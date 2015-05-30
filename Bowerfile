@@ -1,0 +1,10 @@
+asset 'angular'
+asset 'angular-route'
+asset 'angular-resource'
+asset 'angular-mocks'
+asset 'angular-flash'
+asset 'angular-animate'
+asset 'ngDialog'
+asset 'ngstorage'
+asset 'bootstrap-sass-official'
+# vim: ft=ruby

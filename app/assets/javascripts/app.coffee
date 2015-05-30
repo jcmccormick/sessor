@@ -1,0 +1,2 @@
+sessor = angular.module('sessor', [
+])
