@@ -1,0 +1,52 @@
+<form class="form-horizontal" role="form" class="edit-user">
+  
+  <div class="form-group" ng-class="{'has-warning has-feedback':errors.name}">
+    <label for="name" class="col-md-2 control-label col-md-offset-2">Name</label>
+    <div class="col-md-5">
+      <input type="text" name="name" class="form-control" placeholder="Create a descriptive title..." ng-model="report.name">
+    </div>
+  </div>
+
+  <div class="form-group" ng-class="{'has-warning has-feedback':errors.name}">
+    <label for="submission" class="col-md-2 control-label col-md-offset-2">Submission</label>
+    <div class="col-md-5">
+      <textarea name="submission" class="form-control" ng-model='report.submission' placeholder="Enter your comments...">
+      </textarea>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="response" class="col-md-2 control-label col-md-offset-2">Response</label>
+    <div class="col-md-5">
+      <textarea name="response" class="form-control" ng-model='report.response' placeholder="Enter a response...">
+      </textarea>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="active" class="col-md-2 control-label col-md-offset-2">Active</label>
+    <div class="col-md-5">
+      <input type="checkbox" name="active" class="form-control" ng-model='report.active'>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="location" class="col-md-2 control-label col-md-offset-2">Location</label>
+    <div class="col-md-5">
+      <select name="location" class="form-control" ng-model='report.location'>
+        <option name="home" value="home">Home</option>
+        <option name="work" value="work">Work</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-offset-4 col-md-1">
+      <button ng-click="back()" class="btn btn-default">&larr; Reports</button>
+    </div>
+    <div class="col-md-4 text-right">
+      <button class="btn btn-primary" ng-click="save()"> Save </button>
+    </div>
+  </div>
+
+</form>

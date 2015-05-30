@@ -1,14 +1,18 @@
-<div class="container-fluid" ng-app="sessor">
-  <div class="panel panel-success">
-    <div class="panel-heading">
-      <h1 ng-if="name">Hello, {{name}}</h1>
-    </div>
-    <div class="panel-body">
-      <form class="form-inline">
-        <div class="form-group">
-          <input class="form-control" type="text" placeholder="Enter your name" autofocus ng-model="name">
-        </div>
-      </form>
-    </div>
-  </div>
+<div ng-app="sessor">
+	<div ng-controller="NavController">
+		<div class="container">
+			<span class="pull-left">Sessor</span>
+			<div class="pull-right">
+				<button ng-repeat="link in nav">{{link.name}}</button>
+				<button ng-click="home()" class="btn btn-default">Home</button>
+				<button ng-click="reports()" class="btn btn-default">Reports</button>
+				<button ng-click="draggable()" class="btn btn-default">Draggable</button>
+				<button ng-click="template()" class="btn btn-default">Template</button>
+			</div>
+		</div>
+		<div class="container">
+			<hr>
+			<div ng-view class="view-frame animate-view"></div>
+		</div>
+	</div>
 </div>

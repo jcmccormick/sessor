@@ -40,6 +40,8 @@ group :development, :test do
   gem "capybara"
   gem "database_cleaner"
   gem "selenium-webdriver"
+  gem 'teaspoon'
+  gem 'teaspoon-jasmine'
   gem 'phantomjs'
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
