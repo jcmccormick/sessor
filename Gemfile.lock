@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/jasonswett/devise_token_auth.git
+  revision: 85cff097aaf9e7d3568b43812c5ea93913b454c0
+  specs:
+    devise_token_auth (0.1.32.beta9)
+      devise (~> 3.3)
+      rails (~> 4.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -73,9 +81,6 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
-    devise_token_auth (0.1.31)
-      devise (~> 3.3)
-      rails (~> 4.2)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.5.2)
@@ -233,7 +238,7 @@ DEPENDENCIES
   capybara
   coffee-rails (~> 4.1.0)
   database_cleaner
-  devise_token_auth
+  devise_token_auth!
   factory_girl_rails (~> 4.0)
   faker
   foreman

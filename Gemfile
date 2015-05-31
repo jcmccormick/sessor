@@ -24,7 +24,7 @@ gem 'responders'
 gem 'bower-rails'
 gem 'angular-rails-templates'
 gem "foreman"
-gem 'devise_token_auth'
+gem 'devise_token_auth', git: 'https://github.com/jasonswett/devise_token_auth.git'
 gem 'omniauth'
 group :production, :staging do
   gem "rails_12factor"

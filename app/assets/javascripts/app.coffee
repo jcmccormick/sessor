@@ -21,6 +21,10 @@ sessor.config([ '$routeProvider', 'flashProvider',
       flashProvider.infoClassnames.push("alert-info")
       flashProvider.successClassnames.push("alert-success")
 
+      authResolver = 'auth': ['$auth', ($auth)->
+            return $auth.validateUser()
+          ]
+
       $routeProvider
       .when('/',
         templateUrl: "index.html"
@@ -29,35 +33,47 @@ sessor.config([ '$routeProvider', 'flashProvider',
         templateUrl: 'user/new.html',
         controller: 'UserController'
       })
+      .when('/sign_up', {
+        templateUrl: 'user/register.html',
+        controller: 'UserRegistrationController'
+      })
       .when('/reports',
         templateUrl: "show_reports.html"
         controller: 'ReportController'
+        resolve: authResolver
       )
       .when('/reports/new/',
         templateUrl: "edit_report.html"
         controller: 'ReportController'
+        resolve: authResolver
       )
       .when('/reports/:reportId',
         templateUrl: "show_report.html"
         controller: 'ReportController'
+        resolve: authResolver
       )
       .when('/reports/:reportId/edit',
         templateUrl: "edit_report.html"
         controller: 'ReportController'
+        resolve: authResolver
       )
       .when('/template',
         templateUrl: 'template/main.html'
+        resolve: authResolver
       )
       .when('/template/create',
         templateUrl: 'template/create.html'
         controller: 'TemplateController'
+        resolve: authResolver
       )
       .when('/template/:id',
         templateUrl: 'template/view.html'
         controller: 'ViewReportController'
+        resolve: authResolver
       )
       .when('/draggable',
         templateUrl: "draggable.html"
+        resolve: authResolver
       )
 ])
 
@@ -66,12 +82,11 @@ factories   = angular.module('factories',[])
 directives  = angular.module('directives',[])
 services    = angular.module('services',[])
 
-sessor.run ([
-  '$rootScope'
-  '$location'
+sessor.run (['$rootScope','$location',
   ($rootScope, $location) ->
-    $rootScope.$on 'auth:login-success', ->
+    $rootScope.$on('auth:login-success', ->
       $location.path '/'
       return
+    )
     return
 ])

@@ -17,4 +17,23 @@ feature 'Authentication', js: true do
       expect(page).to have_content('Welcome')
     end
   end
+
+  feature 'page access' do
+    scenario 'visiting groups page when signed in' do
+      @login_page.sign_in(@user.email, @user.password)
+
+      # We want Capybara to wait for sign-in to finish happening
+      # before we visit /groups.
+      expect(page).to have_css('h1', text: 'Home')
+
+      visit '/groups'
+      expect(page).to have_css('h1', text: 'Groups')
+    end
+
+    scenario 'visiting "groups" page when not signed in' do
+      visit '/groups'
+      expect(page).not_to have_css('h1', text: 'Groups')
+    end
+  end
+  
 end

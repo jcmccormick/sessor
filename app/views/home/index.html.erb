@@ -6,11 +6,11 @@
 				<div class="pull-right" ng-controller="UserController">
 					<button ng-repeat="link in nav">{{link.name}}</button>
 					<button ng-click="home()" class="btn btn-default">Home</button>
-					<button ng-click="reports()" class="btn btn-default">Reports</button>
-					<button ng-click="draggable()" class="btn btn-default">Draggable</button>
-					<button ng-click="template()" class="btn btn-default">Template</button>
+					<button ng-click="reports()" class="btn btn-default" ng-show="user.id">Reports</button>
+					<button ng-click="draggable()" class="btn btn-default" ng-show="user.id">Draggable</button>
+					<button ng-click="template()" class="btn btn-default" ng-show="user.id">Template</button>
 					<button ng-click="signOut()" class="btn btn-danger" ng-show="user.id">Sign Out</button>
-					<a href="#/sign_in" ng-show="!user.id" class="btn btn-primary">Log On</a>
+					<a href="#/sign_in" class="btn btn-primary" ng-show="!user.id">Log On</a>
 				</div>
 			</div>
 			<div class="container">
