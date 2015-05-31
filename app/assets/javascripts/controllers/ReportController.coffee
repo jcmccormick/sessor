@@ -21,10 +21,10 @@ controllers.controller("ReportController",  [ '$scope', '$routeParams', '$resour
 	$scope.reports = ReportFactory.query()
 
 
-	$scope.view      = (reportId)-> $location.path("/reports/#{reportId}")
-	$scope.edit      = (reportId)-> $location.path("/reports/#{reportId}/edit")
+	$scope.viewReport = (reportId)-> $location.path("/reports/#{reportId}")
+	$scope.editReport = (reportId)-> $location.path("/reports/#{reportId}/edit")
 
-	$scope.save      = ->
+	$scope.saveReport = ->
 		if $routeParams.reportId
 			$scope.report.$update({id: $routeParams.reportId})
 				.then((res)-> 
@@ -40,7 +40,7 @@ controllers.controller("ReportController",  [ '$scope', '$routeParams', '$resour
 				.catch((err)->
 					flash.alert = "There was an issue creating this report. Try again later.")
 
-	$scope.delete = ()->
+	$scope.deleteReport = ()->
 		$scope.report.$delete({id: $routeParams.reportId})
 			.then((res)->
 				$location.path("/reports")
