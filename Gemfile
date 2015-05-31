@@ -38,6 +38,7 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
   gem "rspec-rails", "3.2.1"
   gem "factory_girl_rails", "~> 4.0"
+  gem 'faker'
   gem "capybara"
   gem "database_cleaner"
   gem "selenium-webdriver"

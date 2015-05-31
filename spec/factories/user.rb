@@ -3,6 +3,7 @@ FactoryGirl.define do
     email { Faker::Internet.email }
     password { Faker::Internet.password(8) }
     password_confirmation { password }
+    provider 'email'
 
     factory :confirmed_user do
       confirmed_at Time.zone.now

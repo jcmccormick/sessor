@@ -65,3 +65,13 @@ controllers = angular.module('controllers',[])
 factories   = angular.module('factories',[])
 directives  = angular.module('directives',[])
 services    = angular.module('services',[])
+
+sessor.run ([
+  '$rootScope'
+  '$location'
+  ($rootScope, $location) ->
+    $rootScope.$on 'auth:login-success', ->
+      $location.path '/'
+      return
+    return
+])
