@@ -25,6 +25,10 @@ sessor.config([ '$routeProvider', 'flashProvider',
       .when('/',
         templateUrl: "index.html"
       )
+      .when('/sign_in', {
+        templateUrl: 'user/new.html',
+        controller: 'UserController'
+      })
       .when('/reports',
         templateUrl: "show_reports.html"
         controller: 'ReportController'

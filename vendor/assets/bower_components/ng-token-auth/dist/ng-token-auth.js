@@ -171,6 +171,9 @@ angular.module('ng-token-auth', ['ipCookie']).provider('$auth', function() {
               });
             },
             submitLogin: function(params, opts) {
+              // headers = function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))}
+              // params['beforeSend'] = headers
+              // console.log(params)
               if (opts == null) {
                 opts = {};
               }

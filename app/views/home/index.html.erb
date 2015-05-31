@@ -1,18 +1,22 @@
 <div ng-app="sessor">
-	<div ng-controller="NavController">
-		<div class="container">
-			<span class="pull-left">Sessor</span>
-			<div class="pull-right">
-				<button ng-repeat="link in nav">{{link.name}}</button>
-				<button ng-click="home()" class="btn btn-default">Home</button>
-				<button ng-click="reports()" class="btn btn-default">Reports</button>
-				<button ng-click="draggable()" class="btn btn-default">Draggable</button>
-				<button ng-click="template()" class="btn btn-default">Template</button>
+	<div ng-controller="UserController">
+		<div ng-controller="NavController">
+			<div class="container">
+				<span class="pull-left">Sessor</span>
+				<div class="pull-right">
+					<button ng-repeat="link in nav">{{link.name}}</button>
+					<button ng-click="home()" class="btn btn-default">Home</button>
+					<button ng-click="reports()" class="btn btn-default">Reports</button>
+					<button ng-click="draggable()" class="btn btn-default">Draggable</button>
+					<button ng-click="template()" class="btn btn-default">Template</button>
+				</div>
 			</div>
-		</div>
-		<div class="container">
-			<hr>
-			<div ng-view class="view-frame animate-view"></div>
+			<li ng-show="!user.id"><a ng-href="#/sign_in">Sign in</a></li> 
+			<li ng-show="user.id"><a ng-click='signOut()'>Sign out</a></li>
+			<div class="container">
+				<hr>
+				<div ng-view class="view-frame animate-view"></div>
+			</div>
 		</div>
 	</div>
 </div>
