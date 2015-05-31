@@ -23,7 +23,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'responders'
 gem 'bower-rails'
 gem 'angular-rails-templates'
-gem 'actionpack-page_caching'
 gem "foreman"
 gem 'devise_token_auth'
 gem 'omniauth'

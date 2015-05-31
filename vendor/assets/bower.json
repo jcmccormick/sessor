@@ -7,6 +7,8 @@
     "angular-mocks": "latest",
     "angular-flash": "latest",
     "angular-animate": "latest",
+    "angular-cookie": "latest",
+    "ng-token-auth": "latest",
     "ngDialog": "latest",
     "ngstorage": "latest",
     "bootstrap-sass-official": "latest"
