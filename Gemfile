@@ -25,6 +25,8 @@ gem 'bower-rails'
 gem 'angular-rails-templates'
 gem 'actionpack-page_caching'
 gem "foreman"
+gem 'devise_token_auth'
+gem 'omniauth'
 group :production, :staging do
   gem "rails_12factor"
   gem "rails_stdout_logging"
