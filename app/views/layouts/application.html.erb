@@ -7,17 +7,13 @@
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
+  <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+  <link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
 </head>
-<body>
+<body ng-controller="UserController">
 
 <%= yield %>
   <script>
-    $.ajaxSetup({
-      headers: {
-        'X-Transaction': 'POST Example',
-        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-      }
-    })
     $(document).ready(function() {
         $('[data-toggle="tooltip"]').tooltip();
         $('[data-toggle="popover"]').popover();

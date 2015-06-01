@@ -7,25 +7,52 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="http://getbootstrap.com/examples/dashboard/#">Sessor</a>
+      <a class="navbar-brand" ng-click="goToHome()">Sessor</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li><a href ng-click="goToHome()" >Home</a></li>
-        <li><a href ng-click="goToReports()" ng-show="user.id">Reports</a></li>
-        <li><a href ng-click="goToTemplate()" ng-show="user.id">Template</a></li>
-        <li class="dropdown" ng-controller="UserController">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">You <span class="caret"></span></a>
+        <li><a href ng-click="goToReports()" ng-hide="user.id">Reports</a></li>
+        <li><a href ng-click="goToTemplate()" ng-hide="user.id">Template</a></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.nickname}} <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-          	<li><a href="#/sign_in" ng-show="!user.id">Sign In</a></li>
-        	<li><a href ng-click="signOut()" ng-show="user.id">Sign Out</a></li>
+          	<li><a href ng-show="!user.id" data-toggle="modal" data-target="#loginModal">Sign In</a></li>
+        	<li><a href ng-show="user.id" ng-click="signOut()">Sign Out</a></li>
           </ul>
         </li>
       </ul>
-      <form class="navbar-form navbar-right">
-        <input type="text" class="form-control" placeholder="Search...">
-      </form>
     </div>
   </div>
 </nav>
+
+<!-- NG VIEW POPULATES ANGULAR VIEWS -->
 <div class="view-frame animate-view" ng-view></div>
+
+<!-- TOP LEVEL MODALS -->
+<div class="modal fade" id="loginModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form class="form-signin" role="form" ng-init="loginForm = {}">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Sign in to Sessor</h4>
+        </div>
+        <div class="modal-body">
+          <label for="inputEmail" class="sr-only">Email address</label>
+          <input type="email" class="form-control" name="email" id="email" ng-model="loginForm.email" required="required">
+          <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" class="form-control" name="password" id="password" ng-model="loginForm.password" required="required">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="remember-me" ng-model="loginForm.remember"> Remember me
+            </label>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-lg btn-primary btn-block" ng-click="submitLogin(loginForm)" data-dismiss="modal">Sign in</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
