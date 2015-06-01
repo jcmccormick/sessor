@@ -1,24 +1,28 @@
 controllers = angular.module('controllers')
 controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog', 'TemplateService',
 ($scope, $resource, ngDialog, TemplateService)->
-	# preview form mode
+
+	# previewForm - for preview purposes, form will be copied into this
+	# otherwise, actual form might get manipulated in preview mode
+	$scope.previewForm = {}
 	$scope.previewMode = false
+
 	# new form
 	$scope.form = {}
 	$scope.form.form_id = 1
 	$scope.form.form_name = ''
 	$scope.form.form_sections = []
-	# previewForm - for preview purposes, form will be copied into this
-	# otherwise, actual form might get manipulated in preview mode
-	$scope.previewForm = {}
+
 	# add new field drop-down:
 	$scope.addField = {}
 	$scope.addField.types = TemplateService.fields
 	$scope.addField.new = $scope.addField.types[0].name
 	$scope.addField.lastAddedID = 0
+
 	# accordion settings
 	$scope.accordion = {}
 	$scope.accordion.oneAtATime = true
+	
 	# add new section option
 	$scope.section = {}
 	$scope.section.section_columns = 0
@@ -26,6 +30,8 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 	$scope.section.section_fields = []
 	$scope.addSection = {}
 	$scope.addSection.lastAddedID = 0
+
+	#add section button
 	$scope.addNewSection = ()->
 		$scope.addSection.lastAddedID++
 		newSection = 
@@ -34,6 +40,8 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 			'section_columns': $scope.section.section_columns
 		console.log newSection
 		$scope.form.form_sections.push newSection
+
+	#section sub-column manipulation
 	$scope.setColumns = (cols)->
 		$scope.section.section_columns = cols
 		$scope.section.section_column_width = 'col-md-' + (12/cols)
@@ -44,6 +52,8 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 		if !user_title = prompt('What would you like to name this ' + type + '?')
 			user_title = "Untitled " + type + " field"
 		i = 0
+
+		#collect glyphicon class of scoped type
 		while i < $scope.addField.types.length
 			if $scope.addField.types[i].name == type
 				glyphicon = $scope.addField.types[i].glyphicon
@@ -64,7 +74,6 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 		return
 
 	# deletes particular field on button click
-
 	$scope.deleteField = (field_id) ->
 		i = 0
 		while i < $scope.form.form_fields.length
@@ -75,7 +84,6 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 		return
 
 	# add new option to the field
-
 	$scope.addOption = (field) ->
 		if !field.field_options
 			field.field_options = new Array

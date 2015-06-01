@@ -1,22 +1,31 @@
-<div>
-	<div>
-		<div ng-controller="NavController">
-			<div class="container">
-				<span class="pull-left">Sessor</span>
-				<div class="pull-right" ng-controller="UserController">
-					<button ng-repeat="link in nav">{{link.name}}</button>
-					<button ng-click="home()" class="btn btn-default">Home</button>
-					<button ng-click="reports()" class="btn btn-default" ng-show="user.id">Reports</button>
-					<button ng-click="draggable()" class="btn btn-default" ng-show="user.id">Draggable</button>
-					<button ng-click="template()" class="btn btn-default" ng-show="user.id">Template</button>
-					<button ng-click="signOut()" class="btn btn-danger" ng-show="user.id">Sign Out</button>
-					<a href="#/sign_in" class="btn btn-primary" ng-show="!user.id">Log On</a>
-				</div>
-			</div>
-			<div class="container">
-				<hr>
-				<div ng-view class="view-frame animate-view"></div>
-			</div>
-		</div>
-	</div>
-</div>
+<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavController">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://getbootstrap.com/examples/dashboard/#">Sessor</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href ng-click="goToHome()" >Home</a></li>
+        <li><a href ng-click="goToReports()" ng-show="user.id">Reports</a></li>
+        <li><a href ng-click="goToTemplate()" ng-show="user.id">Template</a></li>
+        <li class="dropdown" ng-controller="UserController">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">You <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+          	<li><a href="#/sign_in" ng-show="!user.id">Sign In</a></li>
+        	<li><a href ng-click="signOut()" ng-show="user.id">Sign Out</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="navbar-form navbar-right">
+        <input type="text" class="form-control" placeholder="Search...">
+      </form>
+    </div>
+  </div>
+</nav>
+<div class="view-frame animate-view" ng-view></div>

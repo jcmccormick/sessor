@@ -3,12 +3,12 @@ directives.directive('templateFormDirective',[()->
   {
     controller: ['$scope', ($scope) ->
 
-      $scope.submit = ->
+      $scope.submitForm = ->
         alert 'Form submitted..'
         $scope.form.submitted = true
         return
 
-      $scope.cancel = ->
+      $scope.cancelForm = ->
         alert 'Form canceled..'
         return
 

@@ -47,4 +47,7 @@ controllers.controller("ReportController",  [ '$scope', '$routeParams', '$resour
 				delete $scope.$storage.report)
 			.catch((err)->
 				flash.alert = "There was an unexpected issue. Try again later.")
+				
+	$scope.clearForm = -> $scope.keywords = []
+	$scope.newReport = -> $location.path("/reports/new")
 ])
