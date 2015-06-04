@@ -5,10 +5,12 @@ factories.factory("ReportFactory", ['$resource', '$q',
 		update: {
 			method: 'PUT'
 			isArray: true
+			cache: true
 		},
 		query: {
 			method: 'GET'
 			isArray: true
+			cache: true
 			interceptor: {
 				response: (response)->
 					return response

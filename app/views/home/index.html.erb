@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavController">
+<nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -15,8 +15,8 @@
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.nickname}} <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-          	<li><a href ng-show="!user.id" data-toggle="modal" data-target="#loginModal">Sign In</a></li>
-        	<li><a href ng-show="user.id" ng-click="signOut()">Sign Out</a></li>
+          	<li><a href ng-show="!user.signedIn" data-toggle="modal" data-target="#loginModal">Sign In</a></li>
+        	<li><a href ng-show="user.signedIn" ng-click="handleSignOut()">Sign Out</a></li>
           </ul>
         </li>
       </ul>
@@ -39,19 +39,41 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title">Sign in to Sessor</h4>
         </div>
-        <div class="modal-body">
+        <div class="modal-body testdiv">
           <label for="inputEmail" class="sr-only">Email address</label>
-          <input type="email" class="form-control" name="email" id="email" ng-model="loginForm.email" required="required">
+          <input type="email" class="form-control" name="email" id="email" ng-model="loginForm.email" required="required" placeholder="Email">
           <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" class="form-control" name="password" id="password" ng-model="loginForm.password" required="required">
+            <input type="password" class="form-control" name="password" id="password" ng-model="loginForm.password" required="required" placeholder="Password">
           <div class="checkbox">
             <label>
               <input type="checkbox" value="remember-me" ng-model="loginForm.remember"> Remember me
             </label>
-        </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button class="btn btn-lg btn-primary btn-block" ng-click="submitLogin(loginForm)" data-dismiss="modal">Sign in</button>
+          <button type="button" class="btn btn-lg btn-primary btn-block" data-target="#forgotPassModal" data-toggle="modal" data-dismiss="modal">Forgot Password</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="forgotPassModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form class="form-forgotpass" role="form">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Enter your Email</h4>
+        </div>
+        <div class="modal-body testdiv">
+          <label for="inputFpemail" class="sr-only">Email address</label>
+          <input type="email" class="form-control" name="fpemail" id="fpemail" ng-model="fpemail" required="required" placeholder="Email">
+        </div>
+        <div class="modal-footer">
+          <p>If your email exists in our system, you'll receive a password reset link momentarily.</p>
+          <a class="btn btn-lg btn-primary btn-block" ng-click="handleForgotPass()">Forgot Password</a>
         </div>
       </form>
     </div><!-- /.modal-content -->

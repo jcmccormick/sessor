@@ -9,8 +9,9 @@
   <%= csrf_meta_tags %>
 </head>
 <body ng-controller="UserController">
-
+  <div ng-controller="NavController">
 <%= yield %>
+  </div>
   <script>
     $(document).ready(function() {
         $('[data-toggle="tooltip"]').tooltip();
