@@ -4,7 +4,7 @@ controllers.controller('UserRegistrationController', ['$scope', '$auth', '$locat
 		$scope.error = reason.errors[0]
 		return
 	)
-	allowed_emails= ['sean.d.potts@gmail.com', 'benmccormickmedia@gmail.com', 'joe.c.mccormick@gmail.com']
+	allowed_emails= ['sean.d.potts@gmail.com', 'benmccormickmedia@gmail.com', 'joe.c.mccormick@gmail.com', 'knightrage@gmail.com']
 	$scope.handleRegBtnClick = ->
 		i = 0
 		console.log allowed_emails.length

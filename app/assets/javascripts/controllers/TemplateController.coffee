@@ -16,6 +16,8 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 	$scope.form.id = 1
 	$scope.form.name = ''
 	$scope.form.sections = []
+	$scope.form.sections.columns = []
+	$scope.form.sections.columns.fields = []
 
 	# add new field option
 	$scope.addField = {}
@@ -24,42 +26,39 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 	$scope.addField.lastAddedID = 0
 
 	# add new section option
-	$scope.section = {}
 	$scope.addSection = {}
-	$scope.addSection.columns = []
 	$scope.addSection.lastAddedID = 0
+	$scope.addSection.columns = []
+	$scope.addSection.columns.lastAddedID = 0
 
 	# add new column option
-	$scope.section.column = {}
-	$scope.section.columns = []
-	$scope.addColumn = {}
+	$scope.addColumn = []
 	$scope.addColumn.lastAddedID = 0
-	$scope.section.column.fields = []
 
 	#add section button
-	$scope.addNewSection = ()->
+	$scope.addNewSection = (cols)->
+		i = 0
+		while i < cols
+			$scope.addSection.columns.lastAddedID++
+			newColumn = 
+				'id': $scope.addSection.columns.lastAddedID
+				'width': 'col-md-' + (12/cols)
+				'fields': []
+			$scope.addSection.columns.push newColumn
+			i++
 		$scope.addSection.lastAddedID++
 		newSection = 
 			'id': $scope.addSection.lastAddedID
 			'title': $scope.addSection.title
 			'columns': $scope.addSection.columns
 		$scope.form.sections.push newSection
-		return
-
-	#section sub-column manipulation
-	$scope.addNewColumns = (cols)->
-		i = 0
-		while i < cols
-			$scope.addColumn.lastAddedID++
-			newColumn = 
-				'id': $scope.addColumn.lastAddedID
-				'width': 'col-md-' + (12/cols)
-			$scope.addSection.columns.push newColumn
-			i++
+		$scope.addSection.title = ''
+		$scope.addSection.columns = []
+		$scope.addSection.columns.lastAddedID = 0
 		return
 
 	# create new field button click
-	$scope.addNewField = (type)->
+	$scope.addNewField = (type, section, column)->
 		if !user_title = prompt('What would you like to name this ' + type + '?')
 			user_title = "Untitled " + type + " field"
 		i = 0
@@ -73,6 +72,8 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 		$scope.addField.lastAddedID++
 		newField = 
 			'id': $scope.addField.lastAddedID
+			'section': section
+			'column': column
 			'title': user_title
 			'type': type
 			'value': ''
@@ -80,7 +81,7 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 			'disabled': false
 			'glyphicon': glyphicon
 		# put newField into current column
-		$scope.section.column.fields.push newField
+		$scope.form.sections[section-1].columns[column-1].fields.push newField
 		return
 
 	# deletes particular field on button click
@@ -159,6 +160,8 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 	$scope.reset = ->
 		$scope.form.fields.splice 0, $scope.form.fields.length
 		$scope.addField.lastAddedID = 0
+		$scope.form.sections.splice 0, $scope.form.sections.length
+		$scope.addSection.lastAddedID = 0
 		$scope.previewMode = false
 		return
 

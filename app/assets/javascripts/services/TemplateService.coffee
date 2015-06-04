@@ -40,6 +40,20 @@ services.service('TemplateService', ['$http',
         glyphicon: 'glyphicon-envelope'
       }
     ]
+    columns: [
+      {
+        id: 1
+        width: 'col-md-12'
+      }
+      {
+        id: 2
+        width: 'col-md-6'
+      }
+      {
+        id: 3
+        width: 'col-md-4'
+      }
+    ]
     form: (id) ->
       # $http returns a promise, which has a then function, which also returns a promise
       $http.get(formsJsonPath).then (response) ->
