@@ -3,7 +3,6 @@ sessor = angular.module('sessor', [
   'ngRoute',
   'ngResource',
   'ngStorage',
-  'ngDialog',
   'ng-token-auth',
   'ipCookie',
   'controllers',

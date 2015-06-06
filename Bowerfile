@@ -6,7 +6,6 @@ asset 'angular-flash'
 asset 'angular-animate'
 asset 'angular-cookie'
 asset 'ng-token-auth'
-asset 'ngDialog'
 asset 'ngstorage'
 asset 'bootstrap-sass-official'
 # vim: ft=ruby

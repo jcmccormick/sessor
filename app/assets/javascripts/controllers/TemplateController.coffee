@@ -1,6 +1,6 @@
 controllers = angular.module('controllers')
-controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog', 'TemplateService',
-($scope, $resource, ngDialog, TemplateService)->
+controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateService',
+($scope, $resource, TemplateService)->
 
 	# previewForm - for preview purposes, form will be copied into this
 	# otherwise, actual form might get manipulated in preview mode
