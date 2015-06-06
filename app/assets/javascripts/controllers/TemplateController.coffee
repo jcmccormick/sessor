@@ -4,6 +4,7 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 
 	# previewForm - for preview purposes, form will be copied into this
 	# otherwise, actual form might get manipulated in preview mode
+	$('#column-preview').prop('disabled', true)
 	$scope.previewForm = {}
 
 	# accordion settings
@@ -58,11 +59,8 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 
 	# create new field button click
 	$scope.addNewField = (type, sec, col)->
-		if !user_title = prompt('What would you like to name this ' + type + '?')
-			user_title = "Untitled " + type + " field"
-		i = 0
-
 		#collect glyphicon class of scoped type
+		i = 0
 		while i < $scope.addField.types.length
 			if $scope.addField.types[i].name == type
 				glyphicon = $scope.addField.types[i].glyphicon
@@ -73,7 +71,7 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 			'id': $scope.addField.lastAddedID
 			'section': sec
 			'column': col
-			'title': user_title
+			'title': "Untitled " + type
 			'type': type
 			'value': ''
 			'required': true
