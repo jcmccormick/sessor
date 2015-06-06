@@ -3,6 +3,23 @@
   color: #AAAAAA;
 }
 
+.ng-hide {
+  display: none!important;
+}
+
+@media (min-width: 768px) {
+  .column-preview-wrap {
+    position:relative!important;
+  }
+  .column-preview {
+    position: absolute;
+    top: 0;
+    right: -270px;
+    width: 250px;
+
+  }
+}
+
 /* Bootstrap Home */
 /*
  * Base structure
