@@ -1,15 +1,18 @@
-<form name="myForm" id="myForm" class="form" ng-show="!form.submitted">
-    <div class="panel-heading">{{form.form_name}}</div>
-    <form>
-        <div ng-repeat="field in form.form_fields">
-            <template-field-directive field="field">
+<form name="myForm" id="myForm" class="form">
+    <h1>{{form.name}}</h1>
+    <div ng-repeat="section in form.sections">
+        <h3>{{section.title}}</h3>
+        <div class="{{column.width}}" ng-repeat="column in section.columns">
+            <div ng-repeat="field in column.fields">
+                <template-field-directive field="field">
 
-            </template-field-directive>
+                </template-field-directive>
+            </div>
         </div>
-    </form>
+    </div>
 
 
-    <div class="form-actions">
+    <div class="col-md-12">
         <p class="text-center">
             <button class="btn btn-success right" type="button" ng-disabled="!myForm.$valid" ng-click="submitForm()"><i class="icon-edit icon-white"></i> Submit Form</button>
             <button class="btn btn-danger right" type="button" ng-click="cancelForm()"><i class="icon-remove icon-white"></i> Cancel</button>
@@ -17,10 +20,10 @@
     </div>
 </form>
 
-<div ng-show="form.submitted">
+<!-- <div ng-show="form.submitted">
     <h3>Submitted Data</h3>
-    <div ng-repeat="field in form.form_fields">
+    <div ng-repeat="field in form.sections.columns.fields">
         Field Title: {{ field.field_title }} <br>
         Field Value: {{ field.field_value }} <br><br>
     </div>
-</div>
+</div> -->

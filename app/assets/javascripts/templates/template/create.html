@@ -1,198 +1,144 @@
 
 <section class="col-xs-6 col-xs-offset-3">
-    <h1>Template Builder</h1>
-    <div class="form-group has-feedback" ng-hide="previewMode">
-        <input type="text" class="form-control" ng-model="form.name" placeholder="Enter a title..." />
-        <i class="glyphicon glyphicon-pencil form-control-feedback"></i>
-    </div>
 
-    <div class="panel-body text-center" ng-show="form.sections.length != 0">
-      <!-- <button class="btn btn-primary right" type="button" ng-click="previewOn()">Toggle Preview</button>
-      <button class="btn btn-danger right" type="button" ng-click="reset()">Reset</button><br><br> -->
-      <button class="btn btn-primary btn-lg" data-toggle="modal" data-target=".newSectionModal">Add New Section</button>
-    </div><br>
+  <h1>Template Builder<button class="btn btn-danger pull-right" type="button" ng-click="reset()">Reset Form</button></h1>
+  
+  <div class="form-group has-feedback">
+      <input type="text" class="form-control" ng-model="form.name" placeholder="Enter a title..." />
+      <i class="glyphicon glyphicon-pencil form-control-feedback"></i>
+  </div>
 
-    
-    <div class="modal fade newSectionModal" tabindex="-1" role="dialog" aria-labelledby="newSectionModal" aria-hidden="true">
-      <div class="modal-dialog modal-md">
-        <form class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Section Design</h4>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-                <label class="control-label">Section Title</label>
-                <input type="text" class="form-control" ng-model="addSection.title" value="{{section.title}}">
-            </div>
-            <div class="form-group">
-              <h4>Number of Columns</h4>
-              <label class="btn btn-info text-center" data-dismiss="modal" aria-label="Select Columns and Create Section" ng-click="addNewSection(cols)" ng-repeat="cols in [1,2,3]">{{cols}}</label>
-            </div>
-            <!-- <div role="tabpanel">
-              <ul role="tablist" class="nav nav-tabs">
-                <li role="presentation" class="{{column.width}}" ng-repeat="column in section.columns">  
-                  <a aria-controls="{{column.id}}" role="tab" data-target="#column{{column.id}}" data-toggle="tab">Tab {{column.id}}</a>
-                </li>
-              </ul>
-              <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade" id="column{{column.id}}" aria-labeledby="{{column.id}}-tab" ng-repeat="column in section.columns">
-                  <h4>Content for tab # {{column.id}}</h4>
-                </div>
-              </div>
-            </div> -->
-          </div>
-          <div class="modal-footer">
-            <!-- <button type="button" class="btn btn-success" ng-click="">Create Section</button> -->  
-          </div>
-        </form>
-      </div>
-    </div>
-<!--     <pre ng-show="form.sections.length != 0">{{form | json}}</pre>
- -->
-    <h1>{{form.name}}</h1>
-    <div class="panel-group" id="outer-accordion" role="tablist" aria-multiselectable="true">
-      <div class="panel panel-default" ng-repeat="section in form.sections">
-        <div class="panel-heading" data-toggle="collapse" data-target="#collapse{{section.id}}" data-parent="#outer-accordion" aria-expanded="true" aria-controls="collapse{{section.id}}" role="tab" id="{{section.title}}">
-          <h4 class="panel-title">
-            {{section.title}}
-          </h4>
+  <div class="panel-body text-center">
+    <button class="btn btn-info btn-lg" data-toggle="modal" data-target=".previewModal" ng-click="previewUpdate()">Preview</button>
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target=".newSectionModal">Add New Section</button>
+  </div><br>
+
+  
+  <div class="modal fade previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModal" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <form class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
-        <div id="collapse{{section.id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{section.id}}">
+        <div class="modal-body">
           <div class="panel-body">
-            <div role="tabpanel">
-              <ul role="tablist" class="nav nav-tabs">
-                <li role="presentation" class="{{column.width}}" ng-repeat="column in section.columns">  
-                  <a aria-controls="sec{{section.id}}col{{column.id}}" role="tab" data-target="#sec{{section.id}}col{{column.id}}" data-toggle="tab">Tab {{column.id}}
-                  </a>
-                </li>
-              </ul>
-              <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade" id="sec{{section.id}}col{{column.id}}" aria-labeledby="sec{{section.id}}col{{column.id}}-tab" ng-repeat="column in section.columns">
+            <template-form-directive form="previewForm"></template-form-directive>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Return">Return</button>  
+        </div>
+      </form>
+    </div>
+  </div>
 
-                  <div class="panel-group" id="inner-accordion" role="tablist" aria-multiselectable="true">
-                    <div class="panel panel-default" ng-repeat="field in column.fields">
-                      <div class="panel-heading" data-toggle="collapse" data-target="#field{{field.id}}" data-parent="#inner-accordion" aria-expanded="true" aria-controls="collapseOne" role="tab" id="{{field.title}}">
-                        <h4 class="panel-title">
-                          {{field.title}}
-                          <i ng-show="field.title" class="glyphicon {{field.glyphicon}} pull-right"></i>
-                        </h4>
-                      </div>
+  <div class="modal fade newSectionModal" tabindex="-1" role="dialog" aria-labelledby="newSectionModal" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <form class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Section Design</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+              <label class="control-label">Section Title</label>
+              <input type="text" class="form-control" ng-model="addSection.title" value="{{section.title}}">
+          </div>
+          <div class="form-group">
+            <h4>Number of Columns</h4>
+            <label class="btn btn-info text-center" data-dismiss="modal" aria-label="Select Columns and Create Section" ng-click="addNewSection(cols)" ng-repeat="cols in [1,2,3]">{{cols}}</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-success" ng-click="">Create Section</button> -->  
+        </div>
+      </form>
+    </div>
+  </div>
+     <pre ng-show="form.sections">{{form | json}}</pre>
 
-                      <div id="field{{field.id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="{{field.title}}">
-                        <div class="panel-body">
-                          <div class="col-md-6">
-                              <div class="form-group">
-                                  <label class="control-label">Field Title</label>
-                                  <input type="text" class="form-control" ng-model="field.title" value="{{field.title}}">
+  <div class="panel-group" id="outer-accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default" ng-repeat="section in form.sections" ng-click="previewOff()">
+      <div class="panel-heading" data-toggle="collapse" data-target="#collapse{{section.id}}" data-parent="#outer-accordion" aria-expanded="true" aria-controls="collapse{{section.id}}" role="tab" id="{{section.title}}">
+        <input ng-model="section.title" class="panel-title"></input>
+      </div>
+      <div id="collapse{{section.id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{section.id}}">
+        <div class="panel-body">
+          <div role="tabpanel">
+            <ul role="tablist" class="nav nav-tabs">
+              <li role="presentation" class="{{column.width}}" ng-repeat="column in section.columns">  
+                <a aria-controls="sec{{section.id}}col{{column.id}}" role="tab" data-target="#sec{{section.id}}col{{column.id}}" data-toggle="tab">Tab {{column.id}}
+                </a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane fade" id="sec{{section.id}}col{{column.id}}" aria-labeledby="sec{{section.id}}col{{column.id}}-tab" ng-repeat="column in section.columns">
+                <p>
+                  <ul class="text-center list-inline">
+                    <li ng-repeat="type in addField.types">
+                      <button class="btn btn-info btn-md" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="{{type.value}}" ng-model="addField.new" ng-click="addNewField(type.name, section.id, column.id)"><i class="glyphicon {{type.glyphicon}}"></i>
+                      </button>
+                    </li>
+                  </ul>
+                </p>
+                <div class="panel-group" id="inner-accordion" role="tablist" aria-multiselectable="true">
+                  <div class="panel panel-default" ng-repeat="field in column.fields">
+                    <div class="panel-heading" data-toggle="collapse" data-target="#field{{field.id}}" data-parent="#inner-accordion" aria-expanded="true" aria-controls="collapseOne" role="tab" id="{{field.title}}">
+                      <h4 class="panel-title">
+                        {{field.title}}
+                        <i ng-show="field.title" class="glyphicon {{field.glyphicon}} pull-right"></i>
+                      </h4>
+                    </div>
+
+                    <div id="field{{field.id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="{{field.title}}">
+                      <div class="panel-body">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Field Title</label>
+                                <input type="text" class="form-control" ng-model="field.title" value="{{field.title}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Field Default Value</label>
+                                <input class="form-control" type="text" ng-model="field.value" value="{{field.value}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label"><input type="checkbox" ng-value="true" ng-selected ng-model="field.required"/> Required?</label>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label"><input type="checkbox" ng-value="true" ng-selected ng-model="field.disabled"/> Disabled?</label>
+                            </div>
+                            <button class="btn btn-danger h1" type="button" ng-click="deleteField(field.id, section.id, column.id)">Delete</button>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group" ng-show="showAddOptions(field.value)">
+                            <label class="control-label">Field Options</label>
+                            <div class="control-input">
+                              <button class="btn btn-primary btn-sm" type="button" ng-click="addOption(field)"> Add Option</button><br><br>
+                              <div class="has-feedback" ng-repeat="option in field.options">
+                                <input type="text" class="form-control" ng-model="option.title" value="{{option.title}}">
+                                <button class="btn btn-danger btn-xs right form-control-feedback" ng-click="deleteOption(field.id, section.id, column.id, option)"><i class="glyphicon glyphicon-remove"></i></button><br>
                               </div>
-
-                              <div class="form-group">
-                                  <label class="control-label">Field Default Value</label>
-                                  <input class="form-control" type="text" ng-model="field.value" value="{{field.value}}">
-                              </div>
-
-                              <div class="form-group">
-                                  <label class="control-label"><input type="checkbox" ng-value="true" ng-selected ng-model="field.required"/> Required?</label>
-                              </div>
-
-                              <div class="form-group">
-                                  <label class="control-label"><input type="checkbox" ng-value="true" ng-selected ng-model="field.disabled"/> Disabled?</label>
-                              </div>
-                              <button class="btn btn-danger h1" type="button" ng-click="deleteField(field.id)">Delete</button>
-                          </div>
-
-                          <div class="col-md-6">
-                              <div class="form-group" ng-show="showAddOptions(field)">
-                                  <label class="control-label">Field Options</label>
-                                  <div class="control-input">
-                                      <button class="btn btn-primary btn-sm" type="button" ng-click="addOption(field)"> Add Option</button><br><br>
-                                      <div class="has-feedback" ng-repeat="option in field.options">
-                                          <input type="text" class="form-control" ng-model="option.option_title" value="{{option.option_title}}">
-                                          <button class="btn btn-danger btn-xs right form-control-feedback" type="button" ng-click="deleteOption(field, option)"><i class="glyphicon glyphicon-remove"></i></button><br>
-                                      </div>
-                                  </div>
-                              </div>
-
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-
-                  <ul class="text-center list-inline">
-                    <li ng-repeat="type in addField.types">
-                      <button class="btn btn-info btn-md" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="{{type.value}}" ng-model="addField.new" ng-click="addNewField(type.name, section.id, column.id)"><i class="glyphicon {{type.glyphicon}}"></i>
-                      </button>
-                    </li>
-                  </ul> 
-                </div>
-              </div>
-            </div>
-          </div> 
-        </div>
-      </div>
-    </div>
-
-
-    <div ng-show="{{previewMode}}">
-        <div class="panel-group" id="inner-accordion" role="tablist" aria-multiselectable="true">
-          <div class="panel panel-default" ng-repeat="field in form.fields">
-            <div class="panel-heading" data-toggle="collapse" data-target="#field{{field.id}}" data-parent="#inner-accordion" aria-expanded="true" aria-controls="collapseOne" role="tab" id="{{field.title}}">
-              <h4 class="panel-title">
-                {{field.title}}
-                <i ng-show="field.title" class="glyphicon {{field.glyphicon}} pull-right"></i>
-              </h4>
-            </div>
-
-            <div id="field{{field.id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="{{field.title}}">
-              <div class="panel-body">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label">Field Title</label>
-                        <input type="text" class="form-control" ng-model="field.title" value="{{field.title}}">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label">Field Default Value</label>
-                        <input class="form-control" type="text" ng-model="field.value" value="{{field.value}}">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label"><input type="checkbox" ng-value="true" ng-selected ng-model="field.required"/> Required?</label>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label"><input type="checkbox" ng-value="true" ng-selected ng-model="field.disabled"/> Disabled?</label>
-                    </div>
-                    <button class="btn btn-danger h1" type="button" ng-click="deleteField(field.id)">Delete</button>
                 </div>
 
-                <div class="col-md-6">
-                    <div class="form-group" ng-show="showAddOptions(field)">
-                        <label class="control-label">Field Options</label>
-                        <div class="control-input">
-                            <button class="btn btn-primary btn-sm" type="button" ng-click="addOption(field)"> Add Option</button><br><br>
-                            <div class="has-feedback" ng-repeat="option in field.options">
-                                <input type="text" class="form-control" ng-model="option.option_title" value="{{option.option_title}}">
-                                <button class="btn btn-danger btn-xs right form-control-feedback" type="button" ng-click="deleteOption(field, option)"><i class="glyphicon glyphicon-remove"></i></button><br>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+                
               </div>
             </div>
           </div>
-        </div>
+        </div> 
+      </div>
     </div>
-    <!-- <div ng-show="{{previewMode}}">
-        <template-form-directive form="previewForm"></template-form-directive>
-
-        <p class="text-center">
-            <button class="btn btn-primary btn-large right" type="button" ng-click="previewOff()">Back to Create Mode</button>
-        </p>
-    </div> -->
+      <!-- <button class="collapsed btn btn-block btn-lg btn-primary" data-toggle="collapse" data-target="#collapsepreview" data-parent="#outer-accordion" aria-expanded="true" aria-controls="collapsepreview" role="tab" id="preview" ng-click="previewUpdate()">Preview</button> -->
+  </div>
 </section>
 <!-- <div class="text-center">
                 <a class="btn btn-small btn-primary" ng-show="!showJson" ng-click="showJson = true">Show form json object</a>

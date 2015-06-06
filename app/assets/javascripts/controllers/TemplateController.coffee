@@ -5,7 +5,6 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 	# previewForm - for preview purposes, form will be copied into this
 	# otherwise, actual form might get manipulated in preview mode
 	$scope.previewForm = {}
-	$scope.previewMode = false
 
 	# accordion settings
 	$scope.accordion = {}
@@ -58,7 +57,7 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 		return
 
 	# create new field button click
-	$scope.addNewField = (type, section, column)->
+	$scope.addNewField = (type, sec, col)->
 		if !user_title = prompt('What would you like to name this ' + type + '?')
 			user_title = "Untitled " + type + " field"
 		i = 0
@@ -72,8 +71,8 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 		$scope.addField.lastAddedID++
 		newField = 
 			'id': $scope.addField.lastAddedID
-			'section': section
-			'column': column
+			'section': sec
+			'column': col
 			'title': user_title
 			'type': type
 			'value': ''
@@ -81,15 +80,16 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 			'disabled': false
 			'glyphicon': glyphicon
 		# put newField into current column
-		$scope.form.sections[section-1].columns[column-1].fields.push newField
+		$scope.form.sections[sec-1].columns[col-1].fields.push newField
 		return
 
 	# deletes particular field on button click
-	$scope.deleteField = (id) ->
+	$scope.deleteField = (id, sec, col) ->
+		fields = $scope.form.sections[sec-1].columns[col-1].fields
 		i = 0
-		while i < $scope.form.fields.length
-			if $scope.form.fields[i].id == id
-				$scope.form.fields.splice i, 1
+		while i < fields.length
+			if fields[i].id == id
+				fields.splice i, 1
 				break
 			i++
 		return
@@ -113,38 +113,20 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 
 	# delete particular option
 
-	$scope.deleteOption = (field, option) ->
+	$scope.deleteOption = (field, sec, col, option) ->
+		options = $scope.form.sections[sec-1].columns[col-1].fields[field-1].options
 		i = 0
-		while i < field.options.length
-			if field.options[i].id == option.id
-				field.options.splice i, 1
+		while i < options.length
+			if options[i].id == option.id
+				options.splice i, 1
 				break
 			i++
 		return
 
 	# preview form
 
-	$scope.previewOn = ->
-		if $scope.form.fields == null or $scope.form.fields.length == 0
-			title = 'Error'
-			msg = 'No fields added yet, please add fields to the form before preview.'
-			btns = [ {
-				result: 'ok'
-				label: 'OK'
-				cssClass: 'btn-primary'
-			} ]
-			ngDialog.open(title, msg, btns)
-		else
-			$scope.previewMode = !$scope.previewMode
-			$scope.form.submitted = false
+	$scope.previewUpdate = ->
 			angular.copy $scope.form, $scope.previewForm
-		return
-
-	# hide preview form, go back to create mode
-
-	$scope.previewOff = ->
-		$scope.previewMode = !$scope.previewMode
-		$scope.form.submitted = false
 		return
 
 	# decides whether field options block will be shown (true for dropdown and radio fields)
@@ -158,13 +140,8 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'ngDialog'
 	# deletes all the fields
 
 	$scope.reset = ->
-		$scope.form.fields.splice 0, $scope.form.fields.length
-		$scope.addField.lastAddedID = 0
-		$scope.form.sections.splice 0, $scope.form.sections.length
+		$scope.form.splice 0, $scope.form.length
 		$scope.addSection.lastAddedID = 0
 		$scope.previewMode = false
 		return
-
-	$scope.getNumber = (num)->
-		return new Array(num)
 ])

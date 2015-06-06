@@ -71,6 +71,7 @@ sessor.config([ '$routeProvider', 'flashProvider',
         templateUrl: "draggable.html"
         resolve: authResolver
       )
+      .otherwise('/')
 ])
 
 controllers = angular.module('controllers',[])
