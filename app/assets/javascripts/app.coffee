@@ -4,6 +4,7 @@ sessor = angular.module('sessor', [
   'ngResource',
   'ngStorage',
   'ng-token-auth',
+  'ngBootbox',
   'ipCookie',
   'controllers',
   'directives',

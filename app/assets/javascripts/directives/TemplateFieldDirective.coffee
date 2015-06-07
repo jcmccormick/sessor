@@ -96,18 +96,15 @@ directives.directive('templateFieldDirective', ['$http', '$compile',
       </div>
     </div>'
 
-    # currently unused controls
-
     hidden = '
     <input type="hidden" ng-model="field.value" value="{{field.value}}" ng-disabled="field.disabled">'
 
     password = '
-    <div class="field row">
-      <div class="span2">{{field.title}}
-        <span class="required-error" ng-show="field.required && !field.value">*</span></div>
-      <div class="span4">
-        <input type="password" ng-model="field.value" value="{{field.value}}"  ng-required="field.required" ng-disabled="field.disabled">
-      </div>
+    <div class="form-group">
+      <label class="control-label">{{field.title}}
+        <span class="required-error" ng-show="field.required && !field.value">*</span>
+      </label>
+      <input type="password" class="form-control" value="{{field.value}}" ng-model="field.value"  ng-required="field.required" ng-disabled="field.disabled">
     </div>'
 
     # GET template content from path

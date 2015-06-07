@@ -39,6 +39,11 @@ services.service('TemplateService', ['$http',
         value: 'E-mail'
         glyphicon: 'glyphicon-envelope'
       }
+      {
+        name: 'password'
+        value: 'Password'
+        glyphicon: 'glyphicon-lock'
+      }
     ]
     columns: [
       {

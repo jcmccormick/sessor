@@ -7,7 +7,36 @@
   display: none!important;
 }
 
+.tooltip {
+  z-index:-1!important;
+}
+
+.panel-heading {
+   cursor: pointer;
+}
+@media (max-width: 768px) {
+  #input-fields > .btn  {
+    padding:3px!important;
+  }
+}
 @media (min-width: 768px) {
+  .modal {
+    text-align: center;
+  }
+
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+
+  .modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+  }
+
   .column-preview-wrap {
     position:relative!important;
   }

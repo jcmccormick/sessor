@@ -39,11 +39,16 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 	$scope.addNewSection = (cols)->
 		i = 0
 		while i < cols
+			if i == 0
+				firstpill = 'active'
+			else
+				firstpill = ''
 			$scope.addSection.columns.lastAddedID++
 			newColumn = 
 				'id': $scope.addSection.columns.lastAddedID
 				'width': 'col-md-' + (12/cols)
 				'fields': []
+				'firstpill': firstpill
 			$scope.addSection.columns.push newColumn
 			i++
 		$scope.addSection.lastAddedID++
@@ -58,7 +63,7 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 		return
 
 	# create new field button click
-	$scope.addNewField = (type, sec, col)->
+	$scope.addNewField = (type, sec, col, title)->
 		#collect glyphicon class of scoped type
 		i = 0
 		while i < $scope.addField.types.length
@@ -71,7 +76,7 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 			'id': $scope.addField.lastAddedID
 			'section': sec
 			'column': col
-			'title': "Untitled " + type
+			'title': title
 			'type': type
 			'value': ''
 			'required': true
@@ -126,14 +131,6 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 	$scope.previewUpdate = ->
 			angular.copy $scope.form, $scope.previewForm
 		return
-
-	# decides whether field options block will be shown (true for dropdown and radio fields)
-
-	$scope.showAddOptions = (field) ->
-		if field.type == 'radio' or field.type == 'dropdown'
-			true
-		else
-			false
 
 	# deletes all the fields
 

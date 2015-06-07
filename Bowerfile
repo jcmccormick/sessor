@@ -8,4 +8,6 @@ asset 'angular-cookie'
 asset 'ng-token-auth'
 asset 'ngstorage'
 asset 'bootstrap-sass-official'
+asset 'bootbox'
+asset 'ngBootbox'
 # vim: ft=ruby

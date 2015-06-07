@@ -5,4 +5,5 @@ controllers.controller("NavController", [ '$scope', '$routeParams', '$location'
 	$scope.goToReports   = -> $location.path("/reports/")
 	$scope.goToTemplates = -> $location.path("/template/")
 	$scope.goToHome		 = -> $location.path("/")
+
 ])

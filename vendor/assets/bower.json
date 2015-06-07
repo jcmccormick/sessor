@@ -10,6 +10,8 @@
     "angular-cookie": "latest",
     "ng-token-auth": "latest",
     "ngstorage": "latest",
-    "bootstrap-sass-official": "latest"
+    "bootstrap-sass-official": "latest",
+    "bootbox": "latest",
+    "ngBootbox": "latest"
   }
 }
