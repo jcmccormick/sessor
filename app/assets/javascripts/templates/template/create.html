@@ -1,20 +1,13 @@
-
-<section class="col-xs-6 col-xs-offset-3">
-
-  <h1>Template Builder<button class="btn btn-danger pull-right" type="button" ng-click="reset()">Reset Form</button></h1>
+  <h1>Template Builder</h1>
   
-  <div class="form-group has-feedback">
+  <div class="has-feedback">
       <input type="text" class="form-control" ng-model="form.name" placeholder="Enter a title..." />
       <i class="glyphicon glyphicon-pencil form-control-feedback"></i>
   </div>
-
-  <div class="panel-body text-center" ng-show="form.name != ''">
-    <button class="btn btn-info btn-lg" data-toggle="modal" data-target=".previewModal" ng-click="previewUpdate()" ng-show="form.sections.length>0">Preview</button>
-    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target=".newSectionModal">Add New Section</button>
-  </div><br>
-
-  
-
+<h6 class="btn-group btn-group-justified" ng-show="form.name != ''">
+  <a role="button" class="btn btn-primary" data-toggle="modal" data-target=".newSectionModal">Add New Section</a>
+  <a role="button" class="btn btn-info" data-toggle="modal" data-target=".previewModal" ng-click="previewUpdate()">Preview</a>
+</h6>
   <div class="modal fade previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModal" aria-hidden="true">
     <div class="modal-dialog modal-md">
       <form class="modal-content">
@@ -23,9 +16,7 @@
           <h4 class="modal-title">Template Preview</h4>
         </div>
         <div class="modal-body">
-          <div class="panel-body">
-            <template-form-directive form="previewForm"></template-form-directive>
-          </div>
+          <template-form-directive form="previewForm"></template-form-directive>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Return">Return</button>  
@@ -60,12 +51,10 @@
 <!--      <pre ng-show="form.sections">{{form | json}}</pre>
  -->
 
-  <div class="panel-group" id="outer-accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-default" ng-repeat="section in form.sections">
-      <div class="panel-heading" data-toggle="collapse" data-target="#collapse{{section.id}}" data-parent="#outer-accordion" aria-expanded="true" aria-controls="collapse{{section.id}}" role="tab" id="{{section.title}}">
-        <div  class="panel-title">
-          {{section.title}}
-        </div>
+  <div class="panel-group panel-carat" id="outer-accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-success" ng-repeat="section in form.sections">
+      <div class="panel-heading template-section-header" data-toggle="collapse" data-target="#collapse{{section.id}}" data-parent="#outer-accordion" aria-expanded="true" aria-controls="collapse{{section.id}}" role="tab" id="{{section.title}}">
+        {{section.title}}
       </div>
 
 
@@ -75,10 +64,10 @@
             <label class="control-label">Section Title</label>
             <input type="text" class="form-control" ng-model="section.title" value="{{section.title}}">
           </p>
-          <div role="tabpanel">
+          <div role="tabpanel template-column-nav">
             <ul role="tablist" class="nav nav-pills nav-justified">
               <li role="presentation" class="text-center" ng-repeat="column in section.columns">  
-                <a href aria-controls="sec{{section.id}}col{{column.id}}" role="tab" data-target="#sec{{section.id}}col{{column.id}}" data-toggle="tab">Column {{column.id}}
+                <a role="button" aria-controls="sec{{section.id}}col{{column.id}}" role="tab" data-target="#sec{{section.id}}col{{column.id}}" data-toggle="tab">Column {{column.id}}
                 </a>
               </li>
             </ul>
@@ -86,14 +75,14 @@
               <div role="tabpanel" class="tab-pane fade column-preview-wrap" id="sec{{section.id}}col{{column.id}}" aria-labeledby="sec{{section.id}}col{{column.id}}-tab" ng-repeat="column in section.columns">
                 <h4 class="text-center">
                   <div id="input-fields" class="h4 text-center btn-group btn-group-justified">
-                    <label class="btn btn-default btn-md" ng-model="addField.new" ng-bootbox-prompt="Please enter a name for this {{type.value}}" ng-bootbox-prompt-action="addNewField(type.name, section.id, column.id, result)" bs-popover ng-repeat="type in addField.types">
+                    <label class="btn btn-success btn-md" ng-model="addField.new" ng-bootbox-prompt="Please enter a name for this {{type.value}}" ng-bootbox-prompt-action="addNewField(type.name, section.id, column.id, result)" bs-popover ng-repeat="type in addField.types">
                       <i class="glyphicon {{type.glyphicon}}" id="{{type.name}}" rel="popover" data-content="{{type.value}}" data-placement="bottom" data-container="body"></i>
                     </label>
                   </div>
                 </h4>
 
                 <div class="panel-group" id="inner-accordion" role="tablist" aria-multiselectable="false">
-                  <div class="panel panel-default" ng-repeat="field in column.fields">
+                  <div class="panel panel-success" ng-repeat="field in column.fields">
                     <div class="panel-heading" data-toggle="collapse" data-target="#field{{field.id}}" data-parent="#inner-accordion" aria-expanded="true" aria-controls="collapseOne" role="tab" id="{{field.title}}">
                       <h4 class="panel-title">
                         {{field.title}}
@@ -148,7 +137,6 @@
                   <template-field-directive ng-repeat="field in column.fields" field="field"></template-field-directive>
                 </div>
 
-                
               </div>
             </div>
           </div>
@@ -157,13 +145,14 @@
     </div>
       <!-- <button class="collapsed btn btn-block btn-lg btn-primary" data-toggle="collapse" data-target="#collapsepreview" data-parent="#outer-accordion" aria-expanded="true" aria-controls="collapsepreview" role="tab" id="preview" ng-click="previewUpdate()">Preview</button> -->
   </div>
-</section>
-<!-- <div class="text-center">
-                <a class="btn btn-small btn-primary" ng-show="!showJson" ng-click="showJson = true">Show form json object</a>
-                <a class="btn btn-small btn-inverse" ng-show="showJson" ng-click="showJson = false">Hide form json object</a><br><br>
-            </div>
+  <button class="btn btn-danger btn-block btn-md" ng-show="form.sections.length > 0" type="button" ng-click="reset()">Delete Form</button>
 
-            <div ng-show="showJson">
-                <h4>Form object content:</h4>
-                <pre>{{ form | json }}</pre>
-            </div> -->
+<div class="h1 text-center" ng-show="form.sections.length > 0">
+  <a class="btn btn-small btn-primary" ng-show="!showJson" ng-click="showJson = true">Show form json object</a>
+  <a class="btn btn-small btn-inverse" ng-show="showJson" ng-click="showJson = false">Hide form json object</a><br><br>
+</div>
+
+<div ng-show="showJson">
+  <h4>Form object content:</h4>
+  <pre>{{ form | json }}</pre>
+</div>

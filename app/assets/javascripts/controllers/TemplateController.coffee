@@ -39,16 +39,11 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 	$scope.addNewSection = (cols)->
 		i = 0
 		while i < cols
-			if i == 0
-				firstpill = 'active'
-			else
-				firstpill = ''
 			$scope.addSection.columns.lastAddedID++
 			newColumn = 
 				'id': $scope.addSection.columns.lastAddedID
 				'width': 'col-md-' + (12/cols)
 				'fields': []
-				'firstpill': firstpill
 			$scope.addSection.columns.push newColumn
 			i++
 		$scope.addSection.lastAddedID++

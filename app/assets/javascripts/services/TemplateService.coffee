@@ -41,7 +41,7 @@ services.service('TemplateService', ['$http',
       }
       {
         name: 'password'
-        value: 'Password'
+        value: 'Protected'
         glyphicon: 'glyphicon-lock'
       }
     ]
