@@ -11,15 +11,16 @@
   z-index:-1!important;
 }
 
-.nav-pills > li >a {
-    color: #005580;
- }
+.navbar .container-fluid {
+  padding: 0 100px!important;
+}
+
 .nav-pills > li > a:hover {
-    background-color: black;
+    background-color: #eee!important;
  }
 .nav-pills > li.active > a {
-    background-color: black;
-    color: white;
+    background-color: #eee!important;
+    color: #005580!important;
 }
 
 .panel-heading {
