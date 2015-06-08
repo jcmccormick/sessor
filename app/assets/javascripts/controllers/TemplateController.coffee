@@ -4,12 +4,7 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 
 	# previewForm - for preview purposes, form will be copied into this
 	# otherwise, actual form might get manipulated in preview mode
-	$('#column-preview').prop('disabled', true)
 	$scope.previewForm = {}
-
-	# accordion settings
-	$scope.accordion = {}
-	$scope.accordion.oneAtATime = true
 	
 	# new form
 	$scope.form = {}
@@ -19,19 +14,18 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 	$scope.form.sections.columns = []
 	$scope.form.sections.columns.fields = []
 
-	# add new field option
+	# add new field options
 	$scope.addField = {}
-	$scope.addField.types = TemplateService.fields
-	$scope.addField.new = $scope.addField.types[0].name
 	$scope.addField.lastAddedID = 0
+	$scope.addField.types = TemplateService.fields
 
-	# add new section option
+	# add new section options
 	$scope.addSection = {}
 	$scope.addSection.lastAddedID = 0
 	$scope.addSection.columns = []
 	$scope.addSection.columns.lastAddedID = 0
 
-	# add new column option
+	# add new column options
 	$scope.addColumn = []
 	$scope.addColumn.lastAddedID = 0
 
@@ -47,18 +41,20 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 			$scope.addSection.columns.push newColumn
 			i++
 		$scope.addSection.lastAddedID++
+		title = if $scope.addSection.title? then $scope.addSection.title else "Untitled Section"
 		newSection = 
 			'id': $scope.addSection.lastAddedID
-			'title': $scope.addSection.title
+			'title': title
 			'columns': $scope.addSection.columns
 		$scope.form.sections.push newSection
-		$scope.addSection.title = ''
+		$scope.addSection.title = undefined
 		$scope.addSection.columns = []
 		$scope.addSection.columns.lastAddedID = 0
 		return
 
 	# create new field button click
 	$scope.addNewField = (type, sec, col, title)->
+		title = if title? then title else "Untitled "+type
 		#collect glyphicon class of scoped type
 		i = 0
 		while i < $scope.addField.types.length
@@ -73,7 +69,7 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 			'column': col
 			'title': title
 			'type': type
-			'value': ''
+			'value': undefined
 			'required': false
 			'disabled': false
 			'glyphicon': glyphicon

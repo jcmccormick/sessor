@@ -10,7 +10,11 @@
 .tooltip {
   z-index:-1!important;
 }
-
+#outer-accordion .panel {
+  -webkit-box-shadow: none!important;
+  box-shadow: none!important;
+  border: none!important;
+}
 .navbar .container-fluid {
   padding: 0 100px!important;
 }

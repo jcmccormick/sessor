@@ -5,8 +5,8 @@
       <i class="glyphicon glyphicon-pencil form-control-feedback"></i>
   </div>
 <h6 class="btn-group btn-group-justified" ng-show="form.name != ''">
-  <a role="button" class="btn btn-primary" data-toggle="modal" data-target=".newSectionModal">Add New Section</a>
-  <a role="button" class="btn btn-info" data-toggle="modal" data-target=".previewModal" ng-click="previewUpdate()">Preview</a>
+  <a role="button" class="btn btn-primary" data-toggle="modal" data-target=".newSectionModal">Add Section</a>
+  <a role="button" class="btn btn-primary" data-toggle="modal" data-target=".previewModal" ng-click="previewUpdate()">Full Preview</a>
 </h6>
   <div class="modal fade previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModal" aria-hidden="true">
     <div class="modal-dialog modal-md">
@@ -51,8 +51,8 @@
 <!--      <pre ng-show="form.sections">{{form | json}}</pre>
  -->
 
-  <div class="panel-group panel-carat" id="outer-accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-success" ng-repeat="section in form.sections">
+  <div class="panel-group panel-carat" id="outer-accordion" role="tablist">
+    <div class="panel panel-info" ng-repeat="section in form.sections">
       <div class="panel-heading template-section-header" data-toggle="collapse" data-target="#collapse{{section.id}}" data-parent="#outer-accordion" aria-expanded="true" aria-controls="collapse{{section.id}}" role="tab" id="{{section.title}}">{{section.title}}</div>
       <div id="collapse{{section.id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{section.id}}">
         <div class="panel-body" bs-popover>
@@ -63,7 +63,7 @@
               <button class="btn btn-danger">Delete Section</button>
             </span>
           </div>
-          <h3>Add Field <sup><small><i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" title="Adding New Fields" data-content="Choose a field from the list and edit its details below" data-placement="bottom" data-container="body"></i></small></sup></h3>
+          <h3>Add Field <sup><small><i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" title="Adding New Fields" data-content="Choose a field from the list, give it a name, and edit its details below. Hover over the white icons to see details about each field type." data-placement="bottom" data-container="body"></i></small></sup></h3>
           <p>
           </p>
           <div role="tabpanel">
@@ -82,7 +82,7 @@
               <div role="tabpanel" class="tab-pane fade column-preview-wrap" id="sec{{section.id}}col{{column.id}}" ng-class="{'active in':$first}" aria-labeledby="sec{{section.id}}col{{column.id}}-tab" ng-repeat="column in section.columns">
                 <h4 class="text-center">
                   <div id="input-fields" class="h4 text-center btn-group btn-group-justified">
-                    <label class="btn btn-success btn-md" ng-model="addField.new" ng-bootbox-prompt="Please enter a name for this {{type.value}}" ng-bootbox-prompt-action="addNewField(type.name, section.id, column.id, result)" bs-popover ng-repeat="type in addField.types">
+                    <label class="btn btn-success btn-md" ng-bootbox-prompt="Please enter a name for this {{type.value}}" ng-bootbox-prompt-action="addNewField(type.name, section.id, column.id, result)" bs-popover ng-repeat="type in addField.types">
                       <i class="glyphicon {{type.glyphicon}}" id="{{type.name}}" rel="popover" data-content="{{type.value}}" data-placement="bottom" data-container="body"></i>
                     </label>
                   </div>
@@ -105,7 +105,7 @@
                                 <input type="text" class="form-control" ng-model="field.title" value="{{field.title}}">
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" ng-hide="field.type == 'date'">
                                 <label class="control-label">Field Default Value</label>
                                 <input class="form-control" type="text" ng-model="field.value" value="{{field.value}}">
                             </div>
