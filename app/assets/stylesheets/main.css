@@ -1,8 +1,19 @@
 /* Put your CSS here */
 .glyphicon-pencil {
-  color: #AAAAAA;
+  color: #aaa;
 }
+.section-preview-btns.ng-hide-add,
+.section-preview-btns.ng-hide-remove {
+  -webkit-transition:0.5s linear all;
+  transition:0.5s linear all;
 
+  /* remember to add this */
+  display:block!important;
+  opacity:1;
+}
+.section-preview-btns.ng-hide {
+  opacity:0;
+}
 .ng-hide {
   display: none!important;
 }
@@ -10,7 +21,7 @@
 .tooltip {
   z-index:-1!important;
 }
-#outer-accordion .panel {
+#outer-accordion .panel, #outer-accordion .panel-body {
   -webkit-box-shadow: none!important;
   box-shadow: none!important;
   border: none!important;
