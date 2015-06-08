@@ -74,7 +74,7 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 			'title': title
 			'type': type
 			'value': ''
-			'required': true
+			'required': false
 			'disabled': false
 			'glyphicon': glyphicon
 		# put newField into current column

@@ -23,6 +23,10 @@
     color: #005580!important;
 }
 
+.btn-group, .btn-group-vertical {
+  padding:0!important;
+}
+
 .panel-heading {
     cursor: pointer;
 }
@@ -51,7 +55,7 @@
     margin-right: 0px;
     display: inline-block;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .view-frame {
     width: 100%!important;
     margin:0!important;
@@ -81,8 +85,8 @@
   .column-preview {
     position: absolute;
     top: 0;
-    right: -210px;
-    width: 180px;
+    right: -217px;
+    width: 199px;
 
   }
 }
