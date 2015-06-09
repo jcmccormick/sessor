@@ -7,7 +7,6 @@ controllers.controller('UserRegistrationController', ['$scope', '$auth', '$locat
 	allowed_emails= ['sean.d.potts@gmail.com', 'benmccormickmedia@gmail.com', 'joe.c.mccormick@gmail.com', 'knightrage@gmail.com']
 	$scope.handleRegBtnClick = ->
 		i = 0
-		console.log allowed_emails.length
 		while i < allowed_emails.length
 			if $scope.registrationForm.email == allowed_emails[i]
 				allowed = true

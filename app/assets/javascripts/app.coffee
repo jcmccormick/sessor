@@ -67,10 +67,6 @@ sessor.config([ '$routeProvider', 'flashProvider',
         controller: 'ViewReportController'
         resolve: authResolver
       )
-      .when('/draggable',
-        templateUrl: "draggable.html"
-        resolve: authResolver
-      )
       .otherwise('/')
 ])
 

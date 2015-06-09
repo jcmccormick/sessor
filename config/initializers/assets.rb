@@ -2,7 +2,6 @@
 
 # Version of your assets, change this if you want to expire all your assets.
 Rails.application.config.assets.version = '1.0'
-Rails.application.config.assets.precompile += %w( bootstrap/glyphicons-halflings-regular.woff2 )
 Rails.application.config.assets.precompile += %w( fonts/bootstrap/glyphicons-halflings-regular.woff2 )
 Rails.application.config.assets.precompile += %w( 
   teaspoon.css
