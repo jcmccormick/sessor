@@ -1,7 +1,7 @@
 services = angular.module('services')
 services.service('TemplateService', ['$http', 
 ($http) ->
-  formsJsonPath = '.templates/template/static-data/sample_forms.json'
+  formsJsonPath = ''
   {
     fields: [
       {
