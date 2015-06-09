@@ -2,48 +2,24 @@
 .glyphicon-pencil {
   color: #aaa;
 }
-.section-preview-btns.ng-hide-add,
-.section-preview-btns.ng-hide-remove {
-  -webkit-transition:0.5s linear all;
-  transition:0.5s linear all;
-
-  /* remember to add this */
-  display:block!important;
-  opacity:1;
-}
-.section-preview-btns.ng-hide {
-  opacity:0;
-}
 .ng-hide {
   display: none!important;
 }
 
-.tooltip {
-  z-index:-1!important;
+/* Set height of interior button within an input group*/
+.input-group-btn:last-child > .btn-danger {
+  height: 34px;
 }
-#outer-accordion .panel, #outer-accordion .panel-body {
-  -webkit-box-shadow: none!important;
-  box-shadow: none!important;
-  border: none!important;
-}
+
+/* Push "Sessor" and Login/Logout arrow towards center of site navigation */
 .navbar .container-fluid {
   padding: 0 100px!important;
 }
 
-.nav-pills > li > a:hover {
-    background-color: #eee!important;
- }
-.nav-pills > li.active > a {
-    background-color: #eee!important;
-    color: #005580!important;
-}
-
-.btn-group, .btn-group-vertical {
-  padding:0!important;
-}
 
 .panel-heading {
     cursor: pointer;
+    word-wrap: break-word;
 }
 .panel-carat .template-section-header:hover {
     text-decoration: none;
@@ -102,7 +78,7 @@
     top: 0;
     right: -217px;
     width: 199px;
-
+    word-wrap: break-word;
   }
 }
 

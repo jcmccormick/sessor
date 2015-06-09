@@ -5,7 +5,6 @@ factories.factory("ReportFactory", ['$resource', '$q',
 		update: {
 			method: 'PUT'
 			isArray: true
-			cache: true
 		},
 		query: {
 			method: 'GET'

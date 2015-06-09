@@ -14,11 +14,6 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 	$scope.form.sections.columns = []
 	$scope.form.sections.columns.fields = []
 
-	# add new field options
-	$scope.addField = {}
-	$scope.addField.lastAddedID = 0
-	$scope.addField.types = TemplateService.fields
-
 	# add new section options
 	$scope.addSection = {}
 	$scope.addSection.lastAddedID = 0
@@ -28,6 +23,11 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 	# add new column options
 	$scope.addColumn = []
 	$scope.addColumn.lastAddedID = 0
+
+	# add new field options
+	$scope.addField = {}
+	$scope.addField.lastAddedID = 0
+	$scope.addField.types = TemplateService.fields
 
 	#add section button
 	$scope.addNewSection = (cols)->
@@ -50,6 +50,17 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 		$scope.addSection.title = undefined
 		$scope.addSection.columns = []
 		$scope.addSection.columns.lastAddedID = 0
+		return
+
+	# delete section button
+	$scope.deleteSection = (sec) ->
+		sections = $scope.form.sections
+		i = 0
+		while i < sections.length
+			if sections[i].id == sec
+				sections.splice i, 1
+				break
+			i++
 		return
 
 	# create new field button click
@@ -120,14 +131,15 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 	# preview form
 
 	$scope.previewUpdate = ->
-			angular.copy $scope.form, $scope.previewForm
+		angular.copy $scope.form, $scope.previewForm
 		return
 
 	# deletes all the fields
 
-	$scope.reset = ->
-		$scope.form.splice 0, $scope.form.length
+	$scope.resetForm = ->
+		$scope.form.name = ''
+		$scope.form.sections.splice 0, $scope.form.sections.length
 		$scope.addSection.lastAddedID = 0
-		$scope.previewMode = false
+		$scope.addField.lastAddedID = 0
 		return
 ])
