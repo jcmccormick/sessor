@@ -8,7 +8,7 @@
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
   <noscript>
-     Please enable Javascript and Cookies 
+     Please enable javascript and cookies in your browser. 
   </noscript>
 </head>
 <body ng-controller="UserController">
@@ -20,7 +20,7 @@
         $('[data-toggle="tooltip"]').tooltip();
         $('[data-toggle="popover"]').popover();
     });
-    if (!navigator.cookieEnabled) document.write('Please enable cookies.');
+    if (!navigator.cookieEnabled) document.write('Please enable javascript and cookies in your browser.');
   </script>
 </body>
 </html>
