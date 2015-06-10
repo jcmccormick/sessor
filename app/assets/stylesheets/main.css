@@ -55,12 +55,12 @@
 }
 @media (min-width: 426px) {
   .stick{
-    left: 15%!important;
+    left: 17%!important;
   }
 }
 @media (max-width: 767px) {
   .navbar .container-fluid {
-    padding: 0;
+    padding:0 0 0 5px ;
   }
   .view-frame {
     padding:15px;
@@ -80,6 +80,7 @@
   }
   .stick{
     left: 26.25%!important;
+    padding-top: 8px!important;
   }
   .modal {
     text-align: center;
