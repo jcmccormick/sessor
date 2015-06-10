@@ -11,10 +11,7 @@
   height: 34px;
 }
 
-/* Push "Sessor" and Login/Logout arrow towards center of site navigation */
-.navbar .container-fluid {
-  padding: 0 100px!important;
-}
+
 
 
 .panel-heading {
@@ -46,13 +43,26 @@
     margin-right: 0px;
     display: inline-block;
 }
+.stick {
+    position:fixed !important;
+    top:8px !important;
+    margin-left: -15px;
+    z-index: 1031!important;
+}
 @media (max-width: 767px) {
+  .stick {
+    left: 28%;
+  }
   .view-frame {
     width: 100%!important;
     margin:0!important;
   }
 }
 @media (min-width: 768px) {
+  /* Push "Sessor" and Login/Logout arrow towards center of site navigation */
+  .navbar .container-fluid {
+    padding: 0 100px!important;
+  }
   .modal {
     text-align: center;
   }

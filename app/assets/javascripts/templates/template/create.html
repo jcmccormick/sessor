@@ -18,17 +18,12 @@
 
 
 <!-- BEGIN SECTION AND PREVEIW BUTTONS -->
-<h3 ng-show="form.name != ''">Sections
-  <sup>
-    <small>
-      <i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" data-content="Add sections and preview the entire form using these buttons." data-container="body"></i>
-    </small>
-  </sup>
-</h3>
-<p class="btn-group btn-group-justified" ng-show="form.name != ''">
-  <a role="button" class="btn btn-primary" data-toggle="modal" data-target=".newSectionModal">Add Section</a>
-  <a role="button" class="btn btn-primary" data-toggle="modal" data-target=".previewModal" ng-click="previewUpdate()">Full Preview</a>
-</p>
+<div class="stick col-sm-6 col-md-6 col-xs-6">
+  <div class="btn-group btn-group-justified" ng-disabled="form.name != ''">
+    <a role="button" class="btn btn-primary" data-toggle="modal" data-target=".newSectionModal">Add Section</a>
+    <a role="button" class="btn btn-primary" data-toggle="modal" data-target=".previewModal" ng-click="previewUpdate()">Full Preview</a>
+  </div>
+</div>
 <!-- END SECTION AND PREVEIW BUTTONS -->
 
 
@@ -84,6 +79,13 @@
 
 <!-- END MODALS -->
 
+<h3 ng-show="form.sections.length >= 1">Sections
+  <sup>
+    <small>
+      <i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" data-content="Add sections and preview the entire form using these buttons." data-container="body"></i>
+    </small>
+  </sup>
+</h3>
 
 <!-- START MAIN SECTION REPEATING -->
 <div role="tablist" class="panel-group panel-carat" id="section-accordion">
@@ -112,7 +114,7 @@
         <div class="input-group">
           <input type="text" class="form-control" ng-model="section.title" value="{{section.title}}">
           <span class="input-group-btn">
-            <button class="btn btn-danger" ng-bootbox-confirm="<center><h2>Are you absolutely sure you want to delete this section?</h2></center>" ng-bootbox-confirm-action="deleteSection(section.id)">Delete Section</button>
+            <button class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you absolutely sure you want to delete this section?</h4></center>" ng-bootbox-confirm-action="deleteSection(section.id)">Delete Section</button>
           </span>
         </div>
         <hr>        
@@ -120,7 +122,7 @@
           Columns and Fields
           <sup>
             <small>
-              <i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" title="Columns and Fields" data-content="Multiple columns will stack on top of one another on mobile devices. Hover over the white and green icons to see details about each field type and click to add. The fields you add are different for each column." data-placement="bottom" data-container="body"></i>
+              <i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" title="Columns and Fields" data-content="Hover over the white and green icons to see details about each field type and click to add. The fields you add are different for each column." data-placement="bottom" data-container="body"></i>
             </small>
           </sup>
         </h3>
@@ -212,7 +214,7 @@
                           <p class="input-group" ng-repeat="option in field.options">
                             <input type="text" class="form-control" ng-model="option.title" value="{{option.title}}">
                             <span class="input-group-btn">
-                              <button class="btn btn-danger" ng-bootbox-confirm="<center><h2>Are you absolutely sure you want to delete this option?</h2></center>" ng-bootbox-confirm-action="deleteOption(field.id, section.id, column.id, option)">
+                              <button class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you absolutely sure you want to delete this option?</h4></center>" ng-bootbox-confirm-action="deleteOption(field.id, section.id, column.id, option)">
                                 <i class="glyphicon glyphicon-remove"></i>
                               </button>
                             </span>
@@ -262,7 +264,7 @@
 
 
 <div ng-show="form.sections.length > 0">
-  <button type="button" class="btn btn-danger pull-right" ng-bootbox-confirm="<center><h2>Are you absolutely sure you want to delete the entire form? All work will be permanently deleted.</h2></center>" ng-bootbox-confirm-action="resetForm()">Delete Form</button>
+  <button type="button" class="btn btn-danger pull-right" ng-bootbox-confirm="<center><h4>Are you absolutely sure you want to delete the entire form?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="resetForm()">Delete Form</button>
   <a class="btn btn-small btn-primary" ng-show="!showJson" ng-click="showJson = true">Show form json object</a>
   <a class="btn btn-small btn-inverse" ng-show="showJson" ng-click="showJson = false">Hide form json object</a><br><br>
 </div>
