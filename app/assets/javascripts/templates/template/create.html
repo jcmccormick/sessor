@@ -156,7 +156,7 @@
 
 
             <!-- BEGIN FIELD REPEATING -->
-            <div role="tablist" class="panel-group" id="field-accordion-{{column.id}}">
+            <div role="tablist" class="panel-group" id="field-accordion-sec{{section.id}}col{{column.id}}">
               <div class="panel panel-success" ng-repeat="field in column.fields">
 
 
@@ -164,7 +164,7 @@
                 <div class="panel-heading" 
                 data-toggle="collapse" 
                 data-target="#sec{{section.id}}col{{column.id}}field{{field.id}}" 
-                data-parent="#field-accordion-{{column.id}}" 
+                data-parent="#field-accordion-sec{{section.id}}col{{column.id}}" 
                 aria-controls="sec{{section.id}}col{{column.id}}field{{field.id}}" 
                 id="sec{{section.id}}col{{column.id}}field{{field.title}}">
                   <h4 class="panel-title">
@@ -181,7 +181,7 @@
 
 
                     <!-- BEGIN FIELD ACCORDION LEFT SIDE -->
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
                         <div class="form-group">
                             <label class="control-label">Field Title</label>
                             <input type="text" class="form-control" ng-model="field.title" value="{{field.title}}">
@@ -204,7 +204,7 @@
 
 
                     <!-- BEGIN FIELD ACCORDION RIGHT SIDE -->
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
                       <div class="form-group" ng-show="field.type == 'radio' || field.type == 'dropdown'">
                         <label class="control-label">Field Options</label>
                         <div class="control-input">
@@ -224,8 +224,8 @@
 
 
                     <!-- BEGIN FIELD ACCORDION FOOTER -->
-                    <div class="col-md-12">
-                      <button type="button" class="btn btn-danger h1" ng-bootbox-confirm="<center><h2>Are you absolutely sure you want to delete this field?</h2></center>" ng-bootbox-confirm-action="deleteField(field.id, section.id, column.id)">Delete Field</button>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <button type="button" class="btn btn-danger h1" ng-bootbox-confirm="<center><h4>Are you absolutely sure you want to delete this field?</h4></center>" ng-bootbox-confirm-action="deleteField(field.id, section.id, column.id)">Delete Field</button>
                     </div>
                     <!-- END FIELD ACCORDION FOOTER -->
 
@@ -239,7 +239,7 @@
             </div>
 
             <!-- BEGIN COLUMN PREVIEW -->
-            <div class="column-preview" id="column-preview" ng-show="column.fields.length > 0" bs-popover>
+            <div class="column-preview {{column.width}}" id="column-preview" ng-show="column.fields.length > 0" bs-popover>
               <h4>
                 Column Preview 
                 <sup>

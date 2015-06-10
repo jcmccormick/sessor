@@ -1,5 +1,5 @@
 <form name="myForm" id="myForm" class="form">
-    <h1>{{form.name}}</h1>
+    <h1><center>{{form.name}}</center></h1>
     <div ng-repeat="section in form.sections">
         <h3>{{section.title}}</h3>
         <div class="{{column.width}}" ng-repeat="column in section.columns">
@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <p class="text-center col-md-12">
+    <p class="text-center">
         <button class="btn btn-success right" type="button" ng-disabled="!myForm.$valid" ng-click="submitForm()"><i class="icon-edit icon-white"></i> Submit Form</button>
         <button class="btn btn-danger right" type="button" ng-click="cancelForm()"><i class="icon-remove icon-white"></i> Cancel</button>
     </p>

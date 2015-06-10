@@ -70,16 +70,16 @@
     vertical-align: middle;
   }
 
-  .column-preview-wrap {
+/*  .column-preview-wrap {
     position:relative!important;
   }
   .column-preview {
-    position: absolute;
-    top: 0;
-    right: -217px;
-    width: 199px;
-    word-wrap: break-word;
-  }
+    position: absolute!important;
+    top: 0!important;
+    right: -217px!important;
+    width: 199px!important;
+    word-wrap: break-word!important;
+  }*/
 }
 
 /* Bootstrap Home */

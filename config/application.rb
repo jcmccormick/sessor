@@ -8,7 +8,7 @@ Bundler.require(*Rails.groups)
 
 module Sessor
   class Application < Rails::Application
-    config.assets.precompile << %r(bootstrap-sass-official/assets/fonts/bootstrap/[\w-]+\.(?:eot|svg|ttf|woff2?)$)
+    
     config.assets.paths << Rails.root.join("vendor","assets","bower_components","bootstrap-sass-official","assets","fonts")
 
     config.assets.precompile << %r(.*.(?:eot|svg|ttf|woff)$)

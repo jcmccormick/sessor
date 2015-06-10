@@ -4,12 +4,10 @@ controllers.controller("ReportController",  [ '$scope', '$routeParams', '$resour
 	$scope.$storage = $localStorage
 	$scope.reports = ReportFactory.query()
 
-
 	#store single report data in local storage
 	if $routeParams.reportId
 		promise = ReportFactory.get({id: $routeParams.reportId}).$promise
 		promise.then((res)->
-			console.log(res)
 			$scope.report = new ReportFactory()
 			$scope.report = res)
 		promise.catch((err)-> 
@@ -34,6 +32,7 @@ controllers.controller("ReportController",  [ '$scope', '$routeParams', '$resour
 		else
 			$scope.report.$save()
 				.then((res)-> 
+					console.log(res)
 					$scope.report = res
 					$scope.reports.push(res)
 					flash.message = "Report Created"

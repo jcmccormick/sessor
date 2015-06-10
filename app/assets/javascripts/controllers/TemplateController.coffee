@@ -36,7 +36,7 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 			$scope.addSection.columns.lastAddedID++
 			newColumn = 
 				'id': $scope.addSection.columns.lastAddedID
-				'width': 'col-md-' + (12/cols)
+				'width': 'col-md-' + (12/cols) + ' col-sm-' + (12/cols) + ' col-xs-' + (12/cols)
 				'fields': []
 			$scope.addSection.columns.push newColumn
 			i++

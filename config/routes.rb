@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   root 'home#index' 
   resources :reports, only: [:index, :show, :create, :update, :destroy]
 
-
   # token auth routes available at /api/v1/auth
   scope '/api' do
     mount_devise_token_auth_for 'User', at: '/auth'
