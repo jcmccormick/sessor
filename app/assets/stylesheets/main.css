@@ -49,9 +49,19 @@
     margin-left: -15px;
     z-index: 1031!important;
 }
-@media (max-width: 767px) {
+@media (max-width: 425px) {
   .stick {
-    left: 28%;
+    left: 20%!important;
+  }
+}
+@media (min-width: 426px) {
+  .stick{
+    left: 15%!important;
+  }
+}
+@media (max-width: 767px) {
+  .navbar .container-fluid {
+    padding: 0;
   }
   .view-frame {
     width: 100%!important;
@@ -62,6 +72,9 @@
   /* Push "Sessor" and Login/Logout arrow towards center of site navigation */
   .navbar .container-fluid {
     padding: 0 100px!important;
+  }
+  .stick{
+    left: 26.25%!important;
   }
   .modal {
     text-align: center;
