@@ -1,22 +1,20 @@
-<div class="fluid-container col-md-6 col-md-offset-3">
-  <h1 class="page-header">Reports</h1>
-  <div class="form-group">
-    <input ng-model="keywords" name="keywords" type="text" autofocus class="form-control" placeholder="Search by ID, Title, Participants, and more...">
-  </div>
-  <div class="form-group">
-    <a href ng-click="clearForm()"class="btn btn-primary btn-md">Clear</a>
-    <a href ng-click="newReport()" class="btn btn-info btn-md pull-right">New</a>
-  </div>
-  <accordion ng-if="reports">
-    <accordion-group class="panel panel-info" ng-repeat="report in reports | filter: keywords | orderBy: '-id'">
-      <accordion-heading class="panel-heading">
-        <h4>{{report.name}}
-          <i class="glyphicon glyphicon-pencil pull-right"></i></h4>
-      </accordion-heading>
-      <div class="form-group" ng-repeat="(key, val) in report">
-        <label class="control-label">{{key | uppercase}}: {{val}}</label>
-      </div>
-      <button class="btn btn-info" ng-click="editReport(report.id)">Edit</button>
-    </accordion>
-  </accordion>
+<h1 class="page-header">Reports</h1>
+<div class="form-group">
+  <input ng-model="keywords" name="keywords" type="text" autofocus class="form-control" placeholder="Search by ID, Title, Participants, and more...">
 </div>
+<div class="form-group">
+  <a href ng-click="clearForm()"class="btn btn-primary btn-md">Clear</a>
+  <a href ng-click="newReport()" class="btn btn-info btn-md pull-right">New</a>
+</div>
+<accordion ng-if="reports">
+  <accordion-group class="panel panel-info" ng-repeat="report in reports | filter: keywords | orderBy: '-id'">
+    <accordion-heading class="panel-heading">
+      <h4>{{report.name}}
+        <i class="glyphicon glyphicon-pencil pull-right"></i></h4>
+    </accordion-heading>
+    <div class="form-group" ng-repeat="(key, val) in report">
+      <label class="control-label">{{key | uppercase}}: {{val}}</label>
+    </div>
+    <button class="btn btn-info" ng-click="editReport(report.id)">Edit</button>
+  </accordion>
+</accordion>
