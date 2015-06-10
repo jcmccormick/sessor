@@ -20,8 +20,10 @@
   <!-- BEGIN SECTION AND PREVEIW BUTTONS -->
   <div class="stick col-xs-9 col-sm-6 col-md-6">
     <div class="btn-group btn-group-justified" ng-disabled="form.name != ''">
-      <a role="button" class="btn btn-primary" data-toggle="modal" data-target=".newSectionModal">Add Section</a>
-      <a role="button" class="btn btn-primary" data-toggle="modal" data-target=".previewModal" ng-click="previewUpdate()">Full Preview</a>
+      <a role="button" class="btn btn-info">Save</a>
+      <a role="button" class="btn btn-info">Draft</a>
+      <a role="button" class="btn btn-info" data-toggle="modal" data-target=".previewModal" ng-click="previewUpdate()">Preview</a>
+      <a type="button" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you absolutely sure you want to reset the entire form?<br> All unsaved or undrafted work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="resetForm()">Reset</a>
     </div>
   </div>
   <!-- END SECTION AND PREVEIW BUTTONS -->
@@ -81,13 +83,18 @@
 
   <!-- END MODALS -->
 
-  <h3 ng-show="form.sections.length >= 1">Sections
-    <sup>
-      <small>
-        <i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" data-content="Add sections and preview the entire form using these buttons." data-container="body"></i>
-      </small>
-    </sup>
-  </h3>
+  <div ng-show="form.name != ''">
+    <h3>Sections
+      <sup>
+        <small>
+          <i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" data-content="Add sections and preview the entire form using these buttons." data-container="body"></i>
+        </small>
+      </sup>
+    </h3>
+    <p>
+      <a role="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target=".newSectionModal">Add Section</a>
+    </p>
+  </div>
 
   <!-- START MAIN SECTION REPEATING -->
   <div role="tablist" class="panel-group panel-carat" id="section-accordion">
@@ -266,7 +273,6 @@
 
 
   <div ng-show="form.sections.length > 0">
-    <button type="button" class="btn btn-danger pull-right" ng-bootbox-confirm="<center><h4>Are you absolutely sure you want to delete the entire form?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="resetForm()">Delete Form</button>
     <a class="btn btn-small btn-primary" ng-show="!showJson" ng-click="showJson = true">Show form json object</a>
     <a class="btn btn-small btn-inverse" ng-show="showJson" ng-click="showJson = false">Hide form json object</a><br><br>
   </div>
