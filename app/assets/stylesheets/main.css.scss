@@ -1,9 +1,119 @@
 /* Put your CSS here */
+$mini: 20em;
+$mobile: 30em;
+$tablet: 48em;
+$desktop: 60em;
+
+@mixin respond($media) {
+ @if $media == mini {
+  @media screen and (min-width: $mini) {
+   @content
+  }
+ }
+ @if $media == mobile {
+  @media screen and (min-width: $mobile) {
+   @content
+  }
+ }
+
+ @else if $media == tablet {
+  @media screen and (min-width: $tablet) {
+   @content
+  }
+ }
+
+ @else if $media == desktop {
+  @media screen and (min-width: $desktop) {
+   @content
+  }
+ }
+}
+/* Site Maintenance settings */
+.alert {
+  position: absolute;
+}
+.alert.in {
+  z-index: 1032;
+  top:5%;
+  left:25%; 
+  right:25%;
+}
+
+.jumbotron {
+  margin:0 auto!important;
+  background:none;
+}
+.jumbotron h1, .jumbotron .h1 {
+  font-size: 32px;
+  @include respond(tablet) {
+    font-size: 72px;
+  }
+}
+
+.nav > li > a:not(.open) {
+  font-size: 18px!important;
+}
+
+.navbar-toggle {
+  color: #FFF;
+  border:0!important;
+}
+.main-dropdown-nav:not(.open) {
+  background-color: black;
+}
+.main-dropdown-nav > li > a {
+  width:160px;
+  color: #AAA;
+  margin:0 20px;
+}
+.navbar-header > .navbar-toggle {
+  margin-top: 8px;
+  @include respond(mobile) {
+    margin-top: 16px;
+  }
+}
+
+/* Sticky toolbar for form builder */
+.stick {
+  position:fixed !important;
+  top:0;
+  margin-top:8px;
+  margin-left: -15px;
+  z-index: 1031;
+  @include respond(mini) {
+    left: 2%;
+  }
+  @include respond(mobile) {
+    left: 15%;
+    margin-top: 16px;
+  }
+
+  @include respond(tablet) {
+    left: 26%;
+  }
+}
+.stick > .btn-group-justified {
+  width: 123%;
+  @include respond(mobile) {
+    width: 100%;
+  }
+}
+.stick > .btn-group-justified > .btn {
+  padding: 6px 2px;
+  @include respond(mobile) {
+    padding: 6px 12px;
+  }
+}
+
 .glyphicon-pencil {
   color: #aaa;
 }
 .ng-hide {
   display: none!important;
+}
+.btn.active {
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 
 /* Set height of interior button within an input group*/
@@ -42,25 +152,9 @@
     margin-right: 0px;
     display: inline-block;
 }
-.stick {
-    position:fixed !important;
-    top:8px !important;
-    margin-left: -15px;
-    z-index: 1031!important;
-}
-@media (max-width: 425px) {
-  .stick {
-    left: 20%!important;
-  }
-}
-@media (min-width: 426px) {
-  .stick{
-    left: 17%!important;
-  }
-}
 @media (max-width: 767px) {
   .navbar .container-fluid {
-    padding:0 0 0 5px ;
+    padding:0 5px ;
   }
   .view-frame {
     padding:15px;
@@ -74,41 +168,20 @@
   .navbar .container-fluid {
     padding: 0 64px!important;
   }
-  .navbar-brand {
-    font-size:24px !important;
-    margin-top:10px !important;
-  }
-  .stick{
-    left: 26.25%!important;
-    padding-top: 8px!important;
-  }
   .modal {
     text-align: center;
   }
-
   .modal:before {
     display: inline-block;
     vertical-align: middle;
     content: " ";
     height: 100%;
   }
-
   .modal-dialog {
     display: inline-block;
     text-align: left;
     vertical-align: middle;
   }
-
-/*  .column-preview-wrap {
-    position:relative!important;
-  }
-  .column-preview {
-    position: absolute!important;
-    top: 0!important;
-    right: -217px!important;
-    width: 199px!important;
-    word-wrap: break-word!important;
-  }*/
 }
 
 /* Bootstrap Home */

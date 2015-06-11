@@ -1,48 +1,91 @@
-<h1 class="page-header">Dashboard</h1>
-
-<div class="row placeholders">
-  <div class="col-xs-6 col-sm-3 placeholder">
-    picture
-    <h4>Label</h4>
-    <span class="text-muted">Something else</span>
-  </div>
-  <div class="col-xs-6 col-sm-3 placeholder">
-    picture
-    <h4>Label</h4>
-    <span class="text-muted">Something else</span>
-  </div>
-  <div class="col-xs-6 col-sm-3 placeholder">
-    picture
-    <h4>Label</h4>
-    <span class="text-muted">Something else</span>
-  </div>
-  <div class="col-xs-6 col-sm-3 placeholder">
-    picture
-    <h4>Label</h4>
-    <span class="text-muted">Something else</span>
-  </div>
+<div class="jumbotron">
+  <h1>Welcome!</h1>
+  <p class="lead">New around here?</p>
+  <p><a href class="btn btn-primary" data-toggle="modal" data-target="#userRegistrationModal">Register</a></p>
+  <p class="lead">Or</p>
+  <a href class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Sign In</a>
 </div>
 
-<h2 class="sub-header">Section title</h2>
-<div class="table-responsive">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Header 1</th>
-        <th>Header 2</th>
-        <th>Header 3</th>
-        <th>Header 4</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1,001</td>
-        <td>Lorem</td>
-        <td>ipsum</td>
-        <td>dolor</td>
-        <td>sit</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<!-- TOP LEVEL MODALS -->
+<div class="modal fade" id="loginModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form class="form-signin" role="form" ng-init="loginForm = {}">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Sign in to Sessor</h4>
+        </div>
+        <div class="modal-body">
+          <label for="inputEmail" class="sr-only">Email address</label>
+          <input type="email" class="form-control" name="email" id="email" ng-model="loginForm.email" required="required" placeholder="Email">
+          <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" class="form-control" name="password" id="password" ng-model="loginForm.password" required="required" placeholder="Password">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="remember-me" ng-model="loginForm.remember"> Remember me
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-lg btn-primary btn-block" ng-click="submitLogin(loginForm)" data-dismiss="modal">Sign in</button>
+          <button type="button" class="btn btn-lg btn-primary btn-block" data-target="#forgotPassModal" data-toggle="modal" data-dismiss="modal">Forgot Password</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal fade" id="userRegistrationModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form class="form-signin" ng-controller="UserRegistrationController" ng-submit="handleRegBtnClick()" role="form" ng-init="registrationForm = {}">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Create an Account</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" ng-model="registrationForm.email" required="required" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" ng-model="registrationForm.password" required="required" class="form-control">
+            8 or more characters required.
+          </div>
+
+          <div class="form-group">
+            <label for="password_confirmation">Password Confirmation</label>
+            <input type="password" name="password_confirmation" id="password_confirmation" ng-model="registrationForm.password_confirmation" required="required" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-lg btn-primary btn-block">Complete Registration</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="forgotPassModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form class="form-forgotpass" role="form">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Enter your Email</h4>
+        </div>
+        <div class="modal-body testdiv">
+          <label for="inputFpemail" class="sr-only">Email address</label>
+          <input type="email" class="form-control" name="fpemail" id="fpemail" ng-model="fpemail" required="required" placeholder="Email">
+        </div>
+        <div class="modal-footer">
+          <p>If your email exists in our system, you'll receive a password reset link momentarily.</p>
+          <a class="btn btn-lg btn-primary btn-block" ng-click="handleForgotPass()">Forgot Password</a>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

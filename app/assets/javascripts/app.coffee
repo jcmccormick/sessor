@@ -22,17 +22,17 @@ sessor.config([ '$routeProvider', 'flashProvider',
       flashProvider.successClassnames.push("alert-success")
 
       authResolver = 'auth': ['$auth', ($auth)->
-            return $auth.validateUser()
-          ]
+          return $auth.validateUser()
+        ]
 
       $routeProvider
       .when('/',
         templateUrl: "index.html"
       )
-      .when('/sign_up', {
-        templateUrl: 'user/register.html',
-        controller: 'UserRegistrationController'
-      })
+      .when('/desktop/',
+        templateUrl: "desktop.html"
+        resolve: authResolver
+      )
       .when('/reports',
         templateUrl: "show_reports.html"
         controller: 'ReportController'
@@ -78,6 +78,11 @@ services    = angular.module('services',[])
 sessor.run (['$rootScope','$location',
   ($rootScope, $location) ->
     $rootScope.$on('auth:login-success', ->
+      $location.path '/desktop/'
+      return
+    )
+    $rootScope.$on('auth:invalid', ->
+      flash.error = "Looks like there was an error validating your credentials. Please try logging in again or contact support if problems continue."
       $location.path '/'
       return
     )

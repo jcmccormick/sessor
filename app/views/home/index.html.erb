@@ -1,109 +1,48 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
+
+<div flash-alert="error" active-class="in" class="alert fade">
+    <strong class="alert-heading">Whoops...</strong>
+    <span class="alert-message">{{flash.message}}</span>
+</div>
+
+<div flash-alert="success" active-class="in" class="alert fade">
+    <strong class="alert-heading">Good news!</strong>
+    <span class="alert-message">{{flash.message}}</span>
+</div>
+
+<div class="container-fluid">
+  <nav ng-show="user.signedIn" class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+        <i class="glyphicon glyphicon-flash"></i>
       </button>
-      <a href class="navbar-brand" ng-click="goToHome()">Sessor</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-right top-nav">
+      <ul class="nav navbar-nav navbar-left top-nav">
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">You <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-          	<li><a href ng-show="!user.signedIn" data-toggle="modal" data-target="#loginModal">Sign In</a></li>
-        	  <li><a href ng-show="user.signedIn" ng-click="handleSignOut()">Sign Out</a></li>
-          </ul>
-        </li>
-        <li class="dropdown ng-hide main-dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Main <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href ng-click="goToHome()">Home</a></li>
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sessor</a>
+          <ul class="nav navbar-nav main-dropdown-nav dropdown-menu" role="menu">
+            <li><a href ng-click="goToDesktop()">Desktop</a></li>
             <li><a href ng-click="goToReports()">Reports</a></li>
             <li><a href ng-click="goToTemplates()">Templates</a></li>
           </ul>
         </li>
       </ul>
+      <ul class="nav navbar-nav navbar-right top-nav">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">You</a>
+          <ul class="nav navbar-nav main-dropdown-nav dropdown-menu" role="menu">
+            <li><a href ng-show="!user.signedIn" data-toggle="modal" data-target="#loginModal">Sign In</a></li>
+            <li><a href ng-show="user.signedIn" ng-click="handleSignOut()">Sign Out</a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
-  </div>
-</nav>
+  </nav>
+</div>
 <div class="container-fluid">
   <div class="row">
-	<!-- NG VIEW POPULATES ANGULAR VIEWS -->
-  <div class="col-sm-3 col-md-2 sidebar" ng-controller="NavController">
-    <ul class="nav nav-sidebar">
-      <li><a href ng-click="goToHome()">Home</a></li>
-      <li><a href ng-click="goToReports()">Reports</a></li>
-      <li><a href ng-click="goToTemplates()">Templates</a></li>
-    </ul>
-    <hr>
-    <ul class="nav nav-sidebar">
-      <li><a href="">Nav item</a></li>
-      <li><a href="">Nav item again</a></li>
-      <li><a href="">One more nav</a></li>
-      <li><a href="">Another nav item</a></li>
-      <li><a href="">More navigation</a></li>
-    </ul>
-    <hr>
-    <ul class="nav nav-sidebar">
-      <li><a href="">Nav item again</a></li>
-      <li><a href="">One more nav</a></li>
-      <li><a href="">Another nav item</a></li>
-    </ul>
-  </div>
-	<div class="col-sm-8 col-md-8 view-frame animate-view" ng-view bs-popover></div>
+  <div class="col-xs-2 col-sm-2 col-md-2" ng-show="!user.signedIn"></div>
+	<div class="col-xs-12 col-sm-12 col-md-12 view-frame animate-view" ng-view bs-popover></div>
   </div>
 </div>
-
-<!-- TOP LEVEL MODALS -->
-<div class="modal fade" id="loginModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form class="form-signin" role="form" ng-init="loginForm = {}">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Sign in to Sessor</h4>
-        </div>
-        <div class="modal-body testdiv">
-          <label for="inputEmail" class="sr-only">Email address</label>
-          <input type="email" class="form-control" name="email" id="email" ng-model="loginForm.email" required="required" placeholder="Email">
-          <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" class="form-control" name="password" id="password" ng-model="loginForm.password" required="required" placeholder="Password">
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" value="remember-me" ng-model="loginForm.remember"> Remember me
-            </label>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-lg btn-primary btn-block" ng-click="submitLogin(loginForm)" data-dismiss="modal">Sign in</button>
-          <button type="button" class="btn btn-lg btn-primary btn-block" data-target="#forgotPassModal" data-toggle="modal" data-dismiss="modal">Forgot Password</button>
-        </div>
-      </form>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<div class="modal fade" id="forgotPassModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form class="form-forgotpass" role="form">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Enter your Email</h4>
-        </div>
-        <div class="modal-body testdiv">
-          <label for="inputFpemail" class="sr-only">Email address</label>
-          <input type="email" class="form-control" name="fpemail" id="fpemail" ng-model="fpemail" required="required" placeholder="Email">
-        </div>
-        <div class="modal-footer">
-          <p>If your email exists in our system, you'll receive a password reset link momentarily.</p>
-          <a class="btn btn-lg btn-primary btn-block" ng-click="handleForgotPass()">Forgot Password</a>
-        </div>
-      </form>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->

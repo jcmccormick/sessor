@@ -1,12 +1,13 @@
 controllers = angular.module('controllers')
-controllers.controller('UserController', ['$auth', '$scope', '$location', ($auth, $scope, $location)->
+controllers.controller('UserController', ['$auth', '$scope', '$location', 'flash', ($auth, $scope, $location, flash)->
 	
 	$scope.$on('auth:login-error', (ev, reason)->
-		$scope.error = reason.errors[0]
+		flash.error = reason.errors[0]
 	)
 	$scope.handleSignOut = ->
 		$auth.signOut()
 			.then(()->
+				flash.success = "You have been signed out."
 				$location.path('/')
 			)
 
