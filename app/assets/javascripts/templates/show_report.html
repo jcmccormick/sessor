@@ -1,15 +1,16 @@
-  <div class="panel panel-info">
-    <header class="panel-heading"><h1>{{report.name}}</h1></header>
-    <div class="panel-body">
-      <p><b>Participants:</b> {{report.participants}}</p>
-      <p><b>Submission:</b> {{report.submission}}</p>
-      <p><b>Response:</b> {{report.response}}</p>
-    </div>
+<h1 class="page-header">Report {{report.id}}</h1>
+<div class="panel panel-info">
+  <header class="panel-heading"><h1>{{report.name}}</h1></header>
+  <div class="panel-body">
+    <p><b>Participants:</b> {{report.participants}}</p>
+    <p><b>Submission:</b> {{report.submission}}</p>
+    <p><b>Response:</b> {{report.response}}</p>
   </div>
-  <div class="col-md-3">
-    <button ng-click="goToReports()" class="btn btn-default">&larr; Reports</button>
-  </div>
-  <div class="col-md-9 text-right">
-    <button ng-click="editReport(report.id)" class="btn btn-info"> Edit </button>
-    <button ng-click="deleteReport()" class="btn btn-danger"> Delete </button>
-  </div>
+</div>
+<div class="col-md-3">
+  <button ng-click="goToReports()" class="btn btn-default">&larr; Reports</button>
+</div>
+<div class="col-md-9 text-right">
+  <button ng-click="editReport(report.id)" class="btn btn-info"> Edit </button>
+  <button ng-click="deleteReport()" class="btn btn-danger"> Delete </button>
+</div>

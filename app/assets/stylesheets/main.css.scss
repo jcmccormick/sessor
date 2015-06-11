@@ -136,22 +136,26 @@ $desktop: 60em;
     text-decoration: underline;
 }
 .panel-carat .template-section-header:before {
+    font-family: "Glyphicons Halflings";
     font-size: 25px;
+    margin-right: 10px;
     vertical-align: -3px;
-    -webkit-transition-duration: 1.0s;
-    -moz-transition-duration: 1.0s;
-    -o-transition-duration: 1.0s;
-    transition-duration: 1.0s;
+    -webkit-transition-duration: .5s;
+    -moz-transition-duration: .5s;
+    -o-transition-duration: .5s;
+    transition-duration: .5s;
 }
 .panel-carat .template-section-header:not(.collapsed):before {
-    content: "▾";
-    margin-right: 0px;
+    content: "\e082";
     display: inline-block;
 }
 .panel-carat .template-section-header.collapsed:before {
-    content: "▸";
-    margin-right: 0px;
+    content: "\e081";
     display: inline-block;
+    -webkit-transform: rotate(1080deg);
+    -moz-transform: rotate(1080deg);
+    -ms-transform: rotate(1080deg);
+    -o-transform: rotate(1080deg);
 }
 @media (max-width: 767px) {
   .navbar .container-fluid {
@@ -166,8 +170,8 @@ $desktop: 60em;
 }
 @media (min-width: 768px) {
   /* Push "Sessor" and Login/Logout arrow towards center of site navigation */
-  .navbar .container-fluid {
-    padding: 0 64px!important;
+  .navbar-fixed-top {
+    padding: 0 100px!important;
   }
   .modal {
     text-align: center;

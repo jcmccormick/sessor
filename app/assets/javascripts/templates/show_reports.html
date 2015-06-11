@@ -6,15 +6,33 @@
   <a href ng-click="clearForm()"class="btn btn-primary btn-md">Clear</a>
   <a href ng-click="newReport()" class="btn btn-info btn-md pull-right">New</a>
 </div>
-<accordion ng-if="reports">
-  <accordion-group class="panel panel-info" ng-repeat="report in reports | filter: keywords | orderBy: '-id'">
-    <accordion-heading class="panel-heading">
-      <h4>{{report.name}}
-        <i class="glyphicon glyphicon-pencil pull-right"></i></h4>
-    </accordion-heading>
-    <div class="form-group" ng-repeat="(key, val) in report">
-      <label class="control-label">{{key | uppercase}}: {{val}}</label>
+
+<div role="tablist" class="panel-group panel-carat" id="reports-accordion" ng-if="reports">
+  <div class="panel panel-info" ng-repeat="report in reports | filter: keywords | orderBy: '-id'">
+
+
+    <!-- BEGIN SECTION HEADER -->
+    <div class="panel-heading"
+    data-toggle="collapse" 
+    data-target="#collapse{{report.id}}" 
+    data-parent="#reports-accordion" 
+    aria-controls="collapse{{report.id}}">
+      {{report.name}}
     </div>
-    <button class="btn btn-info" ng-click="editReport(report.id)">Edit</button>
-  </accordion>
-</accordion>
+    <!-- END SECTION HEADER -->
+
+
+    <!-- BEGIN SECTION INFO PANEL -->
+    <div role="tabpanel" id="collapse{{report.id}}" class="panel-collapse collapse" aria-labelledby="heading{{report.id}}-tab">
+      <div class="panel-body" bs-popover>
+        <div class="form-group" ng-repeat="(key, val) in report">
+          <label class="control-label">{{key | uppercase}}</label>
+          <p>{{val}}</p>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button class="btn btn-info" ng-click="editReport(report.id)">Edit</button>
+      </div>
+    </div>
+  </div>
+</div>
