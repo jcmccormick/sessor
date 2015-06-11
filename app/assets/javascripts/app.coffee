@@ -60,7 +60,7 @@ sessor.config([ '$routeProvider', 'flashProvider',
       .when('/template/create',
         templateUrl: 'template/create.html'
         controller: 'TemplateController'
-        #resolve: authResolver
+        resolve: authResolver
       )
       .when('/template/:id',
         templateUrl: 'template/view.html'

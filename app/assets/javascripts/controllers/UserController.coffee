@@ -11,4 +11,7 @@ controllers.controller('UserController', ['$auth', '$scope', '$location', 'flash
 				$location.path('/')
 			)
 
+	$scope.handleForgotPass = (email)->
+		console.log email
+		$auth.requestPasswordReset(email).then((res)-> console.log res.data).catch((err)-> console.log err.data)
 ])

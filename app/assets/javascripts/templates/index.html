@@ -28,7 +28,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-lg btn-primary btn-block" ng-click="submitLogin(loginForm)" data-dismiss="modal">Sign in</button>
-          <button type="button" class="btn btn-lg btn-primary btn-block" data-target="#forgotPassModal" data-toggle="modal" data-dismiss="modal">Forgot Password</button>
+          <button type="button" class="btn btn-lg btn-primary btn-block" data-dismiss="modal" ng-bootbox-prompt="Please enter your email..." ng-bootbox-prompt-action="handleForgotPass(result)">Forgot Password</button>
         </div>
       </form>
     </div><!-- /.modal-content -->
@@ -72,14 +72,21 @@
 <div class="modal fade" id="forgotPassModal">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form ng-submit="requestPasswordReset(passwordResetForm)" role="form" ng-init="passwordResetForm = {}">
-        <div class="form-group">
-          <label>email</label>
-          <input type="email" name="email" ng-model="passwordResetForm.email" required="required" class="form-control"/>
+      <form role="form">
+        <div class="modal-header">
+          <h4 class="modal-title">Reset Password</h3>
         </div>
-
-        <button type="submit" class="btn btn-primary btn-lg">Request password reset</button>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Your Email</label>
+            <input type="email" name="email" id="email" ng-model="fpemail" required="required" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary btn-lg" ng-click="handleForgotPass()">Request password reset</button>
+        </div>
       </form>
+
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
