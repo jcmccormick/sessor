@@ -2,10 +2,6 @@ source 'https://rubygems.org'
 ruby '2.1.6'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
-# Use mysql as the database for Active Record
-gem 'mysql2'
-# Use postgresql as the database for Heroku
-gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # gem 'sass-rails', '4.0.2' -- May need older version
@@ -16,6 +12,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -27,11 +24,15 @@ gem "foreman"
 gem 'devise_token_auth', git: 'https://github.com/jasonswett/devise_token_auth.git'
 gem 'omniauth'
 group :production, :staging do
+  # Use postgresql as the database for Heroku
+  gem 'pg'
   gem "rails_12factor"
   gem "rails_stdout_logging"
   gem "rails_serve_static_assets"
 end
 group :development, :test do
+  # Use mysql as the database for Active Record
+  gem 'mysql2'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   # Access an IRB console on exception pages or by using <%= console %> in views

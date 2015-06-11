@@ -10,9 +10,9 @@ sessor = angular.module('sessor', [
   'directives',
   'factories',
   'services',
-  'ui.sortable',
   'angular-flash.service',
-  'angular-flash.flash-alert-directive'
+  'angular-flash.flash-alert-directive',
+  'ui.sortable'
 ])
 
 sessor.config([ '$routeProvider', 'flashProvider',
