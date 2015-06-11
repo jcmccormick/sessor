@@ -8,13 +8,11 @@
     "angular-flash": "latest",
     "angular-animate": "latest",
     "angular-cookie": "latest",
+    "angular-ui-sortable": "latest",
     "ng-token-auth": "latest",
     "ngstorage": "latest",
-    "angular-ui/ui-sortable": "latest",
     "bootstrap-sass-official": "latest",
     "bootbox": "latest",
     "ngBootbox": "latest"
-  },
-  "resolutions": {
   }
 }

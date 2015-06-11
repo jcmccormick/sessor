@@ -6,13 +6,13 @@ sessor = angular.module('sessor', [
   'ng-token-auth',
   'ngBootbox',
   'ipCookie',
+  'ui.sortable',
+  'angular-flash.service',
+  'angular-flash.flash-alert-directive',
   'controllers',
   'directives',
   'factories',
   'services',
-  'angular-flash.service',
-  'angular-flash.flash-alert-directive',
-  'ui.sortable'
 ])
 
 sessor.config([ '$routeProvider', 'flashProvider',
