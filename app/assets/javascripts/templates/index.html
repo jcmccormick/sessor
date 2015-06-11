@@ -1,12 +1,13 @@
-<h1 class="page-title">Home</h1>
+<h1 class="page-header">Home</h1>
 
-<div class="jumbotron">
+<div class="jumbotron" ng-show="!user.signedIn">
   <h1>Welcome!</h1>
   <p class="lead">New around here?</p>
   <p><a href class="btn btn-primary" data-toggle="modal" data-target="#userRegistrationModal">Register</a></p>
   <p class="lead">Or</p>
   <a href class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Sign In</a>
 </div>
+
 
 <!-- TOP LEVEL MODALS -->
 <div class="modal fade" id="loginModal">

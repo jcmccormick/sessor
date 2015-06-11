@@ -48,15 +48,58 @@ services.service('TemplateService', ['$http',
     columns: [
       {
         id: 1
-        width: 'col-md-12'
+        width: 'col-xs-12 col-sm-12 col-md-12'
       }
       {
         id: 2
-        width: 'col-md-6'
+        width: 'col-xs-6 col-sm-6 col-md-6'
       }
       {
         id: 3
-        width: 'col-md-4'
+        width: 'col-xs-4 col-sm-4 col-md-4'
+      }
+    ]
+    sections: [
+      {
+        title: 'Basic Personal Information',
+        columns: [
+          {
+            id: 1,
+            width: 'col-md-12 col-sm-12 col-xs-12',
+            fields: [
+              {
+                id: 1,
+                section: 1,
+                column: 1,
+                title: 'First Name',
+                type: 'textfield',
+                required: false,
+                disabled: false,
+                glyphicon: 'glyphicon-font'
+              },
+              {
+                id: 2,
+                section: 1,
+                column: 1,
+                title: 'Last Name',
+                type: 'textfield',
+                required: false,
+                disabled: false,
+                glyphicon: 'glyphicon-font'
+              },
+              {
+                id: 3,
+                section: 1,
+                column: 1,
+                title: 'E-mail',
+                type: 'email',
+                required: false,
+                disabled: false,
+                glyphicon: 'glyphicon-envelope'
+              }
+            ]
+          }
+        ]
       }
     ]
     form: (id) ->

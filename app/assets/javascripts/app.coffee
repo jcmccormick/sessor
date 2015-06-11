@@ -10,6 +10,7 @@ sessor = angular.module('sessor', [
   'directives',
   'factories',
   'services',
+  'ui.sortable',
   'angular-flash.service',
   'angular-flash.flash-alert-directive'
 ])
@@ -22,8 +23,8 @@ sessor.config([ '$routeProvider', 'flashProvider',
       flashProvider.successClassnames.push("alert-success")
 
       authResolver = 'auth': ['$auth', ($auth)->
-          return $auth.validateUser()
-        ]
+        return $auth.validateUser()
+      ]
 
       $routeProvider
       .when('/',
@@ -75,16 +76,15 @@ factories   = angular.module('factories',[])
 directives  = angular.module('directives',[])
 services    = angular.module('services',[])
 
-sessor.run (['$rootScope','$location',
-  ($rootScope, $location) ->
+sessor.run (['$rootScope','$location', 'flash',
+  ($rootScope, $location, flash) ->
     $rootScope.$on('auth:login-success', ->
-      $location.path '/desktop/'
+      $location.path('/desktop/')
       return
     )
     $rootScope.$on('auth:invalid', ->
       flash.error = "Looks like there was an error validating your credentials. Please try logging in again or contact support if problems continue."
-      $location.path '/'
+      $location.path('/')
       return
     )
-    return
 ])

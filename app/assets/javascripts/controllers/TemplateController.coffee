@@ -16,18 +16,26 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 
 	# add new section options
 	$scope.addSection = {}
+	$scope.addSection.prototype = {}
 	$scope.addSection.lastAddedID = 0
 	$scope.addSection.columns = []
 	$scope.addSection.columns.lastAddedID = 0
+	$scope.addSection.types = TemplateService.sections
 
 	# add new column options
 	$scope.addColumn = []
 	$scope.addColumn.lastAddedID = 0
+	$scope.addColumn.types = TemplateService.columns
 
 	# add new field options
 	$scope.addField = {}
 	$scope.addField.lastAddedID = 0
 	$scope.addField.types = TemplateService.fields
+	
+	# preview form
+	$scope.previewUpdate = ->
+		angular.copy $scope.form, $scope.previewForm
+		return
 
 	#add section button
 	$scope.addNewSection = (cols)->
@@ -40,8 +48,8 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 				'fields': []
 			$scope.addSection.columns.push newColumn
 			i++
-		$scope.addSection.lastAddedID++
 		title = if $scope.addSection.title? then $scope.addSection.title else "Untitled Section"
+		$scope.addSection.lastAddedID++
 		newSection = 
 			'id': $scope.addSection.lastAddedID
 			'title': title
@@ -50,6 +58,15 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 		$scope.addSection.title = undefined
 		$scope.addSection.columns = []
 		$scope.addSection.columns.lastAddedID = 0
+		return
+
+	# add new option to the field
+	$scope.addPremadeSection = (sec) ->
+		$scope.addSection.lastAddedID++
+		angular.copy sec, $scope.addSection.prototype
+		$scope.addSection.prototype.id = $scope.addSection.lastAddedID
+		$scope.form.sections.push $scope.addSection.prototype
+		$scope.addSection.prototype = {}
 		return
 
 	# delete section button
@@ -128,11 +145,6 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 			i++
 		return
 
-	# preview form
-
-	$scope.previewUpdate = ->
-		angular.copy $scope.form, $scope.previewForm
-		return
 
 	# deletes all the fields
 

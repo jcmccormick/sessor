@@ -54,7 +54,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile',
       <label class="control-label">{{field.title}}
         <span class="required-error" ng-show="field.required && !field.value">*</span>
       </label>
-      <input type="email" class="form-control" placeholder="Email" value="{{field.value}}" ng-model="field.value" ng-required="field.required" ng-disabled="field.disabled"/>
+      <input type="email" class="form-control" placeholder="Email" ng-model="field.value" ng-required="field.required" ng-disabled="field.disabled"/>
     </div>'
 
     checkbox = '

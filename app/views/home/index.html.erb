@@ -1,11 +1,11 @@
 
 <div flash-alert="error" active-class="in" class="alert fade">
-    <strong class="alert-heading">Whoops...</strong>
+    <h4 class="alert-heading">Whoops...</h4>
     <span class="alert-message">{{flash.message}}</span>
 </div>
 
 <div flash-alert="success" active-class="in" class="alert fade">
-    <strong class="alert-heading">Good news!</strong>
+    <h4 class="alert-heading">Good news!</h4>
     <span class="alert-message">{{flash.message}}</span>
 </div>
 
@@ -22,6 +22,7 @@
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sessor</a>
           <ul class="nav navbar-nav main-dropdown-nav dropdown-menu" role="menu">
+            <li><a href ng-click="goToHome()">Home</a></li>
             <li><a href ng-click="goToDesktop()">Desktop</a></li>
             <li><a href ng-click="goToReports()">Reports</a></li>
             <li><a href ng-click="goToTemplates()">Templates</a></li>
