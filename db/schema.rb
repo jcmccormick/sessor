@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 20150609235552) do
     t.string   "location",     limit: 255
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.string   "participants", limit: 255
   end
 
   create_table "users", force: :cascade do |t|

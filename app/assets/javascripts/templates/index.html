@@ -72,19 +72,13 @@
 <div class="modal fade" id="forgotPassModal">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form class="form-forgotpass" role="form">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Enter your Email</h4>
+      <form ng-submit="requestPasswordReset(passwordResetForm)" role="form" ng-init="passwordResetForm = {}">
+        <div class="form-group">
+          <label>email</label>
+          <input type="email" name="email" ng-model="passwordResetForm.email" required="required" class="form-control"/>
         </div>
-        <div class="modal-body testdiv">
-          <label for="inputFpemail" class="sr-only">Email address</label>
-          <input type="email" class="form-control" name="fpemail" id="fpemail" ng-model="fpemail" required="required" placeholder="Email">
-        </div>
-        <div class="modal-footer">
-          <p>If your email exists in our system, you'll receive a password reset link momentarily.</p>
-          <a class="btn btn-lg btn-primary btn-block" ng-click="handleForgotPass()">Forgot Password</a>
-        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg">Request password reset</button>
       </form>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
