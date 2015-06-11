@@ -74,7 +74,7 @@
                 <div class="panel-body">
                   <label class="control-label">Section Title</label>
                   <input type="text" class="form-control" ng-model="addSection.title" value="{{section.title}}">
-                  <div class="btn btn-default h6" ng-repeat="column in addColumn.types" data-dismiss="modal" ng-click="addNewSection(column.id)">
+                  <div class="btn btn-default h6" ng-repeat="column in addColumn.types" data-dismiss="modal" ng-click="addNewSection(column)">
                     <h4>{{column.id}} <ng-pluralize count="column.id" when="{'one': 'column', 'other': 'columns'}"></ng-pluralize></h4>
                     <div class="btn-group btn-group-justified">
                       <div class="{{column.width}}" aria-label="Select from one to three columns" ng-repeat="but in addColumn.types|limitTo:column.id">Column {{but.id}}</div>

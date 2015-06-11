@@ -38,13 +38,13 @@ controllers.controller('TemplateController', [ '$scope', '$resource', 'TemplateS
 		return
 
 	#add section button
-	$scope.addNewSection = (cols)->
+	$scope.addNewSection = (column)->
 		i = 0
-		while i < cols
+		while i < column.id
 			$scope.addSection.columns.lastAddedID++
 			newColumn = 
 				'id': $scope.addSection.columns.lastAddedID
-				'width': 'col-md-' + (12/cols) + ' col-sm-' + (12/cols) + ' col-xs-' + (12/cols)
+				'width': column.width
 				'fields': []
 			$scope.addSection.columns.push newColumn
 			i++
