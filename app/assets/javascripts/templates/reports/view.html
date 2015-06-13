@@ -5,11 +5,5 @@
 <div class="col-md-9 text-right">
   <a href="#/reports/{{report.id}}/edit" class="btn btn-info"> Edit </a>
 </div>
-<div class="panel panel-info">
-  <header class="panel-heading"><h1>{{report.name}}</h1></header>
-  <div class="panel-body">
-    <p><b>Participants:</b> {{report.participants}}</p>
-    <p><b>Submission:</b> {{report.submission}}</p>
-    <p><b>Response:</b> {{report.response}}</p>
-  </div>
-</div>
+
+<template-form-directive form="report.sections"></template-form-directive>

@@ -1,6 +1,12 @@
 controllers = angular.module('controllers')
 controllers.controller('ViewTemplateController', ['$scope', '$routeParams', 'TemplateFactory',
 ($scope, $routeParams, TemplateFactory)->
-	$scope.template = TemplateFactory.get({id: $routeParams.templateId})
-	console.log $scope.template.sections
+	TemplateFactory.get({id: $routeParams.templateId}).$promise.then((res)->
+		$scope.template = res
+		jsonData = JSON.parse($scope.template.sections)
+		$scope.template.sections = $.map(jsonData, (value, index)->
+			value.key = index
+			return [value]
+		)
+	)
 ])

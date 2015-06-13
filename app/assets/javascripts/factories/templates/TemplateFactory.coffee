@@ -7,6 +7,7 @@ factories.factory("TemplateFactory", ['$resource',
 		isArray: true
 	get:
 		cache: true
+		isArray: false
 	})
 
 ])

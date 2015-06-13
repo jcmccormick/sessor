@@ -3,7 +3,14 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 ($rootScope, $scope, $resource, $routeParams, $location, TemplateService, TemplateFactory)->
 
 	if $routeParams.templateId
-		$scope.template = TemplateFactory.get({id: $routeParams.templateId})
+		TemplateFactory.get({id: $routeParams.templateId}).$promise.then((res)->
+			$scope.template = res
+			jsonData = JSON.parse($scope.template.sections)
+			$scope.template.sections = $.map(jsonData, (value, index)->
+				value.key = index
+				return [value]
+			)
+		)
 	else
 		$scope.template = new TemplateFactory()
 		$scope.template.name = ''
@@ -11,27 +18,28 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 		$scope.template.sections.columns = []
 		$scope.template.sections.columns.fields = []
 
-		# add new section options
-		$scope.addSection = {}
-		$scope.addSection.prototype = {}
-		$scope.addSection.lastAddedID = 0
-		$scope.addSection.columns = []
-		$scope.addSection.columns.lastAddedID = 0
-		$scope.addSection.types = TemplateService.sections
+	# add new section options
+	$scope.addSection = {}
+	$scope.addSection.prototype = {}
+	$scope.addSection.lastAddedID = 0
+	$scope.addSection.columns = []
+	$scope.addSection.columns.lastAddedID = 0
+	$scope.addSection.types = TemplateService.sections
 
-		# add new column options
-		$scope.addColumn = []
-		$scope.addColumn.lastAddedID = 0
-		$scope.addColumn.types = TemplateService.columns
+	# add new column options
+	$scope.addColumn = []
+	$scope.addColumn.lastAddedID = 0
+	$scope.addColumn.types = TemplateService.columns
 
-		# add new field options
-		$scope.addField = {}
-		$scope.addField.lastAddedID = 0
-		$scope.addField.types = TemplateService.fields
+	# add new field options
+	$scope.addField = {}
+	$scope.addField.lastAddedID = 0
+	$scope.addField.types = TemplateService.fields
 	
 	# preview template
 	$scope.previewTemplate = {}
 	$scope.previewUpdate = ->
+		console.log $scope.template
 		angular.copy $scope.template, $scope.previewTemplate
 		return
 
@@ -155,12 +163,7 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 
 	$scope.saveTemplate  = ->
 		i = 0
-		JSONsections = ''
-		while i < $scope.template.sections.length
-			JSONsections += JSON.stringify($scope.template.sections[i])
-			i++
-		$scope.template.sections = JSONsections
-		console.log $scope.template.sections
+		$scope.template.sections = JSON.stringify($scope.template.sections)
 		if $scope.template.id
 			$scope.template.$update({id: $scope.template.id}, (res)->
 				$location.path("/templates/#{$scope.template.id}")
@@ -177,4 +180,5 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 		.then((res)->
 			$rootScope.$broadcast('cleartemplates')
 			$location.path("/templates"))
+
 ])
