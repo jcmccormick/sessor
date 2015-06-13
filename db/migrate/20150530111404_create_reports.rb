@@ -6,6 +6,8 @@ class CreateReports < ActiveRecord::Migration
       t.text :response
       t.boolean :active
       t.string :location
+      t.text :participants
+
 
       t.timestamps null: false
     end

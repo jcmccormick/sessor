@@ -1,0 +1,13 @@
+<template-form-directive form="template"></template-form-directive>
+
+<hr>
+
+<div class="text-center">
+	<a class="btn btn-small btn-primary" ng-show="!showJson" ng-click="showJson = true">Show template json object</a>
+	<a class="btn btn-small btn-inverse" ng-show="showJson" ng-click="showJson = false">Hide template json object</a><br><br>
+</div>
+
+<div ng-show="showJson">
+	<h4>Form object:</h4>
+	<pre>{{ template | json }}</pre>
+</div>

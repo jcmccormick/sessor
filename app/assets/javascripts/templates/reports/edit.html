@@ -1,0 +1,47 @@
+<h1 class="page-header">Edit Report</h1>
+
+<p>
+  <button class="btn btn-default" ng-click="goToReports()">&larr; Reports</button>
+  <button class="btn btn-primary" ng-click="saveReport()"> Save </button>
+</p>
+
+<form class="form-group" role="form" class="edit-user">
+
+  <div class="form-group">
+    <label for="participants" class="control-label">Participants</label>
+      <input type="disabled" name="participants" class="form-control" ng-model="report.participants">
+  </div>
+
+  <div class="form-group" ng-class="{'has-warning has-feedback':errors.name}">
+    <label for="name" class="control-label">Name</label>
+      <input type="text" name="name" class="form-control" placeholder="Create a descriptive title..." ng-model="report.name">
+  </div>
+
+  <div class="form-group" ng-class="{'has-warning has-feedback':errors.name}">
+    <label for="submission" class="control-label">Submission</label>
+      <textarea name="submission" class="form-control" ng-model='report.submission' placeholder="Enter your comments...">
+      </textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="response" class="control-label">Response</label>
+      <textarea name="response" class="form-control" ng-model='report.response' placeholder="Enter a response...">
+      </textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="active" class="control-label">Active</label>
+      <input type="checkbox" name="active" class="form-control" ng-model='report.active'>
+  </div>
+
+  <div class="form-group">
+    <label for="location" class="control-label">Location</label>
+    <select name="location" class="form-control" ng-model='report.location'>
+      <option name="home" value="home">Home</option>
+      <option name="work" value="work">Work</option>
+    </select>
+  </div>
+
+  <button ng-click="deleteReport()" class="btn btn-danger"> Delete </button>
+
+</form>

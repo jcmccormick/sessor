@@ -2,7 +2,7 @@ sessor = angular.module('sessor', [
   'templates',
   'ngRoute',
   'ngResource',
-  'ngStorage',
+  'LocalStorageModule',
   'ng-token-auth',
   'ngBootbox',
   'ipCookie',
@@ -12,11 +12,13 @@ sessor = angular.module('sessor', [
   'controllers',
   'directives',
   'factories',
-  'services',
+  'services'
 ])
 
-sessor.config([ '$routeProvider', 'flashProvider',
-  ($routeProvider, flashProvider)->
+sessor.config([ '$routeProvider', 'flashProvider', 'localStorageServiceProvider',
+  ($routeProvider, flashProvider, localStorageServiceProvider)->
+      localStorageServiceProvider
+        .setPrefix('sesso_')
       flashProvider.errorClassnames.push("alert-danger")
       flashProvider.warnClassnames.push("alert-warning")
       flashProvider.infoClassnames.push("alert-info")
@@ -28,47 +30,57 @@ sessor.config([ '$routeProvider', 'flashProvider',
 
       $routeProvider
       .when('/',
-        templateUrl: "index.html"
+        templateUrl: "main/index.html"
       )
       .when('/desktop/',
-        templateUrl: "desktop.html"
+        templateUrl: "main/desktop.html"
         resolve: authResolver
-      )
+      ) #                                       REPORTS ROUTES #
       .when('/reports',
-        templateUrl: "show_reports.html"
-        controller: 'ReportController'
+        templateUrl: "reports/show.html"
+        controller: 'ShowReportsController'
         resolve: authResolver
       )
       .when('/reports/new/',
-        templateUrl: "edit_report.html"
-        controller: 'ReportController'
+        templateUrl: "reports/edit.html"
+        controller: 'EditReportController'
         resolve: authResolver
       )
       .when('/reports/:reportId',
-        templateUrl: "show_report.html"
-        controller: 'ReportController'
-        resolve: authResolver
-      )
-      .when('/reports/:reportId/edit',
-        templateUrl: "edit_report.html"
-        controller: 'ReportController'
-        resolve: authResolver
-      )
-      .when('/template',
-        templateUrl: 'template/main.html'
-        resolve: authResolver
-      )
-      .when('/template/create',
-        templateUrl: 'template/create.html'
-        controller: 'TemplateController'
-        resolve: authResolver
-      )
-      .when('/template/:id',
-        templateUrl: 'template/view.html'
+        templateUrl: "reports/view.html"
         controller: 'ViewReportController'
         resolve: authResolver
       )
+      .when('/reports/:reportId/edit',
+        templateUrl: "reports/edit.html"
+        controller: 'EditReportController'
+        resolve: authResolver
+      ) #                                       TEMPLATES ROUTES #
+      .when('/templates',
+        templateUrl: "templates/show.html"
+        controller: 'ShowTemplatesController'
+        resolve: authResolver
+      )
+      .when('/templates/new',
+        templateUrl: "templates/edit.html"
+        controller: 'EditTemplateController'
+        resolve: authResolver
+      )
+      .when('/templates/:templateId',
+        templateUrl: "templates/view.html"
+        controller: 'ViewTemplateController'
+        resolve: authResolver
+      )
+      .when('/templates/:templateId/edit',
+        templateUrl: "templates/edit.html"
+        controller: 'EditTemplateController'
+        resolve: authResolver
+      )
       .otherwise('/')
+])
+
+sessor.factory("sessorCache", ['$cacheFactory', ($cacheFactory)-> 
+  return $cacheFactory('reports')
 ])
 
 controllers = angular.module('controllers',[])
@@ -76,8 +88,8 @@ factories   = angular.module('factories',[])
 directives  = angular.module('directives',[])
 services    = angular.module('services',[])
 
-sessor.run (['$rootScope','$location', 'flash',
-  ($rootScope, $location, flash) ->
+sessor.run (['$rootScope','$location', '$cacheFactory', '$http', 'flash',
+  ($rootScope, $location, $cacheFactory, $http, flash) ->
     $rootScope.$on('auth:login-success', ->
       $location.path('/desktop/')
       return
@@ -87,4 +99,14 @@ sessor.run (['$rootScope','$location', 'flash',
       $location.path('/')
       return
     )
+
+    $httpDefaultCache = $cacheFactory.get('$http')
+    angular.forEach [
+      'cleartemplates'
+      'clearreports'
+    ], (value) ->
+      $rootScope.$on value, (event) ->
+        $httpDefaultCache.removeAll()
+        return
+      return
 ])

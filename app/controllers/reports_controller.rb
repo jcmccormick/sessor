@@ -5,7 +5,11 @@ class ReportsController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def index
-  	@reports = Report.all
+  	@reports = if params[:id]
+                 Report.where('id ilike ?',"%#{params[:id]}%")
+               else
+                 Report.all
+               end
   end
 
   def show
@@ -32,6 +36,6 @@ class ReportsController < ApplicationController
 
   private
     def allowed_params
-      params.require(:report).permit(:name, :submission, :response, :active, :location)
+      params.require(:report).permit(:name, :submission, :response, :active, :location, :participants)
     end
 end

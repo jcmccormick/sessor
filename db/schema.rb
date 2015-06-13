@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150609235552) do
+ActiveRecord::Schema.define(version: 20150613011408) do
 
   create_table "reports", force: :cascade do |t|
     t.string   "name",         limit: 255
@@ -21,6 +21,22 @@ ActiveRecord::Schema.define(version: 20150609235552) do
     t.string   "location",     limit: 255
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.string   "participants", limit: 255
+    t.integer  "template",     limit: 4
+  end
+
+  create_table "templates", force: :cascade do |t|
+    t.string   "name",          limit: 255
+    t.text     "sections",      limit: 65535
+    t.string   "creator_uid",   limit: 255
+    t.boolean  "private_world", limit: 1
+    t.boolean  "private_group", limit: 1
+    t.integer  "group_id",      limit: 4
+    t.boolean  "group_edit",    limit: 1
+    t.text     "group_editors", limit: 65535
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "draft",         limit: 1
   end
 
   create_table "users", force: :cascade do |t|

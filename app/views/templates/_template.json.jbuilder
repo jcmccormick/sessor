@@ -1,0 +1,1 @@
+json.(template, :id, :name, :sections, :creator_uid, :private_world, :private_group, :group_id, :group_edit, :group_editors)

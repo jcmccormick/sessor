@@ -1,0 +1,44 @@
+
+<div class="jumbotron">
+	<h1>Create a reporting template fast!</h1>
+	<p class="lead">Sessor offers a Template Builder tool that lets you create the online forms that are core to your reporting needs. Build fast and smart with our interactive template designer!</p>
+	<a class="btn btn-large btn-success" href="#/templates/new">Start Building!</a>
+</div>
+
+<h1 class="page-header">Templates</h1>
+
+<div class="form-group">
+  <input ng-model="keywords" name="keywords" type="text" autofocus class="form-control" placeholder="Search by ID, Title, Participants, and more...">
+</div>
+<div class="form-group">
+  <button ng-click="keywords = ''"class="btn btn-primary btn-md">Clear</button>
+</div>
+
+<div role="tablist" class="panel-group panel-carat" id="templates-accordion" ng-if="templates">
+  <div class="panel panel-info" ng-repeat="template in templates | filter: keywords | orderBy: '-id'">
+
+
+    <!-- BEGIN SECTION HEADER -->
+    <div class="panel-heading"
+    data-toggle="collapse" 
+    data-target="#collapse{{template.id}}" 
+    data-parent="#templates-accordion" 
+    aria-controls="collapse{{template.id}}">
+      {{template.name}}
+    </div>
+    <!-- END SECTION HEADER -->
+
+
+    <!-- BEGIN SECTION INFO PANEL -->
+    <div role="tabpanel" id="collapse{{template.id}}" class="panel-collapse collapse" aria-labelledby="heading{{template.id}}-tab">
+      <div class="panel-body" bs-popover>
+        <div class="form-group">
+          <template-form-directive form="template"></template-form-directive>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <a href="#/templates/{{template.id}}/edit" class="btn btn-info">Edit</a>
+      </div>
+    </div>
+  </div>
+</div>
