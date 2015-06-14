@@ -35,6 +35,7 @@ sessor.config([ '$routeProvider', 'flashProvider', 'localStorageServiceProvider'
       )
       .when('/desktop/',
         templateUrl: "main/desktop.html"
+        resolve: authResolver
       ) #                                       REPORTS ROUTES #
       .when('/reports',
         templateUrl: "reports/show.html"
