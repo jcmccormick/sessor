@@ -1,7 +1,7 @@
 services = angular.module('services')
 services.service('StatisticsService', [->
 	{
-	getCountOfIn: (ent, arr)->
+	getCountOfIn: (ent, arr, callback)->
 		this.ent = []
 		x = 0
 		while x < arr.length
@@ -23,8 +23,8 @@ services.service('StatisticsService', [->
 					y++
 			x++
 		this.ent = this.countD(this.ent)
-		return this.ent
-		
+		callback(this.ent)
+
 	countD: (arr)->
 		a = []
 		b = []

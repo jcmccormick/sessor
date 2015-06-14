@@ -2,6 +2,24 @@ controllers = angular.module('controllers')
 controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$resource', '$routeParams', '$location', 'TemplateService', 'TemplateFactory'
 ($rootScope, $scope, $resource, $routeParams, $location, TemplateService, TemplateFactory)->
 
+	# add new section options
+	$scope.addSection = {}
+	$scope.addSection.lastAddedID = 0
+	$scope.addSection.prototype = {}
+	$scope.addSection.columns = {}
+	$scope.addSection.columns.lastAddedID = 0
+	$scope.addSection.types = TemplateService.sections
+
+	# add new column options
+	$scope.addColumn = {}
+	$scope.addColumn.lastAddedID = 0
+	$scope.addColumn.types = TemplateService.columns
+
+	# add new field options
+	$scope.addField = {}
+	$scope.addField.lastAddedID = 0
+	$scope.addField.types = TemplateService.fields
+
 	if $routeParams.templateId
 		TemplateFactory.get({id: $routeParams.templateId}).$promise.then((res)->
 			$scope.template = res
@@ -10,6 +28,7 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 				value.key = index
 				return [value]
 			)
+			$scope.addSection.lastAddedID = $scope.template.sections.length
 		)
 	else
 		$scope.template = new TemplateFactory()
@@ -18,23 +37,6 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 		$scope.template.sections.columns = []
 		$scope.template.sections.columns.fields = []
 
-	# add new section options
-	$scope.addSection = {}
-	$scope.addSection.prototype = {}
-	$scope.addSection.lastAddedID = 0
-	$scope.addSection.columns = []
-	$scope.addSection.columns.lastAddedID = 0
-	$scope.addSection.types = TemplateService.sections
-
-	# add new column options
-	$scope.addColumn = []
-	$scope.addColumn.lastAddedID = 0
-	$scope.addColumn.types = TemplateService.columns
-
-	# add new field options
-	$scope.addField = {}
-	$scope.addField.lastAddedID = 0
-	$scope.addField.types = TemplateService.fields
 	
 	# preview template
 	$scope.previewTemplate = {}

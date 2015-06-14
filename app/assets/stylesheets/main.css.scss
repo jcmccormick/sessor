@@ -81,15 +81,11 @@ button.close {
   margin-right: 3px;
 }
 
-.jumbotron {
-  margin:0 auto!important;
-  background:none;
-}
-.jumbotron p .glyphicon {
+.custom-jumbotron p .glyphicon {
   font-size:72px!important;
 }
 .jumbotron h1, .jumbotron .h1 {
-  font-size: 32px;
+  font-size: 40px !important;
   @include respond(tablet) {
     font-size: 72px;
   }
@@ -102,8 +98,9 @@ button.close {
   background-color: #31b0d5 !important;
   border-color: #269abc !important;
 }
-.desktop-buttons .jumbotron {
-  width: 230px;
+.jumbotron-warning {
+  background-color: #f0ad4e !important;
+  border-color: #eea236 !important;
 }
 
 .nav > li > a:not(.open) {

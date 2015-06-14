@@ -5,7 +5,9 @@ controllers.controller("ReportsStatisticsController",  ['$scope', 'ReportsFactor
 		$scope.dataProps = []
 		$scope.dataProps.names = TemplateService.supportedProperties
 		$scope.showData = ->
-			$scope.count = StatisticsService.getCountOfIn($scope.selectedData, res)
+			StatisticsService.getCountOfIn($scope.selectedData, res, (statRes)->
+				$scope.count = statRes
+			)
 			$scope.labels = $scope.count[0]
 			$scope.data = $scope.count[1]
 			console.log $scope.dataProps
