@@ -64,6 +64,7 @@ $desktop: 60em;
   }
  }
 }
+
 /* Site Maintenance settings */
 .alert {
   position: absolute;
@@ -140,6 +141,9 @@ $desktop: 60em;
   @include respond(mobile) {
     padding: 6px 12px;
   }
+}
+.report-edit-template-select {
+  padding: 8px 12px!important;
 }
 
 .glyphicon-pencil {

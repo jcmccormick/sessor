@@ -7,6 +7,7 @@ factories.factory("ReportFactory", ['$resource',
 		isArray: true
 	get:
 		cache: true
+		isArray: false
 	})
 
 ])

@@ -88,6 +88,7 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 
 	# create new field button click
 	$scope.addNewField = (type, sec, col, title)->
+		$scope.location = $scope.template.sections[sec-1].columns[col-1]
 		title = if title? then title else "Untitled "+type
 		#collect glyphicon class of scoped type
 		i = 0
@@ -96,6 +97,8 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 				glyphicon = $scope.addField.types[i].glyphicon
 				break
 			i++
+		i = 0
+		$scope.addField.lastAddedID = $scope.location.fields.length
 		$scope.addField.lastAddedID++
 		newField = 
 			'id': $scope.addField.lastAddedID
@@ -161,17 +164,20 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 		$scope.addField.lastAddedID = 0
 		return
 
-	$scope.saveTemplate  = ->
-		i = 0
-		$scope.template.sections = JSON.stringify($scope.template.sections)
-		if $scope.template.id
-			$scope.template.$update({id: $scope.template.id}, (res)->
-				$location.path("/templates/#{$scope.template.id}")
+	$scope.saveTemplate = ->
+		tempCopy = new TemplateFactory()
+		console.log $scope.template
+		angular.copy $scope.template, tempCopy
+		console.log tempCopy
+		tempCopy.sections = JSON.stringify(tempCopy.sections)
+		if tempCopy.id
+			tempCopy.$update({id: tempCopy.id}, (res)->
+				$location.path("/templates/#{tempCopy.id}")
 				$rootScope.$broadcast('cleartemplates')
 			)
 		else
-			$scope.template.$save({}, (res)->
-				$location.path("/templates/#{$scope.template.id}")
+			tempCopy.$save({}, (res)->
+				$location.path("/templates/#{tempCopy.id}")
 				$rootScope.$broadcast('cleartemplates')
 			).catch((err)-> console.log err.data)
 

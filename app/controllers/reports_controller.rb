@@ -36,6 +36,6 @@ class ReportsController < ApplicationController
 
   private
     def allowed_params
-      params.require(:report).permit(:name, :submission, :response, :active, :location, :participants)
+      params.require(:report).permit(:name, :submission, :response, :active, :location, :participants, :template)
     end
 end
