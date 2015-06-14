@@ -3,6 +3,27 @@ services.service('TemplateService', ['$http',
 ($http) ->
   formsJsonPath = ''
   {
+    supportedProperties: [
+      'id'
+      'section'
+      'column'
+      'title'
+      'type'
+      'required'
+      'disabled'
+      'glyphicon'
+    ]
+    supportedFields: [
+      'textfield'
+      'textarea'
+      'email'
+      'checkbox'
+      'date'
+      'dropdown'
+      'hidden'
+      'password'
+      'radio'
+    ]
     fields: [
       {
         name: 'textfield'

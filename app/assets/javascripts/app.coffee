@@ -7,6 +7,7 @@ sessor = angular.module('sessor', [
   'ngBootbox',
   'ipCookie',
   'ui.sortable',
+  'chart.js',
   'angular-flash.service',
   'angular-flash.flash-alert-directive',
   'controllers',

@@ -97,7 +97,6 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 				glyphicon = $scope.addField.types[i].glyphicon
 				break
 			i++
-		i = 0
 		$scope.addField.lastAddedID = $scope.location.fields.length
 		$scope.addField.lastAddedID++
 		newField = 

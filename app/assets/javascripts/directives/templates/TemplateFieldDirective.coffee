@@ -1,19 +1,9 @@
 directives = angular.module('directives')
-directives.directive('templateFieldDirective', ['$http', '$compile',
-($http, $compile) ->
+directives.directive('templateFieldDirective', ['$http', '$compile', 'TemplateService',
+($http, $compile, TemplateService) ->
   getTemplate = (field) ->
     type = field.type
-    supported_fields = [
-      'textfield'
-      'textarea'
-      'email'
-      'checkbox'
-      'date'
-      'dropdown'
-      'hidden'
-      'password'
-      'radio'
-    ]
+    supportedFields = TemplateService.supportedFields
 
     __indexOf = [].indexOf || (item)->
       i = 0
@@ -23,7 +13,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile',
           return i
       return -1
 
-    if __indexOf.call(supported_fields, type) >= 0
+    if __indexOf.call(supportedFields, type) >= 0
       return type
     return
 

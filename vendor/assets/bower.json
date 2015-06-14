@@ -10,6 +10,7 @@
     "angular-cookie": "latest",
     "angular-ui-sortable": "latest",
     "angular-local-storage": "latest",
+    "angular-chart.js": "latest",
     "ng-token-auth": "latest",
     "bootstrap-sass-official": "latest",
     "bootbox": "latest",

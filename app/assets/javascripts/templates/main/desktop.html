@@ -1,25 +1,9 @@
 <h1 class="page-header">Desktop</h1>
-
-<div class="row placeholders">
+<div class="row placeholders" ng-controller="ReportsStatisticsController">
+  <button class="btn btn-primary" ng-click="showData()">Log</button>
+  <select ng-model="selectedData" ng-options="prop for prop in dataProps.names"></select>
   <div class="col-xs-6 col-sm-3 placeholder">
-    picture
-    <h4>Label</h4>
-    <span class="text-muted">Something else</span>
-  </div>
-  <div class="col-xs-6 col-sm-3 placeholder">
-    picture
-    <h4>Label</h4>
-    <span class="text-muted">Something else</span>
-  </div>
-  <div class="col-xs-6 col-sm-3 placeholder">
-    picture
-    <h4>Label</h4>
-    <span class="text-muted">Something else</span>
-  </div>
-  <div class="col-xs-6 col-sm-3 placeholder">
-    picture
-    <h4>Label</h4>
-    <span class="text-muted">Something else</span>
+    <canvas id="polar-area" class="chart chart-pie" data="data" labels="labels"></canvas>
   </div>
 </div>
 
