@@ -1,9 +1,10 @@
 <h1 class="page-header">Desktop</h1>
-<div class="row placeholders" ng-controller="ReportsStatisticsController">
-  <button class="btn btn-primary" ng-click="showData()">Log</button>
-  <select ng-model="selectedData" ng-options="prop for prop in dataProps.names"></select>
-  <div class="col-xs-6 col-sm-3 placeholder">
-    <canvas id="polar-area" class="chart chart-pie" data="data" labels="labels"></canvas>
+<div class="row desktop-buttons text-center">
+  <div class="col-xs-6">
+    <a href="#/template/create" class="btn jumbotron jumbotron-info"><p class="lead"><i class="glyphicon glyphicon-list-alt"></i></p>Create Template</a>
+  </div>
+  <div class="col-xs-6">
+    <a href="#/report/create" class="btn jumbotron jumbotron-success"><p class="lead"><i class="glyphicon glyphicon-file"></i></p>Create Report</a>
   </div>
 </div>
 

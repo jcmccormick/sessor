@@ -4,7 +4,7 @@ controllers.controller('UserRegistrationController', ['$scope', '$auth', '$locat
 		$scope.error = reason.errors[0]
 		return
 	)
-	allowed_emails= ['sean.d.potts@gmail.com', 'benmccormickmedia@gmail.com', 'joe.c.mccormick@gmail.com', 'knightrage@gmail.com']
+	allowed_emails= ['sean.d.potts@gmail.com', 'benmccormickmedia@gmail.com', 'joe.c.mccormick@gmail.com', 'knightrage@gmail.com', 'gardnecl@gmail.com', 'mccormickcharlie@hotmail.com']
 	$scope.handleRegBtnClick = ->
 		i = 0
 		while i < allowed_emails.length
@@ -21,6 +21,10 @@ controllers.controller('UserRegistrationController', ['$scope', '$auth', '$locat
 					$auth.submitLogin({
 						email: $scope.registrationForm.email,
 						password: $scope.registrationForm.password
-					})
+					}).then((res)->
+						flash.success = "Account created! Welcome to Sessor."
+					).catch((err)->
+						flash.error = "There was an issue registering your account. Make sure to meet all the requirements of the form."
+					)
 				)
 ])

@@ -22,10 +22,11 @@
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sessor</a>
           <ul class="nav navbar-nav main-dropdown-nav dropdown-menu" role="menu">
-            <li><a href ng-click="goToHome()">Home</a></li>
-            <li><a href ng-click="goToDesktop()">Desktop</a></li>
-            <li><a href ng-click="goToReports()">Reports</a></li>
-            <li><a href ng-click="goToTemplates()">Templates</a></li>
+            <li><a href="#/">Home</a></li>
+            <li><a href="#/desktop">Desktop</a></li>
+            <li><a href="#/reports">Reports</a></li>
+            <li><a href="#/templates">Templates</a></li>
+            <li><a href="#/statistics">Statistics</a></li>
           </ul>
         </li>
       </ul>
@@ -43,7 +44,6 @@
 </div>
 <div class="container-fluid">
   <div class="row">
-  <div class="col-xs-2 col-sm-2 col-md-2" ng-show="!user.signedIn"></div>
-	<div class="col-xs-12 col-sm-12 col-md-12 view-frame animate-view" ng-view bs-popover></div>
+	<div class="col-xs-12 col-sm-8 col-sm-offset-2 view-frame animate-view" ng-view bs-popover></div>
   </div>
 </div>

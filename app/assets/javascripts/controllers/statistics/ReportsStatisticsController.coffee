@@ -14,5 +14,4 @@ controllers.controller("ReportsStatisticsController",  ['$scope', 'ReportsFactor
 			console.log $scope.labels
 			console.log $scope.count
 	)
-
 ])

@@ -1,0 +1,9 @@
+<h1 class="page-header">Statistics</h1>
+<div class="row placeholders">
+  Select data source:
+  <select ng-model="selectedData" ng-options="prop for prop in dataProps.names"></select>
+  <button class="btn btn-primary" ng-click="showData()">Log</button>
+  <div class="col-xs-12 col-sm-6 placeholder">
+    <canvas id="polar-area" class="chart chart-pie" data="data" labels="labels" legend="legend"></canvas>
+  </div>
+</div>

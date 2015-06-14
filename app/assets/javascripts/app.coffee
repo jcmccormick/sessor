@@ -33,7 +33,7 @@ sessor.config([ '$routeProvider', 'flashProvider', 'localStorageServiceProvider'
       .when('/',
         templateUrl: "main/index.html"
       )
-      .when('/desktop/',
+      .when('/desktop',
         templateUrl: "main/desktop.html"
         resolve: authResolver
       ) #                                       REPORTS ROUTES #
@@ -75,6 +75,11 @@ sessor.config([ '$routeProvider', 'flashProvider', 'localStorageServiceProvider'
       .when('/templates/:templateId/edit',
         templateUrl: "templates/edit.html"
         controller: 'EditTemplateController'
+        resolve: authResolver
+      )
+      .when('/statistics',
+        templateUrl: "statistics/show.html"
+        controller: 'ReportsStatisticsController'
         resolve: authResolver
       )
       .otherwise('/')

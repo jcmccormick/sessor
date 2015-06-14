@@ -13,9 +13,9 @@
 <div class="modal fade" id="loginModal">
   <div class="modal-dialog">
     <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <form class="form-signin" role="form" ng-init="loginForm = {}">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title">Sign in to Sessor</h4>
         </div>
         <div class="modal-body">
@@ -30,7 +30,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-lg btn-primary btn-block" ng-click="submitLogin(loginForm)" data-dismiss="modal">Sign in</button>
+          <button class="btn btn-lg btn-primary btn-block" data-dismiss="modal" ng-click="submitLogin(loginForm)">Sign in</button>
           <button type="button" class="btn btn-lg btn-primary btn-block" data-dismiss="modal" ng-bootbox-prompt="Please enter your email..." ng-bootbox-prompt-action="handleForgotPass(result)">Forgot Password</button>
         </div>
       </form>
@@ -42,9 +42,9 @@
 <div class="modal fade" id="userRegistrationModal">
   <div class="modal-dialog">
     <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <form class="form-signin" ng-controller="UserRegistrationController" ng-submit="handleRegBtnClick()" role="form" ng-init="registrationForm = {}">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title">Create an Account</h4>
         </div>
         <div class="modal-body">
@@ -65,7 +65,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-lg btn-primary btn-block">Complete Registration</button>
+          <button type="submit" data-dismiss="modal" class="btn btn-lg btn-primary btn-block">Complete Registration</button>
         </div>
       </form>
     </div><!-- /.modal-content -->
@@ -75,6 +75,7 @@
 <div class="modal fade" id="forgotPassModal">
   <div class="modal-dialog">
     <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <form role="form">
         <div class="modal-header">
           <h4 class="modal-title">Reset Password</h3>
@@ -86,10 +87,9 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary btn-lg" ng-click="handleForgotPass()">Request password reset</button>
+          <button class="btn btn-primary btn-lg" data-dismiss="modal" ng-click="handleForgotPass()">Send Password Reset Email</button>
         </div>
       </form>
-
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

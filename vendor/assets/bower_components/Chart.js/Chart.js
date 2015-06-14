@@ -2348,7 +2348,7 @@
 		animationSteps : 100,
 
 		//String - Animation easing effect
-		animationEasing : "linear",
+		animationEasing : "easeInOutExpo",
 
 		//Boolean - Whether we animate the rotation of the Doughnut
 		animateRotate : true,

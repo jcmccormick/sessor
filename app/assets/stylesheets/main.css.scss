@@ -20,7 +20,7 @@ $desktop: 60em;
   }
 }
 @media (min-width: 768px) {
-  /* Push "Sessor" and Login/Logout arrow towards center of site navigation */
+  /* Push "Sessor" and "You" towards center of site navigation */
   .navbar-fixed-top {
     padding: 0 100px!important;
   }
@@ -70,21 +70,40 @@ $desktop: 60em;
   position: absolute;
 }
 .alert.in {
-  z-index: 1032;
+  z-index: 2000;
   top:5%;
   left:25%; 
   right:25%;
+}
+
+button.close {
+  font-size: 30px;
+  margin-right: 3px;
 }
 
 .jumbotron {
   margin:0 auto!important;
   background:none;
 }
+.jumbotron p .glyphicon {
+  font-size:72px!important;
+}
 .jumbotron h1, .jumbotron .h1 {
   font-size: 32px;
   @include respond(tablet) {
     font-size: 72px;
   }
+}
+.jumbotron-success {
+  background-color: #5cb85c !important;
+  border-color: #4cae4c !important;
+}
+.jumbotron-info {  
+  background-color: #31b0d5 !important;
+  border-color: #269abc !important;
+}
+.desktop-buttons .jumbotron {
+  width: 230px;
 }
 
 .nav > li > a:not(.open) {
