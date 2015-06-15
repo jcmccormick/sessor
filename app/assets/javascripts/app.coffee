@@ -105,7 +105,6 @@ sessor.run (['$rootScope','$location', '$cacheFactory', '$http', 'flash',
       $location.path('/')
       return
     )
-
     $httpDefaultCache = $cacheFactory.get('$http')
     angular.forEach [
       'cleartemplates'

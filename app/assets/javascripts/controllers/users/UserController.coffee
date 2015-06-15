@@ -6,10 +6,11 @@ controllers.controller('UserController', ['$auth', '$scope', '$location', 'flash
 	)
 	$scope.handleSignOut = ->
 		$auth.signOut()
-			.then(()->
-				flash.success = "You have been signed out."
-				$location.path('/')
-			)
+		.then(()->
+			flash.success = "You have been signed out."
+			$location.path('/')
+		)
+		
 
 	$scope.handleForgotPass = (email)->
 		console.log email

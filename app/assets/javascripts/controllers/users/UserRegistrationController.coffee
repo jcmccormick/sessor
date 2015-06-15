@@ -6,28 +6,28 @@ controllers.controller('UserRegistrationController', ['$scope', '$auth', '$locat
 	)
 	allowed_emails= ['sean.d.potts@gmail.com', 'benmccormickmedia@gmail.com', 'joe.c.mccormick@gmail.com', 'knightrage@gmail.com', 'gardnecl@gmail.com', 'mccormickcharlie@hotmail.com']
 	$scope.handleRegBtnClick = ->
+		$('#userRegistrationModal').modal('toggle')
 		i = 0
 		while i < allowed_emails.length
 			if $scope.registrationForm.email == allowed_emails[i]
 				allowed = true
 			i++
 
+		if $scope.registrationForm.password.length < 8
+			flash.error = "Please try again with a password that is 8 or more characters long."
+			return
 		if !allowed
-			$location.path('/')
 			flash.error = "Sorry, it looks like you're not on the list."
 		else
 			$auth.submitRegistration($scope.registrationForm)
 				.then(->
-					flash.success = "Account created! Welcome to Sessor."
 					$auth.submitLogin({
 						email: $scope.registrationForm.email,
 						password: $scope.registrationForm.password
 					}).then((res)->
+						flash.success = "Account created! Welcome to Sessor."
 					).catch((err)->
-						flash.error = "There was an issue logging in. Check your password or try again in a few moments."
+						flash.error = "There was an issue registering your account. Make sure to meet all the requirements of the form."
 					)
-				)
-				.catch((err)->
-					flash.error = "There was an issue registering your account. Try again later."
 				)
 ])
