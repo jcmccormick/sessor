@@ -18,7 +18,7 @@ controllers.controller('UserRegistrationController', ['$scope', '$auth', '$locat
 		else
 			$auth.submitRegistration($scope.registrationForm)
 				.then(->
-					$('#loginModal').modal('hide')
+					$('#loginModal').modal('toggle')
 					flash.success = "Account created! Welcome to Sessor."
 					$auth.submitLogin({
 						email: $scope.registrationForm.email,
