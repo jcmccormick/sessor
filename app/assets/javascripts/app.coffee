@@ -101,7 +101,7 @@ sessor.run (['$rootScope','$location', '$cacheFactory', '$http', 'flash',
       return
     )
     $rootScope.$on('auth:invalid', ->
-      flash.error = "Looks like there was an error validating your credentials. Please try logging in again or contact support if problems continue."
+      flash.error = "Looks like there was an error validating your credentials. Please try logging in again or contact support if problems continue. Make sure cookies and Javascript are enabled in your browser options."
       $location.path('/')
       return
     )

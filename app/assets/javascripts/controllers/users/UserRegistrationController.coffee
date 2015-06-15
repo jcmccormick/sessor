@@ -18,12 +18,12 @@ controllers.controller('UserRegistrationController', ['$scope', '$auth', '$locat
 		else
 			$auth.submitRegistration($scope.registrationForm)
 				.then(->
+					$.('#loginModal').modal('toggle')
+					flash.success = "Account created! Welcome to Sessor."
 					$auth.submitLogin({
 						email: $scope.registrationForm.email,
 						password: $scope.registrationForm.password
 					}).then((res)->
-						$('#loginModal').modal('hide')
-						flash.success = "Account created! Welcome to Sessor."
 					).catch((err)->
 						flash.error = "There was an issue registering your account. Make sure to meet all the requirements of the form."
 					)
