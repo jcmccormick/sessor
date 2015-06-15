@@ -85,13 +85,11 @@ services.service('TemplateService', ['$http',
         title: 'Basic Personal Information',
         columns: [
           {
-            id: 1,
+            id: 0,
             width: 'col-md-12 col-sm-12 col-xs-12',
             fields: [
               {
-                id: 1,
-                section: 1,
-                column: 1,
+                id: 0,
                 title: 'First Name',
                 type: 'textfield',
                 required: false,
@@ -99,9 +97,7 @@ services.service('TemplateService', ['$http',
                 glyphicon: 'glyphicon-font'
               },
               {
-                id: 2,
-                section: 1,
-                column: 1,
+                id: 1,
                 title: 'Last Name',
                 type: 'textfield',
                 required: false,
@@ -109,9 +105,7 @@ services.service('TemplateService', ['$http',
                 glyphicon: 'glyphicon-font'
               },
               {
-                id: 3,
-                section: 1,
-                column: 1,
+                id: 2,
                 title: 'E-mail',
                 type: 'email',
                 required: false,

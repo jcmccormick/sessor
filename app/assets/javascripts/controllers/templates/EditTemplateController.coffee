@@ -6,7 +6,7 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 	$scope.addSection = {}
 	$scope.addSection.lastAddedID = 0
 	$scope.addSection.prototype = {}
-	$scope.addSection.columns = {}
+	$scope.addSection.columns = []
 	$scope.addSection.columns.lastAddedID = 0
 	$scope.addSection.types = TemplateService.sections
 
@@ -34,14 +34,11 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 		$scope.template = new TemplateFactory()
 		$scope.template.name = ''
 		$scope.template.sections = []
-		$scope.template.sections.columns = []
-		$scope.template.sections.columns.fields = []
 
 	
 	# preview template
 	$scope.previewTemplate = {}
 	$scope.previewUpdate = ->
-		console.log $scope.template
 		angular.copy $scope.template, $scope.previewTemplate
 		return
 
@@ -49,20 +46,21 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 	$scope.addNewSection = (column)->
 		i = 0
 		while i < column.id
-			$scope.addSection.columns.lastAddedID++
 			newColumn = 
 				'id': $scope.addSection.columns.lastAddedID
+				'sec': $scope.addSection.lastAddedID
 				'width': column.width
 				'fields': []
 			$scope.addSection.columns.push newColumn
+			$scope.addSection.columns.lastAddedID++
 			i++
 		title = if $scope.addSection.title? then $scope.addSection.title else "Untitled Section"
-		$scope.addSection.lastAddedID++
 		newSection = 
 			'id': $scope.addSection.lastAddedID
 			'title': title
 			'columns': $scope.addSection.columns
 		$scope.template.sections.push newSection
+		$scope.addSection.lastAddedID++
 		$scope.addSection.title = ''
 		$scope.addSection.columns = []
 		$scope.addSection.columns.lastAddedID = 0
@@ -70,11 +68,12 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 
 	# add new option to the field
 	$scope.addPremadeSection = (sec) ->
-		$scope.addSection.lastAddedID++
+		$scope.addSection.prototype = {}
 		angular.copy sec, $scope.addSection.prototype
 		$scope.addSection.prototype.id = $scope.addSection.lastAddedID
+		$scope.addSection.prototype.premadeCheck = false
 		$scope.template.sections.push $scope.addSection.prototype
-		$scope.addSection.prototype = {}
+		$scope.addSection.lastAddedID++
 		return
 
 	# delete section button
@@ -89,39 +88,31 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 		return
 
 	# create new field button click
-	$scope.addNewField = (type, sec, col, title)->
-		$scope.location = $scope.template.sections[sec-1].columns[col-1]
-		title = if title? then title else "Untitled "+type
-		#collect glyphicon class of scoped type
-		i = 0
-		while i < $scope.addField.types.length
-			if $scope.addField.types[i].name == type
-				glyphicon = $scope.addField.types[i].glyphicon
-				break
-			i++
-		$scope.addField.lastAddedID = $scope.location.fields.length
-		$scope.addField.lastAddedID++
+	$scope.addNewField = (section, column, type, title)->
+		if column.fields.length > 0 && !section.premadeCheck
+			$scope.addField.lastAddedID = column.fields[column.fields.length-1].id + 1
+			section.premadeCheck = true
+		newTitle = if title? then title else "Untitled field"
 		newField = 
 			'id': $scope.addField.lastAddedID
-			'section': sec
-			'column': col
-			'title': title
-			'type': type
+			'section': column.sec
+			'column': column.id
+			'title': newTitle
+			'type': type.name
 			'value': ''
 			'required': false
 			'disabled': false
-			'glyphicon': glyphicon
-		# put newField into current column
-		$scope.template.sections[sec-1].columns[col-1].fields.push newField
+			'glyphicon': type.glyphicon
+		column.fields.push newField
+		$scope.addField.lastAddedID++
 		return
 
 	# deletes particular field on button click
-	$scope.deleteField = (id, sec, col) ->
-		fields = $scope.template.sections[sec-1].columns[col-1].fields
+	$scope.deleteField = (column, field) ->
 		i = 0
 		while i < fields.length
-			if fields[i].id == id
-				fields.splice i, 1
+			if column.fields[i].id == field.id
+				column.fields.splice i, 1
 				break
 			i++
 		return
@@ -144,9 +135,8 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 		return
 
 	# delete particular option
-
-	$scope.deleteOption = (field, sec, col, option) ->
-		options = $scope.template.sections[sec-1].columns[col-1].fields[field-1].options
+	$scope.deleteOption = (field, option) ->
+		options = field.options
 		i = 0
 		while i < options.length
 			if options[i].id == option.id
@@ -157,19 +147,20 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 
 
 	# deletes all the fields
-
 	$scope.resetTemplate = ->
-		$scope.template.name = ''
 		$scope.template.sections.splice 0, $scope.template.sections.length
+		$scope.template = new TemplateFactory()
+		$scope.template.name = ''
+		$scope.template.sections = []
 		$scope.addSection.lastAddedID = 0
+		$scope.addSection.columns.lastAddedID = 0
+		$scope.addColumn.lastAddedID = 0
 		$scope.addField.lastAddedID = 0
 		return
 
 	$scope.saveTemplate = ->
 		tempCopy = new TemplateFactory()
-		console.log $scope.template
 		angular.copy $scope.template, tempCopy
-		console.log tempCopy
 		tempCopy.sections = JSON.stringify(tempCopy.sections)
 		if tempCopy.id
 			tempCopy.$update({id: tempCopy.id}, (res)->

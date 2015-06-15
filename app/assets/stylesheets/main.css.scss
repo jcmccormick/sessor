@@ -81,26 +81,25 @@ button.close {
   margin-right: 3px;
 }
 
-.custom-jumbotron p .glyphicon {
-  font-size:72px!important;
+.custom-jumbotron {
+  border: none !important;
 }
-.jumbotron h1, .jumbotron .h1 {
+.jumbotron h1, .jumbotron .h1, .custom-jumbotron h1, .custom-jumbotron .h1 {
   font-size: 40px !important;
+  margin: 40px 30px !important;
   @include respond(tablet) {
-    font-size: 72px;
+    font-size: 72px !important;
+    margin: 20px 10px !important;
   }
 }
 .jumbotron-success {
-  background-color: #5cb85c !important;
-  border-color: #4cae4c !important;
+  color: #5cb85c !important;
 }
 .jumbotron-info {  
-  background-color: #31b0d5 !important;
-  border-color: #269abc !important;
+  color: #31b0d5 !important;
 }
 .jumbotron-warning {
-  background-color: #f0ad4e !important;
-  border-color: #eea236 !important;
+  color: #f0ad4e !important;
 }
 
 .nav > li > a:not(.open) {
