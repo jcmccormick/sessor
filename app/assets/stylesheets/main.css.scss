@@ -81,10 +81,16 @@ button.close {
   margin-right: 3px;
 }
 
+/*
+ * Desktop Buttons
+ */
 .custom-jumbotron {
+  padding: 6px 2px !important;
+}
+.custom-jumbotron .btn-default {
   border: none !important;
 }
-.jumbotron h1, .jumbotron .h1, .custom-jumbotron h1, .custom-jumbotron .h1 {
+.jumbotron h1, .jumbotron .h1, .custom-jumbotron i {
   font-size: 40px !important;
   margin: 40px 30px !important;
   @include respond(tablet) {
@@ -102,6 +108,9 @@ button.close {
   color: #f0ad4e !important;
 }
 
+/*
+ * Top bar sessor and you navigation
+ */
 .nav > li > a:not(.open) {
   font-size: 18px!important;
 }
