@@ -54,63 +54,63 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 			$scope.addSection.columns.push newColumn
 			$scope.addSection.columns.lastAddedID++
 			i++
-		title = if $scope.addSection.title? then $scope.addSection.title else "Untitled Section"
+		if !$scope.addSection.name
+			name = "Unnamed Section"
 		newSection = 
 			'id': $scope.addSection.lastAddedID
-			'title': title
+			'name': name
 			'columns': $scope.addSection.columns
 		$scope.template.sections.push newSection
 		$scope.addSection.lastAddedID++
-		$scope.addSection.title = ''
+		$scope.addSection.name = ''
 		$scope.addSection.columns = []
 		$scope.addSection.columns.lastAddedID = 0
 		return
 
 	# add new option to the field
 	$scope.addPremadeSection = (sec) ->
+		sec.id = $scope.addSection.lastAddedID
 		$scope.addSection.prototype = {}
 		angular.copy sec, $scope.addSection.prototype
-		$scope.addSection.prototype.id = $scope.addSection.lastAddedID
-		$scope.addSection.prototype.premadeCheck = false
 		$scope.template.sections.push $scope.addSection.prototype
 		$scope.addSection.lastAddedID++
 		return
 
 	# delete section button
-	$scope.deleteSection = (sec) ->
-		sections = $scope.template.sections
+	$scope.deleteSection = (template, section) ->
 		i = 0
-		while i < sections.length
-			if sections[i].id == sec
-				sections.splice i, 1
+		while i < template.sections.length
+			if template.sections[i].id == section.id
+				template.sections.splice i, 1
 				break
 			i++
 		return
 
 	# create new field button click
-	$scope.addNewField = (section, column, type, title)->
-		if column.fields.length > 0 && !section.premadeCheck
-			$scope.addField.lastAddedID = column.fields[column.fields.length-1].id + 1
-			section.premadeCheck = true
-		newTitle = if title? then title else "Untitled field"
+	$scope.addNewField = (column, type, name)->
+		column.nextFieldID = 0
+		if column.fields
+			column.nextFieldID = column.fields.length
+		if !name
+			name = "Unnamed " + type.value
 		newField = 
-			'id': $scope.addField.lastAddedID
+			'id': column.nextFieldID
 			'section': column.sec
 			'column': column.id
-			'title': newTitle
+			'name': name
 			'type': type.name
 			'value': ''
 			'required': false
 			'disabled': false
 			'glyphicon': type.glyphicon
 		column.fields.push newField
-		$scope.addField.lastAddedID++
+		column.nextFieldID++
 		return
 
 	# deletes particular field on button click
 	$scope.deleteField = (column, field) ->
 		i = 0
-		while i < fields.length
+		while i < column.fields.length
 			if column.fields[i].id == field.id
 				column.fields.splice i, 1
 				break
@@ -128,7 +128,7 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 		id = lastOptionID + 1
 		newOption = 
 			'id': id
-			'title': 'Option ' + id
+			'name': 'Option ' + id
 			'value': id
 		# put new option into options array
 		field.options.push newOption

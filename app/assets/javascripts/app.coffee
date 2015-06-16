@@ -40,7 +40,6 @@ sessor.config([ '$routeProvider', 'flashProvider', 'localStorageServiceProvider'
       .when('/reports',
         templateUrl: "reports/show.html"
         controller: 'ShowReportsController'
-        resolve: authResolver
       )
       .when('/reports/new/',
         templateUrl: "reports/edit.html"

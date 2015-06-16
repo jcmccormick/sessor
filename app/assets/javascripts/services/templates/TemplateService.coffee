@@ -5,13 +5,12 @@ services.service('TemplateService', ['$http',
   {
     supportedProperties: [
       'id'
-      'section'
-      'column'
-      'title'
+      'name'
       'type'
       'required'
       'disabled'
       'glyphicon'
+      'value'
     ]
     supportedFields: [
       'textfield'
@@ -69,28 +68,28 @@ services.service('TemplateService', ['$http',
     columns: [
       {
         id: 1
-        width: 'col-xs-12 col-sm-12 col-md-12'
+        width: 'col-xs-12'
       }
       {
         id: 2
-        width: 'col-xs-6 col-sm-6 col-md-6'
+        width: 'col-xs-6'
       }
       {
         id: 3
-        width: 'col-xs-4 col-sm-4 col-md-4'
+        width: 'col-xs-4'
       }
     ]
     sections: [
       {
-        title: 'Basic Personal Information',
+        name: 'Basic Personal Information',
         columns: [
           {
             id: 0,
-            width: 'col-md-12 col-sm-12 col-xs-12',
+            width: 'col-md-12',
             fields: [
               {
                 id: 0,
-                title: 'First Name',
+                name: 'First Name',
                 type: 'textfield',
                 required: false,
                 disabled: false,
@@ -98,7 +97,7 @@ services.service('TemplateService', ['$http',
               },
               {
                 id: 1,
-                title: 'Last Name',
+                name: 'Last Name',
                 type: 'textfield',
                 required: false,
                 disabled: false,
@@ -106,7 +105,7 @@ services.service('TemplateService', ['$http',
               },
               {
                 id: 2,
-                title: 'E-mail',
+                name: 'E-mail',
                 type: 'email',
                 required: false,
                 disabled: false,

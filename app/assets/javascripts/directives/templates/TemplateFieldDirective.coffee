@@ -21,7 +21,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile', 'TemplateSe
 
     textfield = '
     <div class="form-group">
-      <label class="control-label">{{field.title}}
+      <label class="control-label">{{field.name}}
         <span class="required-error" ng-show="field.required && !field.value">*</span>
       </label>
       <div>
@@ -31,7 +31,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile', 'TemplateSe
 
     textarea = '
     <div class="form-group">
-      <label class="control-label">{{field.title}}
+      <label class="control-label">{{field.name}}
         <span class="required-error" ng-show="field.required && !field.value">*</span>
       </label>
       <div>
@@ -41,7 +41,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile', 'TemplateSe
 
     email = '
     <div class="form-group">
-      <label class="control-label">{{field.title}}
+      <label class="control-label">{{field.name}}
         <span class="required-error" ng-show="field.required && !field.value">*</span>
       </label>
       <input type="email" class="form-control" placeholder="Email" ng-model="field.value" ng-required="field.required" ng-disabled="field.disabled"/>
@@ -49,7 +49,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile', 'TemplateSe
 
     checkbox = '
     <input ng-model="field.value" id="{{field.id}}" type="checkbox" ng-true-value="1" ng-false-value="0" ng-required="field.required" ng-disabled="field.disabled">
-    <label class="form-field-label" for="{{field.id}}">{{field.title}}
+    <label class="form-field-label" for="{{field.id}}">{{field.name}}
       <span class="required-error" ng-show="field.required && field.value == 0">*</span>
     </label>
     <br>
@@ -57,7 +57,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile', 'TemplateSe
 
     date = '
     <div class="form-group">
-      <label class="control-label">{{field.title}}
+      <label class="control-label">{{field.name}}
         <span class="required-error" ng-show="field.required && !field.value">*</span>
       </label>
       <input type="date" class="form-control" ng-model="field.value" ng-required="field.required" ng-disabled="field.disabled">
@@ -65,24 +65,24 @@ directives.directive('templateFieldDirective', ['$http', '$compile', 'TemplateSe
 
     dropdown = '
     <div class="form-group">
-      <label class="control-label">{{field.title}}
+      <label class="control-label">{{field.name}}
         <span class="required-error" ng-show="field.required && !field.value">*</span>
       </label>
       <select class="form-control" ng-model="field.value" ng-required="field.required" ng-disabled="field.disabled">
         <option ng-repeat="option in field.options" ng-selected="option.value == field.value" value="{{option.id}}">
-          {{option.title}}
+          {{option.name}}
         </option>
       </select>
     </div>'
 
     radio = '
     <div class="form-group">
-      <label class="control-label">{{field.title}} 
+      <label class="control-label">{{field.name}} 
         <span class="required-error" ng-show="field.required && !field.value">*</span>
       </label>
       <div ng-repeat="option in field.options">
         <input type="radio" value="{{option.value}}" ng-model="field.value"  ng-required="field.required" ng-disabled="field.disabled"/>
-        &nbsp;<span ng-bind="option.title"></span>
+        &nbsp;<span ng-bind="option.name"></span>
       </div>
     </div>'
 
@@ -91,7 +91,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile', 'TemplateSe
 
     password = '
     <div class="form-group">
-      <label class="control-label">{{field.title}}
+      <label class="control-label">{{field.name}}
         <span class="required-error" ng-show="field.required && !field.value">*</span>
       </label>
       <input type="password" class="form-control" value="{{field.value}}" ng-model="field.value"  ng-required="field.required" ng-disabled="field.disabled">

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root 'home#index' 
+  resources :groups, only: [:index, :show, :create, :update, :destroy]
   resources :reports, only: [:index, :show, :create, :update, :destroy]
   resources :templates, only: [:index, :show, :create, :update, :destroy]
 

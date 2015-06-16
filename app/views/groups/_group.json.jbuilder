@@ -1,0 +1,1 @@
+json.(group, :id, :name, :owner, :members, :templates)
