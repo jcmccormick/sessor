@@ -1,23 +1,23 @@
 services = angular.module('services')
 services.service('StatisticsService', [->
 	{
-	getCountOfIn: (ent, arr, callback)->
+	getCountOfIn: (ent, report, callback)->
 		this.ent = []
 		x = 0
-		while x < arr.length
-			if arr[x].template? || arr[x].section?
-				jsonData = JSON.parse(arr[x].template)
-				arr[x].b = $.map(jsonData, (value, index)->
+		while x < report.length
+			if report[x].template? || report[x].section?
+				jsonData = JSON.parse(report[x].template)
+				report[x].sections = $.map(jsonData, (value, index)->
 					value.key = index
 					return [value]
 				)
 				y = 0
-				while y < arr[x].b.length
+				while y < report[x].sections.length
 					z = 0
-					while z < arr[x].b[y].columns.length
+					while z < report[x].sections[y].columns.length
 						q = 0
-						while q < arr[x].b[y].columns[z].fields.length
-							this.ent.push arr[x].b[y].columns[z].fields[q][ent]
+						while q < report[x].sections[y].columns[z].fields.length
+							this.ent.push report[x].sections[y].columns[z].fields[q][ent]
 							q++
 						z++
 					y++
