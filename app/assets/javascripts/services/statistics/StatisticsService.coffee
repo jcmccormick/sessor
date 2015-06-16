@@ -1,29 +1,23 @@
 services = angular.module('services')
 services.service('StatisticsService', [->
 	{
-	getCountOfIn: (ent, report, callback)->
-		this.ent = []
-		x = 0
-		while x < report.length
-			if report[x].template? || report[x].section?
-				jsonData = JSON.parse(report[x].template)
-				report[x].sections = $.map(jsonData, (value, index)->
-					value.key = index
-					return [value]
+	getCountOfIn: (ent, reports, callback)->
+		collection = []
+		#console.log reports
+		reports.forEach (obj) ->
+			obj.sections and obj.sections.forEach((section) ->
+				section.columns and section.columns.forEach((column) ->
+					column.fields and column.fields.forEach((field) ->
+						if field[ent]? then collection.push field[ent]
+						return
+					)
+					return
 				)
-				y = 0
-				while y < report[x].sections.length
-					z = 0
-					while z < report[x].sections[y].columns.length
-						q = 0
-						while q < report[x].sections[y].columns[z].fields.length
-							this.ent.push report[x].sections[y].columns[z].fields[q][ent]
-							q++
-						z++
-					y++
-			x++
-		this.ent = this.countD(this.ent)
-		callback(this.ent)
+				return
+			)
+			return
+		collection = this.countD(collection)
+		callback(collection)
 
 	countD: (arr)->
 		a = []
@@ -44,11 +38,4 @@ services.service('StatisticsService', [->
 			b
 		]
 	}
-#
-#
-#					c = 0
-#					while c < a[x].b[i].c[b].d.length
-#						$scope.labels.push a[x].b[i].c[b].d[c].type
-#						$scope.values.push a[x].b[i].c[b].d[c].value
-#						c++
 ])

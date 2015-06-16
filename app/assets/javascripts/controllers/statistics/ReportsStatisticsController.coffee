@@ -4,16 +4,17 @@ controllers.controller("ReportsStatisticsController",  ['$scope', 'ReportsFactor
 	ReportsFactory.query().$promise.then((res)->
 		$scope.dataProps = []
 		$scope.dataProps.names = TemplateService.supportedProperties
+		$scope.graphtype = 'pie'
 		$scope.showData = ->
-			StatisticsService.getCountOfIn($scope.selectedData, res, (statRes)->
-				$scope.count = statRes
+			StatisticsService.getCountOfIn($scope.selectedData, res, (callback)->
+				$scope.labels = callback[0]
+				$scope.pie = callback[1]
+				$scope.line = []
+				$scope.line.push callback[1]
+				console.log $scope.labels
+				console.log $scope.pie
+				console.log $scope.line
+				$scope.data = callback[1]
 			)
-			$scope.labels = $scope.count[0]
-			$scope.data = $scope.count[1]
-			console.log $scope.dataProps
-			console.log $scope.selectedData
-			console.log $scope.data
-			console.log $scope.labels
-			console.log $scope.count
 	)
 ])

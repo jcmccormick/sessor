@@ -23,11 +23,6 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 	if $routeParams.templateId
 		TemplateFactory.get({id: $routeParams.templateId}).$promise.then((res)->
 			$scope.template = res
-			jsonData = JSON.parse($scope.template.sections)
-			$scope.template.sections = $.map(jsonData, (value, index)->
-				value.key = index
-				return [value]
-			)
 			$scope.addSection.lastAddedID = $scope.template.sections.length
 		)
 	else

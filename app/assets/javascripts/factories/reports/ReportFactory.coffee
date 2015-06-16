@@ -8,6 +8,15 @@ factories.factory("ReportFactory", ['$resource',
 	get:
 		cache: true
 		isArray: false
+		interceptor: {
+			response: (response)->
+				jsonData = JSON.parse(response.data.template)
+				response.data.sections = $.map(jsonData, (value, index)->
+					value.key = index
+					return [value]
+				)
+				return response.data
+		}
 	})
 
 ])

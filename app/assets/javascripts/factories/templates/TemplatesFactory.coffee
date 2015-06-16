@@ -6,5 +6,15 @@ factories.factory("TemplatesFactory", ['$resource', '$cacheFactory',
 		method: 'GET'
 		isArray: true
 		cache: true
+		interceptor: {
+			response: (response)->
+				response.data.forEach (obj) ->
+					jsonData = JSON.parse(obj.sections)
+					obj.sections = $.map(jsonData, (value, index)->
+						value.key = index
+						return [value]
+					)
+				return response.data
+		}
 	})
 ])

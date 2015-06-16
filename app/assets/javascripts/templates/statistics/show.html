@@ -1,9 +1,21 @@
 <h1 class="page-header">Statistics</h1>
-<div class="row placeholders">
-  Select data source:
-  <select ng-model="selectedData" ng-options="prop for prop in dataProps.names"></select>
-  <button class="btn btn-primary" ng-click="showData()">Log</button>
-  <div class="col-xs-12 col-sm-6 placeholder">
-    <canvas id="polar-area" class="chart chart-pie" data="data" labels="labels" legend="legend"></canvas>
-  </div>
+<div class="jumbotron">
+	<form class="form-search">
+		<h4>Graph Type</h4>
+		<select class="form-control" ng-model="graphtype" ng-options="graphtype  for graphtype in ['pie','doughnut','polar-area','line','bar','radar']"></select>
+		<h4>Field Data Keys</h4>
+		<div class="input-group">
+			<select class="form-control" ng-model="selectedData" ng-options="prop for prop in dataProps.names"></select>
+			<span class="input-group-btn">
+				<a href class="btn btn-primary btn-sm" ng-click="showData()">Log</a>
+			</span>
+		</div>
+	</form>
+	<canvas ng-show="graphtype == 'pie'" id="pie" class="chart chart-pie" data="pie" labels="labels"></canvas>
+	<canvas ng-show="graphtype == 'doughnut'" id="doughnut" class="chart chart-doughnut" data="pie" labels="labels"></canvas>
+	<canvas ng-show="graphtype == 'polar-area'" id="polar-area" class="chart chart-polar-area" data="pie" labels="labels"></canvas>
+
+	<canvas ng-show="graphtype == 'line'" id="line" class="chart chart-line" data="line" labels="labels"></canvas>
+	<canvas ng-show="graphtype == 'bar'" id="bar" class="chart chart-bar" data="line" labels="labels"></canvas>
+	<canvas ng-show="graphtype == 'radar'" id="radar" class="chart chart-radar" data="line" labels="labels"></canvas>
 </div>

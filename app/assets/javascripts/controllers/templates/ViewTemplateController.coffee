@@ -3,10 +3,5 @@ controllers.controller('ViewTemplateController', ['$scope', '$routeParams', 'Tem
 ($scope, $routeParams, TemplateFactory)->
 	TemplateFactory.get({id: $routeParams.templateId}).$promise.then((res)->
 		$scope.template = res
-		jsonData = JSON.parse($scope.template.sections)
-		$scope.template.sections = $.map(jsonData, (value, index)->
-			value.key = index
-			return [value]
-		)
 	)
 ])

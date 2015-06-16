@@ -28,7 +28,7 @@ require(['path/to/Chartjs'], function(Chart){
 You can also grab Chart.js using bower:
 
 ```bash
-bower install Chart.js --save
+bower install chartjs --save
 ```
 
 ###Creating a chart
@@ -183,7 +183,7 @@ Chart.defaults.global = {
 	// String - Template string for single tooltips
 	tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>",
 	{% endraw %}
-	// String - Template string for multiple tooltips
+	// String - Template string for single tooltips
 	multiTooltipTemplate: "<%= value %>",
 
 	// Function - Will fire on animation progression.
