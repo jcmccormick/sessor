@@ -50,15 +50,14 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 				'id': $scope.addSection.columns.lastAddedID
 				'sec': $scope.addSection.lastAddedID
 				'width': column.width
-				'fields': []
 			$scope.addSection.columns.push newColumn
 			$scope.addSection.columns.lastAddedID++
 			i++
 		if !$scope.addSection.name
-			name = "Unnamed Section"
+			$scope.addSection.name = "Unnamed Section"
 		newSection = 
 			'id': $scope.addSection.lastAddedID
-			'name': name
+			'name': $scope.addSection.name
 			'columns': $scope.addSection.columns
 		$scope.template.sections.push newSection
 		$scope.addSection.lastAddedID++
@@ -88,15 +87,13 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 
 	# create new field button click
 	$scope.addNewField = (column, type, name)->
-		column.nextFieldID = 0
-		if column.fields
-			column.nextFieldID = column.fields.length
+		if !column.fields
+			column.fields = new Array
+			column.lastFieldID = 0
 		if !name
 			name = "Unnamed " + type.value
 		newField = 
-			'id': column.nextFieldID
-			'section': column.sec
-			'column': column.id
+			'id': column.lastFieldID
 			'name': name
 			'type': type.name
 			'value': ''
@@ -104,14 +101,15 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 			'disabled': false
 			'glyphicon': type.glyphicon
 		column.fields.push newField
-		column.nextFieldID++
+		console.log column.lastFieldID
+		column.lastFieldID++
 		return
 
 	# deletes particular field on button click
 	$scope.deleteField = (column, field) ->
 		i = 0
 		while i < column.fields.length
-			if column.fields[i].id == field.id
+			if column.fields[i] == field
 				column.fields.splice i, 1
 				break
 			i++

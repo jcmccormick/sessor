@@ -20,9 +20,16 @@
 <div class="stick col-xs-9 col-sm-6 col-md-6">
   <div class="btn-group btn-group-justified" ng-disabled="template.name != ''">
     <a role="button" class="btn btn-info" ng-click="saveTemplate()">Finish</a>
-    <a role="button" class="btn btn-info" ng-click="saveDraft()">Draft</a>
+    <div class="btn-group navbar-inverse dropdown">
+      <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Options <span class="caret"></span></a>
+      <ul class="nav navbar-nav main-dropdown-nav dropdown-menu" role="menu">
+        <li><a role="button"><input type="radio" name="share_public"> Share Public</a></li>
+        <li><a role="button"><input type="radio" name="share_public"> Share Group</a></li>
+        <li><a role="button"><input type="radio" name="share_public"> Make Private</a></li>
+      </ul>
+    </div>
     <a role="button" class="btn btn-info" data-toggle="modal" data-target=".previewModal" ng-click="previewUpdate()">Preview</a>
-    <a type="button" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to reset the entire template?<br> All unsaved or undrafted work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="resetTemplate()">Reset</a>
+    <a type="button" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to reset the entire template?<br> All unsaved work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="resetTemplate()">Reset</a>
   </div>
 </div>
 <!-- END SECTION AND PREVEIW BUTTONS -->
@@ -228,7 +235,7 @@
                     <div class="col-md-6 col-sm-6 col-xs-6">
                         <div class="form-group">
                             <label class="control-label">Field Title</label>
-                            <input type="text" class="form-control" ng-model="field.name" value="{{field.name}}">
+                            <input type="text" rel="txtTooltip" title="**Add a title**" data-toggle="tooltip" data-placement="right" data-container="body" class="form-control" ng-model="field.name" value="{{field.name}}">
                         </div>
 
                         <div class="form-group" ng-hide="field.type == 'date'">

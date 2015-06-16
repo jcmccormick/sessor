@@ -79,7 +79,6 @@ sessor.config([ '$routeProvider', 'flashProvider', 'localStorageServiceProvider'
       .when('/statistics',
         templateUrl: "statistics/show.html"
         controller: 'ReportsStatisticsController'
-        resolve: authResolver
       )
       .otherwise('/')
 ])
@@ -112,5 +111,16 @@ sessor.run (['$rootScope','$location', '$cacheFactory', '$http', 'flash',
       $rootScope.$on value, (event) ->
         $httpDefaultCache.removeAll()
         return
+      return
+    $(document).ready ->
+      $('.dropdown, .stick').hover (->
+        $('.dropdown-toggle, .dropdown-menu').addClass 'hover-menu'
+        return
+      ), ->
+        $('.dropdown-toggle, .dropdown-menu').removeClass 'hover-menu'
+        return
+      return
+    $(document).ready ->
+      $('input[rel="txtTooltip"]').tooltip();
       return
 ])
