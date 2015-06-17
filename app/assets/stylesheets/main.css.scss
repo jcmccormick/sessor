@@ -335,7 +335,9 @@ body {
 .main .page-header {
   margin-top: 0;
 }
-
+.page-header {
+  border-bottom-color: black !important;
+}
 
 /*
  * Placeholder dashboard ideas

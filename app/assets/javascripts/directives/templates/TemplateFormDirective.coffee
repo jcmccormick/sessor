@@ -13,6 +13,7 @@ directives.directive('templateFormDirective',[()->
 				)
 			else
 				$scope.form.$save({}, (res)->
+					console.log 'saved'
 					$location.path("/reports/#{$scope.form.id}")
 					$rootScope.$broadcast('clearreports')
 				).catch((err)-> console.log err.data)

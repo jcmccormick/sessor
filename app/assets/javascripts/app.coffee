@@ -40,6 +40,7 @@ sessor.config([ '$routeProvider', 'flashProvider', 'localStorageServiceProvider'
       .when('/reports',
         templateUrl: "reports/show.html"
         controller: 'ShowReportsController'
+        resolve: authResolver
       )
       .when('/reports/new/',
         templateUrl: "reports/edit.html"
@@ -93,17 +94,8 @@ factories   = angular.module('factories',[])
 directives  = angular.module('directives',[])
 services    = angular.module('services',[])
 
-sessor.run (['$rootScope','$location', '$cacheFactory', '$http', 'flash',
-  ($rootScope, $location, $cacheFactory, $http, flash) ->
-    $rootScope.$on('auth:login-success', ->
-      $location.path('/desktop/')
-      return
-    )
-    $rootScope.$on('auth:invalid', ->
-      flash.error = "Looks like there was an error validating your credentials. Please try logging in again or contact support if problems continue. Make sure cookies and Javascript are enabled in your browser options."
-      $location.path('/')
-      return
-    )
+sessor.run (['$rootScope', '$cacheFactory', '$http',
+  ($rootScope, $cacheFactory, $http) ->
     $httpDefaultCache = $cacheFactory.get('$http')
     angular.forEach [
       'cleartemplates'

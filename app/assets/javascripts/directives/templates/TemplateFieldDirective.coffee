@@ -60,7 +60,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile', 'TemplateSe
       <label class="control-label">{{field.name}}
         <span class="required-error" ng-show="field.required && !field.value">*</span>
       </label>
-      <input type="date" class="form-control" ng-model="field.value" ng-required="field.required" ng-disabled="field.disabled">
+      <input type="datetime-local" min="2001-01-01T00:00:00" max="2019-12-31T00:00:00" placeholder="yyyy-MM-ddTHH:mm:ss" class="form-control" ng-model="field.value" ng-required="field.required" ng-disabled="field.disabled">
     </div>'
 
     dropdown = '
@@ -105,7 +105,11 @@ directives.directive('templateFieldDirective', ['$http', '$compile', 'TemplateSe
       when "textarea" then element.html textarea
       when "email" then element.html email
       when "checkbox" then element.html checkbox
-      when "date" then element.html date
+      when "date"
+        console.log scope.field.value
+        scope.field.value = new Date(scope.field.value)
+        console.log scope.field.value
+        element.html date
       when "dropdown" then element.html dropdown
       when "hidden" then element.html hidden
       when "password" then element.html password
