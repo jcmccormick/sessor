@@ -1,16 +1,20 @@
 services = angular.module('services')
 services.service('StatisticsService', [->
 	{
-	getCountOfIn: (key, reports, callback)->
+	getCountOfIn: (query, reports, callback)->
+		key = query.substr(0,query.indexOf(' '))
+		searchedField = query.substr(query.indexOf(' ')+1)
 		collection = []
-		fields = {}
-		#console.log reports
+		fieldData = []
+		console.log key
+		console.log searchedField
 		reports.forEach (obj) ->
 			obj.sections and obj.sections.forEach((section) ->
 				section.columns and section.columns.forEach((column) ->
 					column.fields and column.fields.forEach((field) ->
-						console.log field[key]
-						if field[key] == key then collection.push field[key]
+						collection.push field[key]
+						if field[key] == searchedField
+							fieldData.push field.value
 						return
 					)
 					return
@@ -18,8 +22,9 @@ services.service('StatisticsService', [->
 				return
 			)
 			return
+		fieldData = this.countD(fieldData)
 		collection = this.countD(collection)
-		callback(collection, fields)
+		callback(collection, fieldData)
 
 	countD: (arr)->
 		a = []
