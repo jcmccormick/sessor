@@ -1,14 +1,16 @@
 services = angular.module('services')
 services.service('StatisticsService', [->
 	{
-	getCountOfIn: (ent, reports, callback)->
+	getCountOfIn: (key, reports, callback)->
 		collection = []
+		fields = {}
 		#console.log reports
 		reports.forEach (obj) ->
 			obj.sections and obj.sections.forEach((section) ->
 				section.columns and section.columns.forEach((column) ->
 					column.fields and column.fields.forEach((field) ->
-						if field[ent]? then collection.push field[ent]
+						console.log field[key]
+						if field[key] == key then collection.push field[key]
 						return
 					)
 					return
@@ -17,7 +19,7 @@ services.service('StatisticsService', [->
 			)
 			return
 		collection = this.countD(collection)
-		callback(collection)
+		callback(collection, fields)
 
 	countD: (arr)->
 		a = []

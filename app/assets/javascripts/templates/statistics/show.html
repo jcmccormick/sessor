@@ -3,9 +3,11 @@
 	<form class="form-search">
 		<h4>Graph Type</h4>
 		<select class="form-control" ng-model="graphtype" ng-options="graphtype  for graphtype in ['pie','doughnut','polar-area','line','bar','radar']"></select>
-		<h4>Field Data Keys</h4>
+		<h4>Field</h4>
+		<select class="form-control" ng-model="selectedField" ng-options="field for field in dataProps.fields"></select>
+		<h4>Field Data</h4>
 		<div class="input-group">
-			<select class="form-control" ng-model="selectedData" ng-options="prop for prop in dataProps.names"></select>
+			<select class="form-control" ng-model="selectedData" ng-options="value for value in dataProps.values"></select>
 			<span class="input-group-btn">
 				<a href class="btn btn-primary btn-sm" ng-click="showData()">Log</a>
 			</span>
