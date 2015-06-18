@@ -1,8 +1,9 @@
 controllers = angular.module('controllers')
-controllers.controller('UserController', ['$auth', '$scope', '$location', 'flash', 
-($auth, $scope, $location, flash)->
+controllers.controller('UserController', ['$auth', '$scope', '$location', '$window', 'flash', 
+($auth, $scope, $location, $window, flash)->
 	
 	$scope.$on('auth:login-success', ->
+		$window.location.reload()
 		$location.path('/desktop/')
 		return
 	)
