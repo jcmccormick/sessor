@@ -9,6 +9,7 @@ controllers.controller("ReportsStatisticsController",  ['$scope', 'ReportsFactor
 	$scope.search.key = 'name'
 
 	$scope.graphtype = 'pie'
+	$scope.needLegend = true
 
 	TemplatesFactory.query().$promise.then((res)->
 		res.forEach((template)->
@@ -17,6 +18,7 @@ controllers.controller("ReportsStatisticsController",  ['$scope', 'ReportsFactor
 	)
 
 	$scope.dataProps.names = TemplateService.supportedProperties
+	
 	$scope.listFields = ->
 		ReportsFactory.query().$promise.then((res)->
 
@@ -54,5 +56,11 @@ controllers.controller("ReportsStatisticsController",  ['$scope', 'ReportsFactor
 					#	legend: false
 					#}).appendTo('#insertCanvas')
 				)
+			$scope.graphType = (graphtype)->
+				$scope.graphtype = graphtype
+				if $.inArray(graphtype, ['pie','doughnut','polar-area']) != -1
+					$scope.needLegend = true
+				else
+					$scope.needLegend = false
 	)
 ])

@@ -3,6 +3,8 @@
  * Global mobile settings
  */
 
+
+
 $mini: 20em;
 $mobile: 30em;
 $tablet: 48em;
@@ -198,6 +200,12 @@ button.close {
 .glyphicon-pencil {
   color: #aaa;
 }
+small .glyphicon-flash {
+  color: yellow;
+  background-color: #9d9d9d;
+  padding:3px;
+  border-radius: 15px;
+}
 .ng-hide {
   display: none!important;
 }
@@ -247,6 +255,49 @@ button.close {
     -o-transform: rotate(1080deg);
 }
 
+/* 
+ * Statistics 
+ */
+
+canvas#pie {
+  margin-right:0;
+  @include respond(mobile) {
+    padding: 0;
+  }
+}
+
+.chart-legend, .bar-legend, .line-legend, .pie-legend, .radar-legend, .polararea-legend, .doughnut-legend {
+  list-style-type: none;
+  position:absolute;
+  top: 0;
+  left: 0;
+  padding:0;
+
+  li {
+    white-space: inherit;
+    position: relative;
+    margin-bottom: 4px;
+    border-radius: 5px;
+    padding: 2px 8px 2px 28px;
+    font-size: smaller;
+    cursor: default;
+    word-wrap:break-word;
+    width: 90px;
+    @include respond(mobile) {
+      width:200px;
+    }
+
+    span {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+    }
+  }
+}
 
 /* Bootstrap Home */
 /*

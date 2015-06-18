@@ -4,7 +4,7 @@
 <h3>Title
   <sup>
     <small>
-      <i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" data-title="Title" data-html="true" data-content="<p>The title of your template should quickly explain a purpose to your user.</p><p>Ex:</p><pre>In-Person Math Tutoring<br>Patient Intake<br>Daily Exercise</pre>" data-container="body"></i>
+      <i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" data-title="Title" data-html="true" data-content="<p>Great titles convey their message with keywords which capture a situation.</p><p>Ex:</p><pre>In-Person Math Tutoring<br>Influenza Patient Intake<br>Daily Exercise Routine</pre>" data-container="body"></i>
     </small>
   </sup>
 </h3>
@@ -99,11 +99,22 @@
               </div>
               <div role="tabpanel" id="section-list" class="panel-collapse collapse" aria-labelledby="section-list-tab">
                 <div class="panel-body">
-                  <div ng-repeat="premadeSection in addSection.types">
-                    <button class="btn btn-default" aria-label="Select a premade section" data-dismiss="modal" data-toggle="collapse" data-target="#section-list" ng-click="addPremadeSection(premadeSection)">Add Section</button>
-                    <div class="{{column.width}}" ng-repeat="column in premadeSection.columns">
-                      <h4>Column {{column.id+1}}</h4>
-                      <template-field-directive ng-repeat="field in column.fields" field="field"></template-field-directive>
+                  <div role="tablist" class="panel-group" id="premade-section-accordion">
+                    <div class="panel panel-default" ng-repeat="premadeSection in addSection.types track by $index">
+                      <div class="panel-heading" data-toggle="collapse" data-target="#premade-section-{{$index}}" data-parent="#premade-section-accordion" aria-controls="premade-section-{{$index}}" id="premade-section-{{$index}}-header">
+                        {{premadeSection.name}}
+                      </div>
+                      <div role="tabpanel" id="premade-section-{{$index}}" class="panel-collapse collapse" aria-labelledby="premade-section-{{$index}}-tab">
+                        <div class="panel-body">
+                          <button class="btn btn-default pull-right" aria-label="Select a premade section" data-dismiss="modal" data-toggle="collapse" data-target="#premade-section-{{$index}},#section-list" ng-click="addPremadeSection(premadeSection)">Add Section</button>
+                          This section will look like this...
+                          <h3>{{premadeSection.name}}</h3>
+                          <div class="{{column.width}}" ng-repeat="column in premadeSection.columns">
+                            <h4>Column {{column.id+1}}</h4>
+                            <template-field-directive ng-repeat="field in column.fields" field="field"></template-field-directive>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -127,7 +138,7 @@
   <h3>Sections
     <sup>
       <small>
-        <i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" data-html="true" title="Sections" data-content="<p>Sections are the core of your template. Consider focusing them on specific topics.</p><p>Click and drag section headers to reorder.</p>" data-container="body"></i>
+        <i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" data-html="true" title="Sections" data-content="<p>Sections are the core of your template. Consider focusing them on specific topics.</p><p>Open and close sections by clicking on their blue title areas</p><p>Click and drag <i class='glyphicon glyphicon-plus-sign' style='color: #31708f;'></i> to reorder sections.</p>" data-container="body"></i>
       </small>
     </sup>
   </h3>
@@ -295,7 +306,7 @@
                 Column Preview 
                 <sup>
                   <small>
-                    <i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" title="Column Preview" data-content="This is a live preview of the currently selected column. Any data entered below will be used as the default value for its respective field." data-placement="bottom" data-container="body"></i>
+                    <i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" title="Column Preview" data-content="This is a live preview of the currently selected column. Any data entered below will be used as the field's default value when entering reports." data-placement="bottom" data-container="body"></i>
                   </small>
                 </sup>
               </h4>

@@ -7,19 +7,19 @@ services.service('StatisticsService', [->
 		console.log query.field
 		console.log query.key
 		reports.forEach (obj) ->
-			#if obj.template == query.template
-			obj.sections and obj.sections.forEach((section) ->
-				section.columns and section.columns.forEach((column) ->
-					column.fields and column.fields.forEach((field) ->
-						collection.push field[query.key]
-						if field[query.key] == query.field
-							fieldData.push field.value
+			if obj.template_name == query.template
+				obj.sections and obj.sections.forEach((section) ->
+					section.columns and section.columns.forEach((column) ->
+						column.fields and column.fields.forEach((field) ->
+							collection.push field[query.key]
+							if field[query.key] == query.field
+								fieldData.push field.value
+							return
+						)
 						return
 					)
 					return
 				)
-				return
-			)
 			return
 		fieldData = this.countD(fieldData)
 		collection = this.countD(collection)

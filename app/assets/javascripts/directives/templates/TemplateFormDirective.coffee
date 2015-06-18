@@ -8,13 +8,11 @@ directives.directive('templateFormDirective',[()->
 			$scope.form.template = JSON.stringify($scope.form.sections)
 			if $scope.form.id
 				$scope.form.$update({id: $scope.form.id}, (res)->
-					console.log res
 					$location.path("/reports/#{$scope.form.id}")
 					$rootScope.$broadcast('clearreports')
 				)
 			else
 				$scope.form.$save({}, (res)->
-					console.log res
 					$location.path("/reports/#{$scope.form.id}")
 					$rootScope.$broadcast('clearreports')
 				).catch((err)-> console.log err.data)
