@@ -222,37 +222,41 @@ small .glyphicon-flash {
   margin: 7.5px 15px !important;
 }
 .panel-heading {
-    cursor: pointer;
-    word-wrap: break-word;
+  cursor: pointer;
+  word-wrap: break-word;
+}
+.template-section-header h4 {
+  text-size: 25px;
+  display: inline-block;
 }
 .panel-carat .template-section-header:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 .panel-carat .template-section-header:hover span,
 .panel-carat .template-section-header:hover strong {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 .panel-carat .template-section-header:before {
-    font-family: "Glyphicons Halflings";
-    font-size: 25px;
-    margin-right: 10px;
-    vertical-align: -3px;
-    -webkit-transition-duration: .5s;
-    -moz-transition-duration: .5s;
-    -o-transition-duration: .5s;
-    transition-duration: .5s;
+  font-family: "Glyphicons Halflings";
+  font-size: 25px;
+  margin-right: 10px;
+  vertical-align: -3px;
+  -webkit-transition-duration: .5s;
+  -moz-transition-duration: .5s;
+  -o-transition-duration: .5s;
+  transition-duration: .5s;
 }
 .panel-carat .template-section-header:not(.collapsed):before {
-    content: "\e082";
-    display: inline-block;
+  content: "\e082";
+  display: inline-block;
 }
 .panel-carat .template-section-header.collapsed:before {
-    content: "\e081";
-    display: inline-block;
-    -webkit-transform: rotate(1080deg);
-    -moz-transform: rotate(1080deg);
-    -ms-transform: rotate(1080deg);
-    -o-transform: rotate(1080deg);
+  content: "\e081";
+  display: inline-block;
+  -webkit-transform: rotate(1080deg);
+  -moz-transform: rotate(1080deg);
+  -ms-transform: rotate(1080deg);
+  -o-transform: rotate(1080deg);
 }
 
 /* 
