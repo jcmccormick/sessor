@@ -1,23 +1,41 @@
 <h1 class="page-header">Statistics</h1>
-<div class="jumbotron">
-	<form class="form-search">
-		<h4>Graph Type</h4>
-		<select class="form-control" ng-model="graphtype" ng-options="graphtype  for graphtype in ['pie','doughnut','polar-area','line','bar','radar']"></select>
+<form class="form-search">
+	<h4>Template</h4>
+	<div class="input-group">
+		<select class="form-control" ng-model="search.template" ng-options="template for template in dataProps.templates"></select>
+		<span class="input-group-btn">
+			<a href class="btn btn-primary stats-button" ng-click="listFields()">Select</a>
+		</span>
+	</div>
+	<div>
 		<h4>Field</h4>
-		<select class="form-control" ng-model="selectedField" ng-options="field for field in dataProps.fields"></select>
-		<h4>Field Data</h4>
 		<div class="input-group">
-			<select class="form-control" ng-model="selectedData" ng-options="value for value in dataProps.values"></select>
+			<select class="form-control" ng-model="search.field" ng-options="field for field in dataProps.fields"></select>
 			<span class="input-group-btn">
-				<a href class="btn btn-primary btn-sm" ng-click="showData()">Log</a>
+				<a href class="btn btn-primary stats-button" ng-click="showData()">Log</a>
 			</span>
 		</div>
-	</form>
-	<canvas ng-show="graphtype == 'pie'" id="pie" class="chart chart-pie" data="pie" labels="labels"></canvas>
-	<canvas ng-show="graphtype == 'doughnut'" id="doughnut" class="chart chart-doughnut" data="pie" labels="labels"></canvas>
-	<canvas ng-show="graphtype == 'polar-area'" id="polar-area" class="chart chart-polar-area" data="pie" labels="labels"></canvas>
-
-	<canvas ng-show="graphtype == 'line'" id="line" class="chart chart-line" data="line" labels="labels"></canvas>
-	<canvas ng-show="graphtype == 'bar'" id="bar" class="chart chart-bar" data="line" labels="labels"></canvas>
-	<canvas ng-show="graphtype == 'radar'" id="radar" class="chart chart-radar" data="line" labels="labels"></canvas>
+	</div>
+</form>
+<div ng-show="data">
+	<h4>Graph Type</h4>
+	<div class="btn-group btn-group-justified">
+		<a href class="btn btn-success" ng-model="graphtype" ng-repeat="graphtype in ['pie','doughnut','polar-area','line','bar','radar']">{{graphtype}}</a>
+	</div>
 </div>
+
+<canvas insert-canvas graphtype="graphtype" data="data" labels="labels"></canvas>
+
+<!-- <div ng-show="graphtype == type" ng-repeat="type in ['pie','doughnut','polar-area']">
+	<canvas id="{{type}}" ng-attr-class="chart chart-{{type}}" ng-attr-data="pie" labels="labels" legend="true"></canvas>
+</div>
+<div ng-show="graphtype == type" ng-repeat="type in ['line','bar','radar']">
+	<canvas id="{{type}}" ng-attr-class="chart chart-{{type}}" ng-attr-data="line" labels="labels" legend="true"></canvas>
+</div> -->
+<canvas ng-show="type == 'pie'" id="pie" class="chart chart-pie" data="pie" labels="labels" legend="true"></canvas>
+<canvas ng-show="type == 'doughnut'" id="doughnut" class="chart chart-doughnut" data="pie" labels="labels" legend="true"></canvas>
+<canvas ng-show="type == 'polar-area'" id="polar-area" class="chart chart-polar-area" data="pie" labels="labels" legend="true"></canvas>
+
+<canvas ng-show="type == 'line'" id="line" class="chart chart-line" data="line" labels="labels" legend="true"></canvas>
+<canvas ng-show="type == 'bar'" id="bar" class="chart chart-bar" data="line" labels="labels" legend="true"></canvas>
+<canvas ng-show="type == 'radar'" id="radar" class="chart chart-radar" data="line" labels="labels" legend="true"></canvas>

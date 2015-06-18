@@ -2,18 +2,17 @@ services = angular.module('services')
 services.service('StatisticsService', [->
 	{
 	getCountOfIn: (query, reports, callback)->
-		key = query.substr(0,query.indexOf(' '))
-		searchedField = query.substr(query.indexOf(' ')+1)
 		collection = []
 		fieldData = []
-		console.log key
-		console.log searchedField
+		console.log query.field
+		console.log query.key
 		reports.forEach (obj) ->
+			#if obj.template == query.template
 			obj.sections and obj.sections.forEach((section) ->
 				section.columns and section.columns.forEach((column) ->
 					column.fields and column.fields.forEach((field) ->
-						collection.push field[key]
-						if field[key] == searchedField
+						collection.push field[query.key]
+						if field[query.key] == query.field
 							fieldData.push field.value
 						return
 					)

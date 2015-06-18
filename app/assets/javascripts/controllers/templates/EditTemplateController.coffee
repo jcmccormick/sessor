@@ -87,9 +87,9 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 			column.lastFieldID = 0
 		else
 			column.lastFieldID = column.fields[column.fields.length - 1].id
+			column.lastFieldID++
 		if !name
 			name = "Unnamed " + type.value
-		column.lastFieldID++
 		newField = 
 			'id': column.lastFieldID
 			'name': name
@@ -99,7 +99,6 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 			'disabled': false
 			'glyphicon': type.glyphicon
 		column.fields.push newField
-		console.log column.lastFieldID
 		return
 
 	# deletes particular field on button click
@@ -116,16 +115,14 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 	$scope.addOption = (field) ->
 		if !field.options
 			field.options = new Array
-		lastOptionID = 0
+			field.options.lastOptionID = 0
 		if field.options[field.options.length - 1]
 			lastOptionID = field.options[field.options.length - 1].id
-		# new option's id
-		id = lastOptionID + 1
+			lastOptionID++
 		newOption = 
-			'id': id
-			'name': 'Option ' + id
-			'value': id
-		# put new option into options array
+			'id': lastOptionID
+			'name': ''
+			'value': lastOptionID
 		field.options.push newOption
 		return
 

@@ -15,6 +15,11 @@ factories.factory("ReportFactory", ['$resource',
 					value.key = index
 					return [value]
 				)
+				jsonData = JSON.parse(response.data.participants)
+				response.data.participants = $.map(jsonData, (value, index)->
+					value.key = index
+					return [value]
+				)
 				return response.data
 		}
 	})
