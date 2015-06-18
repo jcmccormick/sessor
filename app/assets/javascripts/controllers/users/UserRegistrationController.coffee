@@ -4,7 +4,7 @@ controllers.controller('UserRegistrationController', ['$scope', '$auth', '$locat
 		$scope.error = reason.errors[0]
 		return
 	)
-	allowed_emails= ['sean.d.potts@gmail.com', 'benmccormickmedia@gmail.com', 'joe.c.mccormick@gmail.com', 'knightrage@gmail.com', 'gardnecl@gmail.com', 'mccormickcharlie@hotmail.com']
+	allowed_emails= ['sean.d.potts@gmail.com', 'benmccormickmedia@gmail.com', 'joe.c.mccormick@gmail.com', 'knightrage@gmail.com', 'gardnecl@gmail.com', 'mccormickcharlie@hotmail.com', 'happytogether1954@gmail.com']
 	$scope.handleRegBtnClick = ->
 		$('#userRegistrationModal').modal('toggle')
 		i = 0
