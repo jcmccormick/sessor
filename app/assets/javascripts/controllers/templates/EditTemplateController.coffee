@@ -85,8 +85,11 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 		if !column.fields
 			column.fields = new Array
 			column.lastFieldID = 0
+		else
+			column.lastFieldID = column.fields[column.fields.length - 1].id
 		if !name
 			name = "Unnamed " + type.value
+		column.lastFieldID++
 		newField = 
 			'id': column.lastFieldID
 			'name': name
@@ -97,7 +100,6 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 			'glyphicon': type.glyphicon
 		column.fields.push newField
 		console.log column.lastFieldID
-		column.lastFieldID++
 		return
 
 	# deletes particular field on button click
