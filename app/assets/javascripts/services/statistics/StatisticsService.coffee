@@ -13,12 +13,12 @@ services.service('StatisticsService', [->
 					section.columns and section.columns.forEach((column) ->
 						column.fields and column.fields.forEach((field) ->
 							collection.push field[query.key]
-							if field.options
-								field.options.forEach((option)->
-									optionLabels.push option.name
-								)
 							if field[query.key] == query.field
 								fieldData.push field.value
+								if field.options
+									field.options.forEach((option)->
+										optionLabels.push option.name
+									)
 							return
 						)
 						return

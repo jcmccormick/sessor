@@ -31,7 +31,8 @@ controllers.controller("ReportsStatisticsController",  ['$scope', 'ReportsFactor
 			$scope.showData = ->
 				StatisticsService.getCountOfIn($scope.search, res, (collection, fieldData, optionLabels)->
 					$scope.labels = fieldData[0]
-					if optionLabels
+					console.log optionLabels
+					if optionLabels.length > 0
 						optionLabels.splice(fieldData[0].length, optionLabels.length)
 						$scope.labels = optionLabels
 

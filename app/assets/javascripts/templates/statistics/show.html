@@ -31,15 +31,44 @@
 <div ng-show="graphtype == type" ng-repeat="type in ['line','bar','radar']">
 	<canvas id="{{type}}" ng-attr-class="chart chart-{{type}}" ng-attr-data="line" labels="labels" legend="true"></canvas>
 </div> -->
-<div ng-show="needLegend" class="col-md-2">
-	<canvas class="chart chart-pie hide col-md-2 pull-left" data="pie" labels="labels" legend="true">
-</div>
-<div>
-<canvas ng-show="graphtype == 'pie'" id="pie" class="chart chart-pie" data="pie" labels="labels"></canvas>
-<canvas ng-show="graphtype == 'doughnut'" id="doughnut" class="chart chart-doughnut" data="pie" labels="labels"></canvas>
-<canvas ng-show="graphtype == 'polar-area'" id="polar-area" class="chart chart-polar-area" data="pie" labels="labels"></canvas>
 
-<canvas ng-show="graphtype == 'line'" id="line" class="chart chart-line" data="line" labels="labels"></canvas>
-<canvas ng-show="graphtype == 'bar'" id="bar" class="chart chart-bar" data="line" labels="labels"></canvas>
-<canvas ng-show="graphtype == 'radar'" id="radar" class="chart chart-radar" data="line" labels="labels"></canvas>
+<!-- BEGIN STAT GRAPH ACCORDION -->
+<div ng-show="data" role="tablist" class="panel-group" id="stat-chart-accordion">
+	<div class="panel panel-info">
+
+
+		<!-- BEGIN STAT GRAPH HEADER -->
+		<div class="panel-heading"
+		data-toggle="collapse" 
+		data-target="#stat-chart" 
+		data-parent="#stat-chart-accordion" 
+		aria-controls="stat-chart"
+		id="stat-chart-header">
+			<h4 class="panel-title">
+			Graph Display
+			</h4>
+		</div>
+		<!-- END SECTION HEADER -->
+
+
+		<!-- BEGIN STAT GRAPH INFO PANEL -->
+		<div role="tabpanel" id="stat-chart" class="panel-collapse collapse" aria-labelledby="stat-chart-tab" aria-expanded="true">
+			<div class="panel-body">
+				<div ng-show="needLegend" class="col-md-2">
+					<canvas class="chart chart-pie hide col-md-2 pull-left" data="pie" labels="labels" legend="true">
+				</div>
+				<canvas ng-show="graphtype == 'pie'" id="pie" class="chart chart-pie" data="pie" labels="labels"></canvas>
+				<canvas ng-show="graphtype == 'doughnut'" id="doughnut" class="chart chart-doughnut" data="pie" labels="labels"></canvas>
+				<canvas ng-show="graphtype == 'polar-area'" id="polar-area" class="chart chart-polar-area" data="pie" labels="labels"></canvas>
+
+				<canvas ng-show="graphtype == 'line'" id="line" class="chart chart-line" data="line" labels="labels"></canvas>
+				<canvas ng-show="graphtype == 'bar'" id="bar" class="chart chart-bar" data="line" labels="labels"></canvas>
+				<canvas ng-show="graphtype == 'radar'" id="radar" class="chart chart-radar" data="line" labels="labels"></canvas>
+			</div>
+		</div>
+		<!-- END STAT GRAPH INFO PANEL -->
+
+
+	</div>
 </div>
+<!-- END STAT GRAPH ACCORDION -->
