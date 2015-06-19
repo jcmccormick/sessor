@@ -61,7 +61,7 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 		$scope.addSection.columns.lastAddedID = 0
 		return
 
-	# add new option to the field
+	# add premade section to form
 	$scope.addPremadeSection = (sec) ->
 		sec.id = $scope.addSection.lastAddedID
 		$scope.addSection.prototype = {}
@@ -115,7 +115,7 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 	$scope.addOption = (field) ->
 		if !field.options
 			field.options = new Array
-			field.options.lastOptionID = 0
+			lastOptionID = 0
 		if field.options[field.options.length - 1]
 			lastOptionID = field.options[field.options.length - 1].id
 			lastOptionID++

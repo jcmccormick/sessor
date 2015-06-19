@@ -313,9 +313,9 @@
                 <!-- BEGIN COLUMN PREVIEW HEADER -->
                 <div class="panel-heading" 
                 data-toggle="collapse" 
-                data-target="#column-preview-panel" 
+                data-target="#sec{{section.id}}col{{column.id}}-preview-panel" 
                 data-parent="#column-preview-accordion" 
-                aria-controls="column-preview-panel" 
+                aria-controls="sec{{section.id}}col{{column.id}}-preview-panel" 
                 id="column-preview-panel-header">
                   <h4 class="panel-title" bs-popover>
                     <i class="glyphicon glyphicon-search"></i>
@@ -331,7 +331,7 @@
 
 
                 <!-- BEGIN COLUMN PREVIEW PANEL -->
-                <div role="tabpanel" id="column-preview-panel" class="panel-collapse collapse" aria-labelledby="column-preview-panel-tab">
+                <div role="tabpanel" id="sec{{section.id}}col{{column.id}}-preview-panel" class="panel-collapse collapse" aria-labelledby="sec{{section.id}}col{{column.id}}-preview-panel-tab">
                   <div class="panel-body">
                     <template-field-directive ng-repeat="field in column.fields" field="field"></template-field-directive>
                   </div>

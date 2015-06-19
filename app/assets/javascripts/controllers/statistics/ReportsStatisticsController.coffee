@@ -29,9 +29,12 @@ controllers.controller("ReportsStatisticsController",  ['$scope', 'ReportsFactor
 				)
 			)
 			$scope.showData = ->
-				StatisticsService.getCountOfIn($scope.search, res, (collection, fieldData)->
-
+				StatisticsService.getCountOfIn($scope.search, res, (collection, fieldData, optionLabels)->
 					$scope.labels = fieldData[0]
+					if optionLabels
+						optionLabels.splice(fieldData[0].length, optionLabels.length)
+						$scope.labels = optionLabels
+
 					$scope.pie = fieldData[1]
 					$scope.line = []
 					$scope.line.push fieldData[1]
