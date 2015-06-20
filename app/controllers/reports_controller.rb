@@ -6,9 +6,11 @@ class ReportsController < ApplicationController
 
   def index
   	@reports = if params[:id]
-                 Report.where('id ilike ?',"%#{params[:id]}%")
+                 Report.where('id like ?',"%#{params[:id]}%")
+               elsif params[:participants]
+                 Report.where('participants like ?',"%#{params[:participants]}%")
                else
-                 Report.all
+                 []
                end
   end
 

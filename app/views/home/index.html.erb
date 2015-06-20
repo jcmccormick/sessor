@@ -1,4 +1,4 @@
-
+<!-- BEGIN ERROR DIVS -->
 <div flash-alert="error" active-class="in" class="alert fade">
     <h4 class="alert-heading">Whoops...</h4>
     <span class="alert-message">{{flash.message}}</span>
@@ -8,42 +8,183 @@
     <h4 class="alert-heading">Good news!</h4>
     <span class="alert-message">{{flash.message}}</span>
 </div>
+<!-- END ERROR DIVS -->
 
-<div class="container-fluid">
-  <nav ng-show="user.signedIn" class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <i class="glyphicon glyphicon-flash"></i>
-      </button>
+
+<!-- BEGIN SIGNED OUT JUMBOS -->
+<div id="marketrons" style="background-color:beigh;" ng-show="!user.signedIn">
+  <div class="jumbotron">
+    <div class="container">
+      <h1>Welcome!</h1>
+      <p class="lead">New around here?</p>
+      <p class="lead">
+        <a href class="btn btn-primary" data-toggle="modal" data-target="#userRegistrationModal">Register</a>
+         Or 
+        <a href class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Sign In</a>
+      </p>
     </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-left top-nav">
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sessor</a>
-          <ul class="nav navbar-nav main-dropdown-nav dropdown-menu" role="menu">
-            <li><a href="#/">Home</a></li>
-            <li><a href="#/desktop">Desktop</a></li>
-            <li><a href="#/reports">Reports</a></li>
-            <li><a href="#/templates">Templates</a></li>
-            <li><a href="#/statistics">Statistics</a></li>
-          </ul>
-        </li>
+  </div>
+
+  <div class="jumbotron jumbotron-warning">
+    <div class="container">
+      <h1>What's inside...</h1>
+      <ul class="lead list-unstyled col-xs-6">
+        <li>A clean and simple user interface</li>
+        <li>Fully-featured Template Builder</li>
+        <li>Visual statistics</li>
+        <li>User Groups with Business-oriented Logic</li>
       </ul>
-      <ul class="nav navbar-nav navbar-right top-nav">
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">You</a>
-          <ul class="nav navbar-nav main-dropdown-nav dropdown-menu" role="menu">
-            <li><a href ng-show="!user.signedIn" data-toggle="modal" data-target="#loginModal">Sign In</a></li>
-            <li><a href ng-show="user.signedIn" ng-click="handleSignOut()">Sign Out</a></li>
-          </ul>
-        </li>
+      <ul class="lead list-unstyled col-xs-6">
+        <li>Reporting with User-generated Templates</li>
+        <li>Scheduling for Groups</li>
+        <li>Online Customer Interaction</li>
+        <li>Adaptable to Businesses' Unique Needs</li>
       </ul>
     </div>
-  </nav>
-</div>
-<div class="container-fluid">
-  <div class="row">
-	<div class="col-xs-12 col-sm-8 col-sm-offset-2 view-frame animate-view" ng-view bs-popover></div>
+  </div>
+
+  <div class="jumbotron jumbotron-info">
+    <div class="container">
+      <h1>Try it out!</h1>
+      <p class="lead">Give our Template Builder a test-drive.</p>
+      <p><a href="#/demo" class="btn btn-primary">Go!</a></p>
+    </div>
   </div>
 </div>
+<!-- END SIGNED OUT JUMBOS -->
+
+
+<div id="site-nav-view" ng-show="user.signedIn">
+  <div class="container-fluid">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <i class="glyphicon glyphicon-flash"></i>
+        </button>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-left top-nav">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sessor</a>
+            <ul class="nav navbar-nav main-dropdown-nav dropdown-menu" role="menu">
+              <li><a href="#/">Home</a></li>
+              <li><a href="#/desktop">Desktop</a></li>
+              <li><a href="#/reports">Reports</a></li>
+              <li><a href="#/templates">Templates</a></li>
+              <li><a href="#/statistics">Statistics</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right top-nav">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">You</a>
+            <ul class="nav navbar-nav main-dropdown-nav dropdown-menu" role="menu">
+              <li><a href ng-show="!user.signedIn" data-toggle="modal" data-target="#loginModal">Sign In</a></li>
+              <li><a href ng-show="user.signedIn" ng-click="handleSignOut()">Sign Out</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+  	<div class="col-xs-12 col-sm-8 col-sm-offset-2 view-frame animate-view" ng-view bs-popover></div>
+    </div>
+  </div>
+</div>
+
+<!-- BEGIN TOP LEVEL MODALS -->
+
+<!-- BEGIN LOGIN MODAL -->
+<div class="modal fade" id="loginModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <form class="form-signin" role="form" ng-init="loginForm = {}">
+        <div class="modal-header">
+          <h4 class="modal-title">Sign in to Sessor</h4>
+        </div>
+        <div class="modal-body">
+          <label for="inputEmail" class="sr-only">Email address</label>
+          <input type="email" class="form-control" name="email" id="email" ng-model="loginForm.email" required="required" placeholder="Email">
+          <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" class="form-control" name="password" id="password" ng-model="loginForm.password" required="required" placeholder="Password">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="remember-me" ng-model="loginForm.remember"> Remember me
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-lg btn-primary btn-block" data-dismiss="modal" ng-click="submitLogin(loginForm)">Sign in</button>
+          <button type="button" class="btn btn-lg btn-primary btn-block" data-dismiss="modal" ng-bootbox-prompt="Please enter your email..." ng-bootbox-prompt-action="handleForgotPass(result)">Forgot Password</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- END LOGIN MODAL -->
+
+
+<!-- BEGIN REGISTRATION MODAL -->
+<div class="modal fade" id="userRegistrationModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <form class="form-signin" ng-controller="UserRegistrationController" ng-submit="handleRegBtnClick()" role="form" ng-init="registrationForm = {}">
+        <div class="modal-header">
+          <h4 class="modal-title">Create an Account</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" ng-model="registrationForm.email" required="required" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" ng-model="registrationForm.password" required="required" class="form-control">
+            8 or more characters required.
+          </div>
+
+          <div class="form-group">
+            <label for="password_confirmation">Password Confirmation</label>
+            <input type="password" name="password_confirmation" id="password_confirmation" ng-model="registrationForm.password_confirmation" required="required" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-lg btn-primary btn-block">Complete Registration</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- END REGISTRATION MODAL -->
+
+<!-- BEGIN FORGOT PASS MODAL -->
+<div class="modal fade" id="forgotPassModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <form role="form">
+        <div class="modal-header">
+          <h4 class="modal-title">Reset Password</h3>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Your Email</label>
+            <input type="email" name="email" id="email" ng-model="fpemail" required="required" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary btn-lg" data-dismiss="modal" ng-click="handleForgotPass()">Send Password Reset Email</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- END FORGOT PASS MODAL -->
+
+<!-- END TOP LEVEL MODALS -->

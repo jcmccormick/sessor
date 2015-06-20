@@ -4,6 +4,7 @@ controllers.controller('UserController', ['$auth', '$scope', '$location', '$wind
 	
 	$scope.$on('auth:login-success', ->
 		$window.location.reload()
+		flash.success = "Welcome " + $auth.user.uid
 		$location.path('/desktop/')
 		return
 	)
@@ -18,6 +19,7 @@ controllers.controller('UserController', ['$auth', '$scope', '$location', '$wind
 	$scope.handleSignOut = ->
 		$auth.signOut()
 		.then(()->
+			document.cookie = 'auth_headers' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 			flash.success = "You have been signed out."
 			$location.path('/')
 		)

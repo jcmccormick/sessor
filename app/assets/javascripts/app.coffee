@@ -33,6 +33,10 @@ sessor.config([ '$routeProvider', 'flashProvider', 'localStorageServiceProvider'
       .when('/',
         templateUrl: "main/index.html"
       )
+      .when('/demo',
+        templateUrl: "templates/edit.html"
+        controller: 'EditTemplateController'
+      )
       .when('/desktop',
         templateUrl: "main/desktop.html"
         resolve: authResolver
