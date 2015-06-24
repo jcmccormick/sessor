@@ -1,12 +1,11 @@
 class ReportsController < ApplicationController
 
-  before_action :authenticate_current_user
+  before_filter :authenticate_current_user
 
   skip_before_filter :verify_authenticity_token
 
 
   def index
-    response.headers['Uid'] = current_user.uid
   	@reports = Report.where('participants like ?',"%#{current_user.uid}%")
   end
 

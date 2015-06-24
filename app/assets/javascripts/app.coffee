@@ -112,6 +112,8 @@ services    = angular.module('services',[])
 sessor.run (['$rootScope', '$location', '$cacheFactory', '$http',
 ($rootScope, $location, $cacheFactory, $http) ->
 
+  $httpDefaultCache = $cacheFactory.get('$http')
+
   $rootScope.$on('auth:login-success', ->
     $location.path('/desktop/')
     $httpDefaultCache.removeAll()
@@ -120,6 +122,7 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http',
 
   $rootScope.$on('auth:logout-success', ->
     $location.path('/')
+    $httpDefaultCache.removeAll()
     return
   )
 
@@ -128,8 +131,6 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http',
     $location.path('/')
     return
   )
-
-  $httpDefaultCache = $cacheFactory.get('$http')
 
   angular.forEach [
     'cleartemplates'
