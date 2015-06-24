@@ -16,15 +16,18 @@ sessor = angular.module('sessor', [
   'services'
 ])
 
-sessor.config([ '$routeProvider', 'flashProvider', 'localStorageServiceProvider',
-  ($routeProvider, flashProvider, localStorageServiceProvider)->
-      localStorageServiceProvider
-        .setPrefix('sesso_')
+sessor.config(['$authProvider', '$routeProvider', 'flashProvider', 'localStorageServiceProvider',
+  ($authProvider, $routeProvider, flashProvider, localStorageServiceProvider)->
+      localStorageServiceProvider.setPrefix('sesso_')
+
       flashProvider.errorClassnames.push("alert-danger")
       flashProvider.warnClassnames.push("alert-warning")
       flashProvider.infoClassnames.push("alert-info")
       flashProvider.successClassnames.push("alert-success")
 
+      $authProvider.configure(
+        apiUrl: "api/"
+      )
       authResolver = 'auth': ['$auth', ($auth)->
         return $auth.validateUser()
       ]
@@ -32,6 +35,14 @@ sessor.config([ '$routeProvider', 'flashProvider', 'localStorageServiceProvider'
       $routeProvider
       .when('/',
         templateUrl: "main/index.html"
+      )
+      .when('/sign_up',
+        templateUrl: "user_registrations/new.html"
+        controller: 'UserRegistrationsController'
+      )
+      .when('/sign_in',
+        templateUrl: "user_sessions/new.html"
+        controller: 'UserSessionsController'
       )
       .when('/demo',
         templateUrl: "templates/edit.html"
@@ -56,7 +67,7 @@ sessor.config([ '$routeProvider', 'flashProvider', 'localStorageServiceProvider'
         controller: 'ViewReportController'
         resolve: authResolver
       )
-      .when('/reports/:reportId/edit',
+      .when('/reports/:reportId/edit'
         templateUrl: "reports/edit.html"
         controller: 'EditReportController'
         resolve: authResolver
@@ -76,7 +87,7 @@ sessor.config([ '$routeProvider', 'flashProvider', 'localStorageServiceProvider'
         controller: 'ViewTemplateController'
         resolve: authResolver
       )
-      .when('/templates/:templateId/edit',
+      .when('/templates/:templateId/edit'
         templateUrl: "templates/edit.html"
         controller: 'EditTemplateController'
         resolve: authResolver
@@ -98,26 +109,48 @@ factories   = angular.module('factories',[])
 directives  = angular.module('directives',[])
 services    = angular.module('services',[])
 
-sessor.run (['$rootScope', '$cacheFactory', '$http',
-  ($rootScope, $cacheFactory, $http) ->
-    $httpDefaultCache = $cacheFactory.get('$http')
-    angular.forEach [
-      'cleartemplates'
-      'clearreports'
-    ], (value) ->
-      $rootScope.$on value, (event) ->
-        $httpDefaultCache.removeAll()
-        return
+sessor.run (['$rootScope', '$location', '$cacheFactory', '$http',
+($rootScope, $location, $cacheFactory, $http) ->
+
+  $rootScope.$on('auth:login-success', ->
+    $location.path('/desktop/')
+    $httpDefaultCache.removeAll()
+    return
+  )
+
+  $rootScope.$on('auth:logout-success', ->
+    $location.path('/')
+    return
+  )
+
+  $rootScope.$on('auth:invalid', ->
+    flash.error = "Looks like there was an error validating your credentials. Please try logging in again or contact support if problems continue. Make sure cookies and Javascript are enabled in your browser options."
+    $location.path('/')
+    return
+  )
+
+  $httpDefaultCache = $cacheFactory.get('$http')
+
+  angular.forEach [
+    'cleartemplates'
+    'clearreports'
+  ], (value) ->
+    $rootScope.$on value, (event) ->
+      $httpDefaultCache.removeAll()
       return
-    $(document).ready ->
-      $('.dropdown, .stick').hover (->
-        $('.dropdown-toggle, .dropdown-menu').addClass 'hover-menu'
-        return
-      ), ->
-        $('.dropdown-toggle, .dropdown-menu').removeClass 'hover-menu'
-        return
+    return
+
+  $(document).ready ->
+    $('.dropdown, .stick').hover (->
+      $('.dropdown-toggle, .dropdown-menu').addClass 'hover-menu'
       return
-    $(document).ready ->
-      $('input[rel="txtTooltip"]').tooltip();
+    ), ->
+      $('.dropdown-toggle, .dropdown-menu').removeClass 'hover-menu'
       return
+    return
+
+  $(document).ready ->
+    $('input[rel="txtTooltip"]').tooltip();
+    return
+
 ])

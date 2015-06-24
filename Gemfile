@@ -21,8 +21,9 @@ gem 'responders'
 gem 'bower-rails'
 gem 'angular-rails-templates'
 gem "foreman"
-gem 'devise_token_auth', git: 'https://github.com/jasonswett/devise_token_auth.git'
+gem 'devise_token_auth'
 gem 'omniauth'
+gem 'activerecord-session_store'
 group :production, :staging do
   # Use postgresql as the database for Heroku
   gem 'pg'

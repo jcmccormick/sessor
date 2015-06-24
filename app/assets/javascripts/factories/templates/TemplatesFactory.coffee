@@ -1,7 +1,7 @@
 factories = angular.module('factories')
-factories.factory("TemplatesFactory", ['$resource', '$cacheFactory',
-($resource, $cacheFactory)->
-	return $resource('templates/', { format: 'json' }, {
+factories.factory("TemplatesFactory", ['$auth', '$resource', '$cacheFactory',
+($auth, $resource, $cacheFactory)->
+	return $resource('api/templates/', { format: 'json' }, {
 	query:
 		method: 'GET'
 		isArray: true

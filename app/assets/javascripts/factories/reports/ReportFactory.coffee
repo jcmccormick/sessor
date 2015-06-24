@@ -1,7 +1,7 @@
 factories = angular.module('factories')
-factories.factory("ReportFactory", ['$resource',
-($resource)->
-	return $resource('reports/:id', { id: '@_id', format: 'json' }, {
+factories.factory("ReportFactory", ['$auth', '$resource',
+($auth, $resource)->
+	return $resource('api/reports/:id', { id: '@_id', format: 'json' }, {
 	update:
 		method: 'PUT'
 		isArray: true
