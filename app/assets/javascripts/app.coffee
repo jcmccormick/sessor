@@ -36,6 +36,12 @@ sessor.config(['$authProvider', '$routeProvider', 'flashProvider', 'localStorage
       .when('/',
         templateUrl: "main/index.html"
       )
+      .when('/support',
+        templateUrl: "main/support.html"
+      )
+      .when('/contact',
+        templateUrl: "main/contact.html"
+      )
       .when('/sign_up',
         templateUrl: "user_registrations/new.html"
         controller: 'UserRegistrationsController'
