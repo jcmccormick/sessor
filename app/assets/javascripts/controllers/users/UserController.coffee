@@ -3,9 +3,9 @@ controllers.controller('UserController', ['$auth', '$scope', '$location', '$wind
 ($auth, $scope, $location, $window, flash)->
 	
 	$scope.$on('auth:login-success', ->
-		$window.location.reload()
 		flash.success = "Welcome " + $auth.user.uid
 		$location.path('/desktop/')
+		$window.location.reload()
 		return
 	)
 	$scope.$on('auth:login-error', (ev, reason)->
