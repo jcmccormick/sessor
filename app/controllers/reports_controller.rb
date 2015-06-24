@@ -5,13 +5,7 @@ class ReportsController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def index
-  	@reports = if params[:id]
-                 Report.where('id like ?',"%#{params[:id]}%")
-               elsif params[:participants]
-                 Report.where('participants like ?',"%#{params[:participants]}%")
-               else
-                 []
-               end
+  	@reports = Report.where('participants like ?',"%#{current_user.uid}%")
   end
 
   def show

@@ -1,24 +1,27 @@
 controllers = angular.module('controllers')
 controllers.controller("ReportsStatisticsController",  ['$scope', 'ReportsFactory', 'StatisticsService', 'TemplatesFactory', 'TemplateService',
 ($scope, ReportsFactory, StatisticsService, TemplatesFactory, TemplateService)->
+	## Var Declare
 	$scope.dataProps = []
-	$scope.dataProps.names = {}
-	$scope.dataProps.fields = {}
 	$scope.dataProps.templates = {}
+	$scope.dataProps.fields = {}
+
 	$scope.search = []
 	$scope.search.key = 'name'
+	$scope.search.date = false
 
 	$scope.graphtype = 'pie'
+
 	$scope.needLegend = true
 
+	#Populate User's Templates
 	TemplatesFactory.query().$promise.then((res)->
 		res.forEach((template)->
 			$scope.dataProps.templates[template.id] = template.name
 		)
 	)
 
-	$scope.dataProps.names = TemplateService.supportedProperties
-	
+	#Take Search Selections and Parse
 	$scope.listFields = ->
 		ReportsFactory.query().$promise.then((res)->
 
@@ -44,22 +47,8 @@ controllers.controller("ReportsStatisticsController",  ['$scope', 'ReportsFactor
 					else
 						$scope.data = []
 						$scope.data.push fieldData[1]
-
-					#angular.element('<div></div>')
-					#.data(data)
-					#.attr({
-					#	id: $scope.graphtype
-					#	class: 'chart chart-'+$scope.graphtype
-					#	labels: 'labels'
-					#})
-					#$('<div />', {
-					#	id: $scope.graphtype
-					#	class: 'chart chart-'+$scope.graphtype
-					#	labels: fieldData[0]
-					#	data: data
-					#	legend: false
-					#}).appendTo('#insertCanvas')
 				)
+
 			$scope.graphType = (graphtype)->
 				$scope.graphtype = graphtype
 				if $.inArray(graphtype, ['pie','doughnut','polar-area']) != -1
