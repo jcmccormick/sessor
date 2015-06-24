@@ -141,17 +141,12 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http',
       return
     return
 
-  $(document).ready ->
-    $('.dropdown, .stick').hover (->
-      $('.dropdown-toggle, .dropdown-menu').addClass 'hover-menu'
-      return
-    ), ->
-      $('.dropdown-toggle, .dropdown-menu').removeClass 'hover-menu'
-      return
+  $('.dropdown, .stick').hover (->
+    $('.dropdown-toggle, .dropdown-menu').addClass 'hover-menu'
+    return
+  ), ->
+    $('.dropdown-toggle, .dropdown-menu').removeClass 'hover-menu'
     return
 
-  $(document).ready ->
-    $('input[rel="txtTooltip"]').tooltip();
-    return
-
+  $('input[rel="txtTooltip"]').tooltip()
 ])

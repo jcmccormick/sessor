@@ -1,3 +1,4 @@
+<h1 class="page-header">Sign In to Sessor</h1>
 <form ng-submit="submitLogin(loginForm)" role="form" ng-init="loginForm = {}">
   <div class="form-group">
     <label for="email">Email</label>
@@ -18,6 +19,7 @@
            required="required"
            class="form-control">
   </div>
-
-  <button type="submit" class="btn btn-primary btn-lg">Sign in</button>
+  <a href="#/" class="btn btn-default btn-lg">Back</a>
+  <button type="submit" class="btn btn-primary btn-lg pull-right">Sign in</button> 
+  <a href="#/forgot_password" class="btn btn-link btn-lg pull-right">Forgot Password</a>
 </form>
