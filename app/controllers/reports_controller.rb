@@ -5,6 +5,7 @@ class ReportsController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def index
+    reset_session
   	@reports = Report.where('participants like ?',"%#{current_user.uid}%")
   end
 
