@@ -1,6 +1,6 @@
 factories = angular.module('factories')
-factories.factory("TemplatesFactory", ['$auth', '$resource', '$cacheFactory',
-($auth, $resource, $cacheFactory)->
+factories.factory("TemplatesFactory", ['$auth', '$resource', 'ParseMapService',
+($auth, $resource, ParseMapService)->
 	return $resource('api/templates/', { format: 'json' }, {
 	query:
 		method: 'GET'
@@ -9,11 +9,7 @@ factories.factory("TemplatesFactory", ['$auth', '$resource', '$cacheFactory',
 		interceptor: {
 			response: (response)->
 				response.data.forEach (obj) ->
-					jsonData = JSON.parse(obj.sections)
-					obj.sections = $.map(jsonData, (value, index)->
-						value.key = index
-						return [value]
-					)
+					obj.sections = ParseMapService.map(obj.sections)
 				return response.data
 		}
 	})

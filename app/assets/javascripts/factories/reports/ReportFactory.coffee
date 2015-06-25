@@ -1,6 +1,6 @@
 factories = angular.module('factories')
-factories.factory("ReportFactory", ['$auth', '$resource',
-($auth, $resource)->
+factories.factory("ReportFactory", ['$auth', '$resource', 'ParseMapService',
+($auth, $resource, ParseMapService)->
 	return $resource('api/reports/:id', { id: '@_id', format: 'json' }, {
 	update:
 		method: 'PUT'
@@ -10,16 +10,8 @@ factories.factory("ReportFactory", ['$auth', '$resource',
 		isArray: false
 		interceptor: {
 			response: (response)->
-				jsonData = JSON.parse(response.data.template)
-				response.data.sections = $.map(jsonData, (value, index)->
-					value.key = index
-					return [value]
-				)
-				jsonData = JSON.parse(response.data.participants)
-				response.data.participants = $.map(jsonData, (value, index)->
-					value.key = index
-					return [value]
-				)
+				response.data.sections = ParseMapService.map(response.data.template)
+				response.data.participants = ParseMapService.map(response.data.participants)
 				return response.data
 		}
 	})
