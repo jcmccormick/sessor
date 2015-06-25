@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625154842) do
+ActiveRecord::Schema.define(version: 20150625191717) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "provider",               limit: 255,                null: false
@@ -96,6 +96,14 @@ ActiveRecord::Schema.define(version: 20150625154842) do
     t.datetime "updated_at",                  null: false
     t.boolean  "draft",         limit: 1
   end
+
+  create_table "templates_users", id: false, force: :cascade do |t|
+    t.integer "user_id",     limit: 4
+    t.integer "template_id", limit: 4
+  end
+
+  add_index "templates_users", ["template_id"], name: "index_templates_users_on_template_id", using: :btree
+  add_index "templates_users", ["user_id"], name: "index_templates_users_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "provider",               limit: 255,                null: false

@@ -8,6 +8,7 @@ sessor = angular.module('sessor', [
   'ipCookie',
   'ui.sortable',
   'chart.js',
+  'bgf.paginateAnything',
   'angular-flash.service',
   'angular-flash.flash-alert-directive',
   'controllers',
