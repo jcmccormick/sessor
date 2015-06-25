@@ -1,14 +1,23 @@
 <h1 class="page-header">Reports</h1>
-<div class="input-group">
-  <input type="text" class="form-control" ng-model="keywords" placeholder="Search your reports..." autofocus>
-  <span class="input-group-btn">
-    <a href ng-click="keywords = ''" class="btn btn-primary btn-md">Clear</a>
-  </span>
+
+
+<div class="stick col-xs-9 col-sm-6 col-md-6">
+  <div class="btn-group btn-group-justified">
+    <div class="input-group">
+      <span class="input-group-btn">
+        <a href="#/reports/new" class="btn btn-info">New</a>
+        <a role="button" ng-click="keywords = ''" class="btn btn-primary btn-md">Search</a>
+      </span>
+      <input type="text" class="form-control" ng-model="keywords" placeholder="Search your reports..." autofocus>
+    </div>
+  </div>
 </div>
-<p>
-  <a href="#/reports/new" class="btn btn-info h4">New</a>
+
+<div class="text-center">
   <bgf-pagination collection="reports" url="'api/reports/'"></bgf-pagination>
-</p>
+</div>
+
+
 <div role="tablist" class="panel-group panel-carat" id="reports-accordion" ng-if="reports">
   <div class="panel panel-info" ng-repeat="report in reports | filter: keywords | orderBy: '-id'">
 
