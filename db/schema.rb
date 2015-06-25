@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625122205) do
+ActiveRecord::Schema.define(version: 20150625154842) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "provider",               limit: 255,                null: false
@@ -64,6 +64,14 @@ ActiveRecord::Schema.define(version: 20150625122205) do
     t.integer  "template_id",   limit: 4
     t.string   "template_name", limit: 255
   end
+
+  create_table "reports_users", id: false, force: :cascade do |t|
+    t.integer "user_id",   limit: 4
+    t.integer "report_id", limit: 4
+  end
+
+  add_index "reports_users", ["report_id"], name: "index_reports_users_on_report_id", using: :btree
+  add_index "reports_users", ["user_id"], name: "index_reports_users_on_user_id", using: :btree
 
   create_table "sessions", force: :cascade do |t|
     t.string   "session_id", limit: 255,   null: false

@@ -5,7 +5,7 @@ class ReportsController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def index
-  	@reports = Report.where('participants like ?',"%#{current_user.uid}%")
+  	@reports = current_user.reports
   end
 
   def show
@@ -15,12 +15,14 @@ class ReportsController < ApplicationController
   def create
     @report = Report.new(allowed_params)
     @report.save
+    current_user.reports << @report
     render 'show', status: 201
   end
 
   def update
     report = Report.find(params[:id])
     report.update_attributes(allowed_params)
+    current_user.reports << report unless current_user.reports.include?(report)
     head :no_content
   end
 
