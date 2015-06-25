@@ -1,6 +1,6 @@
 controllers = angular.module('controllers')
-controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$resource', '$routeParams', '$location', 'TemplateService', 'TemplateFactory'
-($rootScope, $scope, $resource, $routeParams, $location, TemplateService, TemplateFactory)->
+controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope', '$resource', '$routeParams', '$location', 'TemplateService', 'TemplateFactory'
+($auth, $rootScope, $scope, $resource, $routeParams, $location, TemplateService, TemplateFactory)->
 
 	# add new section options
 	$scope.addSection = {}
@@ -28,6 +28,7 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$reso
 	else
 		$scope.template = new TemplateFactory()
 		$scope.template.name = ''
+		$scope.template.creator_uid = $auth.user.uid
 		$scope.template.sections = []
 
 	

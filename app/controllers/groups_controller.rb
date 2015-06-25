@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
-
-  before_filter :authenticate_user!
+  devise_token_auth_group :member, contains: [:user, :admin]
+  before_action :authenticate_member!
 
   skip_before_filter :verify_authenticity_token
 

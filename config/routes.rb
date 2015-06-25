@@ -5,7 +5,13 @@ Rails.application.routes.draw do
     resources :groups, only: [:index, :show, :create, :update, :destroy]
     resources :reports, only: [:index, :show, :create, :update, :destroy]
     resources :templates, only: [:index, :show, :create, :update, :destroy]
-    mount_devise_token_auth_for 'User', at: '/auth'
+    
+    mount_devise_token_auth_for 'User', at: 'auth'
+
+    mount_devise_token_auth_for 'Admin', at: 'admin_auth'
+    as :admin do
+      # Define routes for Admin within this block.
+    end
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

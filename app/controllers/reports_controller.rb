@@ -1,9 +1,8 @@
 class ReportsController < ApplicationController
-
-  before_filter :authenticate_current_user
+  devise_token_auth_group :member, contains: [:user, :admin]
+  before_action :authenticate_member!
 
   skip_before_filter :verify_authenticity_token
-
 
   def index
   	@reports = Report.where('participants like ?',"%#{current_user.uid}%")
