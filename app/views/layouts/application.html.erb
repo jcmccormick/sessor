@@ -11,10 +11,8 @@
      Please enable javascript and cookies in your browser. 
   </noscript>
 </head>
-<body>
-  <div ng-controller="NavController">
-    <%= yield %>
-  </div>
+<body ng-controller="NavController">
+  <%= yield %>
   <script>
     if (!navigator.cookieEnabled) document.write('Please enable javascript and cookies in your browser.');
   </script>
