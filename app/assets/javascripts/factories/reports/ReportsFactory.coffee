@@ -9,7 +9,7 @@ factories.factory("ReportsFactory", ['$auth', '$resource', 'ParseMapService',
 		interceptor: {
 			response: (response)->
 				response.data.forEach (obj) ->
-					obj.sections = ParseMapService.map(obj.sections)
+					obj.sections = ParseMapService.map(obj.template)
 				return response.data
 		}
 	})

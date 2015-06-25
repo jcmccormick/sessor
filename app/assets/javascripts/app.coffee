@@ -115,8 +115,8 @@ factories   = angular.module('factories',[])
 directives  = angular.module('directives',[])
 services    = angular.module('services',[])
 
-sessor.run (['$rootScope', '$location', '$cacheFactory', '$http',
-($rootScope, $location, $cacheFactory, $http) ->
+sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'flash',
+($rootScope, $location, $cacheFactory, $http, flash) ->
 
   $httpDefaultCache = $cacheFactory.get('$http')
 

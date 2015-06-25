@@ -47,6 +47,7 @@ group :development, :test do
   gem 'teaspoon'
   gem 'teaspoon-jasmine'
   gem 'phantomjs'
+  gem 'rails-erd'
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
