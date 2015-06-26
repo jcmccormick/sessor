@@ -12,9 +12,9 @@
 </head>
 <body ng-controller="NavController">
   <%= yield %>
+</body>
+  <%= javascript_include_tag 'application' %>
   <script>
     if (!navigator.cookieEnabled) document.write('Please enable javascript and cookies in your browser.');
   </script>
-</body>
-  <%= javascript_include_tag 'application' %>
 </html>
