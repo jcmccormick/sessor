@@ -5,10 +5,12 @@
   <div class="btn-group btn-group-justified">
     <div class="input-group">
       <span class="input-group-btn">
-        <a href="#/reports/new" class="btn btn-info">New</a>
-        <a role="button" ng-click="keywords = ''" class="btn btn-primary btn-md">Search</a>
+        <a href="#/reports/new" class="btn btn-info">New Report</a>
       </span>
-      <input type="text" class="form-control" ng-model="keywords" placeholder="Search your reports..." autofocus>
+      <input type="text" class="form-control" ng-model="keywords" placeholder="Search your reports..." disabled="disabled" autofocus>
+      <span class="input-group-btn">
+        <a role="button" ng-click="keywords = ''" class="btn btn-primary btn-md" disabled="disabled">Search</a>
+      </span>
     </div>
   </div>
 </div>

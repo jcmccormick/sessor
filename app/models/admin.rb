@@ -1,6 +1,6 @@
 class Admin < ActiveRecord::Base
-  has_many :templates
-  has_many :reports
+  has_and_belongs_to_many :templates
+  has_and_belongs_to_many :reports
   
   # Include default devise modules.
   devise :database_authenticatable, :registerable,

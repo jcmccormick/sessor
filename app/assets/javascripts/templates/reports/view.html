@@ -1,9 +1,4 @@
 <h1 class="page-header">Report {{report.id}}</h1>
-<div class="col-md-3">
-  <a href="#/reports/" class="btn btn-default">&larr; Reports</a>
-</div>
-<div class="col-md-9 text-right">
-  <a href="#/reports/{{report.id}}/edit" class="btn btn-info"> Edit </a>
-</div>
-
+<a href="#/reports/" class="btn btn-default">&larr; Reports</a>
+<a href="#/reports/{{report.id}}/edit" class="btn btn-info pull-right">Edit</a>
 <template-form-directive form="report"></template-form-directive>

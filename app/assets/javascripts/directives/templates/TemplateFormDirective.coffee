@@ -15,9 +15,9 @@ directives.directive('templateFormDirective',[()->
 				$scope.form.$save({}, (res)->
 					$location.path("/reports/#{$scope.form.id}")
 					$rootScope.$broadcast('clearreports')
-				).catch((err)-> console.log err.data)
+				)
 
-		$scope.deleteReport = ()->
+		$scope.deleteReport = ->
 			console.log $scope.form
 			$scope.form.$delete({id: $scope.form.id})
 			.then((res)->

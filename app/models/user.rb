@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  belongs_to :group
+  belongs_to :group, inverse_of: :users
   has_and_belongs_to_many :templates
   has_and_belongs_to_many :reports
   

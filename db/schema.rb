@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625191717) do
+ActiveRecord::Schema.define(version: 20150626004531) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "provider",               limit: 255,                null: false
@@ -42,6 +42,14 @@ ActiveRecord::Schema.define(version: 20150625191717) do
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
   add_index "admins", ["uid", "provider"], name: "index_admins_on_uid_and_provider", unique: true, using: :btree
 
+  create_table "admins_reports", id: false, force: :cascade do |t|
+    t.integer "admin_id",  limit: 4
+    t.integer "report_id", limit: 4
+  end
+
+  add_index "admins_reports", ["admin_id"], name: "index_admins_reports_on_admin_id", using: :btree
+  add_index "admins_reports", ["report_id"], name: "index_admins_reports_on_report_id", using: :btree
+
   create_table "groups", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "owner",      limit: 255
@@ -64,6 +72,8 @@ ActiveRecord::Schema.define(version: 20150625191717) do
     t.integer  "template_id",   limit: 4
     t.string   "template_name", limit: 255
   end
+
+  add_index "reports", ["template_id"], name: "index_reports_on_template_id", using: :btree
 
   create_table "reports_users", id: false, force: :cascade do |t|
     t.integer "user_id",   limit: 4
@@ -128,9 +138,11 @@ ActiveRecord::Schema.define(version: 20150625191717) do
     t.text     "tokens",                 limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "group_id",               limit: 4
   end
 
   add_index "users", ["email"], name: "index_users_on_email", using: :btree
+  add_index "users", ["group_id"], name: "index_users_on_group_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
 
