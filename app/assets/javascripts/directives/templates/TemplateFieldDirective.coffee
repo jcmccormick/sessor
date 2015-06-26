@@ -99,7 +99,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
 
 
 
-    if !scope.livesave && $location.path() != '/reports/new/'
+    if $scope.livesave != true && $location.path() != '/reports/new/'
       scope.field.disabled = 'disabled'
 
     # GET template content from path
