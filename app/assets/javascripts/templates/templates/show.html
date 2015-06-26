@@ -14,6 +14,11 @@
   </div>
 </div>
 
+<div class="text-center">
+  <bgf-pagination collection="templates" url="'api/templates/'" transform-response="parseTemplateSections"></bgf-pagination>
+</div>
+
+<!-- BEGIN TEMPLATES LIST -->
 <div role="tablist" class="panel-group panel-carat" id="templates-accordion" ng-if="templates">
   <div class="panel panel-info" ng-repeat="template in templates | filter: keywords | orderBy: '-id'">
 
@@ -40,5 +45,9 @@
         <a href="#/templates/{{template.id}}/edit" class="btn btn-info">Edit</a>
       </div>
     </div>
+    <!-- END SECTION INFO PANEL -->
+
+
   </div>
 </div>
+<!-- END TEMPLATES LIST -->

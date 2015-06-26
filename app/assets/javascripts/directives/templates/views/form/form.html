@@ -1,14 +1,17 @@
 <form name="myForm" id="myForm" class="form row">
-    <div class="col-xs-12 col-sm-12 col-md-12" ng-show="form.livesave">
-        <a role="button" class="btn btn-info" ng-click="saveReport()">Save</a>
-        <a role="button" class="btn btn-danger pull-right" ng-click="deleteReport()" ng-show="form.id">Delete</a>
+    <div class="stick col-xs-9 col-sm-6 col-md-6" ng-show="form.livesave">
+        <div class="btn-group btn-group-justified">
+            <a role="button" class="btn btn-info" ng-click="saveReport()">Save</a>
+            <a role="button" class="btn btn-default" ng-click="selectTemplate()" ng-disabled="form.livesave">Template Select</a>
+            <a role="button" class="btn btn-danger" ng-click="deleteReport()" ng-show="form.id">Delete</a>
+        </div>
     </div>
     <h1><center>{{form.name}}</center></h1>
     <div class="col-xs-12 col-sm-12 col-md-12" ng-repeat="section in form.sections track by $index">
         <h3>{{section.name}}</h3>
         <div class="{{column.width}}" ng-repeat="column in section.columns">
             <div ng-repeat="field in column.fields">
-                <template-field-directive field="field"></template-field-directive>
+                <template-field-directive field="field" livesave="form.livesave"></template-field-directive>
             </div>
         </div>
     </div>

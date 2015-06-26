@@ -5,11 +5,11 @@ class TemplatesController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def index
-  	@templates = if params[:id]
-                 Template.where('id ilike ?',"%#{params[:id]}%")
-               else
-                 Template.all
-               end
+    max_per_page = 5
+
+    paginate current_user.templates.count, max_per_page do |limit, offset|
+      render json: current_user.templates.limit(limit).offset(offset)
+    end
   end
 
   def show

@@ -16,7 +16,6 @@ controllers.controller("EditReportController", ['$rootScope', '$auth', '$scope',
 		)
 
 		$scope.selectTemplate = ->
-			$scope.report.livesave = true
 			$scope.report.sections = $scope.selectedTemplate.sections
 			$scope.report.template_id = $scope.selectedTemplate.id
 			$scope.report.template_name = $scope.selectedTemplate.name

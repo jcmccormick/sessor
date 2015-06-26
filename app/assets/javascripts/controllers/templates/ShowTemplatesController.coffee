@@ -1,8 +1,8 @@
 controllers = angular.module('controllers')
-controllers.controller("ShowTemplatesController",  ['$scope', 'TemplatesFactory',
-($scope, TemplatesFactory)->
-	TemplatesFactory.query().$promise.then((res)->
-		$scope.templates = res
-	).then().catch((err)->console.log err.data)
-	
+controllers.controller("ShowTemplatesController",  ['$scope', 'ParseMapService',
+($scope, ParseMapService)->
+	$scope.parseTemplateSections = (data, headersGetter)->
+		data.forEach (template) ->
+			template.sections = ParseMapService.map(template.sections)
+		return data	
 ])
