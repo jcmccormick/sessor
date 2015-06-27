@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html ng-csp ng-app="sessor">
-<head>
-  <title>Sessor</title>
-  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <%= stylesheet_link_tag    'application', media: 'all' %>
-  <%= csrf_meta_tags %>
-  <noscript>
-     Please enable javascript and cookies in your browser. 
-  </noscript>
-</head>
-<body ng-controller="NavController">
-  <%= yield %>
+  <head>
+    <title>Sessor</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body ng-controller="NavController">
+    <!-- BEGIN ERROR DIVS -->
+    <div flash-alert="error" active-class="in" class="alert fade">
+        <h4 class="alert-heading">Whoops...</h4>
+        <span class="alert-message">{{flash.message}}</span>
+    </div>
+
+    <div flash-alert="success" active-class="in" class="alert fade">
+        <h4 class="alert-heading">Good news!</h4>
+        <span class="alert-message">{{flash.message}}</span>
+    </div>
+    <!-- END ERROR DIVS -->
+
+    <%= yield %>
+  </body>
+  <noscript>Please enable javascript and cookies in your browser.</noscript>
   <%= javascript_include_tag 'application' %>
-  <script>
-    if (!navigator.cookieEnabled) document.write('Please enable javascript and cookies in your browser.');
-  </script>
-</body>
+  <script>if (!navigator.cookieEnabled) document.write('Please enable javascript and cookies in your browser.');</script>
 </html>
