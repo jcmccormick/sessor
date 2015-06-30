@@ -1,6 +1,7 @@
 directives = angular.module('directives')
 directives.directive('templateFieldDirective', ['$http', '$compile', '$location', 'TemplateService',
 ($http, $compile, $location, TemplateService) ->
+  
   getTemplate = (field) ->
     type = field.type
     supportedFields = TemplateService.supportedFields
@@ -18,7 +19,6 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
     return
 
   linker = (scope, element) ->
-
     textfield = '
     <div class="form-group">
       <label class="control-label">{{field.name}}
@@ -99,7 +99,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
 
 
 
-    if $scope.livesave != true && $location.path() != '/reports/new/'
+    if scope.livesave != true && $location.path() != '/reports/new/'
       scope.field.disabled = 'disabled'
 
     # GET template content from path

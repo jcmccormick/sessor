@@ -10,8 +10,8 @@ factories.factory("ReportFactory", ['$auth', '$resource', 'ParseMapService',
 		isArray: false
 		interceptor: {
 			response: (response)->
-				response.data.sections = ParseMapService.map(response.data.template)
-				response.data.participants = ParseMapService.map(response.data.participants)
+				console.log response.data
+				response.data.sections = ParseMapService.map(response.data.sections)
 				return response.data
 		}
 	})

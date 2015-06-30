@@ -148,7 +148,7 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'flash',
       return
     return
 
-  $('.dropdown, .stick').hover (->
+  $('.dropdown, .template-options-dropdown').hover (->
     $('.dropdown-toggle, .dropdown-menu').addClass 'hover-menu'
     return
   ), ->

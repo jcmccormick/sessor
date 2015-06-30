@@ -144,6 +144,7 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 		$scope.template.sections.splice 0, $scope.template.sections.length
 		$scope.template = new TemplateFactory()
 		$scope.template.name = ''
+		$scope.template.wantTitle = false
 		$scope.template.sections = []
 		$scope.addSection.lastAddedID = 0
 		$scope.addSection.columns.lastAddedID = 0

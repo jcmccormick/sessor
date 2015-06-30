@@ -1,13 +1,28 @@
 <form name="myForm" id="myForm" class="form row">
+
+    <!-- NEW FORM OPTIONS -->
     <div class="stick col-xs-9 col-sm-6 col-md-6" ng-show="form.livesave">
         <div class="btn-group btn-group-justified">
             <a role="button" class="btn btn-info" ng-click="saveReport()">Save</a>
-            <a role="button" class="btn btn-default" ng-click="selectTemplate()" ng-disabled="form.livesave">Template Select</a>
-            <a role="button" class="btn btn-danger" ng-click="deleteReport()" ng-show="form.id">Delete</a>
+            <div ng-show="form.livesave">
+                <a role="button" class="btn btn-danger" ng-click="deleteReport()">Delete</a>
+            </div>
+            <div ng-show="!form.id && form.livesave">
+                <div class="btn-group">
+                    <select class="btn btn-info report-edit-template-select text-center" ng-model="selectedTemplate" ng-options="template as template.name for template in templates"><option value="">Template Select</option></select>
+                </div>
+                <a role="button" class="btn btn-default" ng-click="selectTemplate()">Select</a>
+            </div>
         </div>
     </div>
-    <h1><center>{{form.name}}</center></h1>
-    <div class="col-xs-12 col-sm-12 col-md-12" ng-repeat="section in form.sections track by $index">
+
+    <center><h1>{{form.name}}</h1></center>
+
+    <div class="col-xs-12" ng-show="form.wantTitle || form.title">
+      <h3>Title</h3>
+      <input class="form-control" type="text" ng-model="form.title" value="{{form.title}}" ng-disabled="!form.id">
+    </div>
+    <div class="col-xs-12" ng-repeat="section in form.sections track by $index">
         <h3>{{section.name}}</h3>
         <div class="{{column.width}}" ng-repeat="column in section.columns">
             <div ng-repeat="field in column.fields">

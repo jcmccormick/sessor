@@ -1,12 +1,3 @@
 <h1 class="page-header">Edit Report</h1>
 
-<div class="stick col-xs-9 col-sm-6 col-md-6" ng-show="!report.livesave">
-	<div class="btn-group btn-group-justified">
-		<a role="button" class="btn btn-info btn-sm" href="#/reports">&larr; Reports</a>
-		<div class="btn-group">
-			<select class="btn btn-info report-edit-template-select" ng-model="selectedTemplate" ng-options="template as template.name for template in templates"><option class="text-center" value="">Template Select</option></select>
-		</div>
-		<a role="button" class="btn btn-default" ng-click="selectTemplate()">Select</a>
-	</div>
-</div>
-<template-form-directive form="report"></template-form-directive>
+<template-form-directive form="report" templates="templates"></template-form-directive>

@@ -211,6 +211,9 @@ small .glyphicon-flash {
     padding: 6px 12px;
   }
 }
+.stick ul {
+  padding: 0;
+}
 
 /*
  * Reports style
@@ -263,6 +266,25 @@ small .glyphicon-flash {
   -moz-transform: rotate(1080deg);
   -ms-transform: rotate(1080deg);
   -o-transform: rotate(1080deg);
+}
+.template-options-dropdown {
+  width: inherit;
+  min-width: 160px !important;
+  @include respond(desktop) {
+    min-width: 480px !important;
+  }
+}
+.template-options-dropdown ul {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.38em;
+}
+.template-options-dropdown ul li {
+  list-style: none !important;
+}
+.template-options-dropdown > li > ul > li > label:hover {
+  background-color: #eee;
+  cursor: pointer;
 }
 
 /* 

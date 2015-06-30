@@ -18,6 +18,7 @@ class ReportsController < ApplicationController
 
   def create
     @report = current_user.reports.new(allowed_params)
+    @report.template = Template.find(params[:template_id])
     @report.save
     current_user.reports << @report
     render 'show', status: 201
@@ -38,6 +39,6 @@ class ReportsController < ApplicationController
 
   private
     def allowed_params
-      params.require(:report).permit(:name, :submission, :response, :active, :location, :participants, :template, :template_id, :template_name)
+      params.require(:report).permit(:name, :submission, :response, :active, :location, :sections)
     end
 end

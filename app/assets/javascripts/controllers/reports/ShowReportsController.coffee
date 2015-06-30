@@ -3,6 +3,6 @@ controllers.controller("ShowReportsController",  ['$scope', 'ParseMapService',
 ($scope, ParseMapService)->
 	$scope.parseReportTemplate = (data, headersGetter)->
 		data.forEach (report) ->
-			report.sections = ParseMapService.map(report.template)
+			report.sections = ParseMapService.map(report.sections)
 		return data
 ])

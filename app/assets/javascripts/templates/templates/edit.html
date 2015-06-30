@@ -1,38 +1,39 @@
-<h1 class="page-header">Template Builder</h1>
-
-<!-- BEGIN FORM NAME INPUT -->
-<h3>Title
-  <sup>
-    <small>
-      <i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" data-title="Title" data-html="true" data-content="<p>Great titles convey their message with keywords which capture a situation.</p><p>Ex:</p><pre>In-Person Math Tutoring<br>Influenza Patient Intake<br>Daily Exercise Routine</pre>" data-container="body"></i>
-    </small>
-  </sup>
-</h3>
-<p ng-show="template.name == ''"></p>
-<p class="has-feedback">
-    <input type="text" class="form-control" ng-model="template.name" placeholder="Enter a title..." />
-    <i class="glyphicon glyphicon-pencil form-control-feedback"></i>
-</p>
-<!-- END FORM NAME INPUT -->
-
-
-<!-- BEGIN SECTION AND PREVEIW BUTTONS -->
-<div class="stick col-xs-9 col-sm-6 col-md-6">
-  <div class="btn-group btn-group-justified" ng-disabled="template.name != ''">
+<!-- BEGIN EDIT TEMPLATE STICK -->
+<div class="stick col-xs-9 col-sm-6">
+  <ul class="btn-group btn-group-justified">
     <a role="button" class="btn btn-info" ng-click="saveTemplate()">Finish</a>
-    <div class="btn-group navbar-inverse dropdown">
-      <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Options <span class="caret"></span></a>
-      <ul class="nav navbar-nav main-dropdown-nav dropdown-menu" role="menu">
-        <li><a role="button"><input type="radio" name="share_public"> Share Public</a></li>
-        <li><a role="button"><input type="radio" name="share_public"> Share Group</a></li>
-        <li><a role="button"><input type="radio" name="share_public"> Make Private</a></li>
+    <li class="btn-group dropdown">
+      <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Options <span class="caret"></span></a>
+      <ul class="dropdown-menu template-options-dropdown" role="menu">
+        <li class="col-sm-12 col-md-4">
+          <ul>
+            <li><h4>Sharing</h4><hr></li>
+            <li><label for="dont_share_radio"><input id="dont_share_radio" type="radio" name="sharing"> Don't Share</label></li>
+            <li><label for="share_group_radio"><input id="share_group_radio" type="radio" name="sharing"> Share Group</label></li>
+            <li><label for="share_public_radio"><input id="share_public_radio" type="radio" name="sharing"> Share Public</label></li>
+          </ul>
+        </li>
+        <li class="col-sm-12 col-md-4">
+          <ul>
+            <li><h4>Template</h4><hr></li>
+            <li><label for="template_title"><input id="template_title" type="checkbox" name="template_title" ng-model="template.wantTitle"> Add Title</label></li>
+          </ul>
+        </li>
+        <li class="col-sm-12 col-md-4">
+          <ul>
+            <li><h4>Something</h4><hr></li>
+            <li><label for="dont_something_radio"><input id="dont_something_radio" type="radio" name="something"> Don't something</label></li>
+            <li><label for="something_group_radio"><input id="something_group_radio" type="radio" name="something"> something Group</label></li>
+            <li><label for="something_public_radio"><input id="something_public_radio" type="radio" name="something"> something Public</label></li>
+          </ul>
+        </li>
       </ul>
-    </div>
+    </li>
     <a role="button" class="btn btn-info" data-toggle="modal" data-target=".previewModal" ng-click="previewUpdate()">Preview</a>
     <a type="button" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to reset the entire template?<br> All unsaved work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="resetTemplate()">Reset</a>
-  </div>
+  </ul>
 </div>
-<!-- END SECTION AND PREVEIW BUTTONS -->
+<!-- END EDIT TEMPLATE STICK -->
 
 
 <!-- BEGIN MODALS -->
@@ -133,6 +134,24 @@
 
 
 <!-- END MODALS -->
+
+<h1 class="page-header">Template Builder</h1>
+
+<!-- BEGIN FORM NAME INPUT -->
+<h3>Title
+  <sup>
+    <small>
+      <i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" data-title="Template Title" data-html="true" data-content="<p>Great titles convey their message with keywords which capture a situation.</p><p>Ex:</p><pre>In-Person Math Tutoring<br>Influenza Patient Intake<br>Daily Exercise Routine</pre>" data-container="body"></i>
+    </small>
+  </sup>
+</h3>
+<p ng-show="template.name == ''"></p>
+<p class="has-feedback">
+    <input type="text" class="form-control" ng-model="template.name" placeholder="Enter a title..." />
+    <i class="glyphicon glyphicon-pencil form-control-feedback"></i>
+</p>
+<!-- END FORM NAME INPUT -->
+
 
 <div ng-show="template.name != ''">
   <h3>Sections
