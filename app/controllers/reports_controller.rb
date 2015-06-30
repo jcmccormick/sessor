@@ -10,7 +10,6 @@ class ReportsController < ApplicationController
     paginate current_user.reports.count, max_per_page do |limit, offset|
       render json: current_user.reports.limit(limit).offset(offset)
     end
-    @reports = current_user.reports.all
   end
 
   def show

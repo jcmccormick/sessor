@@ -13,25 +13,25 @@ class TemplatesController < ApplicationController
   end
 
   def show
-  	@template = Template.find(params[:id])
+  	@template = current_user.templates.find(params[:id])
   end
 
   def create
-    @template = Template.new(allowed_params)
+    @template = current_user.templates.new(allowed_params)
     @template.save
     current_user.templates << @template
     render 'show', status: 201
   end
 
   def update
-    template = Template.find(params[:id])
+    template = current_user.templates.find(params[:id])
     template.update_attributes(allowed_params)
     current_user.templates << template unless current_user.templates.include?(template)
     head :no_content
   end
 
   def destroy
-    template = Template.find(params[:id])
+    template = current_user.templates.find(params[:id])
     template.destroy
     head :no_content
   end
