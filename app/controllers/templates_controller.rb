@@ -38,6 +38,6 @@ class TemplatesController < ApplicationController
 
   private
     def allowed_params
-      params.require(:template).permit(:name, :sections, :creator_uid, :private_world, :private_group, :group_id, :group_edit, :group_editors)
+      params.require(:template).permit(:name, :sections, :creator_uid, :private_world, :private_group, :group_id, :group_edit, :group_editors, :allow_title)
     end
 end

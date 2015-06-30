@@ -24,26 +24,24 @@
 
 
     <!-- BEGIN SECTION HEADER -->
-    <div class="panel-heading"
+    <div class="panel-heading view-all-accordion"
     data-toggle="collapse" 
     data-target="#collapse{{report.id}}" 
     data-parent="#reports-accordion" 
     aria-controls="collapse{{report.id}}">
-      <h4 ng-show="!report.name">{{report.template.name}} <small>#{{report.id}}</small></h4>
-      <h4 ng-show="report.name">{{report.name}}</h4>
+      <h4 ng-show="report.title">{{report.title}}</h4>
+      <h4 ng-show="!report.title">{{report.template.name}} <small>#{{report.id}}</small></h4>
     </div>
     <!-- END SECTION HEADER -->
 
 
     <!-- BEGIN SECTION INFO PANEL -->
-    <div role="tabpanel" id="collapse{{report.id}}" class="panel-collapse collapse" aria-labelledby="heading{{report.id}}-tab">
+    <div role="tabpanel" id="collapse{{report.id}}" class="panel-collapse collapse view-all-panel" aria-labelledby="heading{{report.id}}-tab"><!-- 
       <div class="panel-body" bs-popover>
         <div class="form-group">
-
-          <pre>{{report | json }}</pre>
           <template-form-directive form="report"></template-form-directive>
         </div>
-      </div>
+      </div> -->
       <div class="panel-footer">
         <a href="#/reports/{{report.id}}/edit" class="btn btn-info">Edit</a>
       </div>

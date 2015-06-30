@@ -97,10 +97,10 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
       <input type="password" class="form-control" value="{{field.value}}" ng-model="field.value"  ng-required="field.required" ng-disabled="field.disabled">
     </div>'
 
-
-
     if scope.livesave != true && $location.path() != '/reports/new/'
       scope.field.disabled = 'disabled'
+    else
+      scope.field.disabled = false
 
     # GET template content from path
     template = getTemplate(scope.field)
@@ -111,9 +111,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
       when "email" then element.html email
       when "checkbox" then element.html checkbox
       when "date"
-        console.log scope.field.value
         scope.field.value = new Date(scope.field.value)
-        console.log scope.field.value
         element.html date
       when "dropdown" then element.html dropdown
       when "hidden" then element.html hidden

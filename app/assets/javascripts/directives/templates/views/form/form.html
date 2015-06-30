@@ -4,23 +4,19 @@
     <div class="stick col-xs-9 col-sm-6 col-md-6" ng-show="form.livesave">
         <div class="btn-group btn-group-justified">
             <a role="button" class="btn btn-info" ng-click="saveReport()">Save</a>
-            <div ng-show="form.livesave">
-                <a role="button" class="btn btn-danger" ng-click="deleteReport()">Delete</a>
+            <div class="btn-group" ng-show="!form.id && form.livesave">
+                <select class="btn btn-info report-edit-template-select text-center" ng-model="selectedTemplate" ng-options="template as template.name for template in templates"><option value="">Template Select</option></select>
             </div>
-            <div ng-show="!form.id && form.livesave">
-                <div class="btn-group">
-                    <select class="btn btn-info report-edit-template-select text-center" ng-model="selectedTemplate" ng-options="template as template.name for template in templates"><option value="">Template Select</option></select>
-                </div>
-                <a role="button" class="btn btn-default" ng-click="selectTemplate()">Select</a>
-            </div>
+            <a role="button" class="btn btn-default" ng-click="selectTemplate()" ng-show="!form.id && form.livesave">Select</a>
+            <a role="button" class="btn btn-danger" ng-click="deleteReport()" ng-show="form.id && form.livesave">Delete</a>
         </div>
     </div>
 
-    <center><h1>{{form.name}}</h1></center>
+    <center ng-show="form.name"><h1>{{form.name}}</h1></center>
 
-    <div class="col-xs-12" ng-show="form.wantTitle || form.title">
+    <div class="col-xs-12" ng-show="form.allow_title || form.title">
       <h3>Title</h3>
-      <input class="form-control" type="text" ng-model="form.title" value="{{form.title}}" ng-disabled="!form.id">
+      <input class="form-control" type="text" ng-model="form.title" value="{{form.title}}" ng-disabled="(!form.id && !form.livesave) || !form.livesave">
     </div>
     <div class="col-xs-12" ng-repeat="section in form.sections track by $index">
         <h3>{{section.name}}</h3>

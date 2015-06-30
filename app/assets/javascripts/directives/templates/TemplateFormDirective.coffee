@@ -5,10 +5,12 @@ directives.directive('templateFormDirective',[()->
 	($rootScope, $scope, $routeParams, $location, ReportFactory) ->
 
 		$scope.selectTemplate = ->
+			$scope.form.allow_title = $scope.selectedTemplate.allow_title
 			$scope.form.sections = $scope.selectedTemplate.sections
 
 		$scope.saveReport = ->
-			$scope.form.template_id = $scope.selectedTemplate.id
+			if !$scope.form.template
+				$scope.form.template_id = $scope.selectedTemplate.id
 			$scope.form.sections = JSON.stringify($scope.form.sections)
 			if $scope.form.id
 				$scope.form.$update({id: $scope.form.id}, (res)->

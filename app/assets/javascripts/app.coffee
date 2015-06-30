@@ -156,4 +156,12 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'flash',
     return
 
   $('input[rel="txtTooltip"]').tooltip()
+
+  $('.view-all-accordion').hover (->
+    $('.view-all-accordion').trigger('click')
+    return
+  ), ->
+    $('.view-all-accordion').trigger('click')
+    return
+
 ])
