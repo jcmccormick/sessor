@@ -8,13 +8,21 @@ class ReportsController < ApplicationController
     max_per_page = 5
 
     pre_paginated_reports = if params.has_key?(:keywords)
-      keywords = params[:keywords]
+
+      keywords = if params[:keywords].is_a? Integer
+        params[:keywords].to_i
+      else
+        params[:keywords].to_s
+      end
+      
       @template = current_user.templates.where('templates.name like :keywords', :keywords => keywords)
+
       if @template.present?
         current_user.reports.where('reports.template_id like :template_id', :template_id => @template.first['id'])
       else
         current_user.reports.where('reports.id like :keywords OR reports.title like :keywords', :keywords => keywords)
       end
+
     else
       current_user.reports
     end
