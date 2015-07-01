@@ -148,24 +148,33 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'flash',
       return
     return
 
+  $('input[rel="txtTooltip"]').tooltip()
+
   mobileDevice = if /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) then true else false
 
-  $('ul.nav li.dropdown').hover (->
-    if !mobileDevice
-      $(this).addClass 'open'
-      $(this).find('.dropdown-menu').stop(true, true).fadeIn()
-    return
-  ), ->
-    if !mobileDevice
-      $(this).removeClass 'open'
-      $(this).find('.dropdown-menu').stop(true, true).fadeOut()
-    return
+  if !mobileDevice
+    $('ul.nav li.dropdown').hover (->
+      $(this).delay(200).addClass('open')
+      $(this).find('.dropdown-menu').stop(true, true).show()
+      return
+    ), ->
+      $(this).delay(200).removeClass('open')
+      $(this).find('.dropdown-menu').stop(true, true).hide()
+      return
 
   $(document).on 'click.nav li', '.navbar-collapse.in', (e) ->
     if $(e.target).is('a')
       $(this).removeClass('in').addClass 'collapse'
     return
 
-  $('input[rel="txtTooltip"]').tooltip()
+  # ADD SLIDEDOWN ANIMATION TO DROPDOWN //
+  $('.dropdown').on 'show.bs.dropdown', (e) ->
+    $(this).find('.dropdown-menu').first().stop(true, true).slideDown()
+    return
+  # ADD SLIDEUP ANIMATION TO DROPDOWN //
+  $('.dropdown').on 'hide.bs.dropdown', (e) ->
+    $(this).find('.dropdown-menu').first().stop(true, true).slideUp()
+    return
+
 
 ])

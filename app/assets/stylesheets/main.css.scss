@@ -80,7 +80,7 @@ small .glyphicon-flash {
 @media (min-width: 768px) {
   /* Push "Sessor" and "You" towards center of site navigation */
   .navbar-fixed-top {
-    padding: 0 100px!important;
+    padding: 0 75px 0 65px!important;
   }
   .modal {
     text-align: center;
@@ -153,22 +153,19 @@ small .glyphicon-flash {
 .main-dropdown-nav:not(.open) {
   background-color: #090909;
   border:0;
+  -webkit-transition-duration: .5s;
+  -moz-transition-duration: .5s;
+  -o-transition-duration: .5s;
+  transition-duration: .5s;
 }
 .main-dropdown-nav > li > a {
-  width:160px;
   color: #AAA;
-  margin:0 20px;
+  margin:0 10px;
 }
 .navbar-header > .navbar-toggle {
   margin-top: 8px;
   @include respond(mobile) {
     margin-top: 16px;
-  }
-}
-.dropdown:hover .hover-menu {
-  @include respond(tablet) {
-    background-color: #090909 !important;
-    display: block !important;
   }
 }
 .top-nav {
@@ -337,8 +334,10 @@ canvas#pie {
  */
 
 /* Move down content because we have a fixed navbar that is 50px tall */
-body {
-  padding-top: 50px;
+@media (min-width: 480px) {
+  body {
+    padding-top: 50px;
+  }
 }
 
 /*
