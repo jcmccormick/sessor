@@ -148,13 +148,17 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'flash',
       return
     return
 
-  $('ul.nav li.dropdown, #site-nav-view > div:nth-child(2) > div > div > div.stick.col-xs-9.col-sm-6.ng-scope > ul > li').hover (->
-    $(this).addClass 'open'
-    $(this).find('.dropdown-menu').stop(true, true).fadeIn()
+  mobileDevice = if /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) then true else false
+
+  $('ul.nav li.dropdown').hover (->
+    if !mobileDevice
+      $(this).addClass 'open'
+      $(this).find('.dropdown-menu').stop(true, true).fadeIn()
     return
   ), ->
-    $(this).removeClass 'open'
-    $(this).find('.dropdown-menu').stop(true, true).fadeOut()
+    if !mobileDevice
+      $(this).removeClass 'open'
+      $(this).find('.dropdown-menu').stop(true, true).fadeOut()
     return
 
   $(document).on 'click.nav li', '.navbar-collapse.in', (e) ->
