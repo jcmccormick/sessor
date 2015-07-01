@@ -148,20 +148,20 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'flash',
       return
     return
 
-  $('.dropdown, .template-options-dropdown').hover (->
-    $('.dropdown-toggle, .dropdown-menu').addClass 'hover-menu'
+  $('ul.nav li.dropdown, #site-nav-view > div:nth-child(2) > div > div > div.stick.col-xs-9.col-sm-6.ng-scope > ul > li').hover (->
+    $(this).addClass 'open'
+    $(this).find('.dropdown-menu').stop(true, true).fadeIn()
     return
   ), ->
-    $('.dropdown-toggle, .dropdown-menu').removeClass 'hover-menu'
+    $(this).removeClass 'open'
+    $(this).find('.dropdown-menu').stop(true, true).fadeOut()
+    return
+
+  $(document).on 'click.nav li', '.navbar-collapse.in', (e) ->
+    if $(e.target).is('a')
+      $(this).removeClass('in').addClass 'collapse'
     return
 
   $('input[rel="txtTooltip"]').tooltip()
-
-  $('.view-all-accordion').hover (->
-    $('.view-all-accordion').trigger('click')
-    return
-  ), ->
-    $('.view-all-accordion').trigger('click')
-    return
 
 ])

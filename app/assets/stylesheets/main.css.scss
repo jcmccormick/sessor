@@ -10,38 +10,6 @@ $mobile: 30em;
 $tablet: 48em;
 $desktop: 60em;
 
-@media (max-width: 767px) {
-  .navbar .container-fluid {
-    padding:0 5px ;
-  }
-  .view-frame {
-    padding:15px;
-  }
-  .main-dropdown {
-    display: block !important;
-  }
-}
-@media (min-width: 768px) {
-  /* Push "Sessor" and "You" towards center of site navigation */
-  .navbar-fixed-top {
-    padding: 0 100px!important;
-  }
-  .modal {
-    text-align: center;
-  }
-  .modal:before {
-    display: inline-block;
-    vertical-align: middle;
-    content: " ";
-    height: 100%;
-  }
-  .modal-dialog {
-    display: inline-block;
-    text-align: left;
-    vertical-align: middle;
-  }
-}
-
 @mixin respond($media) {
  @if $media == mini {
   @media screen and (min-width: $mini) {
@@ -100,6 +68,34 @@ small .glyphicon-flash {
 }
 .ng-hide {
   display: none!important;
+}
+@media (max-width: 767px) {
+  .navbar .container-fluid {
+    padding:0 5px ;
+  }
+  .view-frame {
+    padding:15px;
+  }
+}
+@media (min-width: 768px) {
+  /* Push "Sessor" and "You" towards center of site navigation */
+  .navbar-fixed-top {
+    padding: 0 100px!important;
+  }
+  .modal {
+    text-align: center;
+  }
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+  .modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+  }
 }
 
 /*
@@ -221,7 +217,6 @@ small .glyphicon-flash {
 .report-edit-template-select {
   padding: 8px 12px!important;
 }
-
 
 /* 
  * Template builder
