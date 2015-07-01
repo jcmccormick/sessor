@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'home#index' 
 
-  scope '/api' do
+  scope 'api' do
     resources :groups, only: [:index, :show, :create, :update, :destroy]
     resources :reports, only: [:index, :show, :create, :update, :destroy]
     resources :templates, only: [:index, :show, :create, :update, :destroy]
