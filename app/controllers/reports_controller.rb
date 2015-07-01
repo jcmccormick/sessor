@@ -8,11 +8,11 @@ class ReportsController < ApplicationController
     max_per_page = 5
 
     pre_paginated_reports = if params.has_key?(:keywords)
-      template = current_user.templates.where('name like ?',"%#{params[:keywords]}%")
+      template = current_user.templates.where('name like ?',"#{params[:keywords]}")
       if template.present?
         current_user.reports.where(template: template)
       else
-        current_user.reports.where('reports.id like ? OR reports.title like ?',"%#{params[:keywords]}%","%#{params[:keywords]}%")
+        current_user.reports.where('reports.id like ? OR reports.title like ?',"#{params[:keywords]}","#{params[:keywords]}")
       end
     else
       current_user.reports
