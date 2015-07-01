@@ -36,7 +36,8 @@
 
     <!-- BEGIN SECTION INFO PANEL -->
     <div role="tabpanel" id="collapse{{report.id}}" class="panel-collapse collapse view-all-panel" aria-labelledby="heading{{report.id}}-tab">
-      <div class="panel-body" ng-init="show-report-json=[]">
+      <div class="panel-body">
+        <pre>{{report | json}}</pre>
         <a href="#/reports/{{report.id}}/edit" class="btn btn-info">Edit</a>
       </div>
     </div>
