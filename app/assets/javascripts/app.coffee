@@ -155,25 +155,16 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'flash',
   if !mobileDevice
     $('ul.nav li.dropdown').hover (->
       $(this).delay(200).addClass('open')
-      $(this).find('.dropdown-menu').stop(true, true).show()
+      $(this).find('.dropdown-menu').first().stop(true, true).slideDown()
       return
     ), ->
       $(this).delay(200).removeClass('open')
-      $(this).find('.dropdown-menu').stop(true, true).hide()
+      $(this).find('.dropdown-menu').first().stop(true, true).slideUp()
       return
 
   $(document).on 'click.nav li', '.navbar-collapse.in', (e) ->
     if $(e.target).is('a')
       $(this).removeClass('in').addClass 'collapse'
-    return
-
-  # ADD SLIDEDOWN ANIMATION TO DROPDOWN //
-  $('.dropdown').on 'show.bs.dropdown', (e) ->
-    $(this).find('.dropdown-menu').first().stop(true, true).slideDown()
-    return
-  # ADD SLIDEUP ANIMATION TO DROPDOWN //
-  $('.dropdown').on 'hide.bs.dropdown', (e) ->
-    $(this).find('.dropdown-menu').first().stop(true, true).slideUp()
     return
 
 

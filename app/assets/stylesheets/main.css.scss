@@ -69,6 +69,8 @@ small .glyphicon-flash {
 .ng-hide {
   display: none!important;
 }
+
+
 @media (max-width: 767px) {
   .navbar .container-fluid {
     padding:0 5px ;
@@ -78,6 +80,14 @@ small .glyphicon-flash {
   }
 }
 @media (min-width: 768px) {
+
+  .view-all-accordion .panel-collapse {
+    display:none;
+  }
+  .view-all-accordion.panel:hover .panel-collapse {
+    display:block;
+  }
+
   /* Push "Sessor" and "You" towards center of site navigation */
   .navbar-fixed-top {
     padding: 0 75px 0 65px!important;
@@ -153,10 +163,6 @@ small .glyphicon-flash {
 .main-dropdown-nav:not(.open) {
   background-color: #090909;
   border:0;
-  -webkit-transition-duration: .5s;
-  -moz-transition-duration: .5s;
-  -o-transition-duration: .5s;
-  transition-duration: .5s;
 }
 .main-dropdown-nav > li > a {
   color: #AAA;

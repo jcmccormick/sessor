@@ -8,7 +8,7 @@ class ReportsController < ApplicationController
     max_per_page = 5
 
     paginate current_user.reports.count, max_per_page do |limit, offset|
-      render json: current_user.reports.limit(limit).offset(offset)
+      render json: current_user.reports.limit(limit).offset(offset).to_json( :only => [:id, :title], :include => [ { :users => { :only => [ :id, :uid ] } },{ :template => { :only => :name } } ] )
     end
   end
 
@@ -39,6 +39,6 @@ class ReportsController < ApplicationController
 
   private
     def allowed_params
-      params.require(:report).permit(:title, :submission, :response, :active, :location, :sections)
+      params.require(:report).permit(:title, :sections)
     end
 end
