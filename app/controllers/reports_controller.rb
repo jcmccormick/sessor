@@ -12,14 +12,14 @@ class ReportsController < ApplicationController
       keywords = params[:keywords]
       template = current_user.templates.where(:name => keywords)
 
-      if template.present?
-        current_user.reports.where(:template_id => template.first.id)
-      elsif keywords.present? && keywords.to_i == 0
-        current_user.reports.where(:title => keywords)
-      elsif keywords.to_i > 0  
-        current_user.reports.where(:id => keywords.to_i)
+      query = if template.present?
+        {:template_id => template.first.id}
+      elsif keywords.to_i > 0
+        {:id => keywords.to_i}
+      elsif keywords.length > 0
+        {:title => keywords}
       end
-
+      current_user.reports.where(query)
     else
       current_user.reports
     end
@@ -45,9 +45,12 @@ class ReportsController < ApplicationController
   def create
     @report = current_user.reports.new(allowed_params)
     @report.template = current_user.templates.find(params[:template_id])
-    @report.save
-    current_user.reports << @report
-    render 'show', status: 201
+    if @report.save
+      current_user.reports << @report
+      render 'show', status: 201
+    else
+      render json: {errors: @report.errors.full_messages}, status: 422
+    end
   end
 
   def update

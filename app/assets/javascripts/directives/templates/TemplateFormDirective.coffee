@@ -1,8 +1,8 @@
 directives = angular.module('directives')
 directives.directive('templateFormDirective',[()->
 	{
-	controller: ['$rootScope', '$scope', '$routeParams', '$location', 'ReportFactory', 
-	($rootScope, $scope, $routeParams, $location, ReportFactory) ->
+	controller: ['$rootScope', '$scope', '$routeParams', '$location', 'flash', 'ReportFactory', 
+	($rootScope, $scope, $routeParams, $location, flash, ReportFactory) ->
 
 		$scope.selectTemplate = ->
 			$scope.form.allow_title = $scope.selectedTemplate.allow_title
@@ -21,6 +21,11 @@ directives.directive('templateFormDirective',[()->
 				$scope.form.$save({}, (res)->
 					$location.path("/reports/#{$scope.form.id}")
 					$rootScope.$broadcast('clearreports')
+				).catch((err)->
+					flash.error = ''
+					err.data.errors.forEach((error)->
+						flash.error += error
+					)
 				)
 
 		$scope.deleteReport = ->
