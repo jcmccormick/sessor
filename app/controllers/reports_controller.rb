@@ -1,4 +1,5 @@
 class ReportsController < ApplicationController
+  include ActionView::Helpers::TextHelper
   devise_token_auth_group :member, contains: [:user, :admin]
   before_action :authenticate_member!
 
@@ -48,8 +49,8 @@ class ReportsController < ApplicationController
     if @report.save
       current_user.reports << @report
       render 'show', status: 201
-    else
-      render json: {errors: @report.errors.full_messages}, status: 422
+    else 
+      render json: {errors: @report.errors.full_messages, :pluralerrors => pluralize(@report.errors.count, 'error') }, status: 422
     end
   end
 

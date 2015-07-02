@@ -24,10 +24,11 @@ directives.directive('templateFormDirective',[()->
 					$location.path("/reports/#{tempCopy.id}")
 					$rootScope.$broadcast('clearreports')
 				).catch((err)->
-					errors = ''
+					errors = '<h3>'+err.data.pluralerrors+'</h3><ul>'
 					err.data.errors.forEach((error)->
-						errors += error+'<br/>'
+						errors += '<li>'+error+'</li>'
 					)
+					errors += '</ul>'
 					Flash.create('error', errors)
 				)
 
