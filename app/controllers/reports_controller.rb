@@ -10,15 +10,14 @@ class ReportsController < ApplicationController
     pre_paginated_reports = if params.has_key?(:keywords)
 
       keywords = params[:keywords]
-      keyint = keywords.to_i
-      template = current_user.templates.where(:name => keywords.to_s)
+      template = current_user.templates.where(:name => keywords)
 
       if template.present?
         current_user.reports.where(:template_id => template.first.id)
-      elsif keyint > 0
-        current_user.reports.where(:id => keywords.to_i)
-      elsif keywords.present?
+      elsif keywords.present? && keywords.to_i == 0
         current_user.reports.where(:title => keywords)
+      elsif keywords.to_i > 0  
+        current_user.reports.where(:id => keywords.to_i)
       end
 
     else
