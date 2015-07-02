@@ -18,7 +18,7 @@ class ReportsController < ApplicationController
       elsif keyint > 0
         current_user.reports.where(:id => keywords.to_i)
       elsif keywords.present?
-        current_user.reports.where(:title => keywords.to_s)
+        current_user.reports.where(:title => keywords)
       end
 
     else
