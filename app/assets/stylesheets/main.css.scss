@@ -3,8 +3,6 @@
  * Global mobile settings
  */
 
-
-
 $mini: 20em;
 $mobile: 30em;
 $tablet: 48em;
@@ -40,15 +38,6 @@ body {
   color: #222 !important;
   background-color: #9d9d9d !important;
 }
-.alert {
-  position: absolute;
-}
-.alert.in {
-  z-index: 2000;
-  top:5%;
-  left:25%; 
-  right:25%;
-}
 button.close {
   font-size: 30px;
   margin-right: 3px;
@@ -68,6 +57,16 @@ small .glyphicon-flash {
 }
 .ng-hide {
   display: none!important;
+}
+.flash-alerts button.close {
+  position: absolute !important;
+  top: 5px !important;
+  right: 5px !important;
+  -webkit-appearance: none;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
 }
 
 

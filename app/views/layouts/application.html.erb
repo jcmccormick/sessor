@@ -8,18 +8,7 @@
     <%= stylesheet_link_tag 'application', media: 'all' %>
   </head>
   <body ng-controller="NavController">
-    <!-- BEGIN ERROR DIVS -->
-    <div flash-alert="error" active-class="in" class="alert fade">
-        <h4 class="alert-heading">Whoops...</h4>
-        <span class="alert-message">{{flash.message}}</span>
-    </div>
-
-    <div flash-alert="success" active-class="in" class="alert fade">
-        <h4 class="alert-heading">Good news!</h4>
-        <span class="alert-message">{{flash.message}}</span>
-    </div>
-    <!-- END ERROR DIVS -->
-
+    <div flash-message="10000" class="col-xs-12 btn-info h4 flash-alerts" ></div>
     <%= yield %>
   </body>
   <%= javascript_include_tag 'application' %>

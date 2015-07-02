@@ -5,7 +5,7 @@
     "angular-route": "latest",
     "angular-resource": "latest",
     "angular-mocks": "latest",
-    "angular-flash": "latest",
+    "angular-flash-alert": "latest",
     "angular-animate": "latest",
     "angular-cookie": "latest",
     "angular-ui-sortable": "latest",

@@ -13,10 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
+//= require bootstrap-sass-official/assets/javascripts/bootstrap.min.js
 //= require angular/angular
 //= require angular-route/angular-route
 //= require angular-resource/angular-resource
-//= require angular-flash/dist/angular-flash
+//= require angular-flash-alert/dist/angular-flash.min.js
 //= require angular-mocks/angular-mocks
 //= require angular-animate/angular-animate
 //= require angular-local-storage/dist/angular-local-storage.min
@@ -29,6 +30,5 @@
 //= require ng-token-auth
 //= require bootbox
 //= require ngBootbox
-//= require bootstrap-sass-official
 //= require_tree ./templates
 //= require_tree .

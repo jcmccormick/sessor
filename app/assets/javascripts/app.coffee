@@ -2,6 +2,7 @@ sessor = angular.module('sessor', [
   'templates',
   'ngRoute',
   'ngResource',
+  'ngAnimate',
   'LocalStorageModule',
   'ng-token-auth',
   'ngBootbox',
@@ -9,22 +10,16 @@ sessor = angular.module('sessor', [
   'ui.sortable',
   'chart.js',
   'bgf.paginateAnything',
-  'angular-flash.service',
-  'angular-flash.flash-alert-directive',
+  'flash',
   'controllers',
   'directives',
   'factories',
   'services'
 ])
 
-sessor.config(['$authProvider', '$routeProvider', 'flashProvider', 'localStorageServiceProvider',
-  ($authProvider, $routeProvider, flashProvider, localStorageServiceProvider)->
+sessor.config(['$authProvider', '$routeProvider', 'localStorageServiceProvider',
+  ($authProvider, $routeProvider, localStorageServiceProvider)->
       localStorageServiceProvider.setPrefix('sesso_')
-
-      flashProvider.errorClassnames.push("alert-danger")
-      flashProvider.warnClassnames.push("alert-warning")
-      flashProvider.infoClassnames.push("alert-info")
-      flashProvider.successClassnames.push("alert-success")
 
       $authProvider.configure(
         apiUrl: "api/"
@@ -116,8 +111,8 @@ factories   = angular.module('factories',[])
 directives  = angular.module('directives',[])
 services    = angular.module('services',[])
 
-sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'flash',
-($rootScope, $location, $cacheFactory, $http, flash) ->
+sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash',
+($rootScope, $location, $cacheFactory, $http, Flash) ->
 
   $httpDefaultCache = $cacheFactory.get('$http')
 
@@ -134,7 +129,8 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'flash',
   )
 
   $rootScope.$on('auth:invalid', ->
-    flash.error = "Looks like there was an error validating your credentials. Please try logging in again or contact support if problems continue. Make sure cookies and Javascript are enabled in your browser options."
+    error = "Looks like there was an error validating your credentials. Please try logging in again or contact support if problems continue. Make sure cookies and Javascript are enabled in your browser options."
+    Flash.create('error', error)
     $location.path('/')
     return
   )

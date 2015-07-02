@@ -1,31 +1,34 @@
 directives = angular.module('directives')
 directives.directive('templateFormDirective',[()->
 	{
-	controller: ['$rootScope', '$scope', '$routeParams', '$location', 'flash', 'ReportFactory', 
-	($rootScope, $scope, $routeParams, $location, flash, ReportFactory) ->
+	controller: ['$rootScope', '$scope', '$routeParams', '$location', 'Flash', 'ReportFactory', 
+	($rootScope, $scope, $routeParams, $location, Flash, ReportFactory) ->
 
 		$scope.selectTemplate = ->
 			$scope.form.allow_title = $scope.selectedTemplate.allow_title
 			$scope.form.sections = $scope.selectedTemplate.sections
 
 		$scope.saveReport = ->
-			if !$scope.form.template
-				$scope.form.template_id = $scope.selectedTemplate.id
-			$scope.form.sections = JSON.stringify($scope.form.sections)
-			if $scope.form.id
-				$scope.form.$update({id: $scope.form.id}, (res)->
-					$location.path("/reports/#{$scope.form.id}")
+			tempCopy = new ReportFactory()
+			angular.copy $scope.form, tempCopy
+			if !tempCopy.template
+				tempCopy.template_id = $scope.selectedTemplate.id
+			tempCopy.sections = JSON.stringify(tempCopy)
+			if tempCopy.id
+				tempCopy.$update({id: tempCopy.id}, (res)->
+					$location.path("/reports/#{tempCopy.id}")
 					$rootScope.$broadcast('clearreports')
 				)
 			else
-				$scope.form.$save({}, (res)->
-					$location.path("/reports/#{$scope.form.id}")
+				tempCopy.$save({}, (res)->
+					$location.path("/reports/#{tempCopy.id}")
 					$rootScope.$broadcast('clearreports')
 				).catch((err)->
-					flash.error = ''
+					errors = ''
 					err.data.errors.forEach((error)->
-						flash.error += error
+						errors += error+'<br/>'
 					)
+					Flash.create('error', errors)
 				)
 
 		$scope.deleteReport = ->
