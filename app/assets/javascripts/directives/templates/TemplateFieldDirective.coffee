@@ -81,7 +81,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
         <span class="required-error" ng-show="field.required && !field.value">*</span>
       </label>
       <div ng-repeat="option in field.options">
-        <input type="radio" value="{{option.value}}" ng-model="field.value"  ng-required="field.required" ng-disabled="field.disabled"/>
+        <input type="radio" name="{{field.name}}{{field.id}}" value="{{option.name}}" ng-model="field.value" ng-required="field.required" ng-disabled="field.disabled"/>
         &nbsp;<span ng-bind="option.name"></span>
       </div>
     </div>'
