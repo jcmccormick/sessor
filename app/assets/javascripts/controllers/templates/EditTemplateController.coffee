@@ -103,28 +103,24 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 
 	# add field option
 	$scope.addOption = (field) ->
-		if !field.options
-			field.options = new Array
-			lastOptionID = 0
-		if field.options[field.options.length - 1]
-			lastOptionID = field.options[field.options.length - 1].id
-			lastOptionID++
-		newOption = 
-			'id': lastOptionID
-			'name': ''
-			'value': lastOptionID
-		field.options.push newOption
+		if !field.options then field.options = new Array
+		option = new ClassFactory()
+		option.name = ''
+		option.field_id = field.id
+		field.options.push option
+		option.$save({class: 'options'})
 		return
 
 	# delete particular option
 	$scope.deleteOption = (field, option) ->
-		options = field.options
 		i = 0
-		while i < options.length
-			if options[i].id == option.id
-				options.splice i, 1
+		while i < field.options.length
+			if field.options[i].id == option.id
+				field.options.splice i, 1
 				break
 			i++
+		$.extend option, new ClassFactory()
+		option.$delete({class: 'options', id: option.id})
 		return
 
 	$scope.saveTemplate = ->

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150714211923) do
+ActiveRecord::Schema.define(version: 20150715082501) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "provider",               limit: 255,                null: false
@@ -88,6 +88,15 @@ ActiveRecord::Schema.define(version: 20150714211923) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
+
+  create_table "options", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.integer  "field_id",   limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "options", ["field_id"], name: "index_options_on_field_id", using: :btree
 
   create_table "reports", force: :cascade do |t|
     t.string   "title",       limit: 255

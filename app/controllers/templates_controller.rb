@@ -18,7 +18,9 @@ class TemplatesController < ApplicationController
     render json: current_user.templates.find(params[:id]).as_json(
       :include => { :sections => {
         :include => { :columns => {
-          :include => :fields
+          :include => { :fields => {
+            :include => :options
+          }}
         }}
       }}
     )
@@ -37,6 +39,9 @@ class TemplatesController < ApplicationController
       paramSection[:columns_attributes] = paramSection[:columns]
       paramSection[:columns_attributes].each do |paramColumn|
         paramColumn[:fields_attributes] = paramColumn[:fields]
+        paramColumn[:fields_attributes].each do |paramField|
+          paramField[:options_attributes] = paramField[:options]
+        end
       end
     end
     template = current_user.templates.find(params[:id])
@@ -56,30 +61,17 @@ class TemplatesController < ApplicationController
       params.require(:template).permit(
         :name, :creator_uid, :private_world, :private_group, :group_id, :group_edit, :group_editors, :allow_title, 
         sections_attributes: [
-          :id, :name, :template_id, :created_at, :updated_at,
+          :id, :template_id, :name, :created_at, :updated_at,
           columns_attributes: [
-            :id, :section_id, :created_at, :updated_at, 
+            :id, :section_id, :created_at, :updated_at,
             fields_attributes: [
-              :id, :name, :fieldtype, :value, :required, :disabled, :created_at, :updated_at, :glyphicon, :column_id
+              :id, :column_id, :name, :fieldtype, :value, :required, :disabled, :glyphicon, :created_at, :updated_at,
+              options_attributes: [
+                :id, :field_id, :name, :created_at, :updated_at
+              ]
             ]
           ]
         ]
-        # {:section => [
-        #   :id,
-        #   :name,
-        #   {:columns => [
-        #     :id,
-        #     {:fields => [
-        #       :id,
-        #       :name, 
-        #       :fieldtype, 
-        #       :value, 
-        #       :required, 
-        #       :disabled, 
-        #       :glyphicon
-        #     ]}
-        #   ]}
-        # ]}
       )
     end
 end

@@ -6,4 +6,5 @@ class Template < ActiveRecord::Base
   accepts_nested_attributes_for :sections
   has_many :columns, through: :sections, dependent: :destroy
   has_many :fields, through: :columns, dependent: :destroy
+  has_many :options, through: :fields, dependent: :destroy
 end

@@ -97,9 +97,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
       <input type="password" class="form-control" value="{{field.value}}" ng-model="field.value"  ng-required="field.required" ng-disabled="field.disabled">
     </div>'
 
-    # if scope.livesave != true && $location.path() != '/reports/new/'
-    #   scope.field.disabled = 'disabled'
-    # else
+    # if scope.livesave = true && $location.path() = '/reports/new/'
     #   scope.field.disabled = false
 
     # GET template content from path

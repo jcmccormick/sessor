@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :sections, only: [:show, :create, :update, :destroy]
     resources :columns, only: [:show, :create, :update, :destroy]
     resources :fields, only: [:show, :create, :update, :destroy]
+    resources :options, only: [:show, :create, :update, :destroy]
     
     mount_devise_token_auth_for 'User', at: 'auth'
 
