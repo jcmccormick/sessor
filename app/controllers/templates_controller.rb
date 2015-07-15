@@ -4,6 +4,8 @@ class TemplatesController < ApplicationController
 
   skip_before_filter :verify_authenticity_token
 
+  wrap_parameters include: [:name, :creator_uid, :private_world, :private_group, :group_id, :group_edit, :group_editors, :allow_title, :sections_attributes]
+
   def index
     max_per_page = 5
 
@@ -30,10 +32,17 @@ class TemplatesController < ApplicationController
   end
 
   def update
+    params[:template][:sections_attributes] = params[:sections]
+    params[:template][:sections_attributes].each do |paramSection|
+      paramSection[:columns_attributes] = paramSection[:columns]
+      paramSection[:columns_attributes].each do |paramColumn|
+        paramColumn[:fields_attributes] = paramColumn[:fields]
+      end
+    end
     template = current_user.templates.find(params[:id])
     template.update_attributes(allowed_params)
     current_user.templates << template unless current_user.templates.include?(template)
-    render json: template
+    head :no_content
   end
 
   def destroy
@@ -44,7 +53,17 @@ class TemplatesController < ApplicationController
 
   private
     def allowed_params
-      params.require(:template).permit(:name, :creator_uid, :private_world, :private_group, :group_id, :group_edit, :group_editors, :allow_title, {:sections => [:id, :name]}
+      params.require(:template).permit(
+        :name, :creator_uid, :private_world, :private_group, :group_id, :group_edit, :group_editors, :allow_title, 
+        sections_attributes: [
+          :id, :name, :template_id, :created_at, :updated_at,
+          columns_attributes: [
+            :id, :section_id, :created_at, :updated_at, 
+            fields_attributes: [
+              :id, :name, :fieldtype, :value, :required, :disabled, :created_at, :updated_at, :glyphicon, :column_id
+            ]
+          ]
+        ]
         # {:section => [
         #   :id,
         #   :name,

@@ -81,8 +81,8 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 		field.name = name
 		field.fieldtype = type.name
 		field.value = ""
-		field.required = false
-		field.disabled = 3
+		field.required = undefined
+		field.disabled = undefined
 		field.glyphicon = type.glyphicon
 		field.column_id = column.id
 		column.fields.push field
@@ -128,20 +128,8 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 		return
 
 	$scope.saveTemplate = ->
-		console.log $scope.template
 		tempCopy = new ClassFactory()
 		angular.copy $scope.template, tempCopy
-		# tempCopy.sections.forEach((section)->
-		# 	$.extend section, new ClassFactory()
-		# 	section.$update({class: 'sections', id: section.id})
-		# 	section.columns.forEach((column)->
-		# 		column.fields.forEach((field)->
-		# 			$.extend field, new ClassFactory()
-		# 			field.$update({class: 'fields', id: field.id})
-		# 			console.log field
-		# 		)
-		# 	)
-		# )
 		tempCopy.$update({class: 'templates', id: tempCopy.id}, (res)->
 			$location.path("/templates/#{tempCopy.id}")
 			$rootScope.$broadcast('cleartemplates')
