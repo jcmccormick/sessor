@@ -20,7 +20,7 @@
     </div>
     <div class="col-xs-12" ng-repeat="section in form.sections track by $index">
         <h3>{{section.name}}</h3>
-        <div class="{{column.width}}" ng-repeat="column in section.columns">
+        <div class="col-xs-12" ng-class="{'col-md-6':section.columns.length == 2, 'col-md-4':section.columns.length == 3}" ng-repeat="column in section.columns">
             <div ng-repeat="field in column.fields">
                 <template-field-directive field="field" livesave="form.livesave"></template-field-directive>
             </div>

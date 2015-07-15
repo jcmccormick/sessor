@@ -1,6 +1,6 @@
 directives = angular.module('directives')
-directives.directive('templateFieldDirective', ['$routeParams', '$http', '$compile', '$location', 'TemplateService',
-($routeParams, $http, $compile, $location, TemplateService) ->
+directives.directive('templateFieldDirective', ['$http', '$compile', '$location', 'TemplateService',
+($http, $compile, $location, TemplateService) ->
   
   getTemplate = (field) ->
     type = field.fieldtype
@@ -96,6 +96,11 @@ directives.directive('templateFieldDirective', ['$routeParams', '$http', '$compi
       </label>
       <input type="password" class="form-control" value="{{field.value}}" ng-model="field.value"  ng-required="field.required" ng-disabled="field.disabled">
     </div>'
+
+    # if scope.livesave != true && $location.path() != '/reports/new/'
+    #   scope.field.disabled = 'disabled'
+    # else
+    #   scope.field.disabled = false
 
     # GET template content from path
     template = getTemplate(scope.field)
