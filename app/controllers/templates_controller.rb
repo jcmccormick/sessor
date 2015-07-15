@@ -13,7 +13,13 @@ class TemplatesController < ApplicationController
   end
 
   def show
-  	@template = current_user.templates.find(params[:id])
+    render json: current_user.templates.find(params[:id]).as_json(
+      :include => { :sections => {
+        :include => { :columns => {
+          :include => :fields
+        }}
+      }}
+    )
   end
 
   def create
@@ -27,7 +33,7 @@ class TemplatesController < ApplicationController
     template = current_user.templates.find(params[:id])
     template.update_attributes(allowed_params)
     current_user.templates << template unless current_user.templates.include?(template)
-    head :no_content
+    render json: template
   end
 
   def destroy
@@ -38,6 +44,23 @@ class TemplatesController < ApplicationController
 
   private
     def allowed_params
-      params.require(:template).permit(:name, :sections, :creator_uid, :private_world, :private_group, :group_id, :group_edit, :group_editors, :allow_title)
+      params.require(:template).permit(:name, :creator_uid, :private_world, :private_group, :group_id, :group_edit, :group_editors, :allow_title, {:sections => [:id, :name]}
+        # {:section => [
+        #   :id,
+        #   :name,
+        #   {:columns => [
+        #     :id,
+        #     {:fields => [
+        #       :id,
+        #       :name, 
+        #       :fieldtype, 
+        #       :value, 
+        #       :required, 
+        #       :disabled, 
+        #       :glyphicon
+        #     ]}
+        #   ]}
+        # ]}
+      )
     end
 end

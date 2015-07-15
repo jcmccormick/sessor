@@ -3,7 +3,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
 ($http, $compile, $location, TemplateService) ->
   
   getTemplate = (field) ->
-    type = field.type
+    type = field.fieldtype
     supportedFields = TemplateService.supportedFields
 
     __indexOf = [].indexOf || (item)->

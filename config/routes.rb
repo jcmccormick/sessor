@@ -5,6 +5,9 @@ Rails.application.routes.draw do
     resources :groups, only: [:index, :show, :create, :update, :destroy]
     resources :reports, only: [:index, :show, :create, :update, :destroy]
     resources :templates, only: [:index, :show, :create, :update, :destroy]
+    resources :sections, only: [:show, :create, :update, :destroy]
+    resources :columns, only: [:show, :create, :update, :destroy]
+    resources :fields, only: [:show, :create, :update, :destroy]
     
     mount_devise_token_auth_for 'User', at: 'auth'
 

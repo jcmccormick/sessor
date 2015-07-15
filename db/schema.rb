@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630111300) do
+ActiveRecord::Schema.define(version: 20150714211923) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "provider",               limit: 255,                null: false
@@ -50,6 +50,36 @@ ActiveRecord::Schema.define(version: 20150630111300) do
   add_index "admins_reports", ["admin_id"], name: "index_admins_reports_on_admin_id", using: :btree
   add_index "admins_reports", ["report_id"], name: "index_admins_reports_on_report_id", using: :btree
 
+  create_table "admins_templates", id: false, force: :cascade do |t|
+    t.integer "admin_id",    limit: 4
+    t.integer "template_id", limit: 4
+  end
+
+  add_index "admins_templates", ["admin_id"], name: "index_admins_templates_on_admin_id", using: :btree
+  add_index "admins_templates", ["template_id"], name: "index_admins_templates_on_template_id", using: :btree
+
+  create_table "columns", force: :cascade do |t|
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "section_id", limit: 4
+  end
+
+  add_index "columns", ["section_id"], name: "index_columns_on_section_id", using: :btree
+
+  create_table "fields", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "fieldtype",  limit: 255
+    t.text     "value",      limit: 65535
+    t.boolean  "required",   limit: 1
+    t.boolean  "disabled",   limit: 1
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "column_id",  limit: 4
+    t.string   "glyphicon",  limit: 255
+  end
+
+  add_index "fields", ["column_id"], name: "index_fields_on_column_id", using: :btree
+
   create_table "groups", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "owner",      limit: 255
@@ -80,6 +110,15 @@ ActiveRecord::Schema.define(version: 20150630111300) do
 
   add_index "reports_users", ["report_id"], name: "index_reports_users_on_report_id", using: :btree
   add_index "reports_users", ["user_id"], name: "index_reports_users_on_user_id", using: :btree
+
+  create_table "sections", force: :cascade do |t|
+    t.string   "name",        limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "template_id", limit: 4
+  end
+
+  add_index "sections", ["template_id"], name: "index_sections_on_template_id", using: :btree
 
   create_table "sessions", force: :cascade do |t|
     t.string   "session_id", limit: 255,   null: false

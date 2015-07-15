@@ -1,108 +1,95 @@
 controllers = angular.module('controllers')
-controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope', '$resource', '$routeParams', '$location', 'TemplateService', 'TemplateFactory'
-($auth, $rootScope, $scope, $resource, $routeParams, $location, TemplateService, TemplateFactory)->
-
-	# add new section options
-	$scope.addSection = {}
-	$scope.addSection.lastAddedID = 0
-	$scope.addSection.prototype = {}
-	$scope.addSection.columns = []
-	$scope.addSection.columns.lastAddedID = 0
-	$scope.addSection.types = TemplateService.sections
-
-	# add new column options
-	$scope.addColumn = {}
-	$scope.addColumn.lastAddedID = 0
-	$scope.addColumn.types = TemplateService.columns
-
-	# add new field options
-	$scope.addField = {}
-	$scope.addField.lastAddedID = 0
-	$scope.addField.types = TemplateService.fields
+controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope', '$resource', '$routeParams', '$location', 'TemplateService', 'TemplateFactory', 'ClassFactory',
+($auth, $rootScope, $scope, $resource, $routeParams, $location, TemplateService, TemplateFactory, ClassFactory)->
 
 	if $routeParams.templateId
-		TemplateFactory.get({id: $routeParams.templateId}).$promise.then((res)->
+		ClassFactory.get({class: 'templates', id: $routeParams.templateId}).$promise.then((res)->
 			$scope.template = res
-			$scope.addSection.lastAddedID = $scope.template.sections.length
 		)
 	else
-		$scope.template = new TemplateFactory()
-		$scope.template.name = ''
+		$scope.template = new ClassFactory()
 		$scope.template.creator_uid = $auth.user.uid
-		$scope.template.sections = []
 
-	
+	refreshTemplate = ->
+		$rootScope.$broadcast('cleartemplates')
+		ClassFactory.get({class: 'templates', id: $scope.template.id}, (res)->
+			$scope.template = res
+			$scope.loading = ""
+		)
+
+	$scope.blurSave = ->
+		if !$scope.template.id
+			$scope.template.$save({class: 'templates'}, (res)->
+				$location.path('templates/'+res.id+'/edit')
+			)
+		else
+			$scope.template.$update({class: 'templates', id: $scope.template.id})
+
+	$scope.sectionTypes = TemplateService.sections
+	$scope.columnTypes = TemplateService.columns
+	$scope.fieldTypes = TemplateService.fields
+
 	# preview template
 	$scope.previewTemplate = {}
 	$scope.previewUpdate = ->
 		angular.copy $scope.template, $scope.previewTemplate
 		return
 
-	#add section button
-	$scope.addNewSection = (column)->
-		i = 0
-		while i < column.id
-			newColumn = 
-				'id': $scope.addSection.columns.lastAddedID
-				'sec': $scope.addSection.lastAddedID
-				'width': column.width
-			$scope.addSection.columns.push newColumn
-			$scope.addSection.columns.lastAddedID++
-			i++
-		if !$scope.addSection.name
-			$scope.addSection.name = "Unnamed Section"
-		newSection = 
-			'id': $scope.addSection.lastAddedID
-			'name': $scope.addSection.name
-			'columns': $scope.addSection.columns
-		$scope.template.sections.push newSection
-		$scope.addSection.lastAddedID++
-		$scope.addSection.name = ''
-		$scope.addSection.columns = []
-		$scope.addSection.columns.lastAddedID = 0
+	#add section
+	$scope.addNewSection = (name, column)->
+		$scope.loading = "Loading "
+		section = new ClassFactory()
+		section.name = name
+		section.template_id = $scope.template.id
+		$scope.template.sections.push section
+		section.$save({class: 'sections'}, (res)->
+			column.count.forEach((column)->
+				column = new ClassFactory()
+				column.section_id = res.id
+				column.$save({class: 'columns'})
+			)
+			refreshTemplate()
+		)
+		$scope.newSectionName = ""
 		return
 
-	# add premade section to form
-	$scope.addPremadeSection = (sec) ->
-		sec.id = $scope.addSection.lastAddedID
-		$scope.addSection.prototype = {}
-		angular.copy sec, $scope.addSection.prototype
-		$scope.template.sections.push $scope.addSection.prototype
-		$scope.addSection.lastAddedID++
-		return
+	# add premade section
+	# $scope.addPremadeSection = (section) ->
+	# 	$scope.template.sections.push section
+	# 	$.extend section, new ClassFactory()
+	# 	section.template_id = $scope.template.id
+	# 	section.$save({class: 'sections'}, (res)->
+	# 		refreshTemplate()
+	# 	)
+	# 	return
 
-	# delete section button
+	# delete section
 	$scope.deleteSection = (template, section) ->
 		i = 0
 		while i < template.sections.length
-			if template.sections[i].id == section.id
+			if template.sections[i] == section
 				template.sections.splice i, 1
 				break
 			i++
+		$.extend section, new ClassFactory() 
+		section.$delete({class: 'sections', id: section.id})
 		return
 
-	# create new field button click
+	# create new field
 	$scope.addNewField = (column, type, name)->
-		if !column.fields
-			column.fields = new Array
-			column.lastFieldID = 0
-		else
-			column.lastFieldID = column.fields[column.fields.length - 1].id
-			column.lastFieldID++
-		if !name
-			name = "Unnamed " + type.value
-		newField = 
-			'id': column.lastFieldID
-			'name': name
-			'type': type.name
-			'value': ''
-			'required': false
-			'disabled': false
-			'glyphicon': type.glyphicon
-		column.fields.push newField
+		field = new ClassFactory()
+		field.name = name
+		field.fieldtype = type.name
+		field.value = ""
+		field.required = false
+		field.disabled = 3
+		field.glyphicon = type.glyphicon
+		field.column_id = column.id
+		column.fields.push field
+		field.$save({class: 'fields'})
 		return
 
-	# deletes particular field on button click
+	# delete field
 	$scope.deleteField = (column, field) ->
 		i = 0
 		while i < column.fields.length
@@ -110,9 +97,11 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 				column.fields.splice i, 1
 				break
 			i++
+		$.extend field, new ClassFactory()
+		field.$delete({class: 'fields', id: field.id})
 		return
 
-	# add new option to the field
+	# add field option
 	$scope.addOption = (field) ->
 		if !field.options
 			field.options = new Array
@@ -138,37 +127,28 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 			i++
 		return
 
-
-	# deletes all the fields
-	$scope.resetTemplate = ->
-		$scope.template.sections.splice 0, $scope.template.sections.length
-		$scope.template = new TemplateFactory()
-		$scope.template.name = ''
-		$scope.template.wantTitle = false
-		$scope.template.sections = []
-		$scope.addSection.lastAddedID = 0
-		$scope.addSection.columns.lastAddedID = 0
-		$scope.addColumn.lastAddedID = 0
-		$scope.addField.lastAddedID = 0
-		return
-
 	$scope.saveTemplate = ->
-		tempCopy = new TemplateFactory()
+		console.log $scope.template
+		tempCopy = new ClassFactory()
 		angular.copy $scope.template, tempCopy
-		tempCopy.sections = JSON.stringify(tempCopy.sections)
-		if tempCopy.id
-			tempCopy.$update({id: tempCopy.id}, (res)->
-				$location.path("/templates/#{tempCopy.id}")
-				$rootScope.$broadcast('cleartemplates')
-			)
-		else
-			tempCopy.$save({}, (res)->
-				$location.path("/templates/#{tempCopy.id}")
-				$rootScope.$broadcast('cleartemplates')
-			).catch((err)-> console.log err.data)
+		# tempCopy.sections.forEach((section)->
+		# 	$.extend section, new ClassFactory()
+		# 	section.$update({class: 'sections', id: section.id})
+		# 	section.columns.forEach((column)->
+		# 		column.fields.forEach((field)->
+		# 			$.extend field, new ClassFactory()
+		# 			field.$update({class: 'fields', id: field.id})
+		# 			console.log field
+		# 		)
+		# 	)
+		# )
+		tempCopy.$update({class: 'templates', id: tempCopy.id}, (res)->
+			$location.path("/templates/#{tempCopy.id}")
+			$rootScope.$broadcast('cleartemplates')
+		)
 
 	$scope.deleteTemplate = ()->
-		$scope.template.$delete({id: $scope.template.id})
+		$scope.template.$delete({class: 'templates', id: $scope.template.id})
 		.then((res)->
 			$rootScope.$broadcast('cleartemplates')
 			$location.path("/templates"))

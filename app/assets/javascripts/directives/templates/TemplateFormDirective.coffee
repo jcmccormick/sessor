@@ -11,6 +11,8 @@ directives.directive('templateFormDirective',[()->
 		$scope.saveReport = ->
 			tempCopy = new ReportFactory()
 			angular.copy $scope.form, tempCopy
+			if !tempCopy.title
+				tempCopy.title = "Untitled"
 			if !tempCopy.template
 				tempCopy.template_id = $scope.selectedTemplate.id
 			tempCopy.sections = JSON.stringify(tempCopy)

@@ -67,14 +67,17 @@ services.service('TemplateService', ['$http',
     {
       id: 1
       width: 'col-xs-12'
+      count: [{}]
     }
     {
       id: 2
       width: 'col-xs-6'
+      count: [{}, {}]
     }
     {
       id: 3
       width: 'col-xs-4'
+      count: [{}, {}, {}]
     }
   ]
   sections: [

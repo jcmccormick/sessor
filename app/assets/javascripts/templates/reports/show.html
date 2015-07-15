@@ -11,10 +11,6 @@
   </div>
 </div>
 
-<div class="text-center">
-  <bgf-pagination collection="reports" url="'api/reports'" url-params="urlParams"></bgf-pagination>
-</div>
-
 <div role="tablist" class="panel-group panel-carat" id="reports-accordion" ng-if="reports">
   <div class="panel panel-default view-all-accordion" ng-repeat="report in reports">
 
@@ -38,4 +34,8 @@
     </div>
     <!-- END SECTION INFO PANEL -->
   </div>
+</div>
+
+<div class="text-center">
+  <bgf-pagination collection="reports" url="'api/reports'" url-params="urlParams"></bgf-pagination>
 </div>

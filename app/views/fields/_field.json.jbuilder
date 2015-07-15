@@ -1,0 +1,1 @@
+json.(field, :id, :name, :fieldtype, :value, :required, :disabled, :glyphicon)

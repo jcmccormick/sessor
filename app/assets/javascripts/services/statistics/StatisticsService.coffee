@@ -1,6 +1,6 @@
 services = angular.module('services')
 services.service('StatisticsService', [->
-	{
+{
 	getCountOfIn: (query, reports, callback)->
 		collection = []
 		fieldData = []
@@ -48,5 +48,4 @@ services.service('StatisticsService', [->
 			a
 			b
 		]
-	}
-])
+}])

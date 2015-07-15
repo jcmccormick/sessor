@@ -1,0 +1,1 @@
+json.(section, :id, :name)
