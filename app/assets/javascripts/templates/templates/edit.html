@@ -1,5 +1,5 @@
 <!-- BEGIN EDIT TEMPLATE STICK -->
-<div class="stick col-xs-9 col-sm-6">
+<div class="stick col-xs-9 col-sm-6" ng-show="template.id">
   <ul class="btn-group btn-group-justified">
     <a role="button" class="btn btn-info" ng-click="saveTemplate()">Finish</a>
     <li class="btn-group dropdown">
@@ -147,13 +147,14 @@
 </h3>
 <p ng-show="template.name == ''"></p>
 <p class="has-feedback">
-    <input type="text" class="form-control" ng-model="template.name" placeholder="Enter a title..." ng-blur="blurSave()" />
+    <input type="text" class="form-control" ng-model="template.name" placeholder="Start with a title..." ng-blur="blurSave()" />
     <i class="glyphicon glyphicon-pencil form-control-feedback"></i>
 </p>
 <!-- END FORM NAME INPUT -->
 
+<center ng-hide="template.id"><div class="btn btn-success btn-lg">OK</div></center>
 
-<div ng-show="template.name != ''">
+<div ng-show="template.id">
   <h3>Sections
     <sup>
       <small>

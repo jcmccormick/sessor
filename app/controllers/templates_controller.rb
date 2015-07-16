@@ -34,13 +34,15 @@ class TemplatesController < ApplicationController
   end
 
   def update
-    params[:template][:sections_attributes] = params[:sections]
-    params[:template][:sections_attributes].each do |paramSection|
-      paramSection[:columns_attributes] = paramSection[:columns]
-      paramSection[:columns_attributes].each do |paramColumn|
-        paramColumn[:fields_attributes] = paramColumn[:fields]
-        paramColumn[:fields_attributes].each do |paramField|
-          paramField[:options_attributes] = paramField[:options]
+    if params[:sections]
+      params[:template][:sections_attributes] = params[:sections]
+      params[:template][:sections_attributes].each do |paramSection|
+        paramSection[:columns_attributes] = paramSection[:columns]
+        paramSection[:columns_attributes].each do |paramColumn|
+          paramColumn[:fields_attributes] = paramColumn[:fields]
+          paramColumn[:fields_attributes].each do |paramField|
+            paramField[:options_attributes] = paramField[:options]
+          end
         end
       end
     end
