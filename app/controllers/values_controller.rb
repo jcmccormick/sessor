@@ -1,4 +1,4 @@
-class OptionsController < ApplicationController
+class ValuesController < ApplicationController
   devise_token_auth_group :member, contains: [:user, :admin]
   before_action :authenticate_member!
 
@@ -9,25 +9,25 @@ class OptionsController < ApplicationController
 
   def create
     field = Field.find(params[:field_id])
-    @option = field.options.new(allowed_params)
-    @option.save
+    @value = field.values.new(allowed_params)
+    @value.save
     render 'show', status: 201
   end
 
   def update
-    option = Option.find(params[:id])
-    option.update(allowed_params)
+    value = Value.find(params[:id])
+    value.update(allowed_params)
     head :no_content
   end
 
   def destroy
-    option = Option.find(params[:id])
-    option.destroy
+    value = Value.find(params[:id])
+    value.destroy
     head :no_content
   end
 
   private
     def allowed_params
-      params.require(:option).permit(:name)
+      params.require(:value).permit(:input)
     end
 end

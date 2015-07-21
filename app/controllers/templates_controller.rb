@@ -4,13 +4,24 @@ class TemplatesController < ApplicationController
 
   skip_before_filter :verify_authenticity_token
 
-  wrap_parameters include: [:name, :creator_uid, :private_world, :private_group, :group_id, :group_edit, :group_editors, :allow_title, :sections_attributes]
+  nested_attributes_names = Template.nested_attributes_options.keys.map do |key|
+    key.to_s.concat('_attributes').to_sym
+  end
+  wrap_parameters include: Template.attribute_names + nested_attributes_names
 
   def index
     max_per_page = 5
 
     paginate current_user.templates.count, max_per_page do |limit, offset|
-      render json: current_user.templates.limit(limit).offset(offset)
+      render json: current_user.templates.limit(limit).offset(offset).to_json(
+      :include => { :sections => {
+        :include => { :columns => {
+          :include => { :fields => {
+            :include => [:options, :values]
+          }}
+        }}
+      }}
+    )
     end
   end
 
@@ -19,7 +30,7 @@ class TemplatesController < ApplicationController
       :include => { :sections => {
         :include => { :columns => {
           :include => { :fields => {
-            :include => :options
+            :include => [:options, :values]
           }}
         }}
       }}
@@ -34,18 +45,6 @@ class TemplatesController < ApplicationController
   end
 
   def update
-    if params[:sections]
-      params[:template][:sections_attributes] = params[:sections]
-      params[:template][:sections_attributes].each do |paramSection|
-        paramSection[:columns_attributes] = paramSection[:columns]
-        paramSection[:columns_attributes].each do |paramColumn|
-          paramColumn[:fields_attributes] = paramColumn[:fields]
-          paramColumn[:fields_attributes].each do |paramField|
-            paramField[:options_attributes] = paramField[:options]
-          end
-        end
-      end
-    end
     template = current_user.templates.find(params[:id])
     template.update_attributes(allowed_params)
     current_user.templates << template unless current_user.templates.include?(template)
@@ -61,15 +60,18 @@ class TemplatesController < ApplicationController
   private
     def allowed_params
       params.require(:template).permit(
-        :name, :creator_uid, :private_world, :private_group, :group_id, :group_edit, :group_editors, :allow_title, 
+        :name, :creator_uid, :private_world, :private_group, :group_id, :group_edit, :group_editors, :allow_title, :draft, 
         sections_attributes: [
-          :id, :template_id, :name, :created_at, :updated_at,
+          :id, :name,
           columns_attributes: [
-            :id, :section_id, :created_at, :updated_at,
+            :id,
             fields_attributes: [
-              :id, :column_id, :name, :fieldtype, :value, :required, :disabled, :glyphicon, :created_at, :updated_at,
+              :id, :name, :fieldtype, :required, :disabled, :glyphicon,
+              values_attributes: [
+                :id, :input
+              ],
               options_attributes: [
-                :id, :field_id, :name, :created_at, :updated_at
+                :id, :name
               ]
             ]
           ]

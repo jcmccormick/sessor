@@ -30,7 +30,7 @@
       </ul>
     </li>
     <a role="button" class="btn btn-info" data-toggle="modal" data-target=".previewModal" ng-click="previewUpdate()">Preview</a>
-    <a type="button" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this template?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="deleteTemplate()">Delete</a>
+    <a role="button" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this template?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="deleteTemplate()">Delete</a>
   </ul>
 </div>
 <!-- END EDIT TEMPLATE STICK -->
@@ -273,7 +273,7 @@
 
                         <div class="form-group" ng-hide="field.fieldtype == 'date'">
                             <label class="control-label">Field Default Value</label>
-                            <input class="form-control" type="text" ng-model="field.value" value="{{field.value}}">
+                            <input class="form-control" type="text" ng-model="field.values[0].input" value="{{field.values[0].input}}">
                         </div>
 
                         <div class="form-group">

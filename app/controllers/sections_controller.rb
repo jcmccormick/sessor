@@ -4,6 +4,11 @@ class SectionsController < ApplicationController
 
   skip_before_filter :verify_authenticity_token
 
+  nested_attributes_names = Section.nested_attributes_options.keys.map do |key|
+    key.to_s.concat('_attributes').to_sym
+  end
+  wrap_parameters include: Section.attribute_names + nested_attributes_names
+  
   def show
   end
 

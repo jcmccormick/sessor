@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150715082501) do
+ActiveRecord::Schema.define(version: 20150721114244) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "provider",               limit: 255,                null: false
@@ -69,11 +69,10 @@ ActiveRecord::Schema.define(version: 20150715082501) do
   create_table "fields", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "fieldtype",  limit: 255
-    t.text     "value",      limit: 65535
     t.boolean  "required",   limit: 1
     t.boolean  "disabled",   limit: 1
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "column_id",  limit: 4
     t.string   "glyphicon",  limit: 255
   end
@@ -99,18 +98,22 @@ ActiveRecord::Schema.define(version: 20150715082501) do
   add_index "options", ["field_id"], name: "index_options_on_field_id", using: :btree
 
   create_table "reports", force: :cascade do |t|
-    t.string   "title",       limit: 255
-    t.text     "submission",  limit: 65535
-    t.text     "response",    limit: 65535
-    t.boolean  "active",      limit: 1
-    t.string   "location",    limit: 255
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.text     "sections",    limit: 65535
-    t.integer  "template_id", limit: 4
+    t.string   "title",      limit: 255
+    t.text     "submission", limit: 65535
+    t.text     "response",   limit: 65535
+    t.boolean  "active",     limit: 1
+    t.string   "location",   limit: 255
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
-  add_index "reports", ["template_id"], name: "index_reports_on_template_id", using: :btree
+  create_table "reports_templates", id: false, force: :cascade do |t|
+    t.integer "report_id",   limit: 4
+    t.integer "template_id", limit: 4
+  end
+
+  add_index "reports_templates", ["report_id"], name: "index_reports_templates_on_report_id", using: :btree
+  add_index "reports_templates", ["template_id"], name: "index_reports_templates_on_template_id", using: :btree
 
   create_table "reports_users", id: false, force: :cascade do |t|
     t.integer "user_id",   limit: 4
@@ -141,7 +144,6 @@ ActiveRecord::Schema.define(version: 20150715082501) do
 
   create_table "templates", force: :cascade do |t|
     t.string   "name",          limit: 255
-    t.text     "sections",      limit: 65535
     t.string   "creator_uid",   limit: 255
     t.boolean  "private_world", limit: 1
     t.boolean  "private_group", limit: 1
@@ -193,5 +195,15 @@ ActiveRecord::Schema.define(version: 20150715082501) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
 
-  add_foreign_key "reports", "templates"
+  create_table "values", force: :cascade do |t|
+    t.text     "input",      limit: 65535
+    t.integer  "field_id",   limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "report_id",  limit: 4
+  end
+
+  add_index "values", ["field_id"], name: "index_values_on_field_id", using: :btree
+  add_index "values", ["report_id"], name: "index_values_on_report_id", using: :btree
+
 end

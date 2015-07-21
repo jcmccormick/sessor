@@ -1,1 +1,1 @@
-json.(report, :id, :title, :sections, :template, :users)
+json.(report, :id, :title, :templates, :users)

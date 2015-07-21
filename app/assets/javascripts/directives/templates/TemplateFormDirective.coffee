@@ -1,45 +1,28 @@
 directives = angular.module('directives')
 directives.directive('templateFormDirective',[()->
 	{
-	controller: ['$rootScope', '$scope', '$routeParams', '$location', 'Flash', 'ReportFactory', 
-	($rootScope, $scope, $routeParams, $location, Flash, ReportFactory) ->
+	controller: ['$rootScope', '$scope', '$routeParams', '$location', 'Flash', 'ClassFactory', 
+	($rootScope, $scope, $routeParams, $location, Flash, ClassFactory) ->
 
 		$scope.selectTemplate = ->
-			$scope.form.allow_title = $scope.selectedTemplate.allow_title
-			$scope.form.sections = $scope.selectedTemplate.sections
+			$scope.form.template_id = $scope.selectedTemplate.id
+			$scope.form.title = "Untitled"
+			$scope.form.$save({class: 'reports'}, (res)->
+				$location.path("/reports/#{res.id}/edit")
+			)
 
 		$scope.saveReport = ->
-			tempCopy = new ReportFactory()
-			angular.copy $scope.form, tempCopy
-			if !tempCopy.title
-				tempCopy.title = "Untitled"
-			if !tempCopy.template
-				tempCopy.template_id = $scope.selectedTemplate.id
-			tempCopy.sections = JSON.stringify(tempCopy)
-			if tempCopy.id
-				tempCopy.$update({id: tempCopy.id}, (res)->
-					$location.path("/reports/#{tempCopy.id}")
-					$rootScope.$broadcast('clearreports')
-				)
-			else
-				tempCopy.$save({}, (res)->
-					$location.path("/reports/#{tempCopy.id}")
-					$rootScope.$broadcast('clearreports')
-				).catch((err)->
-					errors = '<h3>'+err.data.pluralerrors+'</h3><ul>'
-					err.data.errors.forEach((error)->
-						errors += '<li>'+error+'</li>'
-					)
-					errors += '</ul>'
-					Flash.create('error', errors)
-				)
+			$scope.form.values_attributes = $scope.form.values
+			$scope.form.$update({class: 'reports', id: $scope.form.id}, (res)->
+				$location.path("/reports/#{$scope.form.id}")
+				$rootScope.$broadcast('clearreports')
+			)
 
 		$scope.deleteReport = ->
-			console.log $scope.form
-			$scope.form.$delete({id: $scope.form.id})
-			.then((res)->
+			$scope.form.$delete({class: 'reports', id: $scope.form.id}, (res)->
 				$rootScope.$broadcast('clearreports')
-				$location.path("/reports"))
+				$location.path("/reports")
+			)
 
 	]
 	templateUrl: 'directives/templates/views/form/form.html'

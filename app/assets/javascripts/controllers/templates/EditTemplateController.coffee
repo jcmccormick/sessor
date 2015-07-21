@@ -1,21 +1,14 @@
 controllers = angular.module('controllers')
-controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope', '$resource', '$routeParams', '$location', 'TemplateService', 'TemplateFactory', 'ClassFactory',
-($auth, $rootScope, $scope, $resource, $routeParams, $location, TemplateService, TemplateFactory, ClassFactory)->
+controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope', '$resource', '$routeParams', '$location', 'TemplateService', 'ClassFactory',
+($auth, $rootScope, $scope, $resource, $routeParams, $location, TemplateService,  ClassFactory)->
 
 	if $routeParams.templateId
-		ClassFactory.get({class: 'templates', id: $routeParams.templateId}).$promise.then((res)->
+		ClassFactory.get({class: 'templates', id: $routeParams.templateId}, (res)->
 			$scope.template = res
 		)
 	else
 		$scope.template = new ClassFactory()
 		$scope.template.creator_uid = $auth.user.uid
-
-	refreshTemplate = ->
-		$rootScope.$broadcast('cleartemplates')
-		ClassFactory.get({class: 'templates', id: $scope.template.id}, (res)->
-			$scope.template = res
-			$scope.loading = ""
-		)
 
 	$scope.blurSave = ->
 		if !$scope.template.id
@@ -24,6 +17,29 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 			)
 		else
 			$scope.template.$update({class: 'templates', id: $scope.template.id})
+
+	$scope.saveTemplate = ->
+		$scope.template.sections_attributes = $scope.template.sections
+		$scope.template.sections_attributes.forEach((section)->
+			section.columns_attributes = section.columns
+			section.columns_attributes.forEach((column)->
+				column.fields_attributes = column.fields
+				column.fields_attributes.forEach((field)->
+					field.options_attributes = field.options
+					field.values_attributes = field.values
+				)
+			)
+		)
+		$scope.template.$update({class: 'templates', id: $scope.template.id}, (res)->
+			$location.path("/templates/#{res.id}")
+			$rootScope.$broadcast('cleartemplates')
+		)
+
+	$scope.deleteTemplate = ->
+		$scope.template.$delete({class: 'templates', id: $scope.template.id})
+		.then((res)->
+			$rootScope.$broadcast('cleartemplates')
+			$location.path("/templates"))
 
 	$scope.sectionTypes = TemplateService.sections
 	$scope.columnTypes = TemplateService.columns
@@ -37,18 +53,19 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 
 	#add section
 	$scope.addNewSection = (name, column)->
-		$scope.loading = "Loading "
 		section = new ClassFactory()
 		section.name = name
 		section.template_id = $scope.template.id
-		$scope.template.sections.push section
 		section.$save({class: 'sections'}, (res)->
+			res.columns = new Array
 			column.count.forEach((column)->
 				column = new ClassFactory()
 				column.section_id = res.id
-				column.$save({class: 'columns'})
+				column.$save({class: 'columns'}, (col)->
+					res.columns.push col
+				)
 			)
-			refreshTemplate()
+			$scope.template.sections.push res
 		)
 		$scope.newSectionName = ""
 		return
@@ -65,38 +82,32 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 
 	# delete section
 	$scope.deleteSection = (template, section) ->
-		i = 0
-		while i < template.sections.length
-			if template.sections[i] == section
-				template.sections.splice i, 1
-				break
-			i++
+		template.sections.splice section.$index, 1
 		$.extend section, new ClassFactory() 
 		section.$delete({class: 'sections', id: section.id})
 		return
 
 	# create new field
 	$scope.addNewField = (column, type, name)->
+		if !column.fields then column.fields = new Array
 		field = new ClassFactory()
 		field.name = name
 		field.fieldtype = type.name
-		field.value = ""
 		field.required = undefined
 		field.disabled = undefined
 		field.glyphicon = type.glyphicon
 		field.column_id = column.id
-		column.fields.push field
-		field.$save({class: 'fields'})
+		field.$save({class: 'fields'}, (res)->
+			value = new ClassFactory()
+			value.field_id = res.id
+			column.fields.push res
+			value.$save({class: 'values'})
+		)
 		return
 
 	# delete field
 	$scope.deleteField = (column, field) ->
-		i = 0
-		while i < column.fields.length
-			if column.fields[i] == field
-				column.fields.splice i, 1
-				break
-			i++
+		column.fields.splice field.$index, 1
 		$.extend field, new ClassFactory()
 		field.$delete({class: 'fields', id: field.id})
 		return
@@ -113,28 +124,8 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 
 	# delete particular option
 	$scope.deleteOption = (field, option) ->
-		i = 0
-		while i < field.options.length
-			if field.options[i].id == option.id
-				field.options.splice i, 1
-				break
-			i++
+		field.options.splice option.$index, 1
 		$.extend option, new ClassFactory()
 		option.$delete({class: 'options', id: option.id})
 		return
-
-	$scope.saveTemplate = ->
-		tempCopy = new ClassFactory()
-		angular.copy $scope.template, tempCopy
-		tempCopy.$update({class: 'templates', id: tempCopy.id}, (res)->
-			$location.path("/templates/#{tempCopy.id}")
-			$rootScope.$broadcast('cleartemplates')
-		)
-
-	$scope.deleteTemplate = ()->
-		$scope.template.$delete({class: 'templates', id: $scope.template.id})
-		.then((res)->
-			$rootScope.$broadcast('cleartemplates')
-			$location.path("/templates"))
-
 ])

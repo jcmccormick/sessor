@@ -4,6 +4,11 @@ class ColumnsController < ApplicationController
 
   skip_before_filter :verify_authenticity_token
 
+  nested_attributes_names = Column.nested_attributes_options.keys.map do |key|
+    key.to_s.concat('_attributes').to_sym
+  end
+  wrap_parameters include: Column.attribute_names + nested_attributes_names
+
   def show
   end
 
@@ -28,6 +33,6 @@ class ColumnsController < ApplicationController
 
   private
     def allowed_params
-      params.require(:column).permit(:name, :fieldtype, :value, :required, :disabled, :glyphicon)
+      params.require(:column).permit()
     end
 end

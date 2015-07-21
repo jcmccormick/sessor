@@ -1,0 +1,1 @@
+json.(value, :id, :input)

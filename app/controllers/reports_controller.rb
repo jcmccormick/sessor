@@ -5,6 +5,11 @@ class ReportsController < ApplicationController
 
   skip_before_filter :verify_authenticity_token
 
+  nested_attributes_names = Report.nested_attributes_options.keys.map do |key|
+    key.to_s.concat('_attributes').to_sym
+  end
+  wrap_parameters include: Report.attribute_names + nested_attributes_names
+
   def index
     max_per_page = 5
 
@@ -33,25 +38,36 @@ class ReportsController < ApplicationController
       .to_json(
         :only => [:id, :title], 
         :include => [
-          { :users => { :only => :uid } },
-          { :template => { :only => :name } }
+          { :users => { :only => :uid } }
         ])
     end
   end
 
   def show
-  	@report = current_user.reports.find(params[:id])
+    report = current_user.reports.find(params[:id])
+    render json: report.as_json(
+      :include => [:values, :templates => {
+        :include => { :sections => {
+          :include => { :columns => {
+            :include => { :fields => {
+              :include => :options
+            }}
+          }}
+        }}
+      }]
+    )
   end
 
   def create
+    template = current_user.templates.find(params[:template_id])
     @report = current_user.reports.new(allowed_params)
-    @report.template = current_user.templates.find(params[:template_id])
-    if @report.save
-      current_user.reports << @report
-      render 'show', status: 201
-    else 
-      render json: {errors: @report.errors.full_messages, :pluralerrors => pluralize(@report.errors.count, 'error') }, status: 422
+    @report.save
+    @report.templates << template
+    current_user.reports << @report
+    template.fields.each do |field|
+      @report.values.where({:field_id => field.id, :report_id => @report.id, :input => field.values.first.input }).first_or_create
     end
+    render 'show', status: 201
   end
 
   def update
@@ -69,6 +85,11 @@ class ReportsController < ApplicationController
 
   private
     def allowed_params
-      params.require(:report).permit(:title, :sections)
+      params.require(:report).permit(
+        :title, :submission, :response, :active, :location,
+        values_attributes: [
+          :id, :report_id, :field_id, :input
+        ]      
+      )
     end
 end
