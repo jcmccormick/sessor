@@ -1,5 +1,11 @@
 <h1 class="page-header">Template {{template.id}}</h1>
 
+<div class="stick col-xs-9 col-sm-6 col-md-6">
+	<div class="btn-group btn-group-justified">
+		<a role="button" href="#/templates/" class="btn btn-default">&larr; Templates</a>
+		<a role="button" href="#/templates/{{template.id}}/edit" class="btn btn-info">Edit</a>
+	</div>
+</div>
 <template-form-directive form="template"></template-form-directive>
 
 

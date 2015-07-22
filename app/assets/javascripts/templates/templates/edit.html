@@ -145,14 +145,14 @@
     </small>
   </sup>
 </h3>
-<p ng-show="template.name == ''"></p>
-<p class="has-feedback">
-    <input type="text" class="form-control" ng-model="template.name" placeholder="Start with a title..." ng-blur="blurSave()" />
-    <i class="glyphicon glyphicon-pencil form-control-feedback"></i>
+
+<p class="input-group">
+  <input type="text" class="form-control" ng-model="template.name" placeholder="Start with a title..."/>
+  <span class="input-group-btn">
+    <button class="btn btn-success" ng-click="saveTemplate('temp')">Save</button>
+  </span>
 </p>
 <!-- END FORM NAME INPUT -->
-
-<center ng-hide="template.id"><div class="btn btn-success btn-lg">OK</div></center>
 
 <div ng-show="template.id">
   <h3>Sections

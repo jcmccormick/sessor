@@ -27,13 +27,13 @@ class TemplatesController < ApplicationController
 
   def show
     render json: current_user.templates.find(params[:id]).as_json(
-      :include => { :sections => {
+      :include => [:fields, :sections => {
         :include => { :columns => {
           :include => { :fields => {
             :include => [:options, :values]
           }}
         }}
-      }}
+      }]
     )
   end
 

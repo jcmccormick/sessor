@@ -10,36 +10,35 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 		$scope.template = new ClassFactory()
 		$scope.template.creator_uid = $auth.user.uid
 
-	$scope.blurSave = ->
+	$scope.saveTemplate = (temp)->
 		if !$scope.template.id
 			$scope.template.$save({class: 'templates'}, (res)->
 				$location.path('templates/'+res.id+'/edit')
 			)
 		else
-			$scope.template.$update({class: 'templates', id: $scope.template.id})
-
-	$scope.saveTemplate = ->
-		$scope.template.sections_attributes = $scope.template.sections
-		$scope.template.sections_attributes.forEach((section)->
-			section.columns_attributes = section.columns
-			section.columns_attributes.forEach((column)->
-				column.fields_attributes = column.fields
-				column.fields_attributes.forEach((field)->
-					field.options_attributes = field.options
-					field.values_attributes = field.values
+			if $scope.template.sections
+				$scope.template.sections_attributes = $scope.template.sections
+				$scope.template.sections_attributes.forEach((section)->
+					section.columns_attributes = section.columns
+					section.columns_attributes.forEach((column)->
+						column.fields_attributes = column.fields
+						column.fields_attributes.forEach((field)->
+							field.options_attributes = field.options
+							field.values_attributes = field.values
+						)
+					)
 				)
+			$scope.template.$update({class: 'templates', id: $scope.template.id}, (res)->
+				if !temp
+					$rootScope.$broadcast('cleartemplates')
+					$location.path("/templates/#{res.id}")
 			)
-		)
-		$scope.template.$update({class: 'templates', id: $scope.template.id}, (res)->
-			$location.path("/templates/#{res.id}")
-			$rootScope.$broadcast('cleartemplates')
-		)
 
 	$scope.deleteTemplate = ->
-		$scope.template.$delete({class: 'templates', id: $scope.template.id})
-		.then((res)->
+		$scope.template.$delete({class: 'templates', id: $scope.template.id}, (res)->
 			$rootScope.$broadcast('cleartemplates')
-			$location.path("/templates"))
+			$location.path("/templates")
+		)
 
 	$scope.sectionTypes = TemplateService.sections
 	$scope.columnTypes = TemplateService.columns

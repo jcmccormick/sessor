@@ -9,6 +9,10 @@ class FieldsController < ApplicationController
   end
   wrap_parameters include: Field.attribute_names + nested_attributes_names
   
+  def index
+    @fields = Field.where(:template_id => params[:template_id])
+  end
+
   def show
   end
 

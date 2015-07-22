@@ -1,5 +1,8 @@
 <h1 class="page-header">Statistics</h1>
 
+<h4>Template</h4>
+<p><select class="form-control" ng-model="search.template" ng-options="template.name for template in dataProps.templates" onblur="listFields()"></select></p>
+
 <div role="tablist" class="panel-group" id="statistics-search-accordion">
 	<div class="panel panel-info">
 
@@ -21,17 +24,10 @@
 		<div role="tabpanel" id="statistics-search" class="panel-collapse collapse" aria-labelledby="statistics-search-tab">
 			<div class="panel-body">
 				<form class="form-search" ng-init="dateSearch = false">
-					<h4>Template</h4>
-					<div class="input-group">
-						<select class="form-control" ng-model="search.template" ng-options="template for template in dataProps.templates"></select>
-						<span class="input-group-btn">
-							<a href class="btn btn-primary stats-button" ng-click="listFields()">Select</a>
-						</span>
-					</div>
 					<div ng-show="labels">
 						<h4>Field</h4>
 						<div class="input-group">
-							<select class="form-control" ng-model="search.field" ng-options="field for field in dataProps.fields"></select>
+							<select class="form-control" ng-model="search.field" ng-options="field.name for field in dataProps.fields"></select>
 							<span class="input-group-btn">
 								<a href class="btn btn-primary stats-button" ng-click="showData()">Select</a>
 							</span>
@@ -65,12 +61,12 @@
 </div>
 
 
-<div ng-show="data" class="lead">
+<!-- <div ng-show="data" class="lead">
 	<h4>Graph Type</h4>
 	<div class="btn-group btn-group-justified">
 		<a href class="btn btn-success" ng-click="graphType(graphtype)" ng-repeat="graphtype in ['pie','doughnut','polar-area','line','bar','radar']">{{graphtype}}</a>
 	</div>
-</div>
+</div> -->
 <!-- <canvas insert-canvas graphtype="graphtype" data="data" labels="labels"></canvas>
  -->
 <!-- <div ng-show="graphtype == type" ng-repeat="type in ['pie','doughnut','polar-area']">
@@ -81,7 +77,7 @@
 </div> -->
 
 
-<div ng-show="needLegend" class="col-md-2">
+<!-- <div ng-show="needLegend" class="col-md-2">
 	<canvas class="chart chart-pie hide col-md-2 pull-left" data="pie" labels="labels" legend="true">
 </div>
 <canvas ng-show="graphtype == 'pie'" id="pie" class="chart chart-pie" data="pie" labels="labels"></canvas>
@@ -90,4 +86,4 @@
 
 <canvas ng-show="graphtype == 'line'" id="line" class="chart chart-line" data="line" labels="labels"></canvas>
 <canvas ng-show="graphtype == 'bar'" id="bar" class="chart chart-bar" data="line" labels="labels"></canvas>
-<canvas ng-show="graphtype == 'radar'" id="radar" class="chart chart-radar" data="line" labels="labels"></canvas>
+<canvas ng-show="graphtype == 'radar'" id="radar" class="chart chart-radar" data="line" labels="labels"></canvas> -->

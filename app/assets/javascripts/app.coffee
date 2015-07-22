@@ -96,7 +96,7 @@ sessor.config(['$authProvider', '$routeProvider', 'localStorageServiceProvider',
       )
       .when('/statistics',
         templateUrl: "statistics/show.html"
-        controller: 'ReportsStatisticsController'
+        controller: 'StatisticsController'
         resolve: authResolver
       )
       .otherwise('/')
