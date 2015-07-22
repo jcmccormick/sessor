@@ -14,15 +14,13 @@ class TemplatesController < ApplicationController
 
     paginate current_user.templates.count, max_per_page do |limit, offset|
       render json: current_user.templates.limit(limit).offset(offset).to_json(
-      :include => [
-        :fields => { :include => :values }, 
-        :sections => {
+      :include => { :sections => {
         :include => { :columns => {
           :include => { :fields => {
             :include => [:options, :values]
           }}
         }}
-      }]
+      }}
     )
     end
   end

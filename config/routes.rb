@@ -7,9 +7,10 @@ Rails.application.routes.draw do
     resources :templates, only: [:index, :show, :create, :update, :destroy]
     resources :sections, only: [:show, :create, :update, :destroy]
     resources :columns, only: [:show, :create, :update, :destroy]
-    resources :fields, only: [:show, :create, :update, :destroy]
+    resources :fields, only: [:index, :show, :create, :update, :destroy]
     resources :options, only: [:show, :create, :update, :destroy]
     resources :values, only: [:show, :create, :update, :destroy]
+    resources :values_statistics, only: :index
     
     mount_devise_token_auth_for 'User', at: 'auth'
 

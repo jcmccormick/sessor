@@ -1,12 +1,12 @@
 <h1 class="page-header">Statistics</h1>
 
 <h4>Template</h4>
-<div class="input-group">
+<p class="input-group">
 	<select class="form-control" ng-model="search.template" ng-options="template.name for template in dataProps.templates"></select>
 	<span class="input-group-btn">
 		<a href class="btn btn-primary stats-button" ng-click="listFields(search.template)">Select</a>
 	</span>
-</div>
+</p>
 
 <div role="tablist" class="panel-group" id="statistics-search-accordion">
 	<div class="panel panel-info">
@@ -28,7 +28,7 @@
 		<!-- BEGIN SECTION INFO PANEL -->
 		<div role="tabpanel" id="statistics-search" class="panel-collapse collapse" aria-labelledby="statistics-search-tab">
 			<div class="panel-body">
-				<form class="form-search" ng-init="dateSearch = false">
+				<form class="form-search" ng-init="dateSearch = false; timeSearch = false">
 					<h4>Field</h4>
 					<div class="input-group">
 						<select class="form-control" ng-model="search.field" ng-options="field.name for field in dataProps.fields"></select>
@@ -36,25 +36,27 @@
 							<a href class="btn btn-primary stats-button" ng-click="showData(search.field)">Select</a>
 						</span>
 					</div>
-					<a href ng-click="dateSearch=!dateSearch">Date</a> <a href ng-click="timeSearch='searchDateTime'">Date & Time</a> 
-					<div ng-show="dateSearch">
+					<p>
+						<a href ng-click="dateSearch=!dateSearch">Date</a> - <a href ng-click="timeSearch=!timeSearch">Time</a> 
+					</p>
+					<div ng-show="dateSearch" class="col-xs-6">
 						<div class="grid-column">
 							<h4>Start Date</h4>
-							<input type="date" min="2001-01-01" max="2019-12-31" placeholder="yyyy-MM-dd" class="form-control" ng-model="dataProps.startDate">
+							<input type="date" class="form-control" ng-model="search.date.startDate">
 						</div>
 						<div class="grid-column">
 							<h4>End Date</h4>
-							<input type="date" min="2001-01-01" max="2019-12-31" placeholder="yyyy-MM-dd" class="form-control" ng-model="dataProps.endDate">
+							<input type="date" class="form-control" ng-model="search.date.endDate">
 						</div>
 					</div> 
-					<div ng-show="timeSearch == 'searchDateTime'">
+					<div ng-show="timeSearch" class="col-xs-6">
 						<div class="grid-column">
-							<h4>Start Date</h4>
-							<input type="datetime-local" min="2001-01-01T00:00:00" max="2019-12-31T00:00:00" placeholder="yyyy-MM-ddTHH:mm:ss" class="form-control" ng-model="dataProps.startDate">
+							<h4>Start Time</h4>
+							<input type="time" class="form-control" ng-model="search.time.startTime">
 						</div>
 						<div class="grid-column">
-							<h4>End Date</h4>
-							<input type="datetime-local" min="2001-01-01T00:00:00" max="2019-12-31T00:00:00" placeholder="yyyy-MM-ddTHH:mm:ss" class="form-control" ng-model="dataProps.endDate">
+							<h4>End Time</h4>
+							<input type="time" class="form-control" ng-model="search.time.endTime">
 						</div>
 					</div>
 				</form>
