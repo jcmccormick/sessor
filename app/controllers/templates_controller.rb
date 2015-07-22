@@ -14,6 +14,21 @@ class TemplatesController < ApplicationController
 
     paginate current_user.templates.count, max_per_page do |limit, offset|
       render json: current_user.templates.limit(limit).offset(offset).to_json(
+      :include => [
+        :fields => { :include => :values }, 
+        :sections => {
+        :include => { :columns => {
+          :include => { :fields => {
+            :include => [:options, :values]
+          }}
+        }}
+      }]
+    )
+    end
+  end
+
+  def show
+    render json: current_user.templates.find(params[:id]).as_json(
       :include => { :sections => {
         :include => { :columns => {
           :include => { :fields => {
@@ -21,19 +36,6 @@ class TemplatesController < ApplicationController
           }}
         }}
       }}
-    )
-    end
-  end
-
-  def show
-    render json: current_user.templates.find(params[:id]).as_json(
-      :include => [:fields, :sections => {
-        :include => { :columns => {
-          :include => { :fields => {
-            :include => [:options, :values]
-          }}
-        }}
-      }]
     )
   end
 

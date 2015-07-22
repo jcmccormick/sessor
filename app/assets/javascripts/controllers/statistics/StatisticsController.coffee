@@ -1,14 +1,19 @@
 controllers = angular.module('controllers')
-controllers.controller("StatisticsController",  ['$scope', 'ClassFactory', 'TemplateService',
-($scope, ClassFactory, TemplateService)->
+controllers.controller("StatisticsController",  ['$scope', 'ClassFactory', 'TemplateService', 'StatisticsService',
+($scope, ClassFactory, TemplateService, StatisticsService)->
 	## Var Declare
 	$scope.dataProps = []
 	$scope.dataProps.templates = []
 	$scope.dataProps.fields = []
+	$scope.dataProps.values = []
 
 	$scope.search = []
 	$scope.search.key = 'name'
 	$scope.search.date = false
+
+	$scope.labels = []
+	$scope.pie = []
+	$scope.line = []
 
 	$scope.graphtype = 'pie'
 
@@ -16,43 +21,29 @@ controllers.controller("StatisticsController",  ['$scope', 'ClassFactory', 'Temp
 
 	#Populate User's Templates
 	ClassFactory.query({class: 'templates'}, (res)->
-		console.log res
-		res.forEach((template)->
+		for template in res
 			$scope.dataProps.templates.push template
-		)
 	)
 
 	#Take Search Selections and Parse
 	$scope.listFields = (template)->
-		# for field in template.fields
-		# 	$scope.dataProps.fields.push field
-		# console.log $scope.dataProps.fields
-		# $scope.search.template.fields
-		# ClassFactory.query().$promise.then((res)->
+		$scope.dataProps.fields = template.fields
 
-		# 	StatisticsService.getCountOfIn($scope.search, res, (collection)->
-		# 		$scope.labels = collection[0]
-		# 		collection[0].forEach((label)->
-		# 			$scope.dataProps.fields[label] = label
-		# 		)
-		# 	)
-	$scope.showData = ->
-		# StatisticsService.getCountOfIn($scope.search, res, (collection, fieldData, optionLabels)->
-		# 	$scope.labels = fieldData[0]
-		# 	console.log optionLabels
-		# 	if optionLabels.length > 0
-		# 		optionLabels.splice(fieldData[0].length, optionLabels.length)
-		# 		$scope.labels = optionLabels
+	$scope.showData = (field)->
+		for value in field.values
+			if value.input
+				$scope.dataProps.values.push value.input
+		$scope.all_data = StatisticsService.countD($scope.dataProps.values)
 
-		# 	$scope.pie = fieldData[1]
-		# 	$scope.line = []
-		# 	$scope.line.push fieldData[1]
-		# 	if $.inArray($scope.graphtype, ['pie', 'doughnut', 'polar-area'])
-		# 		$scope.data = fieldData[1]
-		# 	else
-		# 		$scope.data = []
-		# 		$scope.data.push fieldData[1]
-		# )
+		$scope.labels = $scope.all_data[0]
+
+		$scope.pie = $scope.all_data[1]
+		$scope.line.push $scope.all_data[1]
+		if $.inArray($scope.graphtype, ['pie', 'doughnut', 'polar-area'])
+			$scope.data = $scope.all_data[1]
+		else
+			$scope.data = []
+			$scope.data.push $scope.all_data[1]
 
 	$scope.graphType = (graphtype)->
 		$scope.graphtype = graphtype
