@@ -102,14 +102,14 @@ sessor.config(['$authProvider', '$routeProvider', 'localStorageServiceProvider',
       .otherwise('/')
 ])
 
-sessor.factory("sessorCache", ['$cacheFactory', ($cacheFactory)-> 
-  return $cacheFactory('reports')
-])
-
 controllers = angular.module('controllers',[])
 factories   = angular.module('factories',[])
 directives  = angular.module('directives',[])
 services    = angular.module('services',[])
+
+sessor.factory("sessorCache", ['$cacheFactory', ($cacheFactory)-> 
+  return $cacheFactory('reports')
+])
 
 sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash',
 ($rootScope, $location, $cacheFactory, $http, Flash) ->

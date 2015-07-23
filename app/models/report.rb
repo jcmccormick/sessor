@@ -8,10 +8,16 @@ class Report < ActiveRecord::Base
   #validates :title, format: { with: /\A[a-zA-Z0-9_]*[a-zA-Z][a-zA-Z0-9_ ]*\z/,
   #	message: " must contain at least 1 letter and only letters and numbers" }
 
-  before_update :populate_values
   after_create :populate_values
+  before_update :populate_values
 
   def populate_values
-  	fields.each { |f| self.values.where(report: self, field: f, :input => f.values.first.input).first_or_create }
+    fields.each do |f|
+      value = values.where(report: self, field: f).first_or_create
+      if value.input.blank?
+        value.input = f.values.first.input
+        value.save
+      end
+    end
   end
 end

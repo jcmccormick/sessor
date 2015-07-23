@@ -19,83 +19,44 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
     return
 
   linker = (scope, element) ->
-    textfield = '
-    <div class="form-group">
-      <label class="control-label">{{field.name}}
-        <span class="required-error" ng-show="field.required && !field.values[0].input">*</span>
-      </label>
-      <div>
-        <input type="text" class="form-control" ng-model="field.values[0].input" value="{{field.values[0].input}}" ng-required="field.required" ng-disabled="field.disabled">
-      </div>
-    </div>'
 
-    textarea = '
+    fwstart = '
     <div class="form-group">
       <label class="control-label">{{field.name}}
         <span class="required-error" ng-show="field.required && !field.values[0].input">*</span>
-      </label>
-      <div>
-        <textarea type="text" class="form-control" ng-model="field.values[0].input" value="{{field.values[0].input}}" ng-required="field.required" ng-disabled="field.disabled"></textarea>
-      </div>
-    </div>'
+      </label>'
 
-    email = '
-    <div class="form-group">
-      <label class="control-label">{{field.name}}
-        <span class="required-error" ng-show="field.required && !field.values[0].input">*</span>
-      </label>
-      <input type="email" class="form-control" placeholder="Email" ng-model="field.values[0].input" ng-required="field.required" ng-disabled="field.disabled"/>
-    </div>'
+    textfield = '<input type="text" class="form-control" ng-model="field.values[0].input" value="{{field.values[0].input}}" ng-required="field.required" ng-disabled="field.disabled">'
+
+    textarea = '<textarea type="text" class="form-control" ng-model="field.values[0].input" value="{{field.values[0].input}}" ng-required="field.required" ng-disabled="field.disabled"></textarea>'
+
+    email = '<input type="email" class="form-control" placeholder="Email" ng-model="field.values[0].input" ng-required="field.required" ng-disabled="field.disabled"/>'
 
     checkbox = '
-    <input ng-model="field.values[0].input" id="{{field.id}}" type="checkbox" ng-true-value="1" ng-false-value="0" ng-required="field.required" ng-disabled="field.disabled">
+    <input type="checkbox" ng-model="field.values[0].input" id="{{field.id}}" ng-required="field.required" ng-disabled="field.disabled">
     <label class="form-field-label" for="{{field.id}}">{{field.name}}
       <span class="required-error" ng-show="field.required && field.values[0].input == 0">*</span>
     </label>
     <br>
     <br>'
 
-    date = '
-    <div class="form-group">
-      <label class="control-label">{{field.name}}
-        <span class="required-error" ng-show="field.required && !field.values[0].input">*</span>
-      </label>
-      <input type="datetime-local" min="2001-01-01T00:00:00" max="2019-12-31T00:00:00" placeholder="yyyy-MM-ddTHH:mm:ss" class="form-control" ng-model="field.values[0].input" ng-required="field.required" ng-disabled="field.disabled">
-    </div>'
+    date = '<input type="datetime-local" class="form-control" ng-model="field.values[0].input" ng-required="field.required" ng-disabled="field.disabled">'
 
-    dropdown = '
-    <div class="form-group">
-      <label class="control-label">{{field.name}}
-        <span class="required-error" ng-show="field.required && !field.values[0].input">*</span>
-      </label>
-      <select class="form-control" ng-model="field.values[0].input" ng-required="field.required" ng-disabled="field.disabled">
-        <option ng-repeat="option in field.options" ng-selected="option.value == field.values[0].input" value="{{option.id}}">
-          {{option.name}}
-        </option>
-      </select>
-    </div>'
+    dropdown = '<select class="form-control" ng-model="field.values[0].input" ng-required="field.required" ng-disabled="field.disabled" ng-options="option.name as option.name for option in field.options">
+        <option value="">Select Item</option>
+      </select>'
 
-    radio = '
-    <div class="form-group">
-      <label class="control-label">{{field.name}} 
-        <span class="required-error" ng-show="field.required && !field.values[0].input">*</span>
-      </label>
-      <div ng-repeat="option in field.options">
+    radio = '<div ng-repeat="option in field.options">
         <input type="radio" name="{{field.name}}{{field.id}}" value="{{option.name}}" ng-model="field.values[0].input" ng-required="field.required" ng-disabled="field.disabled"/>
         &nbsp;<span ng-bind="option.name"></span>
-      </div>
-    </div>'
+      </div>'
+
+    password = '<input type="password" class="form-control" value="{{field.values[0].input}}" ng-model="field.values[0].input"  ng-required="field.required" ng-disabled="field.disabled">'
 
     hidden = '
     <input type="hidden" ng-model="field.values[0].input" value="{{field.values[0].input}}" ng-disabled="field.disabled">'
 
-    password = '
-    <div class="form-group">
-      <label class="control-label">{{field.name}}
-        <span class="required-error" ng-show="field.required && !field.values[0].input">*</span>
-      </label>
-      <input type="password" class="form-control" value="{{field.values[0].input}}" ng-model="field.values[0].input"  ng-required="field.required" ng-disabled="field.disabled">
-    </div>'
+    fwend = '</div>'
 
     # if scope.livesave = true && $location.path() = '/reports/new/'
     #   scope.field.disabled = false
@@ -104,17 +65,20 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
     template = getTemplate(scope.field)
 
     switch template
-      when "textfield" then element.html textfield
-      when "textarea" then element.html textarea
-      when "email" then element.html email
-      when "checkbox" then element.html checkbox
+      when "textfield" then element.html fwstart+textfield+fwend
+      when "textarea" then element.html fwstart+textarea+fwend
+      when "email" then element.html fwstart+email+fwend
+      when "checkbox"
+        scope.field.values[0].input = scope.field.values[0].input == 't' ? 1 : 0
+        element.html checkbox
       when "date"
-        scope.field.values[0].input = new Date(scope.field.values[0].input)
-        element.html date
-      when "dropdown" then element.html dropdown
+        if scope.field.values
+          scope.field.values[0].input = new Date(scope.field.values[0].input)
+        element.html fwstart+date+fwend
+      when "dropdown" then element.html fwstart+dropdown+fwend
+      when "radio" then element.html fwstart+radio+fwend
+      when "password" then element.html fwstart+password+fwend
       when "hidden" then element.html hidden
-      when "password" then element.html password
-      when "radio" then element.html radio
 
     $compile(element.contents()) scope
     return

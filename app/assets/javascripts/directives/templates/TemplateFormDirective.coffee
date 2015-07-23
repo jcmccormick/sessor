@@ -1,17 +1,24 @@
 directives = angular.module('directives')
 directives.directive('templateFormDirective',[()->
 	{
-	controller: ['$rootScope', '$scope', '$routeParams', '$location', 'Flash', 'ClassFactory', 
-	($rootScope, $scope, $routeParams, $location, Flash, ClassFactory) ->
+	controller: ['$route', '$rootScope', '$scope', '$routeParams', '$location', 'Flash', 'ClassFactory', 
+	($route, $rootScope, $scope, $routeParams, $location, Flash, ClassFactory)->
 
-		$scope.selectTemplate = ->
-			$scope.form.template_id = $scope.selectedTemplate.id
-			$scope.form.title = "Untitled"
-			$scope.form.$save({class: 'reports'}, (res)->
-				$location.path("/reports/#{res.id}/edit")
-			)
+		$scope.selectTemplate = (template)->
+			$rootScope.$broadcast('clearreports')
+			$scope.form.template_ids.push template.id
+			if !$scope.form.id
+				$scope.form.title = "Untitled"
+				$scope.form.$save({class: 'reports'}, (res)->
+					$location.path("/reports/#{res.id}/edit")
+				)
+			else
+				$scope.form.$update({class: 'reports', id: $scope.form.id}, (res)->
+					$route.reload()
+				)
 
 		$scope.saveReport = ->
+			console.log $scope.form.values
 			$scope.form.values_attributes = $scope.form.values
 			$scope.form.$update({class: 'reports', id: $scope.form.id}, (res)->
 				$location.path("/reports/#{$scope.form.id}")
@@ -23,7 +30,6 @@ directives.directive('templateFormDirective',[()->
 				$rootScope.$broadcast('clearreports')
 				$location.path("/reports")
 			)
-
 	]
 	templateUrl: 'directives/templates/views/form/form.html'
 	restrict: 'E'

@@ -11,32 +11,31 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 		$scope.template.creator_uid = $auth.user.uid
 
 	$scope.saveTemplate = (temp)->
+		$rootScope.$broadcast('cleartemplates')
 		if !$scope.template.id
 			$scope.template.$save({class: 'templates'}, (res)->
 				$location.path('templates/'+res.id+'/edit')
 			)
 		else
-			if $scope.template.sections
-				$scope.template.sections_attributes = $scope.template.sections
-				$scope.template.sections_attributes.forEach((section)->
-					section.columns_attributes = section.columns
-					section.columns_attributes.forEach((column)->
-						column.fields_attributes = column.fields
-						column.fields_attributes.forEach((field)->
-							field.options_attributes = field.options
-							field.values_attributes = field.values
-						)
+			$scope.template.sections_attributes = $scope.template.sections
+			$scope.template.sections && $scope.template.sections_attributes.forEach((section)->
+				section.columns_attributes = section.columns
+				section.columns && section.columns_attributes.forEach((column)->
+					column.fields_attributes = column.fields
+					column.fields && column.fields_attributes.forEach((field)->
+						field.options_attributes = field.options
+						field.values_attributes = field.values
 					)
 				)
+			)
 			$scope.template.$update({class: 'templates', id: $scope.template.id}, (res)->
 				if !temp
-					$rootScope.$broadcast('cleartemplates')
 					$location.path("/templates/#{res.id}")
 			)
 
 	$scope.deleteTemplate = ->
+		$rootScope.$broadcast('cleartemplates')
 		$scope.template.$delete({class: 'templates', id: $scope.template.id}, (res)->
-			$rootScope.$broadcast('cleartemplates')
 			$location.path("/templates")
 		)
 
@@ -81,7 +80,8 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 
 	# delete section
 	$scope.deleteSection = (template, section) ->
-		template.sections.splice section.$index, 1
+		index = template.sections.indexOf(section)
+		template.sections.splice index, 1
 		$.extend section, new ClassFactory() 
 		section.$delete({class: 'sections', id: section.id})
 		return
@@ -106,7 +106,8 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 
 	# delete field
 	$scope.deleteField = (column, field) ->
-		column.fields.splice field.$index, 1
+		index = column.fields.indexOf(field)
+		column.fields.splice index, 1
 		$.extend field, new ClassFactory()
 		field.$delete({class: 'fields', id: field.id})
 		return
@@ -123,7 +124,8 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 
 	# delete particular option
 	$scope.deleteOption = (field, option) ->
-		field.options.splice option.$index, 1
+		index = field.options.indexOf(option)
+		field.options.splice index, 1
 		$.extend option, new ClassFactory()
 		option.$delete({class: 'options', id: option.id})
 		return

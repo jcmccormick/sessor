@@ -47,20 +47,32 @@ class ReportsController < ApplicationController
   def show
     report = current_user.reports.find(params[:id])
     render json: report.as_json(
-      :include => [:values, :templates => {
-        :include => { :sections => {
-          :include => { :columns => {
-            :include => { :fields => {
-              :include => :options
+      :only => [:id, :title],
+      :include => [
+        {:values => {
+          :only => [:id, :input, :field_id]
+        }},
+        {:templates => {
+          :only => [:id, :name, :allow_title],
+          :include => { :sections => {
+            :only => [:id, :name],
+            :include => { :columns => {
+              :only => [:id],
+              :include => { :fields => {
+                :only => [:id, :name, :fieldtype],
+                :include => { :options => {
+                  :only => [:id, :name]
+                }}
+              }}
             }}
           }}
         }}
-      }]
+      ]
     )
   end
 
   def create
-    template = current_user.templates.find(params[:template_id])
+    template = current_user.templates.find(params[:template_ids])
     @report = current_user.reports.new(allowed_params)
     @report.templates << template
     @report.save
@@ -70,6 +82,10 @@ class ReportsController < ApplicationController
 
   def update
     report = current_user.reports.find(params[:id])
+    params[:template_ids].each do |template_id|
+      template = current_user.templates.find(template_id)
+      report.templates << template unless report.templates.include?(template)
+    end
     report.update_attributes(allowed_params)
     current_user.reports << report unless current_user.reports.include?(report)
     head :no_content
@@ -86,7 +102,7 @@ class ReportsController < ApplicationController
       params.require(:report).permit(
         :title, :submission, :response, :active, :location,
         values_attributes: [
-          :id, :report_id, :field_id, :input
+          :id, :input
         ]      
       )
     end

@@ -1,45 +1,65 @@
 <form name="myForm" id="myForm" class="form row">
-    <!-- NEW FORM OPTIONS -->
-    <div class="stick col-xs-9 col-sm-6 col-md-6" ng-show="form.livesave">
-        <div class="btn-group btn-group-justified">
-            <a role="button" class="btn btn-info" ng-click="saveReport()" ng-disabled="myForm.$invalid">Save</a>
-            <div class="btn-group" ng-show="!form.id && form.livesave">
-                <select class="btn btn-info report-edit-template-select text-center" ng-model="selectedTemplate" ng-options="template as template.name for template in templates"><option value="">Template Select</option></select>
-            </div>
-            <a role="button" class="btn btn-default" ng-click="selectTemplate()" ng-show="!form.id && form.livesave">Select</a>
-            <a role="button" class="btn btn-danger" ng-click="deleteReport()" ng-show="form.id && form.livesave">Delete</a>
-        </div>
+  <!-- NEW FORM OPTIONS -->
+  <div class="stick col-xs-9 col-sm-6 col-md-6" ng-show="form.livesave">
+    <div class="btn-group btn-group-justified">
+      <a role="button" class="btn btn-info" ng-click="saveReport()" ng-disabled="myForm.$invalid">Save</a>
+      <a role="button" class="btn btn-default" data-toggle="modal" data-target=".addTemplateModal">Add Template</a>
+      <a role="button" class="btn btn-danger" ng-click="deleteReport()">Delete</a>
     </div>
-    <center><h1>{{form.name}}</h1></center>
+  </div>
+  <center><h1>{{form.name}}</h1></center>
 
-    <div class="col-xs-12" ng-show="form.allow_title">
+  <div class="col-xs-12" ng-show="form.allow_title">
+    <h3>Title</h3>
+    <input class="form-control" type="text" ng-model="form.title" value="{{form.title}}">
+  </div>
+
+  <div class="col-xs-12" ng-repeat="section in form.sections">
+    <h3>{{section.name}}</h3>
+    <div class="col-xs-12" ng-class="{'col-md-6':section.columns.length == 2, 'col-md-4':section.columns.length == 3}" ng-repeat="column in section.columns">
+      <div ng-repeat="field in column.fields">
+        <template-field-directive field="field" livesave="form.livesave"></template-field-directive>
+      </div>
+    </div>
+  </div>
+
+  <div ng-if="form.templates" ng-repeat="template in form.templates">
+
+    <center><h1>{{template.name}}</h1></center>
+
+    <div class="col-xs-12" ng-show="template.allow_title">
       <h3>Title</h3>
       <input class="form-control" type="text" ng-model="form.title" value="{{form.title}}">
     </div>
 
-    <div class="col-xs-12" ng-repeat="section in form.sections">
-        <h3>{{section.name}}</h3>
-        <div class="col-xs-12" ng-class="{'col-md-6':section.columns.length == 2, 'col-md-4':section.columns.length == 3}" ng-repeat="column in section.columns">
-            <div ng-repeat="field in column.fields">
-                <template-field-directive field="field" livesave="form.livesave"></template-field-directive>
-            </div>
+    <div class="col-xs-12" ng-repeat="section in template.sections">
+      <h3>{{section.name}}</h3>
+      <div class="col-xs-12" ng-class="{'col-md-6':section.columns.length == 2, 'col-md-4':section.columns.length == 3}" ng-repeat="column in section.columns">
+        <div ng-repeat="field in column.fields">
+          <template-field-directive field="field" livesave="form.livesave"></template-field-directive>
         </div>
+      </div>
     </div>
-    <div ng-show="form.templates" ng-repeat="template in form.templates">
-        <center><h1>{{template.name}}</h1></center>
-
-        <div class="col-xs-12" ng-show="template.allow_title">
-          <h3>Title</h3>
-          <input class="form-control" type="text" ng-model="form.title" value="{{form.title}}">
-        </div>
-
-        <div class="col-xs-12" ng-repeat="section in template.sections">
-            <h3>{{section.name}}</h3>
-            <div class="col-xs-12" ng-class="{'col-md-6':section.columns.length == 2, 'col-md-4':section.columns.length == 3}" ng-repeat="column in section.columns">
-                <div ng-repeat="field in column.fields">
-                    <template-field-directive field="field" livesave="form.livesave"></template-field-directive>
-                </div>
-            </div>
-        </div>
-    </div>
+  </div>
 </form>
+
+<!-- BEGIN PREVIEW MODAL -->
+<div class="modal fade addTemplateModal" tabindex="-1" role="dialog" aria-labelledby="previewModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-header">
+        <h2 class="modal-title">Template Selection</h2>
+      </div>
+      <div class="modal-body row">
+        <div role="button" class="col-xs-6" data-dismiss="modal" ng-click="selectTemplate(template)" ng-repeat="template in templates" ng-show="form.checkTemplate(template.id)">
+          <ul class="list-group">
+            <li class="list-group-item"><h4>{{template.name}}</h3></li>
+            <li class="list-group-item" ng-repeat="section in template.sections">{{section.name}}</li>
+          </ul>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- END PREVIEW MODAL -->
