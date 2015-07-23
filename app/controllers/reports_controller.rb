@@ -38,7 +38,8 @@ class ReportsController < ApplicationController
       .to_json(
         :only => [:id, :title], 
         :include => [
-          { :users => { :only => :uid } }
+          { :users => { :only => :uid } },
+          { :templates => { :only => :name } }
         ])
     end
   end
@@ -61,12 +62,9 @@ class ReportsController < ApplicationController
   def create
     template = current_user.templates.find(params[:template_id])
     @report = current_user.reports.new(allowed_params)
-    @report.save
     @report.templates << template
+    @report.save
     current_user.reports << @report
-    template.fields.each do |field|
-      @report.values.where({:field_id => field.id, :report_id => @report.id, :input => field.values.first.input }).first_or_create
-    end
     render 'show', status: 201
   end
 
