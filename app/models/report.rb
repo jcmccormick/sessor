@@ -20,4 +20,8 @@ class Report < ActiveRecord::Base
       end
     end
   end
+
+  def as_json(jsonoptions={})
+    super(:only => [:id, :title]).merge(values: values).merge(templates: templates)
+  end
 end

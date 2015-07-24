@@ -35,7 +35,7 @@ class ReportsController < ApplicationController
       .order(id: :desc)
       .limit(limit)
       .offset(offset)
-      .to_json(
+      .as_json(
         :only => [:id, :title], 
         :include => [
           { :users => { :only => :uid } },
@@ -46,29 +46,7 @@ class ReportsController < ApplicationController
 
   def show
     report = current_user.reports.find(params[:id])
-    render json: report.as_json(
-      :only => [:id, :title],
-      :include => [
-        {:values => {
-          :only => [:id, :input, :field_id]
-        }},
-        {:templates => {
-          :only => [:id, :name, :allow_title],
-          :include => { :sections => {
-            :only => [:id, :name],
-            :include => { :columns => {
-              :only => [:id],
-              :include => { :fields => {
-                :only => [:id, :name, :fieldtype],
-                :include => { :options => {
-                  :only => [:id, :name]
-                }}
-              }}
-            }}
-          }}
-        }}
-      ]
-    )
+    render json: report
   end
 
   def create

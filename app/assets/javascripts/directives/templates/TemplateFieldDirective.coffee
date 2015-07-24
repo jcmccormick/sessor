@@ -35,7 +35,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
     checkbox = '
     <input type="checkbox" ng-model="field.values[0].input" id="{{field.id}}" ng-required="field.required" ng-disabled="field.disabled">
     <label class="form-field-label" for="{{field.id}}">{{field.name}}
-      <span class="required-error" ng-show="field.required && field.values[0].input == 0">*</span>
+      <span class="required-error" ng-show="field.required && !field.values[0].input">*</span>
     </label>
     <br>
     <br>'
@@ -47,29 +47,29 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
       </select>'
 
     radio = '<div ng-repeat="option in field.options">
-        <input type="radio" name="{{field.name}}{{field.id}}" value="{{option.name}}" ng-model="field.values[0].input" ng-required="field.required" ng-disabled="field.disabled"/>
-        &nbsp;<span ng-bind="option.name"></span>
+        <input type="radio" name="{{field.id}}" value="{{option.name}}" ng-model="field.values[0].input" ng-required="field.required" ng-disabled="field.disabled">
+        &nbsp;{{option.name}}
       </div>'
 
-    password = '<input type="password" class="form-control" value="{{field.values[0].input}}" ng-model="field.values[0].input"  ng-required="field.required" ng-disabled="field.disabled">'
+    password = '<input type="password" class="form-control" ng-model="field.values[0].input"  ng-required="field.required" ng-disabled="field.disabled">'
 
     hidden = '
     <input type="hidden" ng-model="field.values[0].input" value="{{field.values[0].input}}" ng-disabled="field.disabled">'
 
     fwend = '</div>'
 
-    # if scope.livesave = true && $location.path() = '/reports/new/'
-    #   scope.field.disabled = false
-
     # GET template content from path
     template = getTemplate(scope.field)
-
+    console.log scope.field
     switch template
       when "textfield" then element.html fwstart+textfield+fwend
       when "textarea" then element.html fwstart+textarea+fwend
       when "email" then element.html fwstart+email+fwend
       when "checkbox"
-        scope.field.values[0].input = scope.field.values[0].input == 't' ? 1 : 0
+        if scope.field.values[0].input?
+          scope.field.values[0].input = scope.field.values[0].input == 't' ? 1 : 0
+        else
+          scope.field.values[0].input = 0
         element.html checkbox
       when "date"
         if scope.field.values

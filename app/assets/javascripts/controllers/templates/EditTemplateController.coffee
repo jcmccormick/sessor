@@ -96,6 +96,7 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 		field.disabled = undefined
 		field.glyphicon = type.glyphicon
 		field.column_id = column.id
+		field.options = []
 		field.$save({class: 'fields'}, (res)->
 			value = new ClassFactory()
 			value.field_id = res.id

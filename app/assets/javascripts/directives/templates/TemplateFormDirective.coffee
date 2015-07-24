@@ -14,6 +14,7 @@ directives.directive('templateFormDirective',[()->
 				)
 			else
 				$scope.form.$update({class: 'reports', id: $scope.form.id}, (res)->
+					console.log res
 					$route.reload()
 				)
 
