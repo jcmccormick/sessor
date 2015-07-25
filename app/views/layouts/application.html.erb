@@ -7,8 +7,8 @@
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
   </head>
-  <body ng-controller="NavController">
-    <div flash-message="10000" class="col-xs-12 btn-info h4 flash-alerts" ></div>
+  <body>
+    <div flash-message="10000" class="col-xs-8 col-xs-offset-2 btn-info h4 flash-alerts" ></div>
     <%= yield %>
   </body>
   <%= javascript_include_tag 'application' %>

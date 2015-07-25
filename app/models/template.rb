@@ -6,7 +6,11 @@ class Template < ActiveRecord::Base
 	accepts_nested_attributes_for :sections
 	has_many :fields, through: :sections
 
+	scope :minned, ->{eager_load(:sections => {:columns => { :fields => [:values, :options]}})}
+
+	validates :name, format: { with: /\A[a-zA-Z0-9_]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
+
 	def as_json(jsonoptions={})
-		super(:only => [:id, :name, :allow_title]).merge(sections: sections)
+		super(:only => [:id, :name, :allow_title]).merge(:sections => sections)
 	end
 end

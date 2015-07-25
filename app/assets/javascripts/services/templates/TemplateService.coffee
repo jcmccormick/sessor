@@ -1,6 +1,5 @@
 services = angular.module('services')
-services.service('TemplateService', ['$http', 
-($http) ->
+services.service('TemplateService', [->
   supportedProperties: [
     'id'
     'name'
@@ -34,7 +33,7 @@ services.service('TemplateService', ['$http',
     }
     {
       name: 'radio'
-      value: 'Radio Button'
+      value: 'Radio'
       glyphicon: 'glyphicon-record'
     }
     {
@@ -44,7 +43,7 @@ services.service('TemplateService', ['$http',
     }
     {
       name: 'dropdown'
-      value: 'Dropdown List'
+      value: 'Dropdown'
       glyphicon: 'glyphicon-list'
     }
     {
@@ -78,43 +77,6 @@ services.service('TemplateService', ['$http',
       id: 3
       width: 'col-xs-4'
       count: [{}, {}, {}]
-    }
-  ]
-  sections: [
-    {
-      name: 'Basic Personal Information',
-      columns: [
-        {
-          id: 0,
-          width: 'col-md-12',
-          fields: [
-            {
-              id: 0,
-              name: 'First Name',
-              type: 'textfield',
-              required: false,
-              disabled: false,
-              glyphicon: 'glyphicon-font'
-            },
-            {
-              id: 1,
-              name: 'Last Name',
-              type: 'textfield',
-              required: false,
-              disabled: false,
-              glyphicon: 'glyphicon-font'
-            },
-            {
-              id: 2,
-              name: 'E-mail',
-              type: 'email',
-              required: false,
-              disabled: false,
-              glyphicon: 'glyphicon-envelope'
-            }
-          ]
-        }
-      ]
     }
   ]
 ])

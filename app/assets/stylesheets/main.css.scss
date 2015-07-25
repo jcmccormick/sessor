@@ -1,6 +1,10 @@
-/* Sessor specific css */
+/* Sessor Main CSS File
+ * Authors: Joe McCormick
+ * Last Updated: 7-25-15
+ */
+
 /*
- * Global mobile settings
+ * Mixin Settings
  */
 
 $mini: 20em;
@@ -33,12 +37,17 @@ $desktop: 60em;
  }
 }
 
-/* Site Maintenance settings */
+
+/*
+ * General Site
+ */
+
 body {
   padding-top: 25px;
   color: #222 !important;
+
   @include respond(mobile) {
-    padding-top: 5px;
+    padding-top: 50px;
   }
 }
 button.close {
@@ -49,34 +58,22 @@ button.close {
   -webkit-box-shadow: none!important;
   box-shadow: none!important;
 }
-.glyphicon-pencil {
-  color: #aaa;
-}
-small .glyphicon-flash {
-  color: yellow;
-  background-color: #9d9d9d;
-  padding:3px;
-  border-radius: 15px;
-}
 .ng-hide {
   display: none!important;
 }
-.flash-alerts button.close {
-  position: absolute !important;
-  top: 5px !important;
-  right: 5px !important;
-  -webkit-appearance: none;
-  padding: 0;
-  cursor: pointer;
-  background: transparent;
-  border: 0;
+.page-header {
+  border-bottom-color: black !important;
 }
-
-
+.panel-heading {
+  cursor: pointer;
+  word-wrap: break-word;
+}
 @media (max-width: 767px) {
+
   .navbar .container-fluid {
     padding:0 5px ;
   }
+
   .view-frame {
     padding:15px;
   }
@@ -84,18 +81,22 @@ small .glyphicon-flash {
 @media (min-width: 768px) {
 
   /* Push "Sessor" and "You" towards center of site navigation */
+
   .navbar-fixed-top {
     padding: 0 55px 0  45px!important;
   }
+
   .modal {
     text-align: center;
   }
+
   .modal:before {
     display: inline-block;
     vertical-align: middle;
     content: " ";
     height: 100%;
   }
+
   .modal-dialog {
     display: inline-block;
     text-align: left;
@@ -103,50 +104,16 @@ small .glyphicon-flash {
   }
 }
 
-/*
- * Desktop Buttons
- */
-.custom-jumbotron {
-  padding: 6px 0;
-  @include respond(tablet) {
-    padding: 6px 2px !important;
-  }
-}
-.custom-jumbotron .btn-default {
-  border: none !important;
-  margin-left: -11px;
-  width: 100px;
-  padding: 5px 0;
-  @include respond(mobile) {
-    margin-left:0;
-    padding: 30px 0;
-    width: 100% !important;
-  }
-}
-/*Set responsive headers in jumbotrons */
-.jumbotron h1, .jumbotron .h1, .custom-jumbotron i {
-  font-size: 40px !important;
-  margin: 40px 15px !important;
-  @include respond(tablet) {
-    font-size: 72px !important;
-    margin: 20px 10px !important;
-  }
-}
-.jumbotron-success {
-  color: #5cb85c !important;
-}
-.jumbotron-info {  
-  color: #31b0d5 !important;
-}
-.jumbotron-warning {
-  color: #f0ad4e !important;
-}
 
 /*
- * Top bar sessor and you navigation
+ * Top bar "Sessor" and "You" navigation
  */
+
 .nav > li > a:not(.open) {
   font-size: 18px!important;
+}
+.navbar-fixed-top {
+  border: 0;
 }
 .navbar-inverse {
   border: none !important;
@@ -163,18 +130,46 @@ small .glyphicon-flash {
   color: #AAA;
   margin:0 10px;
 }
-.navbar-header > .navbar-toggle {
-  margin-top: 8px;
-  @include respond(mobile) {
-    margin-top: 16px;
-  }
-}
 .top-nav {
   margin: 7.5px 15px !important;
 }
 
 
-/* Sticky top-menu toolbar */
+/*
+ * Site Tooltip Icon
+ */
+
+small .glyphicon-flash {
+  color: yellow;
+  background-color: #9d9d9d;
+  padding:3px;
+  border-radius: 15px;
+}
+
+
+/*
+ * Flash Error Messages
+ */
+
+.flash-alerts {
+
+  button.close {
+    position: absolute !important;
+    top: 5px !important;
+    right: 5px !important;
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+  }
+}
+
+
+/* 
+ * Sticky Toolbar
+ */
+
 .stick {
   position: relative;
   width: 100%;
@@ -185,6 +180,10 @@ small .glyphicon-flash {
     @include respond(tablet) {
       padding: 0 15px !important;
     }
+  }
+
+  ul {
+    padding: 0;
   }
 }
 
@@ -199,31 +198,50 @@ small .glyphicon-flash {
   @include respond(tablet) {
     width: 64.33333% !important;
   }
-
 }
 
-.stick ul {
-  padding: 0;
-}
 
 /*
- * Reports style
+ * Desktop page style
  */
-.report-edit-template-select {
-  padding: 8px 12px!important;
+
+.custom-jumbotron {
+  padding: 6px 0;
+  @include respond(tablet) {
+    padding: 6px 2px !important;
+  } 
+
+  i {
+    font-size: 40px !important;
+    margin: 40px 15px !important;
+
+    @include respond(tablet) {
+      font-size: 72px !important;
+      margin: 20px 10px !important;
+    }
+  }
+
+  .btn-default {
+    border: none !important;
+    margin-left: -11px;
+    width: 100px;
+    padding: 5px 0;
+
+    @include respond(mobile) {
+      margin-left:0;
+      padding: 30px 0;
+      width: 100% !important;
+    }
+  }
 }
+
 
 /* 
  * Template builder
  */
-.input-group-btn > .btn, .input-group > .form-control {
-  padding-top:8px;
-  height: 36px;
-}
-.panel-heading {
-  cursor: pointer;
-  word-wrap: break-word;
-}
+
+/* Section Panel Animation w Carat */
+
 .template-section-header h4 {
   font-size: 25px;
   display: inline-block;
@@ -257,6 +275,9 @@ small .glyphicon-flash {
   -ms-transform: rotate(1080deg);
   -o-transform: rotate(1080deg);
 }
+
+/* Template Options Dropdown */
+
 .template-options-dropdown {
   width: inherit;
   min-width: 160px !important;
@@ -277,11 +298,24 @@ small .glyphicon-flash {
   cursor: pointer;
 }
 
+/* Field Display */
+
+.required-error {
+  color:red;
+  font-size: smaller;
+}
+.form-field-label {
+  display: inline;
+}
+
+
 /* 
  * Statistics 
  */
+
 canvas#pie {
   margin-right:0;
+
   @include respond(mobile) {
     padding: 0;
   }
@@ -304,6 +338,7 @@ canvas#pie {
     cursor: default;
     word-wrap:break-word;
     width: 90px;
+
     @include respond(mobile) {
       width:200px;
     }
@@ -323,217 +358,4 @@ canvas#pie {
   padding: 15px;
   background-color: #31b0d5; 
   border-radius: 10px;
-}
-
-
-/* Bootstrap Home */
-/*
- * Base structure
- */
-
-/* Move down content because we have a fixed navbar that is 50px tall */
-@media (min-width: 480px) {
-  body {
-    padding-top: 50px;
-  }
-}
-
-/*
- * Global add-ons
- */
-
-.sub-header {
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-/*
- * Top navigation
- * Hide default border to remove 1px line.
- */
-.navbar-fixed-top {
-  border: 0;
-}
-
-/*
- * Sidebar
- */
-
-/* Hide for mobile, show later */
-.sidebar {
-  display: none;
-}
-@media (min-width: 768px) {
-  .sidebar {
-    position: fixed;
-    top: 1px;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    display: block;
-    padding: 20px;
-    overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #f5f5f5;
-    border-right: 1px solid #eee;
-  }
-}
-
-/* Sidebar navigation */
-.nav-sidebar {
-  margin-right: -21px; /* 20px padding + 1px border */
-  margin-bottom: 20px;
-  margin-left: -20px;
-}
-.nav-sidebar > li > a {
-  padding-right: 20px;
-  padding-left: 20px;
-}
-.nav-sidebar > .active > a,
-.nav-sidebar > .active > a:hover,
-.nav-sidebar > .active > a:focus {
-  color: #fff;
-  background-color: #428bca;
-}
-
-
-/*
- * Main content
- */
-
-.main {
-  padding: 20px;
-}
-@media (min-width: 768px) {
-  .main {
-    position: fixed !important;
-    top: 51px;
-    padding-right: 40px;
-    padding-left: 40px;
-  }
-}
-.main .page-header {
-  margin-top: 0;
-}
-.page-header {
-  border-bottom-color: black !important;
-}
-
-/*
- * Placeholder dashboard ideas
- */
-
-.placeholders {
-  margin-bottom: 30px;
-  text-align: center;
-}
-.placeholders h4 {
-  margin-bottom: 0;
-}
-.placeholder {
-  margin-bottom: 20px;
-}
-.placeholder img {
-  display: inline-block;
-  border-radius: 50%;
-}
-
-/* Bootstrap SignIn */
-.form-signin {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
-}
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-  margin-bottom: 10px;
-}
-.form-signin .checkbox {
-  font-weight: normal;
-}
-.form-signin .form-control {
-  position: relative;
-  height: auto;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-}
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-/* Custom container */
-.container-narrow {
-  margin: 0 auto;
-  max-width: 700px;
-}
-.container-narrow  hr {
-  margin: 30px 0;
-}
-
-/* Main marketing message and sign up button */
-.jumbotron {
-  margin: 60px 0;
-  text-align: center;
-}
-.jumbotron h1 {
-  font-size: 72px;
-  line-height: 1;
-}
-.jumbotron .btn {
-  font-size: 21px;
-  padding: 14px 24px;
-}
-
-/* Supporting marketing content */
-.marketing {
-  margin: 60px 0;
-}
-.marketing p, .marketing h4 {
-  margin-top: 28px;
-}
-
-.add-field {
-  text-align: center;
-}
-
-.add-field select {
-  margin-bottom: 0px;
-}
-
-.form-fields .accordion-group{
-  border: 1px solid #AAAAAA;
-}
-
-.form-fields .accordion-heading{
-  background-color: #E2E2E2;
-}
-
-.accordion-edit div, .field div{
-  line-height: 35px;
-}
-
-.form-properties .row {
-  line-height: 35px;
-}
-
-.form-field-label {
-  display: inline;
-}
-
-.required-error {
-  color:red;
-  font-size: smaller;
 }

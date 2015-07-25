@@ -6,10 +6,6 @@ controllers.controller("EditReportController", ['$rootScope', '$auth', '$scope',
 	$scope.report.livesave = true
 	$scope.report.template_ids = []
 
-	ClassFactory.query({class: 'templates'}, (res)->
-		$scope.templates = res
-	)
-
 	if $routeParams.reportId
 		ClassFactory.get({class: 'reports', id: $routeParams.reportId}, (res)->
 			jQuery.extend $scope.report, res

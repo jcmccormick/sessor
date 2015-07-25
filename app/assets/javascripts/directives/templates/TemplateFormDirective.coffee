@@ -19,13 +19,15 @@ directives.directive('templateFormDirective',[()->
 				)
 
 		$scope.saveReport = (temp)->
-			console.log $scope.form.values
-			$scope.form.values_attributes = $scope.form.values
-			$scope.form.$update({class: 'reports', id: $scope.form.id}, (res)->
-				if !temp
-					$location.path("/reports/#{$scope.form.id}")
-					$rootScope.$broadcast('clearreports')
-			)
+			if $scope.form.title.search(/^[a-zA-Z0-9_]*[a-zA-Z][a-zA-Z0-9_ ]*$/) == -1
+				Flash.create('error', 'Title must contain a letter and only letters and numbers.')
+			else
+				$scope.form.values_attributes = $scope.form.values
+				$scope.form.$update({class: 'reports', id: $scope.form.id}, (res)->
+					if !temp
+						$location.path("/reports/#{$scope.form.id}")
+						$rootScope.$broadcast('clearreports')
+				)
 
 		$scope.deleteReport = ->
 			$scope.form.$delete({class: 'reports', id: $scope.form.id}, (res)->

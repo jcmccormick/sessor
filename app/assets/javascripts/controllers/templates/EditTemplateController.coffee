@@ -1,6 +1,6 @@
 controllers = angular.module('controllers')
-controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope', '$resource', '$routeParams', '$location', 'TemplateService', 'ClassFactory',
-($auth, $rootScope, $scope, $resource, $routeParams, $location, TemplateService,  ClassFactory)->
+controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope', '$resource', '$routeParams', '$location', 'ClassFactory', 'Flash', 'TemplateService'
+($auth, $rootScope, $scope, $resource, $routeParams, $location, ClassFactory, Flash, TemplateService)->
 
 	if $routeParams.templateId
 		ClassFactory.get({class: 'templates', id: $routeParams.templateId}, (res)->
@@ -10,28 +10,36 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 		$scope.template = new ClassFactory()
 		$scope.template.creator_uid = $auth.user.uid
 
+	$scope.sectionTypes = TemplateService.sections
+	$scope.columnTypes = TemplateService.columns
+	$scope.fieldTypes = TemplateService.fields
+	$scope.previewTemplate = {}
+
 	$scope.saveTemplate = (temp)->
-		$rootScope.$broadcast('cleartemplates')
-		if !$scope.template.id
-			$scope.template.$save({class: 'templates'}, (res)->
-				$location.path('templates/'+res.id+'/edit')
-			)
+		if $scope.template.name.search(/^[a-zA-Z0-9_]*[a-zA-Z][a-zA-Z0-9_ ]*$/) == -1
+			Flash.create('error', 'Title must contain a letter and only letters and numbers.')
 		else
-			$scope.template.sections_attributes = $scope.template.sections
-			$scope.template.sections && $scope.template.sections_attributes.forEach((section)->
-				section.columns_attributes = section.columns
-				section.columns && section.columns_attributes.forEach((column)->
-					column.fields_attributes = column.fields
-					column.fields && column.fields_attributes.forEach((field)->
-						field.options_attributes = field.options
-						field.values_attributes = field.values
+			$rootScope.$broadcast('cleartemplates')
+			if !$scope.template.id
+				$scope.template.$save({class: 'templates'}, (res)->
+					$location.path('templates/'+res.id+'/edit')
+				)
+			else
+				$scope.template.sections_attributes = $scope.template.sections
+				$scope.template.sections && $scope.template.sections_attributes.forEach((section)->
+					section.columns_attributes = section.columns
+					section.columns && section.columns_attributes.forEach((column)->
+						column.fields_attributes = column.fields
+						column.fields && column.fields_attributes.forEach((field)->
+							field.options_attributes = field.options
+							field.values_attributes = field.values
+						)
 					)
 				)
-			)
-			$scope.template.$update({class: 'templates', id: $scope.template.id}, (res)->
-				if !temp
-					$location.path("/templates/#{res.id}")
-			)
+				$scope.template.$update({class: 'templates', id: $scope.template.id}, (res)->
+					if !temp
+						$location.path("/templates/#{res.id}")
+				)
 
 	$scope.deleteTemplate = ->
 		$rootScope.$broadcast('cleartemplates')
@@ -39,12 +47,7 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 			$location.path("/templates")
 		)
 
-	$scope.sectionTypes = TemplateService.sections
-	$scope.columnTypes = TemplateService.columns
-	$scope.fieldTypes = TemplateService.fields
-
-	# preview template
-	$scope.previewTemplate = {}
+	# separate preview from actual template
 	$scope.previewUpdate = ->
 		angular.copy $scope.template, $scope.previewTemplate
 		return

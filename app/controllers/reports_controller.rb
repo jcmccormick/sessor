@@ -15,36 +15,24 @@ class ReportsController < ApplicationController
     pre_paginated_reports = if params.has_key?(:keywords)
 
       keywords = params[:keywords]
-      template = current_user.templates.where(:name => keywords)
 
-      query = if template.present?
-        {:template_id => template.first.id}
-      elsif keywords.to_i > 0
+      query = if keywords.to_i > 0
         {:id => keywords.to_i}
-      elsif keywords.length > 0
+      else
         {:title => keywords}
       end
-      current_user.reports.where(query)
+      current_user.reports.minned.where(query)
     else
-      current_user.reports
+      current_user.reports.minned
     end
 
     paginate pre_paginated_reports.count, max_per_page do |limit, offset|
-      render json: pre_paginated_reports
-      .order(id: :desc)
-      .limit(limit)
-      .offset(offset)
-      .as_json(
-        :only => [:id, :title], 
-        :include => [
-          { :users => { :only => :uid } },
-          { :templates => { :only => :name } }
-        ])
+      render json: pre_paginated_reports.order(id: :desc).limit(limit).offset(offset)
     end
   end
 
   def show
-    report = current_user.reports.find(params[:id])
+    report = current_user.reports.minned.find(params[:id])
     render json: report
   end
 
