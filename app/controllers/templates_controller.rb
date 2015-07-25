@@ -12,8 +12,31 @@ class TemplatesController < ApplicationController
   def index
     max_per_page = 5
 
-    paginate current_user.templates.count, max_per_page do |limit, offset|
-      render json: current_user.templates.limit(limit).offset(offset)
+    pre_paginated_templates = if params.has_key?(:keywords)
+
+      keywords = params[:keywords]
+      
+      if keywords.to_i > 0
+        {:id => keywords.to_i}
+      else
+        {:name => keywords}
+      end
+      current_user.templates.where(query)
+    else
+      current_user.templates
+    end
+
+    paginate pre_paginated_templates.count, max_per_page do |limit, offset|
+      render json: pre_paginated_templates
+      .order(id: :desc)
+      .limit(limit)
+      .offset(offset)
+      .as_json(
+        :only => [:id, :name, :allow_title, :creator_uid],
+        :include => [
+          { :sections => { :only => :name } }
+        ]
+      )
     end
   end
 

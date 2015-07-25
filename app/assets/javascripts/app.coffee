@@ -163,5 +163,21 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash',
       $(this).removeClass('in').addClass 'collapse'
     return
 
+  $(window).scroll (e) ->
+    $el = $('.stick')
+    if $(this).scrollTop() > 165 and $el.css('position') != 'fixed'
+      $('.stick').addClass('mobile-stick')
+      $('.stick').css
+        'position': 'fixed'
+        'top': '15px'
+        'z-index': '1031'
+    if $(this).scrollTop() < 165 and $el.css('position') == 'fixed'
+      $('.stick').removeClass('mobile-stick')
+      $('.stick').css
+        'width': '100%'
+        'position': 'relative'
+        'top': '0'
+        'z-index': '1000'
+    return
 
 ])

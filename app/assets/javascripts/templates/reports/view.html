@@ -1,10 +1,19 @@
 <h1 class="page-header">Report {{report.id}}</h1>
 
-<div class="stick col-xs-9 col-sm-6 col-md-6">
+<div class="stick">
 	<div class="btn-group btn-group-justified">
 		<a role="button" href="#/reports/" class="btn btn-default">&larr; Reports</a>
-		<a role="button" href="#/reports/{{report.id}}/edit" class="btn btn-info">Edit</a>
+		<a role="button" href="#/reports/{{report.id}}/edit" class="btn btn-default">Edit</a>
 	</div>
 </div>
 <template-form-directive form="report"></template-form-directive>
-<pre>{{report | json}} </pre>
+
+<div class="text-center">
+	<a class="btn btn-small btn-primary" ng-show="!showJson" ng-click="showJson = true">Show report json object</a>
+	<a class="btn btn-small btn-inverse" ng-show="showJson" ng-click="showJson = false">Hide report json object</a><br><br>
+</div>
+
+<div ng-show="showJson">
+	<h4>Form object:</h4>
+	<pre>{{ report | json }}</pre>
+</div>

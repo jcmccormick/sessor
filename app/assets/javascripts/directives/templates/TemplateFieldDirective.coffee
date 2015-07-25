@@ -60,7 +60,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
 
     # GET template content from path
     template = getTemplate(scope.field)
-    console.log scope.field
+    
     switch template
       when "textfield" then element.html fwstart+textfield+fwend
       when "textarea" then element.html fwstart+textarea+fwend
@@ -68,8 +68,6 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
       when "checkbox"
         if scope.field.values[0].input?
           scope.field.values[0].input = scope.field.values[0].input == 't' ? 1 : 0
-        else
-          scope.field.values[0].input = 0
         element.html checkbox
       when "date"
         if scope.field.values

@@ -1,14 +1,21 @@
 <form name="myForm" id="myForm" class="form row">
   <!-- NEW FORM OPTIONS -->
-  <div class="stick col-xs-9 col-sm-6 col-md-6" ng-show="form.livesave">
-    <div class="btn-group btn-group-justified">
-      <a role="button" class="btn btn-info" ng-click="saveReport()" ng-disabled="myForm.$invalid">Save</a>
-      <a role="button" class="btn btn-default" data-toggle="modal" data-target=".addTemplateModal">Add Template</a>
-      <a role="button" class="btn btn-danger" ng-click="deleteReport()">Delete</a>
+  <div class="stick row" ng-show="form.livesave">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-10">
+      <div class="btn-group btn-group-justified">
+        <a role="button" class="btn btn-default" ng-click="saveReport()" ng-disabled="myForm.$invalid">Finish</a>
+        <a role="button" class="btn btn-default" ng-click="saveReport('temp')" ng-disabled="myForm.$invalid">Save</a>
+        <a role="button" class="btn btn-default" data-toggle="modal" data-target=".addTemplateModal"><i class="glyphicon glyphicon-plus"></i> Template</a>
+      </div>
+    </div>
+    <div class="col-xs-1">
+      <a role="button" class="btn btn-danger" ng-click="deleteReport()"><i class="glyphicon glyphicon-trash"></i></a>
     </div>
   </div>
-  <center><h1>{{form.name}}</h1></center>
+  <!-- END FORM OPTIONS -->
 
+  <center><h1>{{form.name}}</h1></center>
   <div class="col-xs-12" ng-show="form.allow_title">
     <h3>Title</h3>
     <input class="form-control" type="text" ng-model="form.title" value="{{form.title}}">
@@ -46,6 +53,9 @@
         <h2 class="modal-title">Template Selection</h2>
       </div>
       <div class="modal-body row">
+        <div class="text-center">
+          <bgf-pagination collection="templates" url="'api/templates'"></bgf-pagination>
+        </div>
         <div role="button" class="col-xs-6" data-dismiss="modal" ng-click="selectTemplate(template)" ng-repeat="template in templates" ng-show="form.checkTemplate(template.id)">
           <ul class="list-group">
             <li class="list-group-item"><h4>{{template.name}}</h3></li>

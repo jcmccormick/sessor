@@ -1,6 +1,6 @@
 controllers = angular.module('controllers')
-controllers.controller("ShowReportsController",  ['$scope', 'ClassFactory',
-($scope, ClassFactory)->
+controllers.controller("ShowReportsController",  ['$scope',
+($scope)->
 	$scope.keywords = ''
 	$scope.$watch 'keywords', (keywords)->
 		$scope.urlParams = if keywords.length > 0

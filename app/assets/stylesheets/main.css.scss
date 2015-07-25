@@ -35,8 +35,11 @@ $desktop: 60em;
 
 /* Site Maintenance settings */
 body {
+  padding-top: 25px;
   color: #222 !important;
-  background-color: #9d9d9d !important;
+  @include respond(mobile) {
+    padding-top: 5px;
+  }
 }
 button.close {
   font-size: 30px;
@@ -80,16 +83,9 @@ small .glyphicon-flash {
 }
 @media (min-width: 768px) {
 
-  .view-all-accordion .panel-collapse {
-    display:none;
-  }
-  .view-all-accordion.panel:hover .panel-collapse {
-    display:block;
-  }
-
   /* Push "Sessor" and "You" towards center of site navigation */
   .navbar-fixed-top {
-    padding: 0 75px 0 65px!important;
+    padding: 0 55px 0  45px!important;
   }
   .modal {
     text-align: center;
@@ -180,35 +176,32 @@ small .glyphicon-flash {
 
 /* Sticky top-menu toolbar */
 .stick {
-  position:fixed !important;
-  top:0;
-  margin-top:8px;
-  margin-left: -15px;
-  z-index: 1031;
-  @include respond(mini) {
-    left: 2%;
+  position: relative;
+  width: 100%;
+
+  > div {
+    padding: 0 !important;
+
+    @include respond(tablet) {
+      padding: 0 15px !important;
+    }
   }
+}
+
+.mobile-stick {
+  width: 83% !important;
+  top: 10px !important;
+
   @include respond(mobile) {
-    left: 15%;
-    margin-top: 16px;
+    top: 15px !important;
   }
 
   @include respond(tablet) {
-    left: 26%;
+    width: 64.33333% !important;
   }
+
 }
-.stick > .btn-group-justified {
-  width: 123%;
-  @include respond(mobile) {
-    width: 100%;
-  }
-}
-.stick > .btn-group-justified > .btn {
-  padding: 6px 2px;
-  @include respond(mobile) {
-    padding: 6px 12px;
-  }
-}
+
 .stick ul {
   padding: 0;
 }
@@ -232,7 +225,7 @@ small .glyphicon-flash {
   word-wrap: break-word;
 }
 .template-section-header h4 {
-  text-size: 25px;
+  font-size: 25px;
   display: inline-block;
 }
 .panel-carat .template-section-header:hover {

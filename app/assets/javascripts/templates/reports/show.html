@@ -1,6 +1,6 @@
 <h1 class="page-header">Reports</h1>
 
-<div class="stick col-xs-9 col-sm-6 col-md-6">
+<p class="stick">
   <div class="btn-group btn-group-justified">
     <div class="input-group">
       <span class="input-group-btn">
@@ -9,16 +9,22 @@
       <input type="text" class="form-control" ng-model="keywords" placeholder="Report ID, Report Title, or Template Name" ng-model-options="{debounce: 1000}" autofocus>
     </div>
   </div>
+</p>
+
+<div class="text-center">
+  <bgf-pagination collection="reports" url="'api/reports'" url-params="urlParams"></bgf-pagination>
 </div>
 
-<div role="tablist" class="panel-group panel-carat" id="reports-accordion" ng-if="reports">
-  <div class="panel panel-default view-all-accordion" ng-repeat="report in reports">
+<!-- BEGIN REPORTS LIST -->
+<div role="tablist" class="panel-group panel-carat" id="view-all-accordion">
+  <div view-all-accordion class="panel panel-default" ng-repeat="report in reports">
+
 
     <!-- BEGIN SECTION HEADER -->
     <div class="panel-heading"
     data-toggle="collapse" 
     data-target="#collapse{{report.id}}" 
-    data-parent="#reports-accordion" 
+    data-parent="#view-all-accordion" 
     aria-controls="collapse{{report.id}}">
       <h4 ng-show="report.title != 'Untitled'">{{report.title}} <small>#{{report.id}}</small> <small ng-show="user.uid != report.users[0].uid">by {{report.users[0].uid}}</small></h4>
       <h4 ng-show="report.title == 'Untitled'" ng-repeat="template in report.templates">{{template.name}} <small>#{{report.id}}</small></h4>
@@ -29,13 +35,13 @@
     <!-- BEGIN SECTION INFO PANEL -->
     <div role="tabpanel" id="collapse{{report.id}}" class="panel-collapse collapse view-all-panel" aria-labelledby="heading{{report.id}}-tab">
       <div class="panel-body">
-        <a href="#/reports/{{report.id}}/edit" class="btn btn-info">Edit</a>
+        <a href="#/reports/{{report.id}}" class="btn btn-link">View</a>
+        <a href="#/reports/{{report.id}}/edit" class="btn btn-link">Edit</a>
       </div>
     </div>
     <!-- END SECTION INFO PANEL -->
+
+
   </div>
 </div>
-
-<div class="text-center">
-  <bgf-pagination collection="reports" url="'api/reports'" url-params="urlParams"></bgf-pagination>
-</div>
+<!-- END REPORTS LIST -->

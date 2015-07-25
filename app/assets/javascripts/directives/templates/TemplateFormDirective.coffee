@@ -18,12 +18,13 @@ directives.directive('templateFormDirective',[()->
 					$route.reload()
 				)
 
-		$scope.saveReport = ->
+		$scope.saveReport = (temp)->
 			console.log $scope.form.values
 			$scope.form.values_attributes = $scope.form.values
 			$scope.form.$update({class: 'reports', id: $scope.form.id}, (res)->
-				$location.path("/reports/#{$scope.form.id}")
-				$rootScope.$broadcast('clearreports')
+				if !temp
+					$location.path("/reports/#{$scope.form.id}")
+					$rootScope.$broadcast('clearreports')
 			)
 
 		$scope.deleteReport = ->

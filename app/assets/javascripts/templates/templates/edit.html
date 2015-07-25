@@ -1,41 +1,3 @@
-<!-- BEGIN EDIT TEMPLATE STICK -->
-<div class="stick col-xs-9 col-sm-6" ng-show="template.id">
-  <ul class="btn-group btn-group-justified">
-    <a role="button" class="btn btn-info" ng-click="saveTemplate()">Finish</a>
-    <li class="btn-group dropdown">
-      <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Options <span class="caret"></span></a>
-      <ul class="dropdown-menu template-options-dropdown" role="menu">
-        <li class="col-sm-12 col-md-4">
-          <ul>
-            <li><h4>Sharing</h4><hr></li>
-            <li><label for="dont_share_radio"><input id="dont_share_radio" type="radio" name="sharing"> Don't Share</label></li>
-            <li><label for="share_group_radio"><input id="share_group_radio" type="radio" name="sharing"> Share Group</label></li>
-            <li><label for="share_public_radio"><input id="share_public_radio" type="radio" name="sharing"> Share Public</label></li>
-          </ul>
-        </li>
-        <li class="col-sm-12 col-md-4">
-          <ul>
-            <li><h4>Template</h4><hr></li>
-            <li><label for="template_title"><input id="template_title" type="checkbox" name="template_title" ng-model="template.allow_title"> Add Title</label></li>
-          </ul>
-        </li>
-        <li class="col-sm-12 col-md-4">
-          <ul>
-            <li><h4>Something</h4><hr></li>
-            <li><label for="dont_something_radio"><input id="dont_something_radio" type="radio" name="something"> Don't something</label></li>
-            <li><label for="something_group_radio"><input id="something_group_radio" type="radio" name="something"> something Group</label></li>
-            <li><label for="something_public_radio"><input id="something_public_radio" type="radio" name="something"> something Public</label></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <a role="button" class="btn btn-info" data-toggle="modal" data-target=".previewModal" ng-click="previewUpdate()">Preview</a>
-    <a role="button" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this template?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="deleteTemplate()">Delete</a>
-  </ul>
-</div>
-<!-- END EDIT TEMPLATE STICK -->
-
-
 <!-- BEGIN MODALS -->
 
 
@@ -137,6 +99,51 @@
 
 <h1 class="page-header">Template Builder</h1>
 
+<!-- BEGIN EDIT TEMPLATE STICK -->
+<div class="stick row" ng-show="template.id">
+  <div class="col-xs-1"></div>
+  <div class="col-xs-10">
+    <ul class="btn-group btn-group-justified">
+      <a role="button" class="btn btn-default" ng-click="saveTemplate()">Finish</a>
+      <li class="btn-group dropdown">
+        <a role="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Options <span class="caret"></span></a>
+        <ul class="dropdown-menu template-options-dropdown" role="menu">
+          <li class="col-sm-12 col-md-4">
+            <ul>
+              <li><h4>Template</h4><hr></li>
+              <li><label for="template_title"><input id="template_title" type="checkbox" name="template_title" ng-model="template.allow_title"> Add Title</label></li>
+            </ul>
+          </li>
+          <li class="col-sm-12 col-md-4">
+            <ul>
+              <li><h4>Sharing</h4><hr></li>
+              <li><label for="dont_share_radio"><input id="dont_share_radio" type="radio" name="sharing"> Don't Share</label></li>
+              <li><label for="share_group_radio"><input id="share_group_radio" type="radio" name="sharing"> Share Group</label></li>
+              <li><label for="share_public_radio"><input id="share_public_radio" type="radio" name="sharing"> Share Public</label></li>
+            </ul>
+          </li>
+          <li class="col-sm-12 col-md-4">
+            <ul>
+              <li><h4>Group Options</h4><hr></li>
+              <li><label for="dont_something_radio"><input id="dont_something_radio" type="radio" name="something"> Don't something</label></li>
+              <li><label for="something_group_radio"><input id="something_group_radio" type="radio" name="something"> something Group</label></li>
+              <li><label for="something_public_radio"><input id="something_public_radio" type="radio" name="something"> something Public</label></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <a role="button" class="btn btn-default" data-toggle="modal" data-target=".newSectionModal"><i class="glyphicon glyphicon-plus"></i> Section</a>
+      <a role="button" class="btn btn-default" data-toggle="modal" data-target=".previewModal" ng-click="previewUpdate()">Preview</a>
+    </ul>
+  </div>
+  <div class="col-xs-1">
+    <a role="button" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this template?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="deleteTemplate()">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+</div>
+<!-- END EDIT TEMPLATE STICK -->
+
 <!-- BEGIN FORM NAME INPUT -->
 <h3>Title
   <sup>
@@ -149,7 +156,7 @@
 <p class="input-group">
   <input type="text" class="form-control" ng-model="template.name" placeholder="Start with a title..."/>
   <span class="input-group-btn">
-    <button class="btn btn-success" ng-click="saveTemplate('temp')">Save</button>
+    <button class="btn btn-primary" ng-click="saveTemplate('temp')">Save</button>
   </span>
 </p>
 <!-- END FORM NAME INPUT -->
@@ -162,14 +169,11 @@
       </small>
     </sup>
   </h3>
-  <p>
-    <a role="button" class="btn btn-primary" data-toggle="modal" data-target=".newSectionModal">Add Section</a>
-  </p>
 </div>
 
 <!-- START MAIN SECTION REPEATING -->
 <div role="tablist" ui-sortable ng-model="template.sections" class="panel-group panel-carat" id="section-accordion">
-  <div class="panel panel-info" ng-repeat="section in template.sections track by $index">
+  <div class="panel panel-default" ng-repeat="section in template.sections track by $index">
 
 
     <!-- BEGIN SECTION HEADER -->
@@ -232,7 +236,7 @@
 
             <!-- BEGIN FIELD LIST -->
             <div id="input-fields" class="h4 text-center btn-group btn-group-justified">
-              <label class="btn btn-success" ng-bootbox-prompt="Please enter a name for this {{type.value}}" ng-bootbox-prompt-action="addNewField(column, type, result)" bs-popover ng-repeat="type in fieldTypes">
+              <label class="btn btn-default" ng-bootbox-prompt="Please enter a name for this {{type.value}}" ng-bootbox-prompt-action="addNewField(column, type, result)" bs-popover ng-repeat="type in fieldTypes">
                 <i class="glyphicon {{type.glyphicon}}" id="{{type.name}}" rel="popover" data-content="{{type.value}}" data-placement="top" data-container="body"></i>
               </label>
             </div>
@@ -241,7 +245,7 @@
 
             <!-- BEGIN FIELD REPEATING -->
             <div role="tablist" ui-sortable="sortableOptions" ng-model="column.fields" class="panel-group" id="field-accordion-sec{{section.id}}col{{column.id}}">
-              <div class="panel panel-success" ng-repeat="field in column.fields track by $index">
+              <div class="panel panel-default" ng-repeat="field in column.fields track by $index">
 
 
                 <!-- BEGIN FIELD HEADER -->
@@ -271,13 +275,13 @@
                             <input type="text" rel="popover" data-title="Add a title..." data-content="stuff" data-placement="right" data-container="body" class="form-control" ng-model="field.name" value="{{field.name}}">
                         </div>
 
-                        <div class="form-group" ng-hide="field.fieldtype == 'date'">
+                        <div class="form-group" ng-hide="field.fieldtype == 'checkbox' || field.fieldtype == 'radio'">
                             <label class="control-label">Field Default Value</label>
-                            <input class="form-control" type="text" ng-model="field.values[0].input" value="{{field.values[0].input}}">
+                            <input class="form-control" type="{{field.fieldtype}}" ng-model="field.values[0].input">
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label"><input type="checkbox" ng-value="true" ng-selected ng-model="field.required"/> Required?</label>
+                            <label class="control-label"><input type="checkbox" ng-model="field.required"/> Required?</label>
                         </div>
 
                         <div class="form-group">
