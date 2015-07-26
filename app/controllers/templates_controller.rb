@@ -18,12 +18,18 @@ class TemplatesController < ApplicationController
       
       query = if keywords.to_i > 0
         {:id => keywords.to_i}
+      elsif keywords.capitalize == 'Draft'
+        {:draft => 1}
       else
         {:name => keywords}
       end
-      current_user.templates.where(query).minned
+      current_user.templates.minned.where(query)
     else
       current_user.templates.minned
+    end
+
+    if params.has_key?(:draft)
+      pre_paginated_templates = pre_paginated_templates.where(draft: nil)
     end
 
     paginate pre_paginated_templates.count, max_per_page do |limit, offset|
@@ -59,7 +65,7 @@ class TemplatesController < ApplicationController
   private
     def allowed_params
       params.require(:template).permit(
-        :name, :creator_uid, :private_world, :private_group, :group_id, :group_edit, :group_editors, :allow_title, :draft, 
+        :name, :creator_uid, :private_group, :private_world, :group_id, :group_edit, :group_editors, :allow_title, :draft, 
         sections_attributes: [
           :id, :name,
           columns_attributes: [

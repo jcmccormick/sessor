@@ -279,10 +279,13 @@ small .glyphicon-flash {
 /* Template Options Dropdown */
 
 .template-options-dropdown {
+  margin: 0 !important;
+  border: 0 !important;
   width: inherit;
   min-width: 160px !important;
   @include respond(desktop) {
-    min-width: 480px !important;
+    min-width: 320px !important;
+    max-width: 480px !important;
   }
 }
 .template-options-dropdown ul {

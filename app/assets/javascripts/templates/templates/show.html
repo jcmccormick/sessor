@@ -6,18 +6,18 @@
       <span class="input-group-btn">
         <a href="#/templates/new" class="btn btn-success">New</a>
       </span>
-      <input type="text" class="form-control" ng-model="keywords" placeholder="Template ID or Title" ng-model-options="{debounce: 1000}" autofocus>
+      <input type="text" class="form-control" ng-model="keywords" placeholder="Template ID, Title, or 'Draft'" ng-model-options="{debounce: 1000}" autofocus>
     </div>
   </div>
 </p>
 
 <div class="text-center">
-  <bgf-pagination collection="templates" url="'api/templates'"></bgf-pagination>
+  <bgf-pagination collection="templates" url="'api/templates'" url-params="urlParams"></bgf-pagination>
 </div>
 
 <!-- BEGIN TEMPLATES LIST -->
 <div role="tablist" class="panel-group panel-carat" id="view-all-accordion">
-  <div view-all-accordion class="panel panel-default" ng-repeat="template in templates | filter: keywords | orderBy: '-id'">
+  <div view-all-accordion class="panel panel-default" ng-repeat="template in templates">
 
 
     <!-- BEGIN SECTION HEADER -->

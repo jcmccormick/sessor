@@ -108,26 +108,25 @@
       <li class="btn-group dropdown">
         <a role="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Options <span class="caret"></span></a>
         <ul class="dropdown-menu template-options-dropdown" role="menu">
-          <li class="col-sm-12 col-md-4">
+          <li class="col-sm-12 col-md-4 h5">
             <ul>
-              <li><h4>Template</h4><hr></li>
-              <li><label for="template_title"><input id="template_title" type="checkbox" name="template_title" ng-model="template.allow_title"> Add Title</label></li>
+              <li><h4>Template</h4></li>
+              <li><label for="template_draft"><input type="checkbox" id="template_draft" name="template_draft" ng-model="template.draft"> Draft</label></li>
+              <li><label for="template_title"><input type="checkbox" id="template_title" name="template_title" ng-model="template.allow_title"> Add Title</label></li>
             </ul>
           </li>
-          <li class="col-sm-12 col-md-4">
+          <li class="col-sm-12 col-md-4 h5">
             <ul>
-              <li><h4>Sharing</h4><hr></li>
-              <li><label for="dont_share_radio"><input id="dont_share_radio" type="radio" name="sharing"> Don't Share</label></li>
-              <li><label for="share_group_radio"><input id="share_group_radio" type="radio" name="sharing"> Share Group</label></li>
-              <li><label for="share_public_radio"><input id="share_public_radio" type="radio" name="sharing"> Share Public</label></li>
+              <li><h4>Sharing</h4></li>
+              <li><label for="private_group"><input type="checkbox" id="private_group" name="private_group" ng-model="template.private_group"> Share Group</label></li>
+              <li><label for="private_world"><input type="checkbox" id="private_world" name="private_world" ng-model="template.private_world"> Share Public</label></li>
             </ul>
           </li>
-          <li class="col-sm-12 col-md-4">
+          <li class="col-sm-12 col-md-4 h5" ng-show="template.private_group == 1">
             <ul>
-              <li><h4>Group Options</h4><hr></li>
-              <li><label for="dont_something_radio"><input id="dont_something_radio" type="radio" name="something"> Don't something</label></li>
-              <li><label for="something_group_radio"><input id="something_group_radio" type="radio" name="something"> something Group</label></li>
-              <li><label for="something_public_radio"><input id="something_public_radio" type="radio" name="something"> something Public</label></li>
+              <li><h4>Group</h4></li>
+              <li><label for="group_edit"><input type="checkbox" id="group_edit" name="group_edit" ng-model="template.group_edit"> Allow Editing</label></li>
+              <li ng-show="template.group_edit"><label>Editors</label><p><a role="button">Add</a>/<a role="button">Remove</a></p></li>
             </ul>
           </li>
         </ul>
@@ -264,12 +263,12 @@
                     <div class="col-md-6 col-sm-6 col-xs-6" bs-popover>
                         <div class="form-group">
                             <label class="control-label">Field Title</label>
-                            <input type="text" rel="popover" data-title="Add a title..." data-content="stuff" data-placement="right" data-container="body" class="form-control" ng-model="field.name" value="{{field.name}}">
+                            <input type="text" class="form-control" ng-model="field.name">
                         </div>
 
                         <div class="form-group" ng-hide="field.fieldtype == 'checkbox' || field.fieldtype == 'radio'">
                             <label class="control-label">Field Default Value</label>
-                            <input class="form-control" type="{{field.fieldtype}}" ng-model="field.values[0].input">
+                            <input type="{{field.fieldtype}}" class="form-control" ng-model="field.values[0].input">
                         </div>
 
                         <div class="form-group">
