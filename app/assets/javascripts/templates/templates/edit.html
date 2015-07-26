@@ -118,15 +118,15 @@
           <li class="col-sm-12 col-md-4 h5">
             <ul>
               <li><h4>Sharing</h4></li>
-              <li><label for="private_group"><input type="checkbox" id="private_group" name="private_group" ng-model="template.private_group"> Share Group</label></li>
               <li><label for="private_world"><input type="checkbox" id="private_world" name="private_world" ng-model="template.private_world"> Share Public</label></li>
+              <li><label for="private_group"><input type="checkbox" id="private_group" name="private_group" ng-model="template.private_group"> Share Group</label></li>
             </ul>
           </li>
           <li class="col-sm-12 col-md-4 h5" ng-show="template.private_group == 1">
             <ul>
               <li><h4>Group</h4></li>
               <li><label for="group_edit"><input type="checkbox" id="group_edit" name="group_edit" ng-model="template.group_edit"> Allow Editing</label></li>
-              <li ng-show="template.group_edit"><label>Editors</label><p><a role="button">Add</a>/<a role="button">Remove</a></p></li>
+              <li ng-show="template.group_edit"><p><b>Editors</b></p><a role="button">Add</a> / <a role="button">Remove</a></li>
             </ul>
           </li>
         </ul>

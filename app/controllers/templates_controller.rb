@@ -29,7 +29,7 @@ class TemplatesController < ApplicationController
     end
 
     if params.has_key?(:draft)
-      pre_paginated_templates = pre_paginated_templates.where(draft: nil)
+      pre_paginated_templates = pre_paginated_templates.where(draft: [nil,0])
     end
 
     paginate pre_paginated_templates.count, max_per_page do |limit, offset|

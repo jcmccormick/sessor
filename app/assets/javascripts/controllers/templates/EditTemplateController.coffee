@@ -16,8 +16,8 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 	$scope.previewTemplate = {}
 
 	$scope.saveTemplate = (temp)->
-		if $scope.template.name.search(/^[a-zA-Z0-9_]*[a-zA-Z][a-zA-Z0-9_ ]*$/) == -1
-			Flash.create('error', 'Title must contain a letter and only letters and numbers.')
+		if $scope.template.name.search(/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/) == -1
+			Flash.create('error', 'Title must begin with a letter and only contain letters and numbers.')
 		else
 			$rootScope.$broadcast('cleartemplates')
 			if !$scope.template.id

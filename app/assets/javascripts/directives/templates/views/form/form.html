@@ -15,6 +15,11 @@
   </div>
   <!-- END FORM OPTIONS -->
 
+  <div class="container-fluid" ng-show="form.allow_title">
+    <h3>Title</h3>
+    <input class="form-control" type="text" ng-model="form.title" value="{{form.title}}">
+  </div>
+
   <center><h1>{{form.name}}</h1></center>
 
   <div class="col-xs-12" ng-repeat="section in form.sections">
@@ -29,11 +34,6 @@
 
   <div ng-if="form.templates" ng-repeat="template in form.templates">
     <center><h1>{{template.name}}</h1></center>    
-
-    <div class="col-xs-12" ng-show="template.allow_title">
-      <h3>Title</h3>
-      <input class="form-control" type="text" ng-model="form.title" value="{{form.title}}">
-    </div>
 
     <div class="col-xs-12" ng-repeat="section in template.sections">
       <h3>{{section.name}}</h3>

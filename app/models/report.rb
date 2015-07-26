@@ -11,7 +11,7 @@ class Report < ActiveRecord::Base
 
   scope :minned, ->{eager_load([:values, :templates => { :sections => {:columns => { :fields => [:values, :options]}}}])}
   
-  validates :title, format: { with: /\A[a-zA-Z0-9_]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
+  validates :title, format: { with: /\A[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
 
   def populate_values
     fields.each do |f|
@@ -24,6 +24,6 @@ class Report < ActiveRecord::Base
   end
 
   def as_json(jsonoptions={})
-    super(:only => [:id, :title]).merge(values: values).merge(templates: templates)
+    super(:only => [:id, :title, :allow_title]).merge(values: values).merge(templates: templates)
   end
 end

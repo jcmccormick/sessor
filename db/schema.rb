@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150721114244) do
+ActiveRecord::Schema.define(version: 20150726041611) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "provider",               limit: 255,                null: false
@@ -98,13 +98,14 @@ ActiveRecord::Schema.define(version: 20150721114244) do
   add_index "options", ["field_id"], name: "index_options_on_field_id", using: :btree
 
   create_table "reports", force: :cascade do |t|
-    t.string   "title",      limit: 255
-    t.text     "submission", limit: 65535
-    t.text     "response",   limit: 65535
-    t.boolean  "active",     limit: 1
-    t.string   "location",   limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "title",       limit: 255
+    t.text     "submission",  limit: 65535
+    t.text     "response",    limit: 65535
+    t.boolean  "active",      limit: 1
+    t.string   "location",    limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.boolean  "allow_title", limit: 1
   end
 
   create_table "reports_templates", id: false, force: :cascade do |t|
@@ -145,14 +146,14 @@ ActiveRecord::Schema.define(version: 20150721114244) do
   create_table "templates", force: :cascade do |t|
     t.string   "name",          limit: 255
     t.string   "creator_uid",   limit: 255
-    t.boolean  "private_world", limit: 1
+    t.boolean  "private_world", limit: 1,     default: true
     t.boolean  "private_group", limit: 1
     t.integer  "group_id",      limit: 4
     t.boolean  "group_edit",    limit: 1
     t.text     "group_editors", limit: 65535
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.boolean  "draft",         limit: 1
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.boolean  "draft",         limit: 1,     default: true
     t.boolean  "allow_title",   limit: 1
   end
 

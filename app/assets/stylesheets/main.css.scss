@@ -281,24 +281,29 @@ small .glyphicon-flash {
 .template-options-dropdown {
   margin: 0 !important;
   border: 0 !important;
-  width: inherit;
-  min-width: 160px !important;
-  @include respond(desktop) {
-    min-width: 320px !important;
-    max-width: 480px !important;
+
+  li {
+    min-width: 160px !important;
+
+    ul {
+      margin: 0 !important;
+      padding: 0 !important;
+      line-height: 1.38em;
+
+      li {
+        list-style: none !important;
+        padding:5px; 
+
+        label {
+          cursor: pointer;
+
+          &:hover {
+            background-color: #eee;
+          }
+        }
+      }
+    }
   }
-}
-.template-options-dropdown ul {
-  margin: 0 !important;
-  padding: 0 !important;
-  line-height: 1.38em;
-}
-.template-options-dropdown ul li {
-  list-style: none !important;
-}
-.template-options-dropdown > li > ul > li > label:hover {
-  background-color: #eee;
-  cursor: pointer;
 }
 
 /* Field Display */

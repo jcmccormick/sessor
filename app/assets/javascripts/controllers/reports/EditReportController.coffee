@@ -9,6 +9,12 @@ controllers.controller("EditReportController", ['$rootScope', '$auth', '$scope',
 	if $routeParams.reportId
 		ClassFactory.get({class: 'reports', id: $routeParams.reportId}, (res)->
 			jQuery.extend $scope.report, res
+			
+			need_title = $.grep res.templates, (template)->
+			 	return template.allow_title == true
+
+			$scope.report.allow_title = need_title? ? true : false
+
 			$scope.report.templates.forEach((template)->
 				$scope.report.template_ids.push template.id
 				template.sections.forEach((section)->
