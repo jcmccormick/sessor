@@ -28,8 +28,12 @@ class TemplatesController < ApplicationController
       current_user.templates.minned
     end
 
-    if params.has_key?(:draft)
-      pre_paginated_templates = pre_paginated_templates.where(draft: [nil,0])
+    if params.has_key?(:d)
+      pre_paginated_templates = pre_paginated_templates.where(:draft => [nil,0])
+    end
+
+    if params.has_key?(:tids)
+      pre_paginated_templates = pre_paginated_templates.where.not(:id => params[:tids][1..-2].split(',').collect! {|n| n.to_i})
     end
 
     paginate pre_paginated_templates.count, max_per_page do |limit, offset|

@@ -14,7 +14,6 @@ directives.directive('templateFormDirective',[()->
 				)
 			else
 				$scope.form.$update({class: 'reports', id: $scope.form.id}, (res)->
-					console.log res
 					$route.reload()
 				)
 
@@ -34,6 +33,12 @@ directives.directive('templateFormDirective',[()->
 				$rootScope.$broadcast('clearreports')
 				$location.path("/reports")
 			)
+
+
+		$scope.urlParams = {
+			'd': true
+			'tids': [$scope.form.template_ids]
+		}
 	]
 	templateUrl: 'directives/templates/views/form/form.html'
 	restrict: 'E'
