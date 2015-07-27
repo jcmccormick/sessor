@@ -14,7 +14,7 @@ class Template < ActiveRecord::Base
 
 	def set_defaults
 		self.draft = true
-		self.allow_public = true
+		self.private_world = true
 	end
 
 	def as_json(jsonoptions={})
