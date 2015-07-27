@@ -89,7 +89,7 @@ sessor.config(['$authProvider', '$routeProvider', 'localStorageServiceProvider',
         templateUrl: "templates/edit.html"
         controller: 'EditTemplateController'
         resolve: authResolver
-      )
+      ) #                                       STATISTICS ROUTES #
       .when('/statistics',
         templateUrl: "statistics/show.html"
         controller: 'StatisticsController'
@@ -102,7 +102,6 @@ controllers = angular.module('controllers',[])
 factories   = angular.module('factories',[])
 directives  = angular.module('directives',[])
 services    = angular.module('services',[])
-run         = angular.module('run',[])
 
 sessor.factory("sessorCache", ['$cacheFactory', ($cacheFactory)-> 
   return $cacheFactory('reports')

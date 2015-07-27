@@ -177,7 +177,7 @@ small .glyphicon-flash {
   > div {
     padding: 0 !important;
 
-    @include respond(tablet) {
+    @include respond(desktop) {
       padding: 0 15px !important;
     }
   }
@@ -196,7 +196,7 @@ small .glyphicon-flash {
   }
 
   @include respond(tablet) {
-    width: 64.33333% !important;
+    width: 66.6666% !important;
   }
 }
 

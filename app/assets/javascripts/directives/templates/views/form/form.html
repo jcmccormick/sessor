@@ -15,7 +15,7 @@
   </div>
   <!-- END FORM OPTIONS -->
 
-  <div class="container-fluid" ng-show="form.allow_title">
+  <div class="container-fluid" ng-show="form.allow_title && form.templates">
     <h3>Title</h3>
     <input class="form-control" type="text" ng-model="form.title" value="{{form.title}}">
   </div>
@@ -56,9 +56,9 @@
       </div>
       <div class="modal-body row">
         <div class="text-center">
-          <bgf-pagination collection="templates" url="'api/templates'" url-params="urlParams"></bgf-pagination>
+          <bgf-pagination collection="templates" url="'api/templates'" url-params="{'d':true,'tids':[form.template_ids]}"></bgf-pagination>
         </div>
-        <div role="button" class="col-xs-6" data-dismiss="modal" ng-click="selectTemplate(template)" ng-repeat="template in templates" ng-show="form.checkTemplate(template.id)">
+        <div role="button" class="col-xs-6" data-dismiss="modal" ng-click="selectTemplate(template)" ng-repeat="template in templates">
           <ul class="list-group">
             <li class="list-group-item"><h4>{{template.name}}</h3></li>
             <li class="list-group-item" ng-if="template.allow_title">Title</li>

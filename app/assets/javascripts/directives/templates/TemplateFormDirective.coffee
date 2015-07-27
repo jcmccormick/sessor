@@ -33,12 +33,6 @@ directives.directive('templateFormDirective',[()->
 				$rootScope.$broadcast('clearreports')
 				$location.path("/reports")
 			)
-
-
-		$scope.urlParams = {
-			'd': true
-			'tids': [$scope.form.template_ids]
-		}
 	]
 	templateUrl: 'directives/templates/views/form/form.html'
 	restrict: 'E'

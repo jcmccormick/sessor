@@ -19,7 +19,7 @@ class TemplatesController < ApplicationController
       query = if keywords.to_i > 0
         {:id => keywords.to_i}
       elsif keywords.capitalize == 'Draft'
-        {:draft => 1}
+        {:draft => '\'t\''}
       else
         {:name => keywords}
       end
@@ -29,7 +29,7 @@ class TemplatesController < ApplicationController
     end
 
     if params.has_key?(:d)
-      pre_paginated_templates = pre_paginated_templates.where(:draft => [nil,0])
+      pre_paginated_templates = pre_paginated_templates.where(:draft => [nil,'\'f\''])
     end
 
     if params.has_key?(:tids)

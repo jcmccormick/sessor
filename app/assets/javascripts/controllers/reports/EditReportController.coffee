@@ -17,7 +17,6 @@ controllers.controller("EditReportController", ['$rootScope', '$auth', '$scope',
 
 			$scope.report.templates.forEach((template)->
 				$scope.report.template_ids.push template.id
-				console.log $scope.report.template_ids
 				template.sections.forEach((section)->
 					section.columns.forEach((column)->
 						column.fields.forEach((field)->
@@ -29,10 +28,4 @@ controllers.controller("EditReportController", ['$rootScope', '$auth', '$scope',
 				)
 			)
 		)
-
-	$scope.report.checkTemplate = (template_id)->
-		if $scope.report.template_ids.indexOf(template_id) == -1 
-			return true
-		else
-			return false
 ])
