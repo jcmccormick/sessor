@@ -10,6 +10,13 @@ class Template < ActiveRecord::Base
 
 	validates :name, format: { with: /\A[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
 
+	before_create :set_defaults
+
+	def set_defaults
+		self.draft = true
+		self.allow_public = true
+	end
+
 	def as_json(jsonoptions={})
 		super(:only => [:id, :name, :creator_uid, :private_group, :private_world, :group_edit, :group_editors, :allow_title, :draft]).merge(:sections => sections)
 	end
