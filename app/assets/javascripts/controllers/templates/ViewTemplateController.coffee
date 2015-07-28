@@ -1,9 +1,6 @@
 controllers = angular.module('controllers')
-controllers.controller('ViewTemplateController', ['$scope', '$routeParams', 'TemplateFactory', 'ClassFactory',
-($scope, $routeParams, TemplateFactory, ClassFactory)->
-	#TemplateFactory.get({id: $routeParams.templateId}).$promise.then((res)->
-	#	$scope.template = res
-	#)
+controllers.controller('ViewTemplateController', ['$routeParams', '$scope', 'ClassFactory',
+($routeParams, $scope, ClassFactory)->
 	ClassFactory.get({class: 'templates', id: $routeParams.templateId}).$promise.then((res)->
 		$scope.template = res
 	)

@@ -18,7 +18,7 @@ directives.directive('templateFormDirective',[()->
 				)
 
 		$scope.saveReport = (temp)->
-			if $scope.form.title.search(/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/) == -1
+			if $scope.form.title.search(/^[a-zA-Z ]*[a-zA-Z0-9 ]*$/) == -1
 				Flash.create('error', 'Title must begin with a letter and only contain letters and numbers.')
 			else
 				$scope.form.values_attributes = $scope.form.values

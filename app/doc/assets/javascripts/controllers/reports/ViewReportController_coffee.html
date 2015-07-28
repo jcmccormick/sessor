@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>ViewReportController.coffee - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../../../";
+</script>
+
+<script src="../../../../js/jquery.js"></script>
+<script src="../../../../js/darkfish.js"></script>
+
+<link href="../../../../css/fonts.css" rel="stylesheet">
+<link href="../../../../css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../../../../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../../../../table_of_contents.html#pages">Pages</a>
+    <a href="../../../../table_of_contents.html#classes">Classes</a>
+    <a href="../../../../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="project-metadata">
+    <div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../../../assets/javascripts/app_coffee.html">app.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/application_js_scss.html">application.js.scss</a>
+  
+    <li><a href="../../../../assets/javascripts/controllers/reports/EditReportController_coffee.html">EditReportController.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/controllers/reports/ShowReportsController_coffee.html">ShowReportsController.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/controllers/reports/ViewReportController_coffee.html">ViewReportController.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/controllers/statistics/StatisticsController_coffee.html">StatisticsController.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/controllers/templates/EditTemplateController_coffee.html">EditTemplateController.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/controllers/templates/ShowTemplatesController_coffee.html">ShowTemplatesController.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/controllers/templates/ViewTemplateController_coffee.html">ViewTemplateController.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/controllers/user_registrations/UserRegistrationsController_coffee.html">UserRegistrationsController.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/controllers/user_sessions/UserSessionsController_coffee.html">UserSessionsController.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/directives/body/ViewAllAccordionDirective_coffee.html">ViewAllAccordionDirective.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/directives/modals/ModalDirective_coffee.html">ModalDirective.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/directives/popover/PopoverDirective_coffee.html">PopoverDirective.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/directives/statistics/InsertCanvasDirective_coffee.html">InsertCanvasDirective.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/directives/templates/TemplateFieldDirective_coffee.html">TemplateFieldDirective.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/directives/templates/TemplateFormDirective_coffee.html">TemplateFormDirective.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/directives/templates/views/form/form_html.html">form.html</a>
+  
+    <li><a href="../../../../assets/javascripts/factories/ClassFactory_coffee.html">ClassFactory.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/run_coffee.html">run.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/services/helpers/ParseMapService_coffee.html">ParseMapService.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/services/reports/ReportStorageService_coffee.html">ReportStorageService.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/services/statistics/StatisticsService_coffee.html">StatisticsService.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/services/templates/TemplateService_coffee.html">TemplateService.coffee</a>
+  
+    <li><a href="../../../../assets/javascripts/templates/main/contact_html.html">contact.html</a>
+  
+    <li><a href="../../../../assets/javascripts/templates/main/desktop_html.html">desktop.html</a>
+  
+    <li><a href="../../../../assets/javascripts/templates/main/index_html.html">index.html</a>
+  
+    <li><a href="../../../../assets/javascripts/templates/main/support_html.html">support.html</a>
+  
+    <li><a href="../../../../assets/javascripts/templates/reports/edit_html.html">edit.html</a>
+  
+    <li><a href="../../../../assets/javascripts/templates/reports/show_html.html">show.html</a>
+  
+    <li><a href="../../../../assets/javascripts/templates/reports/view_html.html">view.html</a>
+  
+    <li><a href="../../../../assets/javascripts/templates/statistics/show_html.html">show.html</a>
+  
+    <li><a href="../../../../assets/javascripts/templates/templates/edit_html.html">edit.html</a>
+  
+    <li><a href="../../../../assets/javascripts/templates/templates/show_html.html">show.html</a>
+  
+    <li><a href="../../../../assets/javascripts/templates/templates/view_html.html">view.html</a>
+  
+    <li><a href="../../../../assets/javascripts/templates/user_registrations/new_html.html">new.html</a>
+  
+    <li><a href="../../../../assets/javascripts/templates/user_sessions/new_html.html">new.html</a>
+  
+    <li><a href="../../../../assets/stylesheets/application_css_scss.html">application.css.scss</a>
+  
+    <li><a href="../../../../assets/stylesheets/main_css_scss.html">main.css.scss</a>
+  
+    <li><a href="../../../../views/api/v1/columns/_column_json_jbuilder.html">_column.json.jbuilder</a>
+  
+    <li><a href="../../../../views/api/v1/columns/show_json_jbuilder.html">show.json.jbuilder</a>
+  
+    <li><a href="../../../../views/api/v1/fields/_field_json_jbuilder.html">_field.json.jbuilder</a>
+  
+    <li><a href="../../../../views/api/v1/fields/show_json_jbuilder.html">show.json.jbuilder</a>
+  
+    <li><a href="../../../../views/api/v1/groups/_group_json_jbuilder.html">_group.json.jbuilder</a>
+  
+    <li><a href="../../../../views/api/v1/groups/index_json_jbuilder.html">index.json.jbuilder</a>
+  
+    <li><a href="../../../../views/api/v1/groups/show_json_jbuilder.html">show.json.jbuilder</a>
+  
+    <li><a href="../../../../views/api/v1/options/_option_json_jbuilder.html">_option.json.jbuilder</a>
+  
+    <li><a href="../../../../views/api/v1/options/show_json_jbuilder.html">show.json.jbuilder</a>
+  
+    <li><a href="../../../../views/api/v1/reports/_report_json_jbuilder.html">_report.json.jbuilder</a>
+  
+    <li><a href="../../../../views/api/v1/reports/index_json_jbuilder.html">index.json.jbuilder</a>
+  
+    <li><a href="../../../../views/api/v1/reports/show_json_jbuilder.html">show.json.jbuilder</a>
+  
+    <li><a href="../../../../views/api/v1/sections/_section_json_jbuilder.html">_section.json.jbuilder</a>
+  
+    <li><a href="../../../../views/api/v1/sections/show_json_jbuilder.html">show.json.jbuilder</a>
+  
+    <li><a href="../../../../views/api/v1/templates/_template_json_jbuilder.html">_template.json.jbuilder</a>
+  
+    <li><a href="../../../../views/api/v1/templates/index_json_jbuilder.html">index.json.jbuilder</a>
+  
+    <li><a href="../../../../views/api/v1/templates/show_json_jbuilder.html">show.json.jbuilder</a>
+  
+    <li><a href="../../../../views/api/v1/values/_value_json_jbuilder.html">_value.json.jbuilder</a>
+  
+    <li><a href="../../../../views/api/v1/values/show_json_jbuilder.html">show.json.jbuilder</a>
+  
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page assets/javascripts/controllers/reports/ViewReportController.coffee">
+
+<p>controllers = angular.module(&#39;controllers&#39;)
+controllers.controller(&#39;ViewReportController&#39;, [&#39;$scope&#39;,
+&#39;$routeParams&#39;, &#39;ClassFactory&#39;, ($scope, $routeParams,
+ClassFactory)-&gt;</p>
+
+<pre>ClassFactory.get({class: &#39;reports&#39;, id: $routeParams.reportId}, (res)-&gt;
+        $scope.report = res
+        $scope.report.templates.forEach((template)-&gt;
+                template.sections.forEach((section)-&gt;
+                        section.columns.forEach((column)-&gt;
+                                column.fields.forEach((field)-&gt;
+                                        field.values = $scope.report.values.filter((obj)-&gt;
+                                                return obj.field_id == field.id
+                                        )
+                                )
+                        )
+                )
+        )
+)</pre>
+
+<p>])</p>
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

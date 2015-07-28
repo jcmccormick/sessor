@@ -19,7 +19,6 @@ controllers.controller('UserRegistrationsController', ['$scope', '$auth', '$loca
 				$location.path('/desktop')
 				Flash.create('success', "Account created! Welcome to Sessor.")
 			).error((err)->
-				console.log err.data
 				Flash.create('error', "There was an error creating your account. The email may already be in use. Try again and contact support if errors persist.")
 			)
 ])

@@ -56,7 +56,7 @@
       </div>
       <div class="modal-body row">
         <div class="text-center">
-          <bgf-pagination collection="templates" url="'api/templates'" url-params="{'d':true,'tids':[form.template_ids]}"></bgf-pagination>
+          <bgf-pagination collection="templates" url="'v1/templates'" url-params="{'d':true,'ts':[form.template_ids]}"></bgf-pagination>
         </div>
         <div role="button" class="col-xs-6" data-dismiss="modal" ng-click="selectTemplate(template)" ng-repeat="template in templates">
           <ul class="list-group">

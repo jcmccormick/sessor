@@ -22,7 +22,7 @@ sessor.config(['$authProvider', '$routeProvider', 'localStorageServiceProvider',
       localStorageServiceProvider.setPrefix('sesso_')
 
       $authProvider.configure(
-        apiUrl: "api/"
+        apiUrl: ""
       )
       authResolver = 'auth': ['$auth', ($auth)->
         return $auth.validateUser()
