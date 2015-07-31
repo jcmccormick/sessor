@@ -51,6 +51,15 @@
   </div>
 
   
+<div class="nav-section">
+  <h3>Table of Contents</h3>
+
+  <ul class="link-list" role="directory">
+    <li><a href="#class-Report-label-Fields">Fields</a>
+    <li><a href="#class-Report-label-Use+Case">Use Case</a>
+  </ul>
+</div>
+
 
   <div id="class-metadata">
     
@@ -88,9 +97,9 @@
   <section class="description">
     
 <p>A <a href="Report.html">Report</a> can be created by Admins and Users, and
-may in the future be linked somehow to Reports. A <a
-href="Report.html">Report</a> itself contains a database relationship to a
-<a href="Template.html">Template</a>, which means that when a <a
+may in the future be linked to a User&#39;s <a href="Group.html">Group</a>.
+A <a href="Report.html">Report</a> itself contains a database relationship
+to a <a href="Template.html">Template</a>, which means that when a <a
 href="Report.html">Report</a> is called from the DB, it will automatically
 have reference to all the Templates it might contain. However, a <a
 href="Report.html">Report</a> is not a duplicate of a <a
@@ -99,9 +108,50 @@ href="Template.html">Template</a> is updated, the Fields of the <a
 href="Report.html">Report</a> will also be updated. When taking on a new or
 updated <a href="Template.html">Template</a> relationship, a <a
 href="Report.html">Report</a> will essentially make copies for the Values
-associated with the <a href="Template.html">Template</a>, allowing for
-default <a href="Template.html">Template</a> Values and unique <a
+associated with its Templates&#39; Fields, allowing for default <a
+href="Field.html">Field</a> Values and unique <a
 href="Report.html">Report</a> Values.</p>
+
+<h4 id="class-Report-label-Fields">Fields<span><a href="#class-Report-label-Fields">&para;</a> <a href="#top">&uarr;</a></span></h4>
+<ul><li>
+<p>Title - String</p>
+</li><li>
+<p>Allow_Title - Boolean</p>
+</li><li>
+<p>Submission - UNUSED</p>
+</li><li>
+<p>Response - UNUSED</p>
+</li><li>
+<p>Active - UNUSED</p>
+</li><li>
+<p>Location - UNUSED</p>
+</li></ul>
+
+<h4 id="class-Report-label-Use+Case">Use Case<span><a href="#class-Report-label-Use+Case">&para;</a> <a href="#top">&uarr;</a></span></h4>
+<ul><li>
+<p>Belongs to many Admins.</p>
+</li><li>
+<p>Belongs to many Users.</p>
+</li><li>
+<p>Belongs to many Templates.</p>
+</li><li>
+<p>Has many Fields through Templates.</p>
+</li><li>
+<p>Has many Values.</p>
+</li><li>
+<p>Saving a <a href="Report.html">Report</a> saves its associated Values.</p>
+</li><li>
+<p><a href="Report.html">Report</a> title must start with a letter and only
+contain letters and numbers.</p>
+</li><li>
+<p>Holds a scope that assures the loading of all <a
+href="Template.html">Template</a> associations in a single DB call. Use
+`Reports.minned`.</p>
+</li><li>
+<p>New Reports check for new Values incoming from added Templates.</p>
+</li><li>
+<p>Updated Reports check for new Values incoming from added Templates.</p>
+</li></ul>
 
   </section>
 
@@ -139,7 +189,7 @@ href="Report.html">Report</a> Values.</p>
           
           <p>Override standard JSON response.</p>
 <ul><li>
-<p>Return only the ID, Title, and ALlow Title fields.</p>
+<p>Return only the ID, Title, and Allow_Title fields.</p>
 </li><li>
 <p>Merge associated Templates and Values into the response.</p>
 </li></ul>
@@ -153,7 +203,7 @@ href="Report.html">Report</a> Values.</p>
 
           
           <div class="method-source-code" id="as_json-source">
-            <pre><span class="ruby-comment"># File models/report.rb, line 54</span>
+            <pre><span class="ruby-comment"># File models/report.rb, line 53</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">jsonoptions</span>={})
   <span class="ruby-keyword">super</span>(<span class="ruby-value">:only</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">:id</span>, <span class="ruby-value">:title</span>, <span class="ruby-value">:allow_title</span>]).<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">values</span><span class="ruby-operator">:</span> <span class="ruby-identifier">values</span>).<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">templates</span><span class="ruby-operator">:</span> <span class="ruby-identifier">templates</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -181,7 +231,13 @@ href="Report.html">Report</a> Values.</p>
         <div class="method-description">
           
           <p>Populate the Values of the Fields associated with the <a
-href="Report.html">Report</a>.</p>
+href="Report.html">Report</a>. (A <a href="Report.html">Report</a> cannot
+contain the same Values as a <a href="Template.html">Template</a>, or every
+<a href="Report.html">Report</a> would have the same Values. Therefore
+creating a <a href="Report.html">Report</a> must somehow create a new <a
+href="Value.html">Value</a> in the DB, linked to a <a
+href="Report.html">Report</a>, and based on a Template&#39;s default
+Values. The following describes that process.)</p>
 <ol><li>
 <p>Loop through each <a href="Template.html">Template</a> <a
 href="Field.html">Field</a> associated with the <a
@@ -189,23 +245,24 @@ href="Report.html">Report</a>.</p>
 </li><li>
 <p>Create a `value` object based on the first <a href="Value.html">Value</a>
 found with the same <a href="Report.html">Report</a> and <a
-href="Field.html">Field</a> ID. At least, a <a href="Value.html">Value</a>
-will have a <a href="Field.html">Field</a> ID, as this is denoted upon <a
+href="Field.html">Field</a> ID. If none is found, create a <a
+href="Value.html">Value</a> tied to the <a href="Report.html">Report</a>
+and <a href="Field.html">Field</a>. (A <a href="Value.html">Value</a> will
+have a <a href="Field.html">Field</a> ID, as this is needed upon <a
 href="Value.html">Value</a> creation. However, if a <a
-href="Value.html">Value</a> has no <a href="Report.html">Report</a>
+href="Value.html">Value</a> has no <a href="Report.html">Report</a> ID
 associated with it, that means it must be the first <a
-href="Value.html">Value</a> created for the <a href="Field.html">Field</a>,
-which can also be thought of as a Field&#39;s Default <a
-href="Value.html">Value</a>.</p>
+href="Value.html">Value</a> created for the <a href="Field.html">Field</a>.
+This is a Field&#39;s default <a href="Value.html">Value</a>.</p>
 </li><li>
 <p>If a <a href="Value.html">Value</a> has no input, set it as the original
-Field&#39;s Default <a href="Value.html">Value</a> input. If the Default <a
-href="Value.html">Value</a> is nil, no harm done. Otherwise, the
-Field&#39;s Default <a href="Value.html">Value</a> will be placed into the
-newly created <a href="Report.html">Report</a> <a
-href="Value.html">Value</a>.</p>
+Field&#39;s default <a href="Value.html">Value</a> input. If the default
+Value&#39;s input is nil, no harm done. Otherwise, the default Value&#39;s
+input will be placed into the newly created <a
+href="Report.html">Report</a> Value&#39;s input.</p>
 </li><li>
-<p>Save the newly created <a href="Value.html">Value</a>.</p>
+<p>Save the newly created <a href="Report.html">Report</a> <a
+href="Value.html">Value</a>.</p>
 </li></ol>
           
           

@@ -14,9 +14,13 @@
 # Ignore all logfiles and tempfiles.
 
 
-/log/*
-!/log/.keep
-
+/log
 /tmp
 
 *.sublime*
+
+# Ignore docs and vendor addons
+
+/app/doc
+/vendor
+erd.pdf

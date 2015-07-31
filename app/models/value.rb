@@ -10,7 +10,7 @@ class Value < ActiveRecord::Base
 
 	# Override standard JSON response.
 	#
-	# * Return only the ID, Input, and Field ID fields.
+	# * Return only the ID, Input, and Field_ID fields.
 	def as_json(jsonoptions={})
 		super(:only => [:id, :input, :field_id])
 	end

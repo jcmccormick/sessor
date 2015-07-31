@@ -37,7 +37,7 @@ class Template < ActiveRecord::Base
 
 	# Override standard JSON response.
 	#
-	# * Return only the ID, Name, Creator UID, Private Group, Private World, Group Edit, Group Editors, Allow Title, and Draft fields.
+	# * Return only the ID, Name, Creator_UID, Private_Group, Private_World, Group_Edit, Group_Editors, Allow_Title, and Draft fields.
 	# * Merge associated Sections.
 	def as_json(jsonoptions={})
 		super(:only => [:id, :name, :creator_uid, :private_group, :private_world, :group_edit, :group_editors, :allow_title, :draft]).merge(:sections => sections)
