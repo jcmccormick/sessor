@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150726041611) do
+ActiveRecord::Schema.define(version: 20150803040235) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "provider",               limit: 255,                null: false
@@ -67,17 +67,20 @@ ActiveRecord::Schema.define(version: 20150726041611) do
   add_index "columns", ["section_id"], name: "index_columns_on_section_id", using: :btree
 
   create_table "fields", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.string   "fieldtype",  limit: 255
-    t.boolean  "required",   limit: 1
-    t.boolean  "disabled",   limit: 1
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "column_id",  limit: 4
-    t.string   "glyphicon",  limit: 255
+    t.string   "name",        limit: 255
+    t.string   "fieldtype",   limit: 255
+    t.boolean  "required",    limit: 1
+    t.boolean  "disabled",    limit: 1
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "column_id",   limit: 4
+    t.string   "glyphicon",   limit: 255
+    t.integer  "section_id",  limit: 4
+    t.integer  "template_id", limit: 4
   end
 
   add_index "fields", ["column_id"], name: "index_fields_on_column_id", using: :btree
+  add_index "fields", ["template_id"], name: "index_fields_on_template_id", using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -146,15 +149,17 @@ ActiveRecord::Schema.define(version: 20150726041611) do
   create_table "templates", force: :cascade do |t|
     t.string   "name",          limit: 255
     t.string   "creator_uid",   limit: 255
-    t.boolean  "private_world", limit: 1,     default: true
+    t.boolean  "private_world", limit: 1
     t.boolean  "private_group", limit: 1
     t.integer  "group_id",      limit: 4
     t.boolean  "group_edit",    limit: 1
     t.text     "group_editors", limit: 65535
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
-    t.boolean  "draft",         limit: 1,     default: true
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "draft",         limit: 1
     t.boolean  "allow_title",   limit: 1
+    t.text     "sections",      limit: 65535
+    t.text     "columns",       limit: 65535
   end
 
   create_table "templates_users", id: false, force: :cascade do |t|

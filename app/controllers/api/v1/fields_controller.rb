@@ -13,8 +13,8 @@ module Api::V1 #:nodoc:
     end
 
     def create
-      column = Column.find(params[:column_id])
-      @field = column.fields.new(allowed_params)
+      template = Template.find(params[:template_id])
+      @field = template.fields.new(allowed_params)
       @field.save
       render 'show', status: 201
     end
@@ -33,7 +33,7 @@ module Api::V1 #:nodoc:
 
     private
       def allowed_params
-        params.require(:field).permit(:name, :fieldtype, :value, :required, :disabled, :glyphicon)
+        params.require(:field).permit(:section_id, :column_id, :name, :fieldtype, :value, :required, :disabled, :glyphicon)
       end
   end
 end

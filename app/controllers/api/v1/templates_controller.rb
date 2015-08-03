@@ -65,20 +65,14 @@ module Api::V1#:nodoc:
     private
       def allowed_params
         params.require(:template).permit(
-          :name, :creator_uid, :private_group, :private_world, :group_id, :group_edit, :group_editors, :allow_title, :draft, 
-          sections_attributes: [
-            :id, :name,
-            columns_attributes: [
-              :id,
-              fields_attributes: [
-                :id, :name, :fieldtype, :required, :disabled, :glyphicon,
-                values_attributes: [
-                  :id, :input
-                ],
-                options_attributes: [
-                  :id, :name
-                ]
-              ]
+          :name, :creator_uid, :sections, :columns, :private_group, :private_world, :group_id, :group_edit, :group_editors, :allow_title, :draft,
+          fields_attributes: [
+            :id, :name, :fieldtype, :required, :disabled, :glyphicon, :section_id, :column_id,
+            values_attributes: [
+              :id, :input
+            ],
+            options_attributes: [
+              :id, :name
             ]
           ]
         )

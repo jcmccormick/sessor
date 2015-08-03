@@ -1,1 +1,1 @@
-json.(template, :id, :name, :sections, :creator_uid, :private_world, :private_group, :group_id, :group_edit, :group_editors, :allow_title)
+json.(template, :id, :name, :sections, :columns, :creator_uid, :private_world, :private_group, :group_id, :group_edit, :group_editors, :allow_title)

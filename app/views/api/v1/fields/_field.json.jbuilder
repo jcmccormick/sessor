@@ -1,1 +1,1 @@
-json.(field, :id, :name, :fieldtype, :required, :disabled, :glyphicon)
+json.(field, :id, :section_id, :column_id, :name, :fieldtype, :required, :disabled, :glyphicon)

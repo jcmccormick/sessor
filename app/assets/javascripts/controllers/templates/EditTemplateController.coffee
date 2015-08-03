@@ -5,6 +5,8 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 	if $routeParams.templateId
 		ClassFactory.get({class: 'templates', id: $routeParams.templateId}, (res)->
 			$scope.template = res
+			$scope.template.sections = JSON.parse($scope.template.sections)
+			$scope.template.columns = JSON.parse($scope.template.columns)
 		)
 	else
 		$scope.template = new ClassFactory()
@@ -14,6 +16,9 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 	$scope.columnTypes = TemplateService.columns
 	$scope.fieldTypes = TemplateService.fields
 	$scope.previewTemplate = {}
+
+	$scope.countColumns = (columns)->
+		return new Array columns
 
 	$scope.saveTemplate = (temp)->
 		if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test $scope.template.name
@@ -25,18 +30,17 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 					$location.path('templates/'+res.id+'/edit')
 				)
 			else
-				$scope.template.sections_attributes = $scope.template.sections
-				$scope.template.sections && $scope.template.sections_attributes.forEach((section)->
-					section.columns_attributes = section.columns
-					section.columns && section.columns_attributes.forEach((column)->
-						column.fields_attributes = column.fields
-						column.fields && column.fields_attributes.forEach((field)->
-							field.options_attributes = field.options
-							field.values_attributes = field.values
-						)
-					)
+				tempCopy = new ClassFactory()
+				$.extend tempCopy, $scope.template
+				console.log tempCopy
+				tempCopy.sections = JSON.stringify(tempCopy.sections)
+				tempCopy.columns = JSON.stringify(tempCopy.columns)
+				tempCopy.fields_attributes = tempCopy.fields
+				tempCopy.fields && tempCopy.fields_attributes.forEach((field)->
+					field.options_attributes = field.options
+					field.values_attributes = field.values
 				)
-				$scope.template.$update({class: 'templates', id: $scope.template.id}, (res)->
+				tempCopy.$update({class: 'templates', id: $scope.template.id}, (res)->
 					if !temp
 						$location.path("/templates/#{res.id}")
 				)
@@ -54,6 +58,9 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 
 	#add section
 	$scope.addNewSection = (name, column)->
+		if !$scope.template.sections
+			$scope.template.sections = []
+			$scope.template.columns = []
 		$scope.template.sections.push name
 		$scope.template.columns.push column.id
 		$scope.newSectionName = ""
@@ -73,27 +80,27 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 	$scope.deleteSection = (template, section) ->
 		index = template.sections.indexOf(section)
 		template.sections.splice index, 1
-		$.extend section, new ClassFactory() 
-		section.$delete({class: 'sections', id: section.id})
+		template.columns.splice index, 1
 		return
 
 	# create new field
-	$scope.addNewField = (column, type, name)->
-		if !column.fields then column.fields = new Array
+	$scope.addNewField = (template, section_id, column_id, type, name)->
 		field = new ClassFactory()
 		field.name = name
 		field.fieldtype = type.name
 		field.required = undefined
 		field.disabled = undefined
 		field.glyphicon = type.glyphicon
-		field.column_id = column.id
+		field.section_id = section_id
+		field.column_id = column_id
+		field.template_id = template.id
 		field.$save({class: 'fields'}, (res)->
 			field.values = []
 			value = new ClassFactory()
 			value.field_id = res.id
 			value.$save({class: 'values'}, (val)->
 				field.values.push val
-				column.fields.push res
+				template.fields.push res
 			)
 		)
 		return

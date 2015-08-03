@@ -50,6 +50,10 @@ body {
     padding-top: 50px;
   }
 }
+.btn-md {
+  height: 34px !important;
+}
+
 button.close {
   font-size: 30px;
   margin-right: 3px;
@@ -81,7 +85,6 @@ button.close {
 @media (min-width: 768px) {
 
   /* Push "Sessor" and "You" towards center of site navigation */
-
   .navbar-fixed-top {
     padding: 0 55px 0  45px!important;
   }
