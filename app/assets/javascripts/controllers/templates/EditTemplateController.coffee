@@ -16,7 +16,7 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 	$scope.previewTemplate = {}
 
 	$scope.saveTemplate = (temp)->
-		if $scope.template.name.search(/^[a-zA-Z ]*[a-zA-Z0-9 ]*$/) == -1
+		if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test $scope.template.name
 			Flash.create('error', 'Title must begin with a letter and only contain letters and numbers.')
 		else
 			$rootScope.$broadcast('cleartemplates')
@@ -54,20 +54,8 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 
 	#add section
 	$scope.addNewSection = (name, column)->
-		section = new ClassFactory()
-		section.name = name
-		section.template_id = $scope.template.id
-		section.$save({class: 'sections'}, (res)->
-			res.columns = new Array
-			column.count.forEach((column)->
-				column = new ClassFactory()
-				column.section_id = res.id
-				column.$save({class: 'columns'}, (col)->
-					res.columns.push col
-				)
-			)
-			$scope.template.sections.push res
-		)
+		$scope.template.sections.push name
+		$scope.template.columns.push column.id
 		$scope.newSectionName = ""
 		return
 

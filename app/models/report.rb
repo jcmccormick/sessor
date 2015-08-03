@@ -27,7 +27,7 @@ class Report < ActiveRecord::Base
   has_many :values
   accepts_nested_attributes_for :values
   scope :minned, ->{eager_load([:users, :values, :templates => { :sections => {:columns => { :fields => [:values, :options]}}}])}
-  validates :title, format: { with: /\A[a-zA-Z ]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
+  validates :title, format: { with: /\A[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
   after_create :populate_values
   before_update :populate_values
 

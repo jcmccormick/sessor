@@ -24,7 +24,7 @@ class Template < ActiveRecord::Base
 	scope :minned, ->{eager_load(:sections => {:columns => { :fields => [:values, :options]}})}
 
 	# Titles must start with a letter and only contain letters and numbers. 
-	validates :name, format: { with: /\A[a-zA-Z ]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
+	validates :name, format: { with: /\A[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
 
 	# Link up Template defaults method on creation.
 	before_create :set_defaults
