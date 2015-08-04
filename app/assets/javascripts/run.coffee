@@ -67,5 +67,4 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash',
         'top': '0'
         'z-index': '1000'
     return
-
 ])

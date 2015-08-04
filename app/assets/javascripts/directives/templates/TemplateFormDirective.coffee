@@ -3,6 +3,7 @@ directives.directive('templateFormDirective',[()->
 	{
 	controller: ['$route', '$rootScope', '$scope', '$routeParams', '$location', 'Flash', 'ClassFactory', 
 	($route, $rootScope, $scope, $routeParams, $location, Flash, ClassFactory)->
+
 		$scope.countColumns = (columns)->
 			return new Array columns
 
@@ -20,7 +21,7 @@ directives.directive('templateFormDirective',[()->
 				)
 
 		$scope.saveReport = (temp)->
-			if $scope.form.title.indexOf(/^[a-zA-Z]*[a-zA-Z0-9 ]*$/) == -1
+			if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test $scope.form.title
 				Flash.create('error', 'Title must begin with a letter and only contain letters and numbers.')
 			else
 				$scope.form.values_attributes = $scope.form.values

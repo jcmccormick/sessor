@@ -22,6 +22,6 @@ class Field < ActiveRecord::Base
 	# * Return only the ID, Name, Fieldtype, Glyphicon, Required, and Disabled fields.
 	# * Merge associated Options and the first Value. (Returning only the first Value assures that when you call any given Template or Report, you will never receive all previously recorded Values for each Field in said Template or Report)
 	def as_json(jsonoptions={})
-		super(:only => [:id, :name, :fieldtype, :glyphicon, :required, :disabled, :section_id, :column_id]).merge(options: options).merge(values: [values.first])
+		super().merge(options: options).merge(values: [values.first])
 	end
 end

@@ -23,6 +23,10 @@ class Template < ActiveRecord::Base
 	# Titles must start with a letter and only contain letters and numbers. 
 	validates :name, format: { with: /\A[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
 
+	# Serialize sections and columns.
+	serialize :sections, Array
+	serialize :columns, Array
+
 	# Link up Template defaults method on creation.
 	before_create :set_defaults
 
@@ -37,6 +41,6 @@ class Template < ActiveRecord::Base
 	# * Return only the ID, Name, Creator_UID, Private_Group, Private_World, Group_Edit, Group_Editors, Allow_Title, and Draft fields.
 	# * Merge associated Sections.
 	def as_json(jsonoptions={})
-		super(:only => [:id, :name, :creator_uid, :private_group, :private_world, :group_edit, :group_editors, :allow_title, :draft, :sections, :columns]).merge(:fields => fields)
+		super().merge(:fields => fields)
 	end
 end

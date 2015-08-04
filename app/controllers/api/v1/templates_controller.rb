@@ -51,6 +51,8 @@ module Api::V1#:nodoc:
 
     def update
       template = current_user.templates.find(params[:id])
+      template.sections = params[:sections]
+      template.columns = params[:columns]
       template.update_attributes(allowed_params)
       current_user.templates << template unless current_user.templates.include?(template)
       head :no_content

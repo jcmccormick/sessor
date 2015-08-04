@@ -38,13 +38,4 @@
   	<div class="col-xs-12 col-sm-8 col-sm-offset-2 view-frame animate-view" autoscroll="true" ng-view bs-popover>
     </div>
   </div>
-
-  <p class="input-group col-xs-6">
-    <input type="text" class="form-control" ng-model="section_name" value="{{section_name}}" placeholder="Enter a section name...">
-    <span class="input-group-btn">
-      <button class="btn btn-danger" data-toggle="collapse" data-target="#sec{{section_id+1}}" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this section?</h4></center>" ng-bootbox-confirm-action="deleteSection(template, section)">
-        <i class="glyphicon glyphicon-trash"></i>
-      </button>
-    </span>
-  </p>
 </div>

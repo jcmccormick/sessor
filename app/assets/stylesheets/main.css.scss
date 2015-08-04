@@ -50,8 +50,9 @@ body {
     padding-top: 50px;
   }
 }
-.btn-md {
-  height: 34px !important;
+.btn:not(.btn-sm),
+.btn:not(.btn-lg) {
+  height: 34px;
 }
 
 button.close {
@@ -199,7 +200,7 @@ small .glyphicon-flash {
   }
 
   @include respond(tablet) {
-    width: 66.6666% !important;
+    width: 64.6666% !important;
   }
 }
 

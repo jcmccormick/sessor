@@ -11,19 +11,14 @@ controllers.controller("EditReportController", ['$rootScope', '$auth', '$scope',
 			jQuery.extend $scope.report, res
 			
 			need_title = $.grep res.templates, (template)->
-			 	return template.allow_title == true
-
-			$scope.report.allow_title = need_title? ? true : false
+				return template.allow_title == true
+			$scope.report.allow_title = need_title[0]? ? true : false
 
 			$scope.report.templates.forEach((template)->
 				$scope.report.template_ids.push template.id
-				template.sections.forEach((section)->
-					section.columns.forEach((column)->
-						column.fields.forEach((field)->
-							field.values = $scope.report.values.filter((obj)->
-								return obj.field_id == field.id
-							)
-						)
+				template.fields.forEach((field)->
+					field.values = $scope.report.values.filter((obj)->
+						return obj.field_id == field.id
 					)
 				)
 			)

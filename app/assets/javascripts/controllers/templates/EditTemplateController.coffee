@@ -5,8 +5,6 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 	if $routeParams.templateId
 		ClassFactory.get({class: 'templates', id: $routeParams.templateId}, (res)->
 			$scope.template = res
-			$scope.template.sections = JSON.parse($scope.template.sections)
-			$scope.template.columns = JSON.parse($scope.template.columns)
 		)
 	else
 		$scope.template = new ClassFactory()
@@ -32,9 +30,6 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 			else
 				tempCopy = new ClassFactory()
 				$.extend tempCopy, $scope.template
-				console.log tempCopy
-				tempCopy.sections = JSON.stringify(tempCopy.sections)
-				tempCopy.columns = JSON.stringify(tempCopy.columns)
 				tempCopy.fields_attributes = tempCopy.fields
 				tempCopy.fields && tempCopy.fields_attributes.forEach((field)->
 					field.options_attributes = field.options
@@ -57,12 +52,12 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 		return
 
 	#add section
-	$scope.addNewSection = (name, column)->
+	$scope.addNewSection = (name, column_id)->
 		if !$scope.template.sections
 			$scope.template.sections = []
 			$scope.template.columns = []
 		$scope.template.sections.push name
-		$scope.template.columns.push column.id
+		$scope.template.columns.push column_id
 		$scope.newSectionName = ""
 		return
 
