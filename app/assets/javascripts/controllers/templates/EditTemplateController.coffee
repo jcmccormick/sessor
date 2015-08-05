@@ -2,6 +2,8 @@ controllers = angular.module('controllers')
 controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope', '$resource', '$routeParams', '$location', 'ClassFactory', 'Flash', 'TemplateService'
 ($auth, $rootScope, $scope, $resource, $routeParams, $location, ClassFactory, Flash, TemplateService)->
 
+	window.TEMPLATE_SCOPE = $scope
+
 	if $routeParams.templateId
 		ClassFactory.get({class: 'templates', id: $routeParams.templateId}, (res)->
 			$scope.template = res
@@ -15,9 +17,17 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 	$scope.fieldTypes = TemplateService.fields
 	$scope.previewTemplate = {}
 
+	# separate preview from actual template
+	$scope.previewUpdate = ->
+		$scope.showModal = true
+		angular.copy $scope.template, $scope.previewTemplate
+		return
+
+	# return an array for column repeating
 	$scope.countColumns = (columns)->
 		return new Array columns
 
+	# save/update template
 	$scope.saveTemplate = (temp)->
 		if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test $scope.template.name
 			Flash.create('error', 'Title must begin with a letter and only contain letters and numbers.')
@@ -40,16 +50,12 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 						$location.path("/templates/#{res.id}")
 				)
 
+	# delete template
 	$scope.deleteTemplate = ->
 		$rootScope.$broadcast('cleartemplates')
 		$scope.template.$delete({class: 'templates', id: $scope.template.id}, (res)->
 			$location.path("/templates")
 		)
-
-	# separate preview from actual template
-	$scope.previewUpdate = ->
-		angular.copy $scope.template, $scope.previewTemplate
-		return
 
 	#add section
 	$scope.addNewSection = (name, column_id)->

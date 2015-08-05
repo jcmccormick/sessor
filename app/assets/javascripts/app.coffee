@@ -103,6 +103,6 @@ factories   = angular.module('factories',[])
 directives  = angular.module('directives',[])
 services    = angular.module('services',[])
 
-sessor.factory("sessorCache", ['$cacheFactory', ($cacheFactory)-> 
-  return $cacheFactory('reports')
+sessor.factory("SessorCache", ['$cacheFactory', ($cacheFactory)-> 
+  return $cacheFactory('sessorCache')
 ])

@@ -42,5 +42,6 @@ directives.directive( 'sortableList', [->
         )
         return
       axis: 'y'
+      handle: '.panel-title'
     return
 ])

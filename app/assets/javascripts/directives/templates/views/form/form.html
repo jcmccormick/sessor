@@ -32,6 +32,7 @@
     <h3>{{section_name}}</h3>
     
     <div class="col-xs-12" ng-class="{'col-md-6':form.columns[section_id] == 2, 'col-md-4':form.columns[section_id] == 3}" ng-repeat="column in countColumns(form.columns[section_id]) track by $index">
+      
       <div ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section_id+1}">
         <template-field-directive field="field" livesave="form.livesave"></template-field-directive>
       </div>
@@ -48,6 +49,7 @@
       <h3>{{section_name}}</h3>
       
       <div class="col-xs-12" ng-class="{'col-md-6':template.columns[section_id] == 2, 'col-md-4':template.columns[section_id] == 3}" ng-repeat="column in countColumns(template.columns[section_id]) track by $index">
+        
         <div ng-repeat="field in template.fields | filter:{column_id: $index+1, section_id: section_id+1}">
           <template-field-directive field="field" livesave="form.livesave"></template-field-directive>
         </div>

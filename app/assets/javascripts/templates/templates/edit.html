@@ -2,7 +2,7 @@
 
 
 <!-- BEGIN PREVIEW MODAL -->
-<div class="modal fade previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModal" aria-hidden="true">
+<div modal-hide ng-if="showModal" model="$parent" show-modal="showModal" class="modal fade previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModal" aria-hidden="true">
   <div class="modal-dialog modal-md">
     <form class="modal-content">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -56,7 +56,7 @@
 <h1 class="page-header">Template Builder</h1>
 
 <!-- BEGIN EDIT TEMPLATE STICK -->
-<div class="stick row" ng-show="template.id">
+<div class="stick row" ng-if="template.id">
   <div class="col-xs-1"></div>
   <div class="col-xs-10">
     <ul class="btn-group btn-group-justified">
@@ -78,11 +78,11 @@
               <li><label for="private_group"><input type="checkbox" id="private_group" name="private_group" ng-model="template.private_group"> Share Group</label></li>
             </ul>
           </li>
-          <li class="col-sm-12 col-md-4 h5" ng-show="template.private_group == 1">
+          <li class="col-sm-12 col-md-4 h5" ng-if="template.private_group == 1">
             <ul>
               <li><h4>Group</h4></li>
               <li><label for="group_edit"><input type="checkbox" id="group_edit" name="group_edit" ng-model="template.group_edit"> Allow Editing</label></li>
-              <li ng-show="template.group_edit"><p><b>Editors</b></p><a role="button">Add</a> / <a role="button">Remove</a></li>
+              <li ng-if="template.group_edit"><p><b>Editors</b></p><a role="button">Add</a> / <a role="button">Remove</a></li>
             </ul>
           </li>
         </ul>
@@ -120,7 +120,7 @@
   <h3>Sections
     <sup>
       <small>
-        <i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" data-html="true" title="Sections" data-content="<p>Sections are the core of your template. Consider focusing them on specific topics.</p><p>Open and close sections by clicking on their blue title areas</p><p>Click and drag <i class='glyphicon glyphicon-plus-sign' style='color: #31708f;'></i> to reorder sections.</p>" data-container="body"></i>
+        <i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" data-html="true" title="Sections" data-content="<p>Open and close sections by clicking on the title area</p><p>Click and drag titles to reorder sections.</p>" data-container="body"></i>
       </small>
     </sup>
   </h3>
@@ -128,7 +128,7 @@
 
 <!-- START MAIN SECTION REPEATING -->
 <div role="tablist" sortable-list="template.sections" class="panel-group panel-carat" id="section-accordion">
-  <div class="panel panel-default" ng-repeat="(section_id, section_name) in template.sections track by $index">
+  <div panel-hide class="panel panel-default" ng-repeat="(section_id, section_name) in template.sections track by $index">
 
 
     <!-- BEGIN SECTION HEADER -->
@@ -147,7 +147,7 @@
 
 
     <!-- BEGIN SECTION INFO PANEL -->
-    <div role="tabpanel" id="sec{{section_id+1}}" class="panel-collapse collapse" aria-labelledby="heading{{section_id+1}}-tab" ng-class="{'active in':$first}">
+    <div role="tabpanel" id="sec{{section_id+1}}" class="panel-collapse collapse section-panel" aria-labelledby="heading{{section_id+1}}-tab" ng-class="{'active in':$first}">
       <div class="panel-body" bs-popover>
 
         <!-- BEGIN SECTION AND COLUMN DETAILS -->
@@ -218,7 +218,7 @@
 
 
                     <!-- BEGIN FIELD ACCORDION LEFT SIDE -->
-                    <div class="col-md-6 col-sm-6 col-xs-6" bs-popover>
+                    <div class="col-xs-6" bs-popover>
                         <div class="form-group">
                             <label class="control-label">Field Title</label>
                             <input type="text" class="form-control" ng-model="field.name">
@@ -241,7 +241,7 @@
 
 
                     <!-- BEGIN FIELD ACCORDION RIGHT SIDE -->
-                    <div class="col-md-6 col-sm-6 col-xs-6">
+                    <div class="col-xs-6">
                       <div class="form-group" ng-show="field.fieldtype == 'radio' || field.fieldtype == 'dropdown'">
                         <label class="control-label">Field Options</label>
                         <div class="control-input">
@@ -278,11 +278,10 @@
 
 
             <!-- BEGIN COLUMN PREVIEW -->
-            <div role="tablist" class="panel-group" id="column-preview-accordion">
+<!--             <div role="tablist" class="panel-group" id="column-preview-accordion">
               <div class="panel panel-default">
 
 
-                <!-- BEGIN COLUMN PREVIEW HEADER -->
                 <div class="panel-heading" 
                 data-toggle="collapse" 
                 data-target="#sec{{section_id+1}}col{{$index+1}}-preview-panel" 
@@ -299,20 +298,17 @@
                     </sup>
                   </h4>
                 </div>
-                <!-- END COLUMN PREVIEW HEADER -->
 
 
-                <!-- BEGIN COLUMN PREVIEW PANEL -->
                 <div role="tabpanel" id="sec{{section_id+1}}col{{$index+1}}-preview-panel" class="panel-collapse collapse" aria-labelledby="sec{{section_id+1}}col{{$index+1}}-preview-panel-tab">
                   <div class="panel-body">
                     <template-field-directive ng-repeat="field in column.fields" field="field"></template-field-directive>
                   </div>
                 </div>
-                <!-- END COLUMN PREVIEW PANEL -->
 
 
               </div>
-            </div>
+            </div> -->
             <!-- END COLUMN PREVIEW -->
 
 
@@ -329,14 +325,3 @@
   </div>
 </div>
 <!-- END MAIN SECTION REPEATING -->
-
-
-<div ng-show="template.sections.length > 0">
-  <a class="btn btn-primary" ng-show="!showJson" ng-click="showJson = true">Show form json object</a>
-  <a class="btn btn-inverse" ng-show="showJson" ng-click="showJson = false">Hide form json object</a><br><br>
-</div>
-
-<div ng-show="showJson">
-  <h4>Template object content:</h4>
-  <pre>{{ template | json }}</pre>
-</div>

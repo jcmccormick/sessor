@@ -1,6 +1,6 @@
 sessor = angular.module("sessor")
-sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash',
-($rootScope, $location, $cacheFactory, $http, Flash) ->
+sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash', 'SessorCache',
+($rootScope, $location, $cacheFactory, $http, Flash, SessorCache) ->
 
   $httpDefaultCache = $cacheFactory.get('$http')
 
