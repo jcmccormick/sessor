@@ -60,9 +60,9 @@
   <div class="col-xs-1"></div>
   <div class="col-xs-10">
     <ul class="btn-group btn-group-justified">
-      <a role="button" class="btn btn-default" ng-click="saveTemplate()">Finish</a>
+      <a href role="button" class="btn btn-default" ng-click="saveTemplate()">Finish</a>
       <li class="btn-group dropdown">
-        <a role="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Options <span class="caret"></span></a>
+        <a href role="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Options <span class="caret"></span></a>
         <ul class="dropdown-menu template-options-dropdown" role="menu">
           <li class="col-sm-12 col-md-4 h5">
             <ul>
@@ -87,12 +87,12 @@
           </li>
         </ul>
       </li>
-      <a role="button" class="btn btn-default" data-toggle="modal" data-target=".newSectionModal"><i class="glyphicon glyphicon-plus"></i> Section</a>
-      <a role="button" class="btn btn-default" data-toggle="modal" data-target=".previewModal" ng-click="previewUpdate()">Preview</a>
+      <a href role="button" class="btn btn-default" data-toggle="modal" data-target=".newSectionModal"><i class="glyphicon glyphicon-plus"></i> Section</a>
+      <a href role="button" class="btn btn-default" data-toggle="modal" data-target=".previewModal" ng-click="previewUpdate()">Preview</a>
     </ul>
   </div>
   <div class="col-xs-1">
-    <a role="button" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this template?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="deleteTemplate()">
+    <a href role="button" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this template?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="deleteTemplate()">
       <i class="glyphicon glyphicon-trash"></i>
     </a>
   </div>
@@ -184,7 +184,7 @@
             <!-- BEGIN FIELD LIST -->
             <div class="row h1">
               <div class="col-xs-10 col-xs-offset-1">
-                <a role="button" class="btn btn-default col-xs-3" ng-bootbox-prompt="Please enter a name for this {{type.value}}" ng-bootbox-prompt-action="addNewField(template, section_id+1, $parent.$index+1, type, result)" ng-repeat="type in fieldTypes">
+                <a href role="button" class="btn btn-default col-xs-3" ng-bootbox-prompt="Please enter a name for this {{type.value}}" ng-bootbox-prompt-action="addNewField(template, section_id+1, $parent.$index+1, type, result)" ng-repeat="type in fieldTypes">
                   {{type.value}}
                 </a>
               </div>
