@@ -34,16 +34,6 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash', 'Sess
 
   $('input[rel="txtTooltip"]').tooltip()
 
-  mobileDevice = if /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) then true else false
-
-  if !mobileDevice
-    $('li.dropdown').hover (->
-      $(this).addClass('open')
-      return
-    ), ->
-      $(this).removeClass('open')
-      return
-
   $(document).on 'click.nav li', '.navbar-collapse.in', (e) ->
     if $(e.target).is('a')
       $(this).removeClass('in').addClass 'collapse'

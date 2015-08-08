@@ -11,10 +11,40 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 			$scope.template = res
 			$scope.template.hideName = false
 			$scope.template.editing = true
+
+			# These actions are defined once the template resolves
+			# in order to use the functions in template-form-directive
+			# delete field
+			$scope.template.deleteField = (column, field) ->
+				index = column.fields.indexOf(field)
+				column.fields.splice index, 1
+				$.extend field, new ClassFactory()
+				field.$delete({class: 'fields', id: field.id})
+				return
+
+			# add field option
+			$scope.template.addOption = (field) ->
+				if !field.options then field.options = new Array
+				option = new ClassFactory()
+				option.name = ''
+				option.field_id = field.id
+				field.options.push option
+				option.$save({class: 'options'})
+				return
+
+			# delete particular option
+			$scope.template.deleteOption = (field, option) ->
+				console.log [field, option]
+				index = field.options.indexOf(option)
+				field.options.splice index, 1
+				$.extend option, new ClassFactory()
+				option.$delete({class: 'options', id: option.id})
+				return
 		)
 	else
 		$scope.template = new ClassFactory()
 		$scope.template.creator_uid = $auth.user.uid
+		$scope.template.hideName = false
 
 	$scope.setFieldType = (type)->
 		$scope.newFieldType = type
@@ -101,31 +131,5 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 			)
 		)
 		$scope.newFieldName = ''
-		return
-
-	# delete field
-	$scope.deleteField = (column, field) ->
-		index = column.fields.indexOf(field)
-		column.fields.splice index, 1
-		$.extend field, new ClassFactory()
-		field.$delete({class: 'fields', id: field.id})
-		return
-
-	# add field option
-	$scope.addOption = (field) ->
-		if !field.options then field.options = new Array
-		option = new ClassFactory()
-		option.name = ''
-		option.field_id = field.id
-		field.options.push option
-		option.$save({class: 'options'})
-		return
-
-	# delete particular option
-	$scope.deleteOption = (field, option) ->
-		index = field.options.indexOf(option)
-		field.options.splice index, 1
-		$.extend option, new ClassFactory()
-		option.$delete({class: 'options', id: option.id})
 		return
 ])

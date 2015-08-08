@@ -15,12 +15,19 @@ services.service('TemplateService', [->
     'email'
     'checkbox'
     'date'
+    'time'
     'dropdown'
+    'radio'
     'hidden'
     'password'
-    'radio'
+    'labelntext'
   ]
   fields: [
+    {
+      name: 'labelntext'
+      value: 'Label and Text'
+      glyphicon: 'glyphicon-text-size'
+    }
     {
       name: 'textfield'
       value: 'Text Line'
@@ -50,6 +57,11 @@ services.service('TemplateService', [->
       name: 'date'
       value: 'Date'
       glyphicon: 'glyphicon-calendar'
+    }
+    {
+      name: 'time'
+      value: 'Time'
+      glyphicon: 'glyphicon-time'
     }
     {
       name: 'email'

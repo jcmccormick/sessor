@@ -50,6 +50,6 @@ directives.directive('templateFormDirective',[()->
 		form: '='
 		report: '='
 		templates: '='
-		selectedOptions: '=selectedOptions'
+		selectedOptions: '='
 	}
 ])
