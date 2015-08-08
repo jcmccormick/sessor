@@ -38,7 +38,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
       <label class="form-field-label" for="{{field.id}}">{{field.name}}
         <span class="required-error" ng-show="field.required && !field.values[0].input">*</span>
       </label>
-      <div id="field-overlay" ng-if="!livesave"></div>
+      <div id="field-overlay" ng-if="!editing"></div>
     </div>'
 
     date = '<input type="datetime-local" class="form-control" ng-model="field.values[0].input" ng-required="field.required" ng-disabled="field.disabled">'
@@ -57,7 +57,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
     hidden = '
     <input type="hidden" ng-model="field.values[0].input" value="{{field.values[0].input}}" ng-disabled="field.disabled">'
 
-    fwend = '<div id="field-overlay" ng-if="!livesave"></div>
+    fwend = '<div id="field-overlay" ng-if="!editing"></div>
       </div>'
 
     # GET template content from path
@@ -88,7 +88,7 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
     restrict: 'E'
     scope:
       field: '='
-      livesave: '='
+      editing: '='
     link: linker
   }
 ])

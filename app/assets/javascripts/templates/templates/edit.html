@@ -10,9 +10,8 @@
           <li><a href ng-bootbox-confirm="<center><h4>Are you sure you want to delete this page?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="deleteTemplate()"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
         </ul>
       </li>
-      <li><a href ng-click="saveTemplate()"><i class="glyphicon glyphicon-save"></i> Finish</a></li>
       <li><a href ng-click="saveTemplate('temp')"><i class="glyphicon glyphicon-floppy-disk"></i> Save</a></li>
-      <li class="dropdown">
+      <li class="dropdown" ng-if="template.id">
         <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-plus"></i> Insert <b class="caret"></b></a>
         <ul class="dropdown-menu">
           <li><a href data-toggle="modal" data-target=".newSectionModal"><i class="glyphicon glyphicon-modal-window"></i> &nbsp; Section</a></li>
@@ -20,23 +19,28 @@
           <li ng-repeat="type in fieldTypes"><a href ng-click="setFieldType(type)" ng-class="{disabled:template.sections.length<1}" data-toggle="modal" data-target=".newFieldModal"><i class="glyphicon {{type.glyphicon}}"></i> &nbsp; {{type.value}}</a></li>
         </ul>
       </li>
-      <li class="dropdown">
+      <li class="dropdown" ng-if="template.id">
         <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> Options <b class="caret"></b></a>
         <ul class="dropdown-menu">
           <li><span>Page</span></li>
-          <li><span><label for="hideName"><input type="checkbox" id="hideName" name="hideName" ng-model="hideName"> Hide Name</span></li>
+          <li><span><label><input type="checkbox"> Hide Name</span></li>
           <li><span><label for="template_draft"><input type="checkbox" id="template_draft" name="template_draft" ng-model="template.draft"> Draft</label></span></li>
           <li class="divider"></li>
           <li><span>Sharing</span></li>
           <li><span><label for="private_world"><input type="checkbox" id="private_world" name="private_world" ng-model="template.private_world"> Share Public</label></span></li>
           <li><span><label for="private_group"><input type="checkbox" id="private_group" name="private_group" ng-model="template.private_group"> Share Group</label></span></li>
-          <li ng-if="template.private_group == 1" class="divider"></li>
-          <li ng-if="template.private_group == 1"><span>Group</span></li>
-          <li ng-if="template.private_group == 1"><span><label for="group_edit"><input type="checkbox" id="group_edit" name="group_edit" ng-model="template.group_edit"> Allow Editing</label></span></li>
-          <li ng-if="template.group_edit"><span>Editors</span></li>
-          <li ng-if="template.group_edit"><span><a role="button">Add</a> / <a role="button">Remove</a></span></li>
+          <div ng-if="template.private_group == 1">
+            <li class="divider"></li>
+            <li><span>Group</span></li>
+            <li><span><label for="group_edit"><input type="checkbox" id="group_edit" name="group_edit" ng-model="template.group_edit"> Allow Editing</label></span></li>
+            <div ng-if="template.group_edit">
+              <li><span>Editors</span></li>
+              <li><span><a role="button">Add</a> / <a role="button">Remove</a></span></li>
+            </div>
+          </div>
         </ul>
       </li>
+      <li><a href ng-click="saveTemplate()" ng-if="template.id"><i class="glyphicon glyphicon-save"></i> Finish</a></li>
     </ul>
   </div>
 </nav>
@@ -101,14 +105,14 @@
 
 <!-- END MODALS -->
 
-<div ng-if="!hideName" class="paper">
+<div class="paper">
   <!-- BEGIN FORM NAME INPUT -->
   <h3>Page Name</h3>
   <input type="text" class="form-control" ng-model="template.name" placeholder="Start with a name then press Save..."/>
   <!-- END FORM NAME INPUT -->
 </div>
 
-<div ng-if="template.sections.length>0">
+<div ng-if="template.id">
   <template-form-directive form="template"></template-form-directive>
 </div>
 

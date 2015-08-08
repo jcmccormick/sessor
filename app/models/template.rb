@@ -30,13 +30,15 @@ class Template < ActiveRecord::Base
 	# Link up Template defaults method on creation.
 	before_create :set_defaults
 
+	# Use a method to get as little information as needed when viewing all templates. Usable on ActiveRecord Relationship.
 	def self.index_minned
-		includes(:fields).as_json(only: [:id, :name, :sections, :columns], include: {fields: {only: [:id, :name]}})
+		eager_load(:fields).as_json(only: [:id, :name, :sections, :draft])
 	end
 
+	# Use a method to get as little information as needed when showing a single template. Usable on Array.
 	def show_minned
 		as_json(
-			only: [:id, :name, :sections, :columns],
+			only: [:id, :name, :sections, :columns, :private_group, :private_world, :group_id, :group_edit, :group_editors, :draft],
 			include: [ 
 				{fields: {
 					only: [:id, :section_id, :column_id, :name, :fieldtype, :required, :disabled],

@@ -5,12 +5,12 @@
         <a href class="dropdown-toggle" data-toggle="dropdown">Reports <b class="caret"></b></a>
         <ul class="dropdown-menu">
           <li><a href="#/reports/new">New</a></li>
+          <li><a href="#/reports/{{report.id}}/edit">Edit</a></li>
           <li><a href="#/reports">View All</a></li>
         </ul>
       </li>
-      <li><a href="#/reports/{{report.id}}/edit">Edit</a></li>
     </ul>
   </div>
 </nav>
 
-<template-form-directive form="report"></template-form-directive>
+<template-form-directive report="report"></template-form-directive>

@@ -5,7 +5,7 @@ class Field < ActiveRecord::Base
 	# Relate to Columns.
 	belongs_to :template, inverse_of: :fields
 
-	# Relate to Values.
+	# Relate to the first Value related to the Field, used as a default value.
 	has_many :values, -> { where report_id: nil }
 
 	# Saving a Field saves its associated Values.

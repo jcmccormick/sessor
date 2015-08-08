@@ -30,10 +30,12 @@ class Report < ActiveRecord::Base
   after_create :populate_values
   before_update :populate_values
 
+  # Use a method to get as little information as needed when viewing all reports. Usable on ActiveRecord Relation.
   def self.index_minned
-    includes(:templates).as_json(only: [:id, :title], include: {templates: {only: :name}})
+    includes(:templates).as_json(only: [:id, :title], include: [{users: {only: :uid}},{templates: {only: :name}}])
   end
 
+  # Use a method to get as little information as needed when showing a single report. Usable on Array.
   def show_minned
     as_json(
       only: [:id, :title], 
@@ -46,30 +48,6 @@ class Report < ActiveRecord::Base
           include: [ 
             {fields: {
               only: [:id, :section_id, :column_id, :name, :fieldtype, :required, :disabled],
-              include: [
-                {options: {
-                  only: [:id, :name]
-                }}
-              ]
-            }}
-          ]
-        }}
-      ]
-    )
-  end
-
-  def edit_minned
-    as_json(
-      only: [:id, :title, :allow_title], 
-      include: [
-        {values: {
-          only: [:id, :field_id, :input]
-        }},
-        {templates: {
-          only: [:id, :name, :sections, :columns],
-          include: [ 
-            {fields: {
-              only: [:id, :section_id, :column_id, :name, :fieldtype, :glyphicon, :required, :disabled],
               include: [
                 {options: {
                   only: [:id, :name]

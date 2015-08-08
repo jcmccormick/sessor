@@ -1,17 +1,17 @@
-<nav ng-if="form.livesave" id="page-menu" class="navbar navbar-inverse">
+<nav ng-if="report.livesave" id="page-menu" class="navbar navbar-inverse">
   <div class="navbar-header">
     <ul class="nav navbar-left top-nav">
       <li class="dropdown">
         <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-inbox"></i> Reports <b class="caret"></b></a>
         <ul class="dropdown-menu">
           <li><a href="#/reports/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
+          <li ng-if="report.id"><a href ng-click="saveReport('temp')" ng-disabled="myForm.$invalid"><i class="glyphicon glyphicon-floppy-disk"></i> Save</a></li>
+          <li ng-if="report.id"><a href ng-click="saveReport()" ng-disabled="myForm.$invalid"><i class="glyphicon glyphicon-save"></i> Save and Finish</a></li>
           <li><a href="#/reports"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
           <li class="divider"></li>
           <li><a href ng-bootbox-confirm="<center><h4>Are you sure you want to delete this report?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="deleteReport()"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
         </ul>
       </li>
-      <li><a href ng-click="saveReport()" ng-disabled="myForm.$invalid"><i class="glyphicon glyphicon-save"></i> Finish</a></li>
-      <li><a href ng-click="saveReport('temp')" ng-disabled="myForm.$invalid"><i class="glyphicon glyphicon-floppy-disk"></i> Save</a></li>
       <li><a href data-toggle="modal" data-target=".addTemplateModal"><i class="glyphicon glyphicon-plus"></i> Page</a></li>
     </ul>
   </div>
@@ -20,7 +20,13 @@
 
 <form name="myForm" id="myForm" class="form">
 
-  <div class="paper" ng-if="form.allow_title && form.templates">
+  <div class="container-fluid" ng-if="report.templates">
+    <ol class="breadcrumb text-center col-xs-10 col-xs-offset-1">
+      <li ng-class="{active:$first}" ng-repeat="template in report.templates"><a role="button" ng-click="setTemplate(template)">{{template.name}}</a></li>
+    </ol>
+  </div>
+
+  <div class="paper" ng-if="form.allow_title">
     <!-- REPORT TITLE -->
     <div class="container-fluid">
       <h3>Title</h3>
@@ -29,7 +35,7 @@
     <!-- END REPORT TITLE -->
   </div>
 
-  <div class="paper" ng-if="form.sections.length>0 || form.templates.length>0">
+  <div class="paper" ng-if="form.sections">
     <!-- TEMPLATE VIEW -->
     <center><h1>{{form.name}}</h1></center>
 
@@ -39,7 +45,7 @@
       <div class="col-xs-12" ng-class="{'col-md-6':form.columns[section_id] == 2, 'col-md-4':form.columns[section_id] == 3}" ng-repeat="column in countColumns(form.columns[section_id]) track by $index">
         
         <div ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section_id+1}">
-          <template-field-directive field="field" livesave="form.livesave"></template-field-directive>
+          <template-field-directive field="field" editing="report.livesave"></template-field-directive>
         </div>
       </div>
     </div>
@@ -47,7 +53,7 @@
 
 
     <!-- REPORT VIEW -->
-    <div ng-if="form.templates" ng-repeat="template in form.templates">
+<!--     <div ng-if="form.templates" ng-repeat="template in form.templates">
       <center><h1>{{template.name}}</h1></center>    
 
       <div ng-repeat="(section_id, section_name) in template.sections track by $index" class="container-fluid">
@@ -60,7 +66,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- END REPORT VIEW -->
   </div>
 
@@ -70,7 +76,7 @@
 
 
 <!-- BEGIN PREVIEW MODAL -->
-<div class="modal fade addTemplateModal" tabindex="-1" role="dialog" aria-labelledby="previewModal" aria-hidden="true" ng-if="form.livesave">
+<div class="modal fade addTemplateModal" tabindex="-1" role="dialog" aria-labelledby="previewModal" aria-hidden="true" ng-if="report.livesave">
   <div class="modal-dialog modal-lg">
     <form class="modal-content">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -79,7 +85,11 @@
       </div>
       <div class="modal-body row">
         <div class="text-center">
-          <bgf-pagination url="'v1/templates'" collection="templates" url-params="{'d':true,'ts':[form.template_ids]}"></bgf-pagination>
+          <bgf-pagination url="'v1/templates'" collection="templates" url-params="{'d':true,'ts':[report.template_ids]}"></bgf-pagination>
+        </div>
+        <div class="text-center" ng-if="templates.length<1">
+          <h3>There are no more un-drafted pages to add.</h3>
+          <button class="btn btn-primary" data-dismiss="modal">Close</button>
         </div>
         <div role="button" class="col-xs-6" data-dismiss="modal" ng-click="selectTemplate(template)" ng-repeat="template in templates">
           <ul class="list-group">

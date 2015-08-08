@@ -2,8 +2,6 @@ controllers = angular.module('controllers')
 controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope', '$resource', '$routeParams', '$location', 'ClassFactory', 'Flash', 'TemplateService'
 ($auth, $rootScope, $scope, $resource, $routeParams, $location, ClassFactory, Flash, TemplateService)->
 
-	window.TEMPLATE_SCOPE = $scope
-
 	$scope.sectionTypes = TemplateService.sections
 	$scope.columnTypes = TemplateService.columns
 	$scope.fieldTypes = TemplateService.fields
