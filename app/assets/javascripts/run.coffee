@@ -37,13 +37,11 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash', 'Sess
   mobileDevice = if /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) then true else false
 
   if !mobileDevice
-    $('ul.nav li.dropdown').hover (->
-      $(this).delay(200).addClass('open')
-      $(this).find('.dropdown-menu').first().stop(true, true).slideDown()
+    $('li.dropdown').hover (->
+      $(this).addClass('open')
       return
     ), ->
-      $(this).delay(200).removeClass('open')
-      $(this).find('.dropdown-menu').first().stop(true, true).slideUp()
+      $(this).removeClass('open')
       return
 
   $(document).on 'click.nav li', '.navbar-collapse.in', (e) ->
@@ -51,20 +49,4 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash', 'Sess
       $(this).removeClass('in').addClass 'collapse'
     return
 
-  $(window).scroll (e) ->
-    $el = $('.stick')
-    if $(this).scrollTop() > 165 and $el.css('position') != 'fixed'
-      $('.stick').addClass('mobile-stick')
-      $('.stick').css
-        'position': 'fixed'
-        'top': '15px'
-        'z-index': '1031'
-    if $(this).scrollTop() < 165 and $el.css('position') == 'fixed'
-      $('.stick').removeClass('mobile-stick')
-      $('.stick').css
-        'width': '100%'
-        'position': 'relative'
-        'top': '0'
-        'z-index': '1000'
-    return
 ])

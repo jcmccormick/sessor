@@ -17,19 +17,19 @@ module Api::V1 #:nodoc:
         else
           {:title => keywords}
         end
-        current_user.reports.minned.where(query)
+        current_user.reports.where(query)
       else
-        current_user.reports.minned
+        current_user.reports
       end
 
       paginate pre_paginated_reports.count, max_per_page do |limit, offset|
-        render json: pre_paginated_reports.order(id: :desc).limit(limit).offset(offset)
+        render json: pre_paginated_reports.order(id: :desc).limit(limit).offset(offset).index_minned
       end
     end
 
     def show
-      report = current_user.reports.minned.find(params[:id])
-      render json: report
+      report = current_user.reports.find(params[:id])
+      render json: report.show_minned
     end
 
     def create

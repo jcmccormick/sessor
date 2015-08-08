@@ -4,6 +4,10 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 
 	window.TEMPLATE_SCOPE = $scope
 
+	$scope.sectionTypes = TemplateService.sections
+	$scope.columnTypes = TemplateService.columns
+	$scope.fieldTypes = TemplateService.fields
+
 	if $routeParams.templateId
 		ClassFactory.get({class: 'templates', id: $routeParams.templateId}, (res)->
 			$scope.template = res
@@ -12,10 +16,8 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 		$scope.template = new ClassFactory()
 		$scope.template.creator_uid = $auth.user.uid
 
-	$scope.sectionTypes = TemplateService.sections
-	$scope.columnTypes = TemplateService.columns
-	$scope.fieldTypes = TemplateService.fields
-	$scope.previewTemplate = {}
+	$scope.setFieldType = (type)->
+		$scope.newFieldType = type
 
 	# separate preview from actual template
 	$scope.previewUpdate = ->
@@ -32,12 +34,12 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 		if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test $scope.template.name
 			Flash.create('error', 'Title must begin with a letter and only contain letters and numbers.')
 		else
-			$rootScope.$broadcast('cleartemplates')
 			if !$scope.template.id
 				$scope.template.$save({class: 'templates'}, (res)->
 					$location.path('templates/'+res.id+'/edit')
 				)
 			else
+				$rootScope.$broadcast('cleartemplates')
 				tempCopy = new ClassFactory()
 				$.extend tempCopy, $scope.template
 				tempCopy.fields_attributes = tempCopy.fields
@@ -104,6 +106,7 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 				template.fields.push res
 			)
 		)
+		$scope.newFieldName = ''
 		return
 
 	# delete field

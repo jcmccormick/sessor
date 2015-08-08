@@ -18,7 +18,7 @@ class Template < ActiveRecord::Base
 	accepts_nested_attributes_for :fields
 
 	# Create a scope that assures the loading of all Template associations in a single DB call. Used as `Templates.minned`.
-	scope :minned, ->{eager_load(:fields => [:values, :options])}
+	# scope :minned, ->{eager_load(:fields)}
 
 	# Titles must start with a letter and only contain letters and numbers. 
 	validates :name, format: { with: /\A[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
@@ -30,17 +30,32 @@ class Template < ActiveRecord::Base
 	# Link up Template defaults method on creation.
 	before_create :set_defaults
 
+	def self.index_minned
+		includes(:fields).as_json(only: [:id, :name, :sections, :columns], include: {fields: {only: [:id, :name]}})
+	end
+
+	def show_minned
+		as_json(
+			only: [:id, :name, :sections, :columns],
+			include: [ 
+				{fields: {
+					only: [:id, :section_id, :column_id, :name, :fieldtype, :required, :disabled],
+					include: [
+						{options: {
+							only: [:id, :name]
+						}},
+						{values: {
+							only: [:id, :field_id, :input]
+						}}
+					]
+				}}
+			]
+		)
+	end
+
 	# Upon Template creation, set Draft and Private World to true. Setting Private World to true means the Template will be publically available for other Users to search for and add to their own Reports.
 	def set_defaults
 		self.draft = true
 		self.private_world = true
-	end
-
-	# Override standard JSON response.
-	#
-	# * Return only the ID, Name, Creator_UID, Private_Group, Private_World, Group_Edit, Group_Editors, Allow_Title, and Draft fields.
-	# * Merge associated Sections.
-	def as_json(jsonoptions={})
-		super().merge(:fields => fields)
 	end
 end

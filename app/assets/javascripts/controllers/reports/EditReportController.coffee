@@ -7,7 +7,7 @@ controllers.controller("EditReportController", ['$rootScope', '$auth', '$scope',
 	$scope.report.template_ids = []
 
 	if $routeParams.reportId
-		ClassFactory.get({class: 'reports', id: $routeParams.reportId}, (res)->
+		ClassFactory.get({class: 'reports', id: $routeParams.reportId, edit: true}, (res)->
 			jQuery.extend $scope.report, res
 			
 			need_title = $.grep res.templates, (template)->

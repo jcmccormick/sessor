@@ -26,10 +26,61 @@ class Report < ActiveRecord::Base
   has_many :fields, through: :templates
   has_many :values
   accepts_nested_attributes_for :values
-  scope :minned, ->{eager_load([:users, :values, :templates => { :fields => [:values, :options]}])}
   validates :title, format: { with: /\A[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
   after_create :populate_values
   before_update :populate_values
+
+  def self.index_minned
+    includes(:templates).as_json(only: [:id, :title], include: {templates: {only: :name}})
+  end
+
+  def show_minned
+    as_json(
+      only: [:id, :title], 
+      include: [
+        {values: {
+          only: [:id, :field_id, :input]
+        }},
+        {templates: {
+          only: [:id, :name, :sections, :columns],
+          include: [ 
+            {fields: {
+              only: [:id, :section_id, :column_id, :name, :fieldtype, :required, :disabled],
+              include: [
+                {options: {
+                  only: [:id, :name]
+                }}
+              ]
+            }}
+          ]
+        }}
+      ]
+    )
+  end
+
+  def edit_minned
+    as_json(
+      only: [:id, :title, :allow_title], 
+      include: [
+        {values: {
+          only: [:id, :field_id, :input]
+        }},
+        {templates: {
+          only: [:id, :name, :sections, :columns],
+          include: [ 
+            {fields: {
+              only: [:id, :section_id, :column_id, :name, :fieldtype, :glyphicon, :required, :disabled],
+              include: [
+                {options: {
+                  only: [:id, :name]
+                }}
+              ]
+            }}
+          ]
+        }}
+      ]
+    )
+  end
 
   # Populate the Values of the Fields associated with the Report.
   # (A Report cannot contain the same Values as a Template, or every Report would have the same Values. Therefore creating a Report must somehow create a new Value in the DB, linked to a Report, and based on a Template's default Values. The following describes that process.)
@@ -44,12 +95,5 @@ class Report < ActiveRecord::Base
         value.save
       end
     end
-  end
-
-  # Override standard JSON response.
-  # * Return only the ID, Title, and Allow_Title fields.
-  # * Merge associated Templates and Values into the response.  
-  def as_json(jsonoptions={})
-    super().merge(values: values).merge(templates: templates).merge(users: users)
   end
 end

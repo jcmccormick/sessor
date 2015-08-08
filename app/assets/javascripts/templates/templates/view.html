@@ -1,20 +1,16 @@
-<h1 class="page-header">Template {{template.id}}</h1>
-
-<div class="stick">
-	<div class="btn-group btn-group-justified">
-		<a role="button" href="#/templates/" class="btn btn-default">&larr; Templates</a>
-		<a role="button" href="#/templates/{{template.id}}/edit" class="btn btn-default">Edit</a>
-	</div>
-</div>
+<nav id="page-menu" class="navbar navbar-inverse">
+  <div class="navbar-header">
+    <ul class="nav navbar-left top-nav">
+      <li class="dropdown">
+        <a href class="dropdown-toggle" data-toggle="dropdown">Pages <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#/templates/new">New</a></li>
+          <li><a href="#/templates">View All</a></li>
+        </ul>
+      </li>
+      <li><a href="#/templates/{{template.id}}/edit">Edit</a></li>
+    </ul>
+  </div>
+</nav>
 
 <template-form-directive form="template"></template-form-directive>
-
-<div class="text-center">
-	<a class="btn btn-small btn-primary" ng-show="!showJson" ng-click="showJson = true">Show template json object</a>
-	<a class="btn btn-small btn-inverse" ng-show="showJson" ng-click="showJson = false">Hide template json object</a><br><br>
-</div>
-
-<div ng-show="showJson">
-	<h4>Form object:</h4>
-	<pre>{{ template | json }}</pre>
-</div>

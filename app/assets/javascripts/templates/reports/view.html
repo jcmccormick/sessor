@@ -1,19 +1,16 @@
-<h1 class="page-header">Report {{report.id}}</h1>
+<nav id="page-menu" class="navbar navbar-inverse">
+  <div class="navbar-header">
+    <ul class="nav navbar-left top-nav">
+      <li class="dropdown">
+        <a href class="dropdown-toggle" data-toggle="dropdown">Reports <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#/reports/new">New</a></li>
+          <li><a href="#/reports">View All</a></li>
+        </ul>
+      </li>
+      <li><a href="#/reports/{{report.id}}/edit">Edit</a></li>
+    </ul>
+  </div>
+</nav>
 
-<div class="stick">
-	<div class="btn-group btn-group-justified">
-		<a role="button" href="#/reports/" class="btn btn-default">&larr; Reports</a>
-		<a role="button" href="#/reports/{{report.id}}/edit" class="btn btn-default">Edit</a>
-	</div>
-</div>
 <template-form-directive form="report"></template-form-directive>
-
-<div class="text-center">
-	<a class="btn btn-small btn-primary" ng-show="!showJson" ng-click="showJson = true">Show report json object</a>
-	<a class="btn btn-small btn-inverse" ng-show="showJson" ng-click="showJson = false">Hide report json object</a><br><br>
-</div>
-
-<div ng-show="showJson">
-	<h4>Form object:</h4>
-	<pre>{{ report | json }}</pre>
-</div>

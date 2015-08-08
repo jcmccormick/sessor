@@ -6,7 +6,7 @@ class Field < ActiveRecord::Base
 	belongs_to :template, inverse_of: :fields
 
 	# Relate to Values.
-	has_many :values
+	has_many :values, -> { where report_id: nil }
 
 	# Saving a Field saves its associated Values.
 	accepts_nested_attributes_for :values
@@ -17,11 +17,4 @@ class Field < ActiveRecord::Base
 	# Saving a Field saves its associated Options.
 	accepts_nested_attributes_for :options
 	
-	# Override standard JSON response.
-	#
-	# * Return only the ID, Name, Fieldtype, Glyphicon, Required, and Disabled fields.
-	# * Merge associated Options and the first Value. (Returning only the first Value assures that when you call any given Template or Report, you will never receive all previously recorded Values for each Field in said Template or Report)
-	def as_json(jsonoptions={})
-		super().merge(options: options).merge(values: [values.first])
-	end
 end

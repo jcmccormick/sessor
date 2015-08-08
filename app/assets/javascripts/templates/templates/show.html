@@ -1,15 +1,17 @@
-<h1 class="page-header">Templates</h1>
-
-<p class="stick">
-  <div class="btn-group btn-group-justified">
-    <div class="input-group">
-      <span class="input-group-btn">
-        <a href="#/templates/new" class="btn btn-success">New</a>
-      </span>
-      <input type="text" class="form-control" ng-model="keywords" placeholder="Template ID, Title, or 'Draft'" ng-model-options="{debounce: 1000}" autofocus>
-    </div>
+<nav id="page-menu" class="navbar navbar-inverse">
+  <div class="navbar-header">
+    <ul class="nav navbar-left top-nav">
+      <li class="dropdown">
+        <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-file"></i> Pages <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#/templates/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
+          <li><a href="#/templates"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
+        </ul>
+      </li>
+      <li><input type="text" class="form-control pull-right" ng-model="keywords" placeholder="Page ID, Title, or 'Draft'" ng-model-options="{debounce: 1000}"></li>
+    </ul>
   </div>
-</p>
+</nav>
 
 <div class="text-center">
   <bgf-pagination collection="templates" url="'v1/templates'" url-params="urlParams"></bgf-pagination>

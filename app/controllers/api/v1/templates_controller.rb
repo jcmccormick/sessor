@@ -19,9 +19,9 @@ module Api::V1#:nodoc:
         else
           {:name => keywords}
         end
-        current_user.templates.minned.where(query)
+        current_user.templates.where(query)
       else
-        current_user.templates.minned
+        current_user.templates
       end
 
       if params.has_key?(:d)
@@ -33,13 +33,13 @@ module Api::V1#:nodoc:
       end
 
       paginate pre_paginated_templates.count, max_per_page do |limit, offset|
-        render json: pre_paginated_templates.order(id: :desc).limit(limit).offset(offset)
+        render json: pre_paginated_templates.order(id: :desc).limit(limit).offset(offset).index_minned
       end
     end
 
     def show
-      template = current_user.templates.minned.find(params[:id])
-      render json: template
+      template = current_user.templates.find(params[:id])
+      render json: template.show_minned
     end
 
     def create
@@ -67,7 +67,7 @@ module Api::V1#:nodoc:
     private
       def allowed_params
         params.require(:template).permit(
-          :name, :creator_uid, :sections, :columns, :private_group, :private_world, :group_id, :group_edit, :group_editors, :allow_title, :draft,
+          :name, :creator_uid, :sections, :columns, :private_group, :private_world, :group_id, :group_edit, :group_editors, :draft,
           fields_attributes: [
             :id, :name, :fieldtype, :required, :disabled, :glyphicon, :section_id, :column_id,
             values_attributes: [

@@ -8,10 +8,10 @@
     <%= stylesheet_link_tag 'application', media: 'all' %>
   </head>
   <body>
-    <div flash-message="10000" class="col-xs-8 col-xs-offset-2 btn-info h4 flash-alerts" ></div>
+    <div flash-message="10000" class="col-xs-6 col-xs-offset-3 flash-alerts"></div>
     <%= yield %>
+    <%= javascript_include_tag 'application' %>
+    <noscript>Please enable javascript and cookies in your browser.</noscript>
+    <script>if (!navigator.cookieEnabled) document.write('Please enable javascript and cookies in your browser.');</script>
   </body>
-  <%= javascript_include_tag 'application' %>
-  <noscript>Please enable javascript and cookies in your browser.</noscript>
-  <script>if (!navigator.cookieEnabled) document.write('Please enable javascript and cookies in your browser.');</script>
 </html>

@@ -33,12 +33,13 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
     email = '<input type="email" class="form-control" placeholder="Email" ng-model="field.values[0].input" ng-required="field.required" ng-disabled="field.disabled"/>'
 
     checkbox = '
-    <input type="checkbox" ng-model="field.values[0].input" id="{{field.id}}" ng-required="field.required" ng-disabled="field.disabled">
-    <label class="form-field-label" for="{{field.id}}">{{field.name}}
-      <span class="required-error" ng-show="field.required && !field.values[0].input">*</span>
-    </label>
-    <br>
-    <br>'
+    <div class="form-group">
+      <input type="checkbox" ng-model="field.values[0].input" id="{{field.id}}" ng-required="field.required" ng-disabled="field.disabled">
+      <label class="form-field-label" for="{{field.id}}">{{field.name}}
+        <span class="required-error" ng-show="field.required && !field.values[0].input">*</span>
+      </label>
+      <div id="field-overlay" ng-if="!livesave"></div>
+    </div>'
 
     date = '<input type="datetime-local" class="form-control" ng-model="field.values[0].input" ng-required="field.required" ng-disabled="field.disabled">'
 
@@ -56,7 +57,8 @@ directives.directive('templateFieldDirective', ['$http', '$compile', '$location'
     hidden = '
     <input type="hidden" ng-model="field.values[0].input" value="{{field.values[0].input}}" ng-disabled="field.disabled">'
 
-    fwend = '</div>'
+    fwend = '<div id="field-overlay" ng-if="!livesave"></div>
+      </div>'
 
     # GET template content from path
     template = getTemplate(scope.field)

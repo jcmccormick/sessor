@@ -8,7 +8,6 @@ directives.directive('templateFormDirective',[()->
 			return new Array columns
 
 		$scope.selectTemplate = (template)->
-			$rootScope.$broadcast('clearreports')
 			$scope.form.template_ids.push template.id
 			if !$scope.form.id
 				$scope.form.title = "Untitled"
@@ -16,6 +15,7 @@ directives.directive('templateFormDirective',[()->
 					$location.path("/reports/#{res.id}/edit")
 				)
 			else
+				$rootScope.$broadcast('clearreports')
 				$scope.form.$update({class: 'reports', id: $scope.form.id}, (res)->
 					$route.reload()
 				)
@@ -24,11 +24,11 @@ directives.directive('templateFormDirective',[()->
 			if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test $scope.form.title
 				Flash.create('error', 'Title must begin with a letter and only contain letters and numbers.')
 			else
+				$rootScope.$broadcast('clearreports')
 				$scope.form.values_attributes = $scope.form.values
 				$scope.form.$update({class: 'reports', id: $scope.form.id}, (res)->
 					if !temp
 						$location.path("/reports/#{$scope.form.id}")
-						$rootScope.$broadcast('clearreports')
 				)
 
 		$scope.deleteReport = ->

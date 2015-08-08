@@ -1,26 +1,47 @@
-<!-- BEGIN MODALS -->
-
-
-<!-- BEGIN PREVIEW MODAL -->
-<div modal-hide ng-if="showModal" model="$parent" show-modal="showModal" class="modal fade previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModal" aria-hidden="true">
-  <div class="modal-dialog modal-md">
-    <form class="modal-content">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <div class="modal-header">
-        <h4 class="modal-title">Template Preview</h4>
-      </div>
-      <div class="modal-body row">
-        <div class="col-md-12">
-          <template-form-directive form="previewTemplate"></template-form-directive>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-info" data-dismiss="modal" aria-label="Return">Return</button>  
-      </div>
-    </form>
+<nav id="page-menu" class="navbar navbar-inverse">
+  <div class="navbar-header">
+    <ul class="nav navbar-left top-nav">
+      <li class="dropdown">
+        <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-file"></i> Pages <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#/templates/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
+          <li><a href="#/templates"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
+          <li class="divider"></li>
+          <li><a href ng-bootbox-confirm="<center><h4>Are you sure you want to delete this page?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="deleteTemplate()"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
+        </ul>
+      </li>
+      <li><a href ng-click="saveTemplate()"><i class="glyphicon glyphicon-save"></i> Finish</a></li>
+      <li><a href ng-click="saveTemplate('temp')"><i class="glyphicon glyphicon-floppy-disk"></i> Save</a></li>
+      <li class="dropdown">
+        <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-plus"></i> Insert <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href data-toggle="modal" data-target=".newSectionModal"><i class="glyphicon glyphicon-modal-window"></i> &nbsp; Section</a></li>
+          <li class="divider"></li>
+          <li ng-repeat="type in fieldTypes"><a href ng-click="setFieldType(type)" ng-class="{disabled:template.sections.length<1}" data-toggle="modal" data-target=".newFieldModal"><i class="glyphicon {{type.glyphicon}}"></i> &nbsp; {{type.value}}</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> Options <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><span>Page</span></li>
+          <li><span><label for="hideName"><input type="checkbox" id="hideName" name="hideName" ng-model="hideName"> Hide Name</span></li>
+          <li><span><label for="template_draft"><input type="checkbox" id="template_draft" name="template_draft" ng-model="template.draft"> Draft</label></span></li>
+          <li class="divider"></li>
+          <li><span>Sharing</span></li>
+          <li><span><label for="private_world"><input type="checkbox" id="private_world" name="private_world" ng-model="template.private_world"> Share Public</label></span></li>
+          <li><span><label for="private_group"><input type="checkbox" id="private_group" name="private_group" ng-model="template.private_group"> Share Group</label></span></li>
+          <li ng-if="template.private_group == 1" class="divider"></li>
+          <li ng-if="template.private_group == 1"><span>Group</span></li>
+          <li ng-if="template.private_group == 1"><span><label for="group_edit"><input type="checkbox" id="group_edit" name="group_edit" ng-model="template.group_edit"> Allow Editing</label></span></li>
+          <li ng-if="template.group_edit"><span>Editors</span></li>
+          <li ng-if="template.group_edit"><span><a role="button">Add</a> / <a role="button">Remove</a></span></li>
+        </ul>
+      </li>
+    </ul>
   </div>
-</div>
-<!-- END PREVIEW MODAL -->
+</nav>
+
+<!-- BEGIN MODALS -->
 
 
 <!-- BEGIN NEW SECTION MODAL -->
@@ -50,73 +71,48 @@
 </div>
 <!-- END NEW SECTION MODAL -->
 
+<!-- BEGIN NEW FIELD MODAL -->
+<div class="modal fade newFieldModal" tabindex="-1" role="dialog" aria-labelledby="newFieldModal" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <form name="newFieldForm" class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-header">
+        <h4 class="modal-title">Field Design</h4>
+      </div>
+      <div class="modal-body">
+        <label class="control-label">Field Name</label>
+        <input type="text" class="form-control" ng-model="newFieldName" required>
+
+        <label class="control-label">Section</label>
+        <select class="form-control" ng-model="newFieldSection" ng-options="key as value for (key, value) in template.sections"></select>
+        
+        <label ng-if="newFieldSection && newFieldSection+1>0" class="control-label">Column</label>
+        <ul ng-if="newFieldSection && newFieldSection+1>0" class="btn-group btn-group-justified list-unstyled">
+          <li class="btn btn-default" data-dismiss="modal" ng-click="addNewField(template, 1*newFieldSection+1, $index+1, newFieldType, newFieldName)" ng-repeat="column_id in countColumns(template.columns[newFieldSection]) track by $index">
+            Column {{$index+1}}
+          </li>
+        </ul>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- END NEW FIELD MODAL -->
+
 
 <!-- END MODALS -->
 
-<h1 class="page-header">Template Builder</h1>
-
-<!-- BEGIN EDIT TEMPLATE STICK -->
-<div class="stick row" ng-if="template.id">
-  <div class="col-xs-1"></div>
-  <div class="col-xs-10">
-    <ul class="btn-group btn-group-justified">
-      <a href role="button" class="btn btn-default" ng-click="saveTemplate()">Finish</a>
-      <li class="btn-group dropdown">
-        <a href role="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Options <span class="caret"></span></a>
-        <ul class="dropdown-menu template-options-dropdown" role="menu">
-          <li class="col-sm-12 col-md-4 h5">
-            <ul>
-              <li><h4>Template</h4></li>
-              <li><label for="template_draft"><input type="checkbox" id="template_draft" name="template_draft" ng-model="template.draft"> Draft</label></li>
-              <li><label for="template_title"><input type="checkbox" id="template_title" name="template_title" ng-model="template.allow_title"> Add Title</label></li>
-            </ul>
-          </li>
-          <li class="col-sm-12 col-md-4 h5">
-            <ul>
-              <li><h4>Sharing</h4></li>
-              <li><label for="private_world"><input type="checkbox" id="private_world" name="private_world" ng-model="template.private_world"> Share Public</label></li>
-              <li><label for="private_group"><input type="checkbox" id="private_group" name="private_group" ng-model="template.private_group"> Share Group</label></li>
-            </ul>
-          </li>
-          <li class="col-sm-12 col-md-4 h5" ng-if="template.private_group == 1">
-            <ul>
-              <li><h4>Group</h4></li>
-              <li><label for="group_edit"><input type="checkbox" id="group_edit" name="group_edit" ng-model="template.group_edit"> Allow Editing</label></li>
-              <li ng-if="template.group_edit"><p><b>Editors</b></p><a role="button">Add</a> / <a role="button">Remove</a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <a href role="button" class="btn btn-default" data-toggle="modal" data-target=".newSectionModal"><i class="glyphicon glyphicon-plus"></i> Section</a>
-      <a href role="button" class="btn btn-default" data-toggle="modal" data-target=".previewModal" ng-click="previewUpdate()">Preview</a>
-    </ul>
-  </div>
-  <div class="col-xs-1">
-    <a href role="button" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this template?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="deleteTemplate()">
-      <i class="glyphicon glyphicon-trash"></i>
-    </a>
-  </div>
+<div ng-if="!hideName" class="paper">
+  <!-- BEGIN FORM NAME INPUT -->
+  <h3>Page Name</h3>
+  <input type="text" class="form-control" ng-model="template.name" placeholder="Start with a name then press Save..."/>
+  <!-- END FORM NAME INPUT -->
 </div>
-<!-- END EDIT TEMPLATE STICK -->
 
-<!-- BEGIN FORM NAME INPUT -->
-<h3>Title
-  <sup>
-    <small>
-      <i class="glyphicon glyphicon-flash" rel="popover" data-trigger="hover" data-title="Template Title" data-html="true" data-content="<p>Great titles convey their message with keywords which capture a situation.</p><p>Ex:</p><pre>In-Person Math Tutoring<br>Influenza Patient Intake<br>Daily Exercise Routine</pre>" data-container="body"></i>
-    </small>
-  </sup>
-</h3>
+<div ng-if="template.sections.length>0">
+  <template-form-directive form="template"></template-form-directive>
+</div>
 
-<p class="input-group">
-  <input type="text" class="form-control" ng-model="template.name" placeholder="Start with a title..."/>
-  <span class="input-group-btn">
-    <button class="btn btn-primary" ng-click="saveTemplate('temp')">Save</button>
-  </span>
-</p>
-<!-- END FORM NAME INPUT -->
-
-<div ng-show="template.id">
+<div ng-if="template.idz">
   <h3>Sections
     <sup>
       <small>
@@ -127,7 +123,7 @@
 </div>
 
 <!-- START MAIN SECTION REPEATING -->
-<div role="tablist" sortable-list="template.sections" class="panel-group panel-carat" id="section-accordion">
+<div ng-if="template.idz" role="tablist" sortable-list="template.sections" class="panel-group panel-carat" id="section-accordion">
   <div panel-hide class="panel panel-default" ng-repeat="(section_id, section_name) in template.sections track by $index">
 
 
@@ -162,15 +158,6 @@
         <!-- END SECTION AND COLUMN DETAILS -->
 
 
-        <!-- BEGIN COLUMN LIST -->
-        <ul role="tablist" class="btn-group btn-group-justified list-unstyled">
-          <li role="presentation" class="btn btn-default" ng-class="{'active in':$first}" ng-repeat="column in countColumns(template.columns[section_id]) track by $index" aria-controls="sec{{section_id+1}}col{{$index+1}}" data-target="#sec{{section_id+1}}col{{$index+1}}" data-toggle="tab">
-            Column {{$index+1}}
-          </li>
-        </ul>
-        <!-- END COLUMN LIST -->
-        
-
         <!-- BEGIN COLUMN REPEATING -->
         <div class="tab-content">
           <div role="tabpanel" 
@@ -180,16 +167,6 @@
           aria-labeledby="sec{{section_id+1}}col{{$index+1}}-tab" 
           ng-repeat="column in countColumns(template.columns[section_id]) track by $index">
             
-
-            <!-- BEGIN FIELD LIST -->
-            <div class="row h1">
-              <div class="col-xs-10 col-xs-offset-1">
-                <a href role="button" class="btn btn-default col-xs-3" ng-bootbox-prompt="Please enter a name for this {{type.value}}" ng-bootbox-prompt-action="addNewField(template, section_id+1, $parent.$index+1, type, result)" ng-repeat="type in fieldTypes">
-                  {{type.value}}
-                </a>
-              </div>
-            </div>
-            <!-- END FIELD LIST -->
 
 
             <!-- BEGIN FIELD REPEATING -->

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150803040235) do
+ActiveRecord::Schema.define(version: 20150808003410) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "provider",               limit: 255,                null: false
@@ -57,14 +57,6 @@ ActiveRecord::Schema.define(version: 20150803040235) do
 
   add_index "admins_templates", ["admin_id"], name: "index_admins_templates_on_admin_id", using: :btree
   add_index "admins_templates", ["template_id"], name: "index_admins_templates_on_template_id", using: :btree
-
-  create_table "columns", force: :cascade do |t|
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.integer  "section_id", limit: 4
-  end
-
-  add_index "columns", ["section_id"], name: "index_columns_on_section_id", using: :btree
 
   create_table "fields", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -127,15 +119,6 @@ ActiveRecord::Schema.define(version: 20150803040235) do
   add_index "reports_users", ["report_id"], name: "index_reports_users_on_report_id", using: :btree
   add_index "reports_users", ["user_id"], name: "index_reports_users_on_user_id", using: :btree
 
-  create_table "sections", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "template_id", limit: 4
-  end
-
-  add_index "sections", ["template_id"], name: "index_sections_on_template_id", using: :btree
-
   create_table "sessions", force: :cascade do |t|
     t.string   "session_id", limit: 255,   null: false
     t.text     "data",       limit: 65535
@@ -157,7 +140,6 @@ ActiveRecord::Schema.define(version: 20150803040235) do
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.boolean  "draft",         limit: 1
-    t.boolean  "allow_title",   limit: 1
     t.text     "sections",      limit: 65535
     t.text     "columns",       limit: 65535
   end

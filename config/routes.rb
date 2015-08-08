@@ -9,8 +9,6 @@ Rails.application.routes.draw do
       resources :groups, only: [:index, :show, :create, :update, :destroy]
       resources :reports, only: [:new, :index, :show, :create, :update, :destroy]
       resources :templates, only: [:index, :show, :create, :update, :destroy]
-      resources :sections, only: [:show, :create, :update, :destroy]
-      resources :columns, only: [:show, :create, :update, :destroy]
       resources :fields, only: [:index, :show, :create, :update, :destroy]
       resources :options, only: [:show, :create, :update, :destroy]
       resources :values, only: [:show, :create, :update, :destroy]

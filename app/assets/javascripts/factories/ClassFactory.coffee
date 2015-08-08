@@ -5,12 +5,12 @@ factories.factory("ClassFactory", ['$auth', '$resource', 'SessorCache',
 	query:
 		method: 'GET'
 		isArray: true
-		cache: SessorCache
+		cache: true
 	update:
 		method: 'PUT'
 		isArray: true
 	get:
-		cache: SessorCache
+		cache: true
 		isArray: false
 	})
 ])
