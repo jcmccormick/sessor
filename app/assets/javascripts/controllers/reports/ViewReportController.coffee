@@ -3,6 +3,7 @@ controllers.controller('ViewReportController', ['$scope', '$routeParams', 'Class
 ($scope, $routeParams, ClassFactory)->
 	ClassFactory.get({class: 'reports', id: $routeParams.reportId}, (res)->
 		$scope.report = res
+		$scope.report.viewing = true
 		$scope.report.templates.forEach((template)->
 			template.fields.forEach((field)->
 				field.values = $scope.report.values.filter((obj)->

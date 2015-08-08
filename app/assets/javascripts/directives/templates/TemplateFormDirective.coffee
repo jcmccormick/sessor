@@ -1,8 +1,12 @@
 directives = angular.module('directives')
 directives.directive('templateFormDirective',[()->
 	{
-	controller: ['$route', '$rootScope', '$scope', '$routeParams', '$location', 'Flash', 'ClassFactory', 
-	($route, $rootScope, $scope, $routeParams, $location, Flash, ClassFactory)->
+	controller: ['$route', '$rootScope', '$scope', '$location', 'Flash',
+	($route, $rootScope, $scope, $location, Flash)->
+
+		$scope.setSelectedOptions = (optionSet)->
+			if $scope.form.editing
+				$scope.selectedOptions = optionSet
 
 		$scope.countColumns = (columns)->
 			return new Array columns
@@ -13,7 +17,7 @@ directives.directive('templateFormDirective',[()->
 		$scope.selectTemplate = (template)->
 			$scope.report.template_ids.push template.id
 			if !$scope.report.id
-				$scope.report.title = "Untitled"
+				$scope.report.title = 'Untitled'
 				$scope.report.$save({class: 'reports'}, (res)->
 					$location.path("/reports/#{res.id}/edit")
 				)
@@ -24,7 +28,7 @@ directives.directive('templateFormDirective',[()->
 				)
 
 		$scope.saveReport = (temp)->
-			if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test $scope.report.title
+			if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test $scope.report.title || $scope.report.title != undefined
 				Flash.create('error', 'Title must begin with a letter and only contain letters and numbers.')
 			else
 				$rootScope.$broadcast('clearreports')
@@ -46,5 +50,6 @@ directives.directive('templateFormDirective',[()->
 		form: '='
 		report: '='
 		templates: '='
+		selectedOptions: '=selectedOptions'
 	}
 ])

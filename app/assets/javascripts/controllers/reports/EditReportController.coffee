@@ -4,15 +4,12 @@ controllers.controller("EditReportController", ['$rootScope', '$auth', '$scope',
 	
 	$scope.report = new ClassFactory()
 	$scope.report.livesave = true
+	$scope.report.hideTitle = false
 	$scope.report.template_ids = []
 	
 	if $routeParams.reportId
 		ClassFactory.get({class: 'reports', id: $routeParams.reportId, edit: true}, (res)->
 			jQuery.extend $scope.report, res
-			
-			need_title = $.grep res.templates, (template)->
-				return template.allow_title == true
-			$scope.report.allow_title = need_title[0]? ? true : false
 
 			$scope.report.templates.forEach((template)->
 				$scope.report.template_ids.push template.id

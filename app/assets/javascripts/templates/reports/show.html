@@ -28,8 +28,15 @@
     data-target="#collapse{{report.id}}" 
     data-parent="#view-all-accordion" 
     aria-controls="collapse{{report.id}}">
-      <h4 ng-show="report.title != 'Untitled'">{{report.title}} <small>#{{report.id}}</small> <small ng-show="user.uid != report.users[0].uid">by {{report.users[0].uid}}</small></h4>
-      <h4 ng-show="report.title == 'Untitled'" ng-repeat="template in report.templates">{{template.name}} <small>#{{report.id}}</small></h4>
+      <h4>#{{report.id}} <span ng-if="report.title != 'Untitled'">{{report.title}}</span> 
+        <small>
+          <ol class="breadcrumb view-reports-crumbs">
+            <li ng-repeat="template in report.templates">{{template.name}}</li>
+          </ol>
+        </small>
+      </h4>
+
+        
     </div>
     <!-- END SECTION HEADER -->
 

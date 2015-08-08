@@ -61,7 +61,7 @@ module Api::V1 #:nodoc:
     private
       def allowed_params
         params.require(:report).permit(
-          :title, :submission, :response, :active, :location, :allow_title,
+          :title, :allow_title, :submission, :response, :active, :location,
           values_attributes: [
             :id, :input
           ]      

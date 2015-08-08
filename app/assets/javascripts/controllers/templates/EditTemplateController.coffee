@@ -9,6 +9,8 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 	if $routeParams.templateId
 		ClassFactory.get({class: 'templates', id: $routeParams.templateId}, (res)->
 			$scope.template = res
+			$scope.template.hideName = false
+			$scope.template.editing = true
 		)
 	else
 		$scope.template = new ClassFactory()
@@ -16,12 +18,6 @@ controllers.controller('EditTemplateController', ['$auth', '$rootScope', '$scope
 
 	$scope.setFieldType = (type)->
 		$scope.newFieldType = type
-
-	# separate preview from actual template
-	$scope.previewUpdate = ->
-		$scope.showModal = true
-		angular.copy $scope.template, $scope.previewTemplate
-		return
 
 	# return an array for column repeating
 	$scope.countColumns = (columns)->

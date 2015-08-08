@@ -123,21 +123,15 @@ button.close {
 }
 
 /*
- * Paper
+ * Breadcrumbz
  */
 
-.paper {
-  margin: 20px;
-  padding: 35px 45px;
-  background-color: white;
-  -webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
+.view-reports-crumbs {
+  display: inherit;
 }
 
-/* Field Display */
-
-.breadcrumb {
+.edit-report-crumbs {
+  background-color: white !important;
   padding: 0 !important;
   border-radius: 0 !important;
   margin-top: 20px;
@@ -149,17 +143,71 @@ button.close {
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
 }
 
-template-form-directive {
-  position: relative;
+/*
+ * Paper
+ */
+
+.paper {
+  margin: 20px 0;
+  padding: 35px 45px;
+  background-color: white;
+  -webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
 }
 
-#field-overlay {
-  width: 100%;
-  height: 100%;
+/*
+ * Page Design
+ */
+
+.template-options {
+  color: #aaa;
+  background-color: #222;
+  position: fixed;
+  top: 101px;
+  bottom: 0;
+  right: 0;
+  width: 225px;
+  overflow-y: auto;
+  -webkit-box-shadow: 5px 10px 25px 2px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 5px 10px 25px 2px rgba(0, 0, 0, 1);
+  box-shadow: 5px 10px 25px 2px rgba(0, 0, 0, 1);
+  z-index: 3;
+  
+  .nav {
+    border-bottom: 1px solid black;
+    -webkit-box-shadow: 0 -5px 25px 2px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 0 -5px 25px 2px rgba(0, 0, 0, 1);
+    box-shadow: 0 -5px 25px 2px rgba(0, 0, 0, 1);
+  }
+
+  .navbar-text {
+    padding-bottom: none;
+  }
+}
+
+
+/* 
+ * Template and Field Display
+ */
+
+.required-error {
+  color:red;
+  font-size: smaller;
+}
+.form-field-label {
+  display: inline;
+}
+template-form-directive .form-group {
+  position: relative;
+}
+.field-overlay {
+  height: 115%;
+  width: 101%;
   position: absolute;
+  border: 3px dotted #aaa;
   top: -5px;
-  left: -3px;
-  z-index: 2;
+  left: -5px;  z-index: 2;
   background:rgba(0,0,0,.2);
   cursor: alias;
   opacity:0;
@@ -170,14 +218,6 @@ template-form-directive {
     opacity: 1;
   }
 }
-.required-error {
-  color:red;
-  font-size: smaller;
-}
-.form-field-label {
-  display: inline;
-}
-
 
 /* 
  * Statistics 
