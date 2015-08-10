@@ -3,70 +3,45 @@
 </page-menu>
 
 <div class="paper">
-	<h4>Template</h4>
-	<p class="input-group">
-		<select class="form-control" ng-model="search.template" ng-options="template.name for template in dataProps.templates"></select>
-		<span class="input-group-btn">
-			<a href class="btn btn-primary stats-button" ng-click="listFields(search.template)">Select</a>
-		</span>
-	</p>
-
-	<div role="tablist" class="panel-group" id="statistics-search-accordion">
-		<div class="panel panel-info">
-
-			<!-- BEGIN SECTION HEADER -->
-			<div class="panel-heading statistics-search-header"
-			data-toggle="collapse" 
-			data-target="#statistics-search" 
-			data-parent="#statistics-search-accordion" 
-			aria-controls="statistics-search"
-			id="statistics-search-accordion-header">
-				<h4 class="panel-title">
-					Search Options
-				</h4>
+	<form class="form-search" ng-init="dateSearch = false; timeSearch = false">
+		<h4>Template</h4>
+		<p class="input-group">
+			<select class="form-control" ng-model="search.template" ng-options="template.name for template in dataProps.templates"></select>
+			<span class="input-group-btn">
+				<a href class="btn btn-primary stats-button" ng-click="listFields(search.template)">Select</a>
+			</span>
+		</p>
+		<h4>Field</h4>
+		<p class="input-group">
+			<select class="form-control" ng-model="search.field" ng-options="field.name for field in dataProps.fields"></select>
+			<span class="input-group-btn">
+				<a href class="btn btn-primary stats-button" ng-click="showData(search.field)">Select</a>
+			</span>
+		</p>
+		<p>
+			<a href ng-click="dateSearch=!dateSearch">Date</a> - <a href ng-click="timeSearch=!timeSearch">Time</a> 
+		</p>
+		<div ng-show="dateSearch" class="col-xs-6">
+			<div class="grid-column">
+				<h4>Start Date</h4>
+				<input type="date" class="form-control" ng-model="search.date.startDate">
 			</div>
-			<!-- END SECTION HEADER -->
-
-
-			<!-- BEGIN SECTION INFO PANEL -->
-			<div role="tabpanel" id="statistics-search" class="panel-collapse collapse" aria-labelledby="statistics-search-tab">
-				<div class="panel-body">
-					<form class="form-search" ng-init="dateSearch = false; timeSearch = false">
-						<h4>Field</h4>
-						<div class="input-group">
-							<select class="form-control" ng-model="search.field" ng-options="field.name for field in dataProps.fields"></select>
-							<span class="input-group-btn">
-								<a href class="btn btn-primary stats-button" ng-click="showData(search.field)">Select</a>
-							</span>
-						</div>
-						<p>
-							<a href ng-click="dateSearch=!dateSearch">Date</a> - <a href ng-click="timeSearch=!timeSearch">Time</a> 
-						</p>
-						<div ng-show="dateSearch" class="col-xs-6">
-							<div class="grid-column">
-								<h4>Start Date</h4>
-								<input type="date" class="form-control" ng-model="search.date.startDate">
-							</div>
-							<div class="grid-column">
-								<h4>End Date</h4>
-								<input type="date" class="form-control" ng-model="search.date.endDate">
-							</div>
-						</div> 
-						<div ng-show="timeSearch" class="col-xs-6">
-							<div class="grid-column">
-								<h4>Start Time</h4>
-								<input type="time" class="form-control" ng-model="search.time.startTime">
-							</div>
-							<div class="grid-column">
-								<h4>End Time</h4>
-								<input type="time" class="form-control" ng-model="search.time.endTime">
-							</div>
-						</div>
-					</form>
-				</div>
+			<div class="grid-column">
+				<h4>End Date</h4>
+				<input type="date" class="form-control" ng-model="search.date.endDate">
+			</div>
+		</div> 
+		<div ng-show="timeSearch" class="col-xs-6">
+			<div class="grid-column">
+				<h4>Start Time</h4>
+				<input type="time" class="form-control" ng-model="search.time.startTime">
+			</div>
+			<div class="grid-column">
+				<h4>End Time</h4>
+				<input type="time" class="form-control" ng-model="search.time.endTime">
 			</div>
 		</div>
-	</div>
+	</form>
 </div>
 
 <div class="paper">

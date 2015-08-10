@@ -6,8 +6,8 @@ module Api::V1 #:nodoc:
     wrap_parameters include: Field.attribute_names + nested_attributes_names
     
     def index
-      @fields = if params.has_key?(:stats)
-        current_user.fields.where(:template_id => params[:template_id]).as_json(only: [:id, :name])
+      if params.has_key?(:stats)
+        render json: current_user.fields.only(['fields.id', 'fields.name']).where(:template_id => params[:template_id]).where.not(:fieldtype => 'labelntext').uniq { |f| f.id }
       end
     end
 

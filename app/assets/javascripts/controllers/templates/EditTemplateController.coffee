@@ -26,7 +26,7 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$rout
 			# save/update template
 			$scope.template.saveTemplate = (temp)->
 				if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test $scope.template.name
-					Flash.create('danger', 'Title must begin with a letter and only contain letters and numbers.')
+					Flash.create('danger', '<p>Title must begin with a letter and only contain letters and numbers.</p>')
 				else
 					$rootScope.$broadcast('cleartemplates')
 					tempCopy = new ClassFactory()

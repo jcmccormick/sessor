@@ -5,17 +5,11 @@ controllers.controller("StatisticsController",  ['$scope', 'ClassFactory', 'Temp
 	$scope.dataProps = []
 	$scope.dataProps.templates = []
 	$scope.dataProps.fields = []
-	$scope.dataProps.values = []
 
 	$scope.search = []
 	$scope.search.key = 'name'
 	$scope.search.date = {}
 	$scope.search.time = {}
-
-	$scope.labels = []
-	$scope.pie = []
-	$scope.line = []
-
 
 	$scope.graphtype = 'pie'
 
@@ -34,15 +28,14 @@ controllers.controller("StatisticsController",  ['$scope', 'ClassFactory', 'Temp
 		)
 
 	$scope.showData = (field)->
+		$scope.dataProps.values = []
+		$scope.labels = []
+		$scope.line = []
+		$scope.pie = []
 		ClassFactory.query({class: 'values', field_id: field.id, stats: true}, (res)->
 			res.forEach((value)->
-				console.log value
 				$scope.dataProps.values.push value.input
 			)
-			console.log field
-			console.log $scope.dataProps.values[0]
-			console.log $scope.search.date
-			console.log $scope.search.time
 			$scope.all_data = StatisticsService.countD($scope.dataProps.values)
 
 			$scope.labels = $scope.all_data[0]
