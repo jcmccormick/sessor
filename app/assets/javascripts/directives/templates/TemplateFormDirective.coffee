@@ -6,7 +6,7 @@ directives.directive('templateFormDirective',[()->
 
 		$scope.setSelectedOptions = (optionSet)->
 			if $scope.form.editing
-				$scope.selectedOptions = optionSet
+				$scope.form.selectedOptions = optionSet
 
 		$scope.countColumns = (columns)->
 			return new Array columns
@@ -28,14 +28,27 @@ directives.directive('templateFormDirective',[()->
 				)
 
 		$scope.saveReport = (temp)->
-			if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test $scope.report.title || $scope.report.title != undefined
-				Flash.create('error', 'Title must begin with a letter and only contain letters and numbers.')
+			errors = ''
+			if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test $scope.report.title
+				errors += '<p>Title must begin with a letter and only contain letters and numbers.</p>'
+			if $scope.myForm.$invalid
+				if $scope.myForm.$error.required
+					required = []
+					$scope.myForm.$error.required.forEach((err)->
+						required.push '<li>- '+err.$name+'</li>'
+					)
+					required = required.filter((item, i, ar)-> return required.indexOf(item) == i ).join('')
+					errors += 'The following fields are required:<ul class="list-unstyled">'+required+'</ul>'
+			if errors != ''
+				errors = '<h3>There are errors with the report!</h3>'+errors
+				Flash.create('error', errors)
 			else
 				$rootScope.$broadcast('clearreports')
 				$scope.report.values_attributes = $scope.report.values
 				$scope.report.$update({class: 'reports', id: $scope.report.id}, (res)->
-					if !temp
+					if temp != true
 						$location.path("/reports/#{$scope.report.id}")
+					Flash.create('success', 'Report saved!')
 				)
 
 		$scope.deleteReport = ->

@@ -1,22 +1,22 @@
-<form name="myForm" id="myForm" class="form">
+<form novalidate name="myForm" id="myForm" class="form">
 
   <nav ng-if="report.livesave" id="page-menu" class="navbar navbar-inverse">
     <div class="navbar-header">
       <ul class="nav navbar-left top-nav">
         <li class="dropdown">
-          <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-inbox"></i> &nbsp; Reports <b class="caret"></b></a>
+          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-inbox"></i> &nbsp; Reports <b class="caret"></b></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#/reports/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
-            <li ng-if="report.id"><a href ng-click="saveReport()" ng-disabled="myForm.$invalid"><i class="glyphicon glyphicon-save"></i> &nbsp; Save/Finish</a></li>
+            <li ng-if="report.id"><a href="javascript:;" ng-click="saveReport(false)"><i class="glyphicon glyphicon-save"></i> &nbsp; Save/Finish</a></li>
             <li><a href="#/reports"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
             <li class="divider"></li>
-            <li><a href ng-bootbox-confirm="<center><h4>Are you sure you want to delete this report?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="deleteReport()"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
+            <li><a href="javascript:;" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this report?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="deleteReport()"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
           </ul>
         </li>
-        <li ng-if="report.id"><a href ng-click="saveReport('temp')" ng-disabled="myForm.$invalid"><i class="glyphicon glyphicon-floppy-disk"></i> &nbsp; Save</a></li>
+        <li ng-if="report.id"><a href="javascript:;" ng-click="saveReport(true)"><i class="glyphicon glyphicon-floppy-disk"></i> &nbsp; Save</a></li>
         <li><a href data-toggle="modal" data-target=".addTemplateModal"><i class="glyphicon glyphicon-plus"></i> &nbsp; Page</a></li>
         <li class="dropdown" ng-if="report.id">
-          <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> &nbsp; Options <b class="caret"></b></a>
+          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> &nbsp; Options <b class="caret"></b></a>
           <ul class="dropdown-menu" role="menu">
             <li><span>Page</span></li>
             <li><span><label><input ng-model="report.allow_title" type="checkbox"> Add Title</label></span></li>
@@ -29,7 +29,7 @@
 
 
   <div class="container-fluid">
-    <div class="col-xs-12" ng-class="{'col-md-9':selectedOptions}">
+    <div class="col-xs-12" ng-class="{'col-md-9':form.selectedOptions}">
 
       <ol ng-if="report.templates" ng-init="setTemplate(report.templates[0])" class="breadcrumb edit-report-crumbs text-center row">
         <li ng-repeat="template in report.templates"><a href="javascript:;" ng-click="setTemplate(template)">{{template.name}}</a></li>
@@ -54,7 +54,7 @@
           <div class="col-xs-12" ng-class="{'col-md-6':form.columns[section_id] == 2, 'col-md-4':form.columns[section_id] == 3}" ng-repeat="column in countColumns(form.columns[section_id]) track by $index">
             
             <div ng-click="setSelectedOptions(field)" ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section_id+1}">
-              <template-field-directive field="field" editing="form.editing"></template-field-directive>
+              <template-field-directive field="field" template="form" editing="form.editing"></template-field-directive>
             </div>
           </div>
 
@@ -71,31 +71,34 @@
      <button type="button" class="btn btn-danger h1" data-toggle="collapse" data-target="#sec{{section_id+1}}col{{$parent.$index+1}}field{{field.id}}" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this field?</h4></center>" ng-bootbox-confirm-action="deleteField(column, field)">Delete Field</button>
 
     -->
-    <div ng-if="selectedOptions && !report" class="template-options">
-      <nav ng-if="selectedOptions.fieldtype" class="navbar-inverse">
+    <div ng-if="form.selectedOptions && !report" class="template-options">
+      <nav ng-if="form.selectedOptions.fieldtype" class="navbar-inverse">
         <ul class="nav">
           <li class="navbar-text">
             <h4>Field Settings<small>
             <p><a href="javascript:;" class="btn btn-link" ng-click="setSelectedOptions(undefined)">Done</a></p>
-              <p>{{selectedOptions.fieldtype | uppercase}}</p>
+              <p>{{form.selectedOptions.fieldtype | uppercase}}</p>
             </small></h4>
-            <p>Field Title<input type="text" class="form-control" ng-model="selectedOptions.name"></p>
+            <p>Field Title<input type="text" class="form-control" ng-model="form.selectedOptions.name"></p>
             <div>
-              <p>Default Value<input ng-show="selectedOptions.fieldtype != 'checkbox'" type="text" class="form-control" ng-model="selectedOptions.values[0].input"><input ng-show="selectedOptions.fieldtype == 'checkbox'" type="checkbox" class="form-control" ng-model="selectedOptions.values[0].input"></p>
+              <p>Default Value
+                <input ng-show="form.selectedOptions.fieldtype != 'checkbox'" type="text" class="form-control" ng-model="form.selectedOptions.values[0].input">
+                <input ng-show="form.selectedOptions.fieldtype == 'checkbox'" type="checkbox" class="form-control" ng-model="form.selectedOptions.values[0].input">
+              </p>
             </div>
-            <p><input type="checkbox" ng-model="selectedOptions.required"/> Required?</p>
-            <p><input type="checkbox" ng-model="selectedOptions.disabled"/> Disabled?</p>
+            <p><input type="checkbox" ng-model="form.selectedOptions.required"/> Required</p>
+            <p><input type="checkbox" ng-model="form.selectedOptions.disabled"/> Disabled</p>
           </li>
         </ul>
-        <ul class="nav" ng-show="selectedOptions.fieldtype == 'dropdown' || selectedOptions.fieldtype == 'radio'">
+        <ul class="nav" ng-show="form.selectedOptions.fieldtype == 'dropdown' || form.selectedOptions.fieldtype == 'radio'">
           <li class="navbar-text">
             <h4>Field Options<small>
-              <p><a href="javascript:;" class="btn btn-link" ng-click="form.addOption(selectedOptions)">Add</a></p>
+              <p><a href="javascript:;" class="btn btn-link" ng-click="form.addOption(form.selectedOptions)">Add</a></p>
             </small></h4>
-            <div class="input-group" ng-repeat="option in selectedOptions.options">
+            <div class="input-group" ng-repeat="option in form.selectedOptions.options">
               <input type="text" class="form-control" ng-model="option.name">
               <span class="input-group-btn">
-                <a href="javascript:;" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this option?</h4></center>" ng-bootbox-confirm-action="form.deleteOption(selectedOptions, option)">
+                <a href="javascript:;" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this option?</h4></center>" ng-bootbox-confirm-action="form.deleteOption(form.selectedOptions, option)">
                   <i class="glyphicon glyphicon-remove"></i>
                 </a>
               </span>

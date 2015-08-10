@@ -3,7 +3,7 @@
  * Last Updated: 7-25-15
  */
 
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
 
 /*
  * Mixin Settings
@@ -101,8 +101,9 @@ button.close {
  */
 
 .flash-alerts {
-  background-color: #FFBFBF;
-  border-radius: 5px;
+  position: fixed !important;
+  z-index: 3 !important;
+  margin-top:20px !important;
 
   span[dynamic="flash.text"] {
     padding: 10px 0 0;
@@ -111,13 +112,18 @@ button.close {
 
   button.close {
     position: absolute !important;
-    top: 5px !important;
-    right: 5px !important;
+    top: 10px !important;
+    right: 20px !important;
     -webkit-appearance: none;
     padding: 0;
     cursor: pointer;
     background: transparent;
     border: 0;
+  }
+
+  .alert-error {
+    background-color: #FFBFBF;
+    border-radius: 5px;
   }
 }
 
@@ -238,11 +244,18 @@ template-form-directive .form-group {
   outline: 2px dashed #aaa;
   border: 5px;
   z-index: 2;
-  background:rgba(0,0,0,.2);
+  background:rgba(0,0,0,.1);
   cursor: alias;
   opacity:0;
   -webkit-transition: opacity .25s ease;
   -moz-transition: opacity .25s ease;
+
+  .close {
+    color: red !important;
+    margin: 3px;
+    z-index: 10;
+    opacity: .64;
+  }
 
   &:hover {
     opacity: 1;
