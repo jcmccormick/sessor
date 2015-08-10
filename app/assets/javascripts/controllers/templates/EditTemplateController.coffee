@@ -9,13 +9,12 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$rout
 			$scope.template = res
 			$scope.template.hideName = false
 			$scope.template.editing = true
-			$scope.template.sectionTypes = TemplateService.sections
-			$scope.template.columnTypes = TemplateService.columns
 			$scope.template.fieldTypes = TemplateService.fields
 
-			# These actions are defined once the template resolves
-			# in order to use the functions in template-form-directive
+			# These functions are defined once the template resolves
+			# in order to use the them in template-form-directive
 
+			# set the field type used when adding a field
 			$scope.template.setFieldType = (type)->
 				$scope.newFieldType = type
 				return
@@ -27,7 +26,7 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$rout
 			# save/update template
 			$scope.template.saveTemplate = (temp)->
 				if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test $scope.template.name
-					Flash.create('error', 'Title must begin with a letter and only contain letters and numbers.')
+					Flash.create('danger', 'Title must begin with a letter and only contain letters and numbers.')
 				else
 					$rootScope.$broadcast('cleartemplates')
 					tempCopy = new ClassFactory()
@@ -124,7 +123,7 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$rout
 		$scope.template.hideName = false
 		$scope.template.saveTemplate = ->
 			if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test $scope.template.name
-				Flash.create('error', '<p>Title must begin with a letter and only contain letters and numbers.</p>')
+				Flash.create('danger', '<p>Title must begin with a letter and only contain letters and numbers.</p>')
 			else
 				$scope.template.$save({class: 'templates'}, (res)->	$location.path('templates/'+res.id+'/edit')	)
 

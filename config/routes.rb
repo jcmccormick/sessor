@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       resources :templates, only: [:index, :show, :create, :update, :destroy]
       resources :fields, only: [:index, :show, :create, :update, :destroy]
       resources :options, only: [:show, :create, :update, :destroy]
-      resources :values, only: [:show, :create, :update, :destroy]
+      resources :values, only: [:index, :show, :create, :update, :destroy]
       resources :values_statistics, only: :index
       
       as :admin do

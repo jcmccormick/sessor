@@ -1,85 +1,90 @@
-<h1 class="page-header">Statistics</h1>
+<page-menu>
+	<li><a href="#/statistics">Statistics</a></li>
+</page-menu>
 
-<h4>Template</h4>
-<p class="input-group">
-	<select class="form-control" ng-model="search.template" ng-options="template.name for template in dataProps.templates"></select>
-	<span class="input-group-btn">
-		<a href class="btn btn-primary stats-button" ng-click="listFields(search.template)">Select</a>
-	</span>
-</p>
+<div class="paper">
+	<h4>Template</h4>
+	<p class="input-group">
+		<select class="form-control" ng-model="search.template" ng-options="template.name for template in dataProps.templates"></select>
+		<span class="input-group-btn">
+			<a href class="btn btn-primary stats-button" ng-click="listFields(search.template)">Select</a>
+		</span>
+	</p>
 
-<div role="tablist" class="panel-group" id="statistics-search-accordion">
-	<div class="panel panel-info">
+	<div role="tablist" class="panel-group" id="statistics-search-accordion">
+		<div class="panel panel-info">
 
-		<!-- BEGIN SECTION HEADER -->
-		<div class="panel-heading statistics-search-header"
-		data-toggle="collapse" 
-		data-target="#statistics-search" 
-		data-parent="#statistics-search-accordion" 
-		aria-controls="statistics-search"
-		id="statistics-search-accordion-header">
-			<h4 class="panel-title">
-				Search Options
-			</h4>
-		</div>
-		<!-- END SECTION HEADER -->
+			<!-- BEGIN SECTION HEADER -->
+			<div class="panel-heading statistics-search-header"
+			data-toggle="collapse" 
+			data-target="#statistics-search" 
+			data-parent="#statistics-search-accordion" 
+			aria-controls="statistics-search"
+			id="statistics-search-accordion-header">
+				<h4 class="panel-title">
+					Search Options
+				</h4>
+			</div>
+			<!-- END SECTION HEADER -->
 
 
-		<!-- BEGIN SECTION INFO PANEL -->
-		<div role="tabpanel" id="statistics-search" class="panel-collapse collapse" aria-labelledby="statistics-search-tab">
-			<div class="panel-body">
-				<form class="form-search" ng-init="dateSearch = false; timeSearch = false">
-					<h4>Field</h4>
-					<div class="input-group">
-						<select class="form-control" ng-model="search.field" ng-options="field.name for field in dataProps.fields"></select>
-						<span class="input-group-btn">
-							<a href class="btn btn-primary stats-button" ng-click="showData(search.field)">Select</a>
-						</span>
-					</div>
-					<p>
-						<a href ng-click="dateSearch=!dateSearch">Date</a> - <a href ng-click="timeSearch=!timeSearch">Time</a> 
-					</p>
-					<div ng-show="dateSearch" class="col-xs-6">
-						<div class="grid-column">
-							<h4>Start Date</h4>
-							<input type="date" class="form-control" ng-model="search.date.startDate">
+			<!-- BEGIN SECTION INFO PANEL -->
+			<div role="tabpanel" id="statistics-search" class="panel-collapse collapse" aria-labelledby="statistics-search-tab">
+				<div class="panel-body">
+					<form class="form-search" ng-init="dateSearch = false; timeSearch = false">
+						<h4>Field</h4>
+						<div class="input-group">
+							<select class="form-control" ng-model="search.field" ng-options="field.name for field in dataProps.fields"></select>
+							<span class="input-group-btn">
+								<a href class="btn btn-primary stats-button" ng-click="showData(search.field)">Select</a>
+							</span>
 						</div>
-						<div class="grid-column">
-							<h4>End Date</h4>
-							<input type="date" class="form-control" ng-model="search.date.endDate">
+						<p>
+							<a href ng-click="dateSearch=!dateSearch">Date</a> - <a href ng-click="timeSearch=!timeSearch">Time</a> 
+						</p>
+						<div ng-show="dateSearch" class="col-xs-6">
+							<div class="grid-column">
+								<h4>Start Date</h4>
+								<input type="date" class="form-control" ng-model="search.date.startDate">
+							</div>
+							<div class="grid-column">
+								<h4>End Date</h4>
+								<input type="date" class="form-control" ng-model="search.date.endDate">
+							</div>
+						</div> 
+						<div ng-show="timeSearch" class="col-xs-6">
+							<div class="grid-column">
+								<h4>Start Time</h4>
+								<input type="time" class="form-control" ng-model="search.time.startTime">
+							</div>
+							<div class="grid-column">
+								<h4>End Time</h4>
+								<input type="time" class="form-control" ng-model="search.time.endTime">
+							</div>
 						</div>
-					</div> 
-					<div ng-show="timeSearch" class="col-xs-6">
-						<div class="grid-column">
-							<h4>Start Time</h4>
-							<input type="time" class="form-control" ng-model="search.time.startTime">
-						</div>
-						<div class="grid-column">
-							<h4>End Time</h4>
-							<input type="time" class="form-control" ng-model="search.time.endTime">
-						</div>
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
-
-<div ng-show="data" class="lead">
-	<h4>Graph Type</h4>
-	<div class="btn-group btn-group-justified">
-		<a href class="btn btn-success" ng-click="graphType(graphtype)" ng-repeat="graphtype in ['pie','doughnut','polar-area','line','bar','radar']">{{graphtype}}</a>
+<div class="paper">
+	<div ng-show="data" class="lead">
+		<h4>Graph Type</h4>
+		<div class="btn-group btn-group-justified">
+			<a href class="btn btn-success" ng-click="graphType(graphtype)" ng-repeat="graphtype in ['pie','doughnut','polar-area','line','bar','radar']">{{graphtype}}</a>
+		</div>
 	</div>
-</div>
 
-<div ng-show="needLegend" class="col-md-2">
-	<canvas class="chart chart-pie hide col-md-2 pull-left" data="pie" labels="labels" legend="true">
-</div>
-<canvas ng-show="graphtype == 'pie'" id="pie" class="chart chart-pie" data="pie" labels="labels"></canvas>
-<canvas ng-show="graphtype == 'doughnut'" id="doughnut" class="chart chart-doughnut" data="pie" labels="labels"></canvas>
-<canvas ng-show="graphtype == 'polar-area'" id="polar-area" class="chart chart-polar-area" data="pie" labels="labels"></canvas>
+	<div ng-show="needLegend" class="col-md-2">
+		<canvas class="chart chart-pie hide col-md-2 pull-left" data="pie" labels="labels" legend="true">
+	</div>
+	<canvas ng-show="graphtype == 'pie'" id="pie" class="chart chart-pie" data="pie" labels="labels"></canvas>
+	<canvas ng-show="graphtype == 'doughnut'" id="doughnut" class="chart chart-doughnut" data="pie" labels="labels"></canvas>
+	<canvas ng-show="graphtype == 'polar-area'" id="polar-area" class="chart chart-polar-area" data="pie" labels="labels"></canvas>
 
-<canvas ng-show="graphtype == 'line'" id="line" class="chart chart-line" data="line" labels="labels"></canvas>
-<canvas ng-show="graphtype == 'bar'" id="bar" class="chart chart-bar" data="line" labels="labels"></canvas>
-<canvas ng-show="graphtype == 'radar'" id="radar" class="chart chart-radar" data="line" labels="labels"></canvas>
+	<canvas ng-show="graphtype == 'line'" id="line" class="chart chart-line" data="line" labels="labels"></canvas>
+	<canvas ng-show="graphtype == 'bar'" id="bar" class="chart chart-bar" data="line" labels="labels"></canvas>
+	<canvas ng-show="graphtype == 'radar'" id="radar" class="chart chart-radar" data="line" labels="labels"></canvas>
+</div>

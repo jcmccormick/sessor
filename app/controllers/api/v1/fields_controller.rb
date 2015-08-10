@@ -6,7 +6,9 @@ module Api::V1 #:nodoc:
     wrap_parameters include: Field.attribute_names + nested_attributes_names
     
     def index
-      @fields = Field.where(:template_id => params[:template_id])
+      @fields = if params.has_key?(:stats)
+        current_user.fields.where(:template_id => params[:template_id]).as_json(only: [:id, :name])
+      end
     end
 
     def show
@@ -33,7 +35,7 @@ module Api::V1 #:nodoc:
 
     private
       def allowed_params
-        params.require(:field).permit(:section_id, :column_id, :name, :fieldtype, :value, :required, :disabled, :glyphicon)
+        params.require(:field).permit(:section_id, :column_id, :name, :fieldtype, :required, :disabled, :glyphicon)
       end
   end
 end

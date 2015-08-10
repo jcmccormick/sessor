@@ -138,6 +138,7 @@ nav input[type='text'] {
 
 @media(min-width:768px) {
     .side-nav {
+        z-index: 2;
         position: fixed;
         top: 51px;
         left: 0;

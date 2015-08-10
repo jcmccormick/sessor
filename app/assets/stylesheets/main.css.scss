@@ -97,33 +97,32 @@ button.close {
 }
 
 /*
- * Flash Error Messages
+ * Flash Messages
  */
 
-.flash-alerts {
+.alert {
+  width: 80%;
+  margin-left: 10%;
   position: fixed !important;
-  z-index: 3 !important;
-  margin-top:20px !important;
+  z-index: 1031;
+  font-size: 18px;
 
-  span[dynamic="flash.text"] {
-    padding: 10px 0 0;
-    font-size: 16px;
+  &[class*="alert-"]:before {
+    font-weight: bold;
+    font-size: 26px;
   }
 
-  button.close {
-    position: absolute !important;
-    top: 10px !important;
-    right: 20px !important;
-    -webkit-appearance: none;
-    padding: 0;
-    cursor: pointer;
-    background: transparent;
-    border: 0;
+  &.alert-danger:before {
+    content: "Something went wrong...";
   }
 
-  .alert-error {
-    background-color: #FFBFBF;
-    border-radius: 5px;
+  &.alert-success:before {
+    content: "Everything worked out after all...";
+  }
+
+  span[dynamic="flash.text"]:before {
+    content: "\a\a";
+    white-space: pre;
   }
 }
 
@@ -168,6 +167,12 @@ button.close {
     padding: 35px 45px;
   }
 }
+.paper-width {
+  @include respond(desktop) {
+    width: 100% !important;
+    padding-right: 245px !important;
+  }
+}
 
 /*
  * Page Design
@@ -181,6 +186,7 @@ button.close {
   bottom: 0;
   right: 0;
   width: 225px;
+  padding: 15px;
   overflow-y: auto;
   -webkit-box-shadow: 5px 10px 25px 2px rgba(0, 0, 0, 1);
   -moz-box-shadow: 5px 10px 25px 2px rgba(0, 0, 0, 1);
@@ -189,6 +195,7 @@ button.close {
 
   @include respond(tablet){
     z-index: 6;
+    padding: 0;
   }
 
   

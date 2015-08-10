@@ -43,7 +43,7 @@ directives.directive('templateFieldDirective', ['$route', '$compile', '$location
       </select>'
 
     radio = '<div ng-repeat="option in field.options"><label>
-        <input type="radio" ng-model="field.values[0].input" ng-value="option.name" ng-required="field.required" ng-disabled="field.disabled">
+        <input type="radio" name="{{field.name}}" ng-model="field.values[0].input" ng-value="option.name" ng-required="field.required" ng-disabled="field.disabled">
         &nbsp;{{option.name}}</label>
       </div>
       <h4 class="text-center" ng-if="field.options.length<1">Click to add options.</h4>'

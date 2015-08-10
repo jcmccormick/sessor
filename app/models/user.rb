@@ -11,6 +11,12 @@ class User < ActiveRecord::Base
   # Relate to Reports.
   has_and_belongs_to_many :reports
 
+  # Relate to Fields
+  has_many :fields, through: :reports
+
+  # Relate to Values
+  has_many :values, through: :reports
+
   # Before saving set UID to a Universial Unique ID, and skip e-mail confirmation.
   before_save -> do
     self.uid = SecureRandom.uuid

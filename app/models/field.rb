@@ -16,5 +16,4 @@ class Field < ActiveRecord::Base
 
 	# Saving a Field saves its associated Options.
 	accepts_nested_attributes_for :options
-	
 end

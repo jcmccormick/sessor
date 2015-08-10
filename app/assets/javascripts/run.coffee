@@ -18,7 +18,7 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash', 'Sess
 
   $rootScope.$on('auth:invalid', ->
     error = "Looks like there was an error validating your credentials. Please try logging in again or contact support if problems continue. Make sure cookies and Javascript are enabled in your browser options."
-    Flash.create('error', error)
+    Flash.create('danger', error)
     $location.path('/')
     return
   )

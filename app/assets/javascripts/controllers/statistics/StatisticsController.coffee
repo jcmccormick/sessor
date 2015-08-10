@@ -5,11 +5,16 @@ controllers.controller("StatisticsController",  ['$scope', 'ClassFactory', 'Temp
 	$scope.dataProps = []
 	$scope.dataProps.templates = []
 	$scope.dataProps.fields = []
+	$scope.dataProps.values = []
 
 	$scope.search = []
 	$scope.search.key = 'name'
 	$scope.search.date = {}
 	$scope.search.time = {}
+
+	$scope.labels = []
+	$scope.pie = []
+	$scope.line = []
 
 
 	$scope.graphtype = 'pie'
@@ -24,33 +29,32 @@ controllers.controller("StatisticsController",  ['$scope', 'ClassFactory', 'Temp
 
 	#Take Search Selections and Parse
 	$scope.listFields = (template)->
-		$scope.dataProps.fields = template.fields
+		ClassFactory.query({class: 'fields', template_id: template.id, stats: true}, (res)->
+			$scope.dataProps.fields = res
+		)
 
 	$scope.showData = (field)->
-		$scope.labels = []
-		$scope.pie = []
-		$scope.line = []
-		$scope.dataProps.values = []
-		for value in field.values
-			time_test = new Date(value.updated_at)
-			if value.input 
-				if !(time_test < $scope.search.date.startDate && time_test > $scope.search.date.endDate)
-					if !(time_test < $scope.search.time.startTime && time_test > $scope.search.date.endTime)
-						$scope.dataProps.values.push value.input
-		console.log $scope.dataProps.values[0]
-		console.log $scope.search.date
-		console.log $scope.search.time
-		$scope.all_data = StatisticsService.countD($scope.dataProps.values)
+		ClassFactory.query({class: 'values', field_id: field.id, stats: true}, (res)->
+			res.forEach((value)->
+				console.log value
+				$scope.dataProps.values.push value.input
+			)
+			console.log field
+			console.log $scope.dataProps.values[0]
+			console.log $scope.search.date
+			console.log $scope.search.time
+			$scope.all_data = StatisticsService.countD($scope.dataProps.values)
 
-		$scope.labels = $scope.all_data[0]
+			$scope.labels = $scope.all_data[0]
 
-		$scope.pie = $scope.all_data[1]
-		$scope.line.push $scope.all_data[1]
-		if $.inArray($scope.graphtype, ['pie', 'doughnut', 'polar-area'])
-			$scope.data = $scope.all_data[1]
-		else
-			$scope.data = []
-			$scope.data.push $scope.all_data[1]
+			$scope.pie = $scope.all_data[1]
+			$scope.line.push $scope.all_data[1]
+			if $.inArray($scope.graphtype, ['pie', 'doughnut', 'polar-area'])
+				$scope.data = $scope.all_data[1]
+			else
+				$scope.data = []
+				$scope.data.push $scope.all_data[1]
+		)
 
 	$scope.graphType = (graphtype)->
 		$scope.graphtype = graphtype

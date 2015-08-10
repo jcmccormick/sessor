@@ -1,5 +1,13 @@
 module Api::V1 #:nodoc:
-  class ValuesController < ApiController    
+  class ValuesController < ApiController
+
+    def index
+      if params.has_key?(:stats)
+        values = current_user.values.where(:field_id => params[:field_id]).as_json(only: :input)
+        render json: values
+      end
+    end
+
     def show
     end
 

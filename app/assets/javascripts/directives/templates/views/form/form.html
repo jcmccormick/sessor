@@ -29,7 +29,7 @@
 
 
   <div class="container-fluid">
-    <div class="col-xs-12" ng-class="{'col-md-9':form.selectedOptions}">
+    <div class="col-xs-12" ng-class="{'paper-width':form.selectedOptions}">
 
       <ol ng-if="report.templates" ng-init="setTemplate(report.templates[0])" class="breadcrumb edit-report-crumbs text-center row">
         <li ng-repeat="template in report.templates"><a href="javascript:;" ng-click="setTemplate(template)">{{template.name}}</a></li>
@@ -87,7 +87,7 @@
               </p>
             </div>
             <p><input type="checkbox" ng-model="form.selectedOptions.required"/> Required</p>
-            <p><input type="checkbox" ng-model="form.selectedOptions.disabled"/> Disabled</p>
+            <p><input type="checkbox" ng-model="form.selectedOptions.disabled"/> Disabled?</p>
           </li>
         </ul>
         <ul class="nav" ng-show="form.selectedOptions.fieldtype == 'dropdown' || form.selectedOptions.fieldtype == 'radio'">
@@ -115,7 +115,7 @@
 
 
 <!-- BEGIN PREVIEW MODAL -->
-<div class="modal fade addTemplateModal" tabindex="-1" role="dialog" aria-labelledby="previewModal" aria-hidden="true" ng-if="report.livesave">
+<div ng-if="report.livesave" class="modal fade addTemplateModal" tabindex="-1" role="dialog" aria-labelledby="previewModal" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <form class="modal-content">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

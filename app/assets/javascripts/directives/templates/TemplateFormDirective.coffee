@@ -33,22 +33,21 @@ directives.directive('templateFormDirective',[()->
 				errors += '<p>Title must begin with a letter and only contain letters and numbers.</p>'
 			if $scope.myForm.$invalid
 				if $scope.myForm.$error.required
+					console.log $scope.myForm.$error
 					required = []
 					$scope.myForm.$error.required.forEach((err)->
 						required.push '<li>- '+err.$name+'</li>'
 					)
 					required = required.filter((item, i, ar)-> return required.indexOf(item) == i ).join('')
 					errors += 'The following fields are required:<ul class="list-unstyled">'+required+'</ul>'
-			if errors != ''
-				errors = '<h3>There are errors with the report!</h3>'+errors
-				Flash.create('error', errors)
+			if errors != '' then Flash.create('danger', errors)
 			else
 				$rootScope.$broadcast('clearreports')
 				$scope.report.values_attributes = $scope.report.values
 				$scope.report.$update({class: 'reports', id: $scope.report.id}, (res)->
 					if temp != true
 						$location.path("/reports/#{$scope.report.id}")
-					Flash.create('success', 'Report saved!')
+					Flash.create('success', '<h3>Report saved!</h3>')
 				)
 
 		$scope.deleteReport = ->
