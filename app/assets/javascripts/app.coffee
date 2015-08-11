@@ -3,7 +3,6 @@ sessor = angular.module('sessor', [
   'ngRoute',
   'ngResource',
   'ngAnimate',
-  'LocalStorageModule',
   'ng-token-auth',
   'ngBootbox',
   'ipCookie',
@@ -17,10 +16,8 @@ sessor = angular.module('sessor', [
   'services'
 ])
 
-sessor.config(['$authProvider', '$routeProvider', 'localStorageServiceProvider',
-  ($authProvider, $routeProvider, localStorageServiceProvider)->
-      localStorageServiceProvider.setPrefix('sesso_')
-
+sessor.config(['$authProvider', '$routeProvider',
+  ($authProvider, $routeProvider)->
       $authProvider.configure(
         apiUrl: ""
       )
@@ -102,7 +99,3 @@ controllers = angular.module('controllers',[])
 factories   = angular.module('factories',[])
 directives  = angular.module('directives',[])
 services    = angular.module('services',[])
-
-sessor.factory("SessorCache", ['$cacheFactory', ($cacheFactory)-> 
-  return $cacheFactory('sessorCache')
-])

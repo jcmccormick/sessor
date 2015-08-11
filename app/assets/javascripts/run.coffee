@@ -1,8 +1,12 @@
 sessor = angular.module("sessor")
-sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash', 'SessorCache',
-($rootScope, $location, $cacheFactory, $http, Flash, SessorCache) ->
+sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash',
+($rootScope, $location, $cacheFactory, $http, Flash) ->
 
   $httpDefaultCache = $cacheFactory.get('$http')
+
+  $rootScope.handleSignOut = ->
+    $location.path('/')
+    $rootScope.signOut()
 
   $rootScope.$on('auth:login-success', ->
     $location.path('/desktop/')
