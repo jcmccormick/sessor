@@ -40,7 +40,7 @@
         <input type="text" class="form-control" ng-model="form.name" placeholder="Start with a name then press Save..."/>
       </div>
 
-      <div ng-if="report.hideTitle==false && report.allow_title==true" class="paper row">
+      <div ng-if="(report.hideTitle==false || report.viewing == true) && report.allow_title==true" class="paper row">
         <h3>Report Title</h3>
         <input class="form-control" type="text" ng-model="report.title">
       </div>

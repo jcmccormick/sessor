@@ -38,7 +38,7 @@ class Report < ActiveRecord::Base
   # Use a method to get as little information as needed when showing a single report. Usable on Array.
   def show_minned
     as_json(
-      only: [:id, :title], 
+      only: [:id, :title, :allow_title], 
       include: [
         {values: {
           only: [:id, :field_id, :input]
