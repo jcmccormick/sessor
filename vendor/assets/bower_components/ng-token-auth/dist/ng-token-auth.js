@@ -27,7 +27,7 @@ angular.module('ng-token-auth', ['ipCookie']).provider('$auth', function() {
       proxyUrl: '/proxy',
       validateOnPageLoad: true,
       forceHardRedirect: false,
-      storage: 'localStorage',
+      storage: 'cookies',
       tokenFormat: {
         "access-token": "{{ token }}",
         "token-type": "Bearer",
@@ -501,7 +501,6 @@ angular.module('ng-token-auth', ['ipCookie']).provider('$auth', function() {
               var expiry;
               switch (this.getConfig(configName).storage) {
                 case 'localStorage':
-                  console.log($window.localStorage);
                   return $window.localStorage.setItem(key, JSON.stringify(val));
                 default:
                   expiry = this.getConfig().parseExpiry(val || {});
@@ -520,7 +519,6 @@ angular.module('ng-token-auth', ['ipCookie']).provider('$auth', function() {
               }
             },
             deleteData: function(key) {
-              console.log(key);
               switch (this.getConfig().storage) {
                 case 'localStorage':
                   return $window.localStorage.removeItem(key);

@@ -23,7 +23,6 @@ gem 'angular-rails-templates'
 gem "foreman"
 gem 'devise_token_auth'
 gem 'omniauth'
-gem 'activerecord-session_store'
 gem 'clean_pagination'
 gem 'deep_cloneable', '~> 2.1.1'
 group :production, :staging do
