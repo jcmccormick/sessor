@@ -5,7 +5,7 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash',
   $httpDefaultCache = $cacheFactory.get('$http')
 
   $rootScope.handleSignOut = ->
-    $location.path('/')
+    $location.path('/desktop')
     $rootScope.signOut()
 
   $rootScope.$on('auth:login-success', ->
