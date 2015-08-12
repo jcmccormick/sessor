@@ -1,23 +1,20 @@
 controllers = angular.module('controllers')
-controllers.controller("EditReportController", ['$rootScope', '$auth', '$scope', '$routeParams', '$location', 'ClassFactory',
-($rootScope, $auth, $scope, $routeParams, $location, ClassFactory)->
-	
-	$scope.report = new ClassFactory()
-	$scope.report.livesave = true
-	$scope.report.hideTitle = false
-	$scope.report.template_ids = []
-	
-	if $routeParams.reportId
-		ClassFactory.get({class: 'reports', id: $routeParams.reportId, edit: true}, (res)->
-			jQuery.extend $scope.report, res
+controllers.controller("EditReportController", ['$routeParams', 'ReportsService',
+($routeParams, ReportsService)->
+	vm = this
 
-			$scope.report.templates.forEach((template)->
-				$scope.report.template_ids.push template.id
-				template.fields.forEach((field)->
-					field.values = $scope.report.values.filter((obj)->
-						return obj.field_id == field.id
-					)
-				)
-			)
+	if $routeParams.reportId
+		ReportsService.getReport($routeParams.reportId).then((res)->
+			vm.report = res
+			vm.report.livesave = true
+			vm.report.hideTitle = false
+			vm.report.saveReport = (temp, myForm, report)->	ReportsService.saveReport(temp, myForm, report)
+			vm.report.deleteReport = (report)->	ReportsService.deleteReport(report)
+			vm.report.getReport = (report)-> ReportsService.getReport(report)
 		)
+	else
+		vm.report = ReportsService.newReport()
+
+	return vm
+
 ])

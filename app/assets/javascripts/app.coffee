@@ -43,6 +43,10 @@ sessor.config(['$authProvider', '$routeProvider',
         templateUrl: "user_sessions/new.html"
         controller: 'UserSessionsController'
       )
+      .when('/sign_out',
+        templateUrl: "user_sessions/destroy.html"
+        resolve: authResolver
+      )
       .when('/desktop',
         templateUrl: "main/desktop.html"
         resolve: authResolver
@@ -55,16 +59,19 @@ sessor.config(['$authProvider', '$routeProvider',
       .when('/reports/new/',
         templateUrl: "reports/edit.html"
         controller: 'EditReportController'
+        controllerAs: 'vm'
         resolve: authResolver
       )
       .when('/reports/:reportId',
         templateUrl: "reports/view.html"
         controller: 'ViewReportController'
+        controllerAs: 'vm'
         resolve: authResolver
       )
       .when('/reports/:reportId/edit'
         templateUrl: "reports/edit.html"
         controller: 'EditReportController'
+        controllerAs: 'vm'
         resolve: authResolver
       ) #                                       TEMPLATES ROUTES #
       .when('/templates',

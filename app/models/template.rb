@@ -35,26 +35,6 @@ class Template < ActiveRecord::Base
 		eager_load(:fields).as_json(only: [:id, :name, :sections, :draft])
 	end
 
-	# Use a method to get as little information as needed when showing a single template. Usable on Array.
-	def show_minned
-		as_json(
-			only: [:id, :name, :sections, :columns, :private_group, :private_world, :group_id, :group_edit, :group_editors, :draft],
-			include: [ 
-				{fields: {
-					only: [:id, :section_id, :column_id, :name, :fieldtype, :required, :disabled],
-					include: [
-						{options: {
-							only: [:id, :name]
-						}},
-						{values: {
-							only: [:id, :field_id, :input]
-						}}
-					]
-				}}
-			]
-		)
-	end
-
 	# Upon Template creation, set Draft and Private World to true. Setting Private World to true means the Template will be publically available for other Users to search for and add to their own Reports.
 	def set_defaults
 		self.draft = true

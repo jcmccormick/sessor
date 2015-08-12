@@ -28,14 +28,13 @@ module Api::V1 #:nodoc:
     end
 
     def show
-      report = current_user.reports.find(params[:id])
-      render json: report.show_minned
+      @report = current_user.reports.find(params[:id])
     end
 
     def create
-      template = current_user.templates.find(params[:template_ids])
+      templates = current_user.templates.find(params[:template_ids])
       @report = current_user.reports.new(allowed_params)
-      @report.templates << template
+      @report.templates << templates
       @report.save
       current_user.reports << @report
       render 'show', status: 201

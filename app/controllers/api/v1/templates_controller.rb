@@ -38,8 +38,7 @@ module Api::V1#:nodoc:
     end
 
     def show
-      template = current_user.templates.find(params[:id])
-      render json: template.show_minned
+      @template = current_user.templates.find(params[:id])
     end
 
     def create

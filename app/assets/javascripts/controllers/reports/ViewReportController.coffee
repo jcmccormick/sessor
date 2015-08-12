@@ -1,15 +1,12 @@
 controllers = angular.module('controllers')
-controllers.controller('ViewReportController', ['$scope', '$routeParams', 'ClassFactory',
-($scope, $routeParams, ClassFactory)->
-	ClassFactory.get({class: 'reports', id: $routeParams.reportId}, (res)->
-		$scope.report = res
-		$scope.report.viewing = true
-		$scope.report.templates.forEach((template)->
-			template.fields.forEach((field)->
-				field.values = $scope.report.values.filter((obj)->
-					return obj.field_id == field.id
-				)
-			)
-		)
+controllers.controller('ViewReportController', ['$routeParams', 'ReportsService',
+($routeParams, ReportsService)->
+	vm = this
+	
+	ReportsService.getReport($routeParams.reportId).then((res)->
+		vm.report = res
+		vm.report.viewing = true
 	)
+
+	return vm
 ])

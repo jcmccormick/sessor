@@ -14,7 +14,7 @@
 # * Has many Values.
 # * Saving a Report saves its associated Values.
 # * Report title must start with a letter and only contain letters and numbers.
-# * Holds a scope that assures the loading of all Template associations in a single DB call. Use `Reports.minned`.
+# * Holds a scope that assures the least amount of data needed to index. Use `current_user.reports.index_minned`.
 # * New Reports check for Values associated with the Template.fields and create Values tied to the Report.
 # * Updated Reports check for new Values associated with new Template.fields and create Values tied to the Report.
 
@@ -32,32 +32,7 @@ class Report < ActiveRecord::Base
 
   # Use a method to get as little information as needed when viewing all reports. Usable on ActiveRecord Relation.
   def self.index_minned
-    includes(:templates).as_json(only: [:id, :title], include: [{users: {only: :uid}},{templates: {only: :name}}])
-  end
-
-  # Use a method to get as little information as needed when showing a single report. Usable on Array.
-  def show_minned
-    as_json(
-      only: [:id, :title, :allow_title], 
-      include: [
-        {values: {
-          only: [:id, :field_id, :input]
-        }},
-        {templates: {
-          only: [:id, :name, :sections, :columns],
-          include: [ 
-            {fields: {
-              only: [:id, :section_id, :column_id, :name, :fieldtype, :required, :disabled],
-              include: [
-                {options: {
-                  only: [:id, :name]
-                }}
-              ]
-            }}
-          ]
-        }}
-      ]
-    )
+    includes(:templates).as_json(only: [:id, :title], include: {templates: {only: :name}})
   end
 
   # Populate the Values of the Fields associated with the Report.

@@ -96,6 +96,7 @@ directives.directive('templateFieldDirective', ['$route', '$compile', '$location
     template: '<div>{{field}}</div>'
     restrict: 'E'
     scope:
+      myForm: '='
       template: '='
       field: '='
       editing: '='

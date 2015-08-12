@@ -3,10 +3,10 @@
     <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-inbox"></i> &nbsp; Reports <b class="caret"></b></a>
     <ul class="dropdown-menu">
       <li><a href="#/reports/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
-      <li><a href="#/reports/{{report.id}}/edit"><i class="glyphicon glyphicon-pencil"></i> &nbsp; Edit</a></li>
+      <li><a href="#/reports/{{vm.report.id}}/edit"><i class="glyphicon glyphicon-pencil"></i> &nbsp; Edit</a></li>
       <li><a href="#/reports"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
     </ul>
   </li>
 </page-menu>
 
-<template-form-directive report="report"></template-form-directive>
+<template-form-directive report="vm.report"></template-form-directive>
