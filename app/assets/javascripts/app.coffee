@@ -59,19 +59,19 @@ sessor.config(['$authProvider', '$routeProvider',
       .when('/reports/new/',
         templateUrl: "reports/edit.html"
         controller: 'EditReportController'
-        controllerAs: 'vm'
+        controllerAs: 'vr'
         resolve: authResolver
       )
       .when('/reports/:reportId',
         templateUrl: "reports/view.html"
         controller: 'ViewReportController'
-        controllerAs: 'vm'
+        controllerAs: 'vr'
         resolve: authResolver
       )
       .when('/reports/:reportId/edit'
         templateUrl: "reports/edit.html"
         controller: 'EditReportController'
-        controllerAs: 'vm'
+        controllerAs: 'vr'
         resolve: authResolver
       ) #                                       TEMPLATES ROUTES #
       .when('/templates',

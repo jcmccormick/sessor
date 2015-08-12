@@ -10,9 +10,9 @@ directives.directive('templateFormDirective',[()->
 	($scope)->
 
 		# Template Designer Features
-		$scope.setSelectedOptions = (optionSet, selectedOptions, editing)->
-			if editing
-				selectedOptions = optionSet
+		$scope.setSelectedOptions = (optionSet, form)->
+			if form.editing
+				form.selectedOptions = optionSet
 
 		$scope.columnsArray = (columns)->
 			new Array columns

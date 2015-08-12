@@ -38,9 +38,11 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 			errors = ''
 			required = ''
 
-			for template in report.templates
-				for field in template.fields
-					if !field.values[0].input? && field.required then required += '<li>'+template.name+': '+field.name+'</li>'
+			if report.templates.length
+				for template in report.templates
+					for field in template.fields
+						if field.required
+							if !field.values[0].input? then required += '<li>'+template.name+': '+field.name+'</li>'
 
 			if !report.title then report.title = 'Untitled'
 			if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test report.title

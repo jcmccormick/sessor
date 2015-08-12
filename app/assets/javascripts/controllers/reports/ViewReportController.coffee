@@ -1,12 +1,12 @@
 controllers = angular.module('controllers')
 controllers.controller('ViewReportController', ['$routeParams', 'ReportsService',
 ($routeParams, ReportsService)->
-	vm = this
+	vr = this
 	
 	ReportsService.getReport($routeParams.reportId).then((res)->
-		vm.report = res
-		vm.report.viewing = true
+		vr.report = res
+		vr.report.viewing = true
 	)
 
-	return vm
+	return vr
 ])

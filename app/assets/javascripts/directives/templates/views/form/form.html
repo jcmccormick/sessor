@@ -53,7 +53,7 @@
           
           <div class="col-xs-12" ng-class="{'col-md-6':form.columns[section_id] == 2, 'col-md-4':form.columns[section_id] == 3}" ng-repeat="column in columnsArray(form.columns[section_id]) track by $index">
             
-            <div ng-click="setSelectedOptions(field)" ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section_id+1}">
+            <div ng-click="setSelectedOptions(field, form)" ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section_id+1}">
               <template-field-directive field="field" template="form" editing="form.editing" myForm="myForm"></template-field-directive>
             </div>
           </div>
@@ -76,7 +76,7 @@
         <ul class="nav">
           <li class="navbar-text">
             <h4>Field Settings<small>
-            <p><a href="javascript:;" class="btn btn-link" ng-click="setSelectedOptions(undefined, form.selectedOptions, form.editing)">Done</a></p>
+            <p><a href="javascript:;" class="btn btn-link" ng-click="setSelectedOptions(undefined, form)">Done</a></p>
               <p>{{form.selectedOptions.fieldtype | uppercase}}</p>
             </small></h4>
             <p>Field Title<input type="text" class="form-control" ng-model="form.selectedOptions.name"></p>
@@ -130,7 +130,7 @@
           <h3>There are no more un-drafted pages to add.</h3>
           <button class="btn btn-primary" data-dismiss="modal">Close</button>
         </div>
-        <div role="button" class="col-xs-6" data-dismiss="modal" ng-click="addTemplate(template, report)" ng-repeat="template in templates">
+        <div role="button" class="col-xs-6" data-dismiss="modal" ng-click="addTemplate(template, myForm, report)" ng-repeat="template in templates">
           <ul class="list-group">
             <li class="list-group-item"><h4>{{template.name}}</h3></li>
             <li class="list-group-item" ng-if="template.allow_title">Title</li>

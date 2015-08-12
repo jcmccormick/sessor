@@ -1,20 +1,20 @@
 controllers = angular.module('controllers')
 controllers.controller("EditReportController", ['$routeParams', 'ReportsService',
 ($routeParams, ReportsService)->
-	vm = this
+	vr = this
 
 	if $routeParams.reportId
 		ReportsService.getReport($routeParams.reportId).then((res)->
-			vm.report = res
-			vm.report.livesave = true
-			vm.report.hideTitle = false
-			vm.report.saveReport = (temp, myForm, report)->	ReportsService.saveReport(temp, myForm, report)
-			vm.report.deleteReport = (report)->	ReportsService.deleteReport(report)
-			vm.report.getReport = (report)-> ReportsService.getReport(report)
+			vr.report = res
+			vr.report.livesave = true
+			vr.report.hideTitle = false
+			vr.report.saveReport = (temp, myForm, report)->	ReportsService.saveReport(temp, myForm, report)
+			vr.report.deleteReport = (report)->	ReportsService.deleteReport(report)
+			vr.report.getReport = (report)-> ReportsService.getReport(report)
 		)
 	else
-		vm.report = ReportsService.newReport()
+		vr.report = ReportsService.newReport()
 
-	return vm
+	return vr
 
 ])
