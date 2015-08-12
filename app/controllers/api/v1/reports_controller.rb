@@ -29,6 +29,8 @@ module Api::V1 #:nodoc:
 
     def show
       @report = current_user.reports.find(params[:id])
+      @report.populate_values
+      @report
     end
 
     def create

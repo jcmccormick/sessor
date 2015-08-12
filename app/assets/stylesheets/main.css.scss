@@ -120,6 +120,10 @@ button.close {
     content: "Everything worked out after all...";
   }
 
+  &.alert-info:before {
+    content: "Just some notes...";
+  }
+
   span[dynamic="flash.text"]:before {
     content: "\a\a";
     white-space: pre;
@@ -224,6 +228,9 @@ button.close {
  * Template and Field Display
  */
 
+.ng-invalid-required.ng-touched:not(.form) {
+  background-color: #f2dede;
+}
 .required-error {
   color:red;
   font-size: smaller;

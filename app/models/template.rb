@@ -40,4 +40,5 @@ class Template < ActiveRecord::Base
 		self.draft = true
 		self.private_world = true
 	end
+
 end

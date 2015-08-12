@@ -68,7 +68,7 @@ directives.directive('templateFieldDirective', ['$route', '$compile', '$location
       when "textarea" then element.html fw+textarea+fwend
       when "email" then element.html fw+email+fwend
       when "checkbox"
-        if scope.field.values[0].input?
+        if scope.field.values && scope.field.values[0].input?
           scope.field.values[0].input = scope.field.values[0].input == 't' ? 1 : 0
         element.html fwstart+checkbox+fwmid+fwend
       when "date"

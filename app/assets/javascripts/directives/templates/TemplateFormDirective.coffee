@@ -23,10 +23,12 @@ directives.directive('templateFormDirective',[()->
 
 		$scope.addTemplate = (template, myForm, report)->
 			report.template_ids.push template.id
+			myForm.$dirty = true
 			report.saveReport(true, myForm, report).then((res)->
 				report.getReport(report.id).then((res)->
-					report.templates = res.templates
-					report.values = res.values
+					console.log 'what'
+					#report.values = res.values
+					#report.templates = res.templates
 				)
 			)
 

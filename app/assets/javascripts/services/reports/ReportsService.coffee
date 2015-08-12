@@ -35,36 +35,43 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 
 		saveReport: (temp, myForm, report)->
 			deferred = $q.defer()
-			errors = ''
-			required = ''
+			if myForm.$dirty
+				errors = ''
+				required = ''
 
-			if report.templates.length
-				for template in report.templates
-					for field in template.fields
-						if field.required
-							if !field.values[0].input? then required += '<li>'+template.name+': '+field.name+'</li>'
+				if report.templates
+					for template in report.templates
+						for field in template.fields
+							if field.required
+								if !field.values[0].input?
+									required += '<li>'+template.name+': '+field.name+'</li>'
+				if !!required then errors += 'The following fields are required<ul>'+required+'</ul>'
 
-			if !report.title then report.title = 'Untitled'
-			if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test report.title
-				errors += '<p>Title must begin with a letter and only contain letters and numbers.</p>'
-			if !!required then errors += 'The following fields are required<ul>'+required+'</ul>'
-			if !!errors then Flash.create('danger', errors)
+				if report.allow_title && !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test report.title
+					errors += '<p>Title must begin with a letter and only contain letters and numbers.</p>'
+				else if !report.title then report.title = 'Untitled'
 
-			else
-				if !report.id
-					report.$save({class: 'reports'}, (res)->
-						$location.path("/reports/#{res.id}/edit")
-						Flash.create('success', '<p>New report created!</p>')
-					)
+				if !!errors 
+					Flash.create('danger', errors)
 				else
-					report.values_attributes = report.values
-					report.$update({class: 'reports', id: report.id}, (res)->
-						deferred.resolve(res)
-						$rootScope.$broadcast('clearreports')
-						Flash.create('success', '<p>Report saved!</p>')
-						myForm.$setPristine()
-						if temp != true then $location.path("/reports/#{report.id}")
-					)
+					if !report.id
+						report.$save({class: 'reports'}, (res)->
+							$location.path("/reports/#{res.id}/edit")
+							Flash.create('success', '<p>New report created!</p>')
+						)
+					else
+						report.values_attributes = report.values
+						report.$update({class: 'reports', id: report.id}, (res)->
+							deferred.resolve(res)
+							$rootScope.$broadcast('clearreports')
+							Flash.create('success', '<p>Report saved!</p>')
+							myForm.$setPristine()
+							if temp != true then $location.path("/reports/#{report.id}")
+						)
+			else if !temp
+				deferred.resolve($location.path("/reports/#{report.id}"))
+			else
+				deferred.resolve(Flash.create('warning', '<p>Report unchanged.</p>'))
 
 			return deferred.promise
 	}

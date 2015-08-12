@@ -3,6 +3,7 @@ controllers.controller("EditReportController", ['$routeParams', 'ReportsService'
 ($routeParams, ReportsService)->
 	vr = this
 
+	# check for report id and get report or prepare a new report object
 	if $routeParams.reportId
 		ReportsService.getReport($routeParams.reportId).then((res)->
 			vr.report = res
