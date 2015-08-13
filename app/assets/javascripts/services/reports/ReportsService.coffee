@@ -1,6 +1,43 @@
 services = angular.module('services')
 services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFactory', 'Flash',
 ($location, $q, $rootScope, ClassFactory, Flash)->
+	
+	associateReportValues = (report)->
+		deferred = $q.defer()
+		report.template_ids = []
+		report.templates.forEach((template)->
+			report.template_ids.push template.id
+			template.fields.forEach((field)->
+				field.values = report.values.filter((obj)->
+					return obj.field_id == field.id
+				)
+			)
+		)
+		deferred.resolve(report)
+		return deferred.promise
+	
+	validateReport = (report, errors)->
+		deferred = $q.defer()
+		errors = ''
+		required = ''
+		if report.templates
+			for template in report.templates
+				for field in template.fields
+					if field.required
+						if !field.values[0].input?
+							required += '<li>'+template.name+': '+field.name+'</li>'
+
+		if !!required
+			errors += 'The following fields are required<ul>'+required+'</ul>'
+
+		if report.allow_title && !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test report.title
+			errors += '<p>Title must begin with a letter and only contain letters and numbers.</p>'
+		else if !report.title
+			report.title = 'Untitled'
+
+		deferred.resolve(errors)
+		return deferred.promise
+
 	{
 
 		newReport: ->
@@ -14,16 +51,9 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 		getReport: (id)->
 			deferred = $q.defer()
 			ClassFactory.get({class: 'reports', id: id}, (res)->
-				res.template_ids = []
-				res.templates.forEach((template)->
-					res.template_ids.push template.id
-					template.fields.forEach((field)->
-						field.values = res.values.filter((obj)->
-							return obj.field_id == field.id
-						)
-					)
+				associateReportValues(res).then((rep)->
+					deferred.resolve(rep)
 				)
-				deferred.resolve(res)
 			)
 			return deferred.promise
 
@@ -32,47 +62,43 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 				$rootScope.$broadcast('clearreports')
 				$location.path("/reports")
 			)
+			return
 
 		saveReport: (temp, myForm, report)->
 			deferred = $q.defer()
-			if myForm.$dirty
-				errors = ''
-				required = ''
-
-				if report.templates
-					for template in report.templates
-						for field in template.fields
-							if field.required
-								if !field.values[0].input?
-									required += '<li>'+template.name+': '+field.name+'</li>'
-				if !!required then errors += 'The following fields are required<ul>'+required+'</ul>'
-
-				if report.allow_title && !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test report.title
-					errors += '<p>Title must begin with a letter and only contain letters and numbers.</p>'
-				else if !report.title then report.title = 'Untitled'
-
+			validateReport(report).then((errors)->
 				if !!errors 
 					Flash.create('danger', errors)
-				else
-					if !report.id
-						report.$save({class: 'reports'}, (res)->
+					deferred.resolve(errors)
+					return
+
+				if !report.id
+					report.$save({class: 'reports'}, (res)->
+						associateReportValues(res).then((res)->
 							$location.path("/reports/#{res.id}/edit")
 							Flash.create('success', '<p>New report created!</p>')
 						)
-					else
+					)
+				else
+					if myForm.$dirty
 						report.values_attributes = report.values
+						$rootScope.$broadcast('clearreports')
 						report.$update({class: 'reports', id: report.id}, (res)->
-							deferred.resolve(res)
-							$rootScope.$broadcast('clearreports')
 							Flash.create('success', '<p>Report saved!</p>')
 							myForm.$setPristine()
-							if temp != true then $location.path("/reports/#{report.id}")
+							report.getReport(res.id).then((rep)->
+								deferred.resolve(rep)
+								if temp != true then $location.path("/reports/#{report.id}")
+							)
 						)
-			else if !temp
-				deferred.resolve($location.path("/reports/#{report.id}"))
-			else
-				deferred.resolve(Flash.create('warning', '<p>Report unchanged.</p>'))
 
+					else if !temp
+						deferred.resolve($location.path("/reports/#{report.id}"))
+					else
+						deferred.resolve(Flash.create('info', '<p>Report unchanged.</p>'))
+
+			)
 			return deferred.promise
+
 	}
 ])

@@ -22,43 +22,48 @@ directives.directive('templateFieldDirective', ['$route', '$compile', '$location
 
     fwstart = '<div class="form-group">'
     fwmid = '<label class="control-label">{{field.name}}
-        <span class="required-error" ng-if="field.required && !field.values[0].input">*</span>
-      </label>'
+               <span class="required-error" ng-if="field.required && !field.values[0].input">*</span>
+             </label>'
+
+    fwend = '<div class="field-overlay" ng-if="editing">
+               <a href="javascript:;" class="close" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this field?<br> It will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="template.deleteField(template, field)">X</a>
+             </div>
+           </div>'
+
     fw = fwstart+fwmid
 
-    textfield = '<input type="text" name="{{field.name}}" class="form-control" ng-model="field.values[0].input" ng-required="field.required" ng-disabled="field.disabled">'
+    inputstart = '<input'
+    clas = 'class="form-control"'
+    ngmodel = 'ng-model="field.values[0].input"'
+    inputend = 'name="{{field.name}}" ng-required="field.required" ng-disabled="field.disabled">'
 
-    textarea = '<textarea type="text" name="{{field.name}}" class="form-control" ng-model="field.values[0].input" ng-required="field.required" ng-disabled="field.disabled"></textarea>'
+    textfield = inputstart+' type="text" '+clas+' '+ngmodel+' '+inputend 
 
-    email = '<input type="email" name="{{field.name}}" class="form-control" placeholder="Email" ng-model="field.values[0].input" ng-required="field.required" ng-disabled="field.disabled"/>'
+    textarea = '<textarea type="text" '+clas+' '+ngmodel+' '+inputend+'</textarea>'
 
-    checkbox = '<input type="checkbox" name="{{field.name}}" ng-model="$parent.field.values[0].input" ng-required="field.required" ng-disabled="field.disabled">'
+    email = inputstart+' type="email" placeholder="Email" '+clas+' '+ngmodel+' '+inputend
 
-    date = '<input type="date" name="{{field.name}}" class="form-control" ng-model="field.values[0].input" ng-required="field.required" ng-disabled="field.disabled">'
+    checkbox = inputstart+' type="checkbox" ng-model="$parent.field.values[0].input" '+inputend
 
-    time = '<input type="time" name="{{field.name}}" class="form-control" ng-model="field.values[0].input" ng-required="field.required" ng-disabled="field.disabled">'
+    date = inputstart+' type="date" '+clas+' '+ngmodel+' '+inputend
 
-    dropdown = '<select name="{{field.name}}" class="form-control" value="{{field.values[0].input}}" ng-model="field.values[0].input" ng-required="field.required" ng-disabled="field.disabled" ng-options="option.name as option.name for option in field.options">
+    time = inputstart+' type="time" '+clas+' '+ngmodel+' '+inputend
+
+    dropdown = '<select value="{{field.values[0].input}}" ng-options="option.name as option.name for option in field.options" '+clas+' '+ngmodel+' '+inputend+'
         <option value="">Select Item</option>
       </select>'
 
-    radio = '<div ng-repeat="option in field.options"><label>
-        <input type="radio" name="{{field.name}}" ng-model="field.values[0].input" ng-value="option.name" ng-required="field.required" ng-disabled="field.disabled">
-        &nbsp;{{option.name}}</label>
-      </div>
-      <h4 class="text-center" ng-if="field.options.length<1">Click to add options.</h4>'
+    radio = '<div ng-repeat="option in field.options">
+              <label>'+inputstart+' type="radio" ng-value="option.name" '+ngmodel+' '+inputend+'&nbsp;{{option.name}}</label>
+            </div>
+            <h4 class="text-center" ng-if="!field.options.length">Click to add options.</h4>'
 
-    password = '<input type="password" name="{{field.name}}" class="form-control" ng-model="field.values[0].input"  ng-required="field.required" ng-disabled="field.disabled">'
+    password = inputstart+' type="password" '+clas+' '+ngmodel+' '+inputend
 
     labelntext = '<p>{{field.values[0].input}}</p><h4 class="text-center" ng-if="!field.values[0].input">Click to add text.</h4>'
 
-    hidden = '
-    <input type="hidden" ng-model="field.values[0].input" value="{{field.values[0].input}}" ng-disabled="field.disabled">'
+    hidden = inputstart+' type="hidden" value="{{field.values[0].input}}" '+ngmodel+' '+inputend
 
-    fwend = '<div class="field-overlay" ng-if="editing">
-          <a href="javascript:;" class="close" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this field?<br> It will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="template.deleteField(template, field)">X</a>
-        </div>
-      </div>'
 
     # GET template content from path
     template = getTemplate(scope.field)

@@ -87,6 +87,7 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$rout
 					)
 				)
 				$scope.newFieldName = ''
+				$scope.newFieldName.$dirty = false
 				return
 
 			# delete field

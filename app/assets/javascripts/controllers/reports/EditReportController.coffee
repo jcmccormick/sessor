@@ -8,6 +8,7 @@ controllers.controller("EditReportController", ['$routeParams', 'ReportsService'
 		ReportsService.getReport($routeParams.reportId).then((res)->
 			vr.report = res
 			vr.report.livesave = true
+			vr.report.editing = true
 			vr.report.hideTitle = false
 			vr.report.saveReport = (temp, myForm, report)->	ReportsService.saveReport(temp, myForm, report)
 			vr.report.deleteReport = (report)->	ReportsService.deleteReport(report)

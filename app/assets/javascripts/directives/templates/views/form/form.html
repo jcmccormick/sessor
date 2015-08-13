@@ -45,15 +45,14 @@
         <input class="form-control" type="text" ng-model="report.title">
       </div>
 
-      <div ng-if="form.sections" class="paper row">
+      <div ng-show="form.sections" class="paper row">
         <center><h1>{{form.name}}</h1></center>
 
-        <div class="container-fluid" ng-repeat="(section_id, section_name) in form.sections track by $index">
+        <div class="container-fluid section-row" ng-repeat="(section_id, section_name) in form.sections track by $index">
           <h3>{{section_name}}</h3>
           
           <div class="col-xs-12" ng-class="{'col-md-6':form.columns[section_id] == 2, 'col-md-4':form.columns[section_id] == 3}" ng-repeat="column in columnsArray(form.columns[section_id]) track by $index">
-            
-            <div ng-click="setSelectedOptions(field, form)" ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section_id+1}">
+            <div ng-if="(report.livesave && report.editing) || report.viewing || (!report && form)" ng-click="setSelectedOptions(field, form)" ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section_id+1}">
               <template-field-directive field="field" template="form" editing="form.editing" myForm="myForm"></template-field-directive>
             </div>
           </div>
@@ -79,15 +78,18 @@
             <p><a href="javascript:;" class="btn btn-link" ng-click="setSelectedOptions(undefined, form)">Done</a></p>
               <p>{{form.selectedOptions.fieldtype | uppercase}}</p>
             </small></h4>
-            <p>Field Title<input type="text" class="form-control" ng-model="form.selectedOptions.name"></p>
+            <p>Field Label<input type="text" class="form-control" ng-model="form.selectedOptions.name"></p>
             <div>
               <p>Default Value
-                <input ng-show="form.selectedOptions.fieldtype != 'checkbox'" type="text" class="form-control" ng-model="form.selectedOptions.values[0].input">
+                <input ng-show="['checkbox','labelntext','textarea'].indexOf(form.selectedOptions.fieldtype) == -1" type="text" class="form-control" ng-model="form.selectedOptions.values[0].input">
                 <input ng-show="form.selectedOptions.fieldtype == 'checkbox'" type="checkbox" class="form-control" ng-model="form.selectedOptions.values[0].input">
+                <textarea ng-show="['labelntext','textarea'].indexOf(form.selectedOptions.fieldtype) != -1" class="form-control" ng-model="form.selectedOptions.values[0].input"></textarea>
               </p>
             </div>
-            <p><input type="checkbox" ng-model="form.selectedOptions.required"/> Required</p>
-            <p><input type="checkbox" ng-model="form.selectedOptions.disabled"/> Disabled</p>
+            <div ng-show="form.selectedOptions.fieldtype != 'labelntext'">
+              <p><input type="checkbox" ng-model="form.selectedOptions.required"/> Required</p>
+              <p><input type="checkbox" ng-model="form.selectedOptions.disabled"/> Disabled</p>
+            </div>
           </li>
         </ul>
         <ul class="nav" ng-show="form.selectedOptions.fieldtype == 'dropdown' || form.selectedOptions.fieldtype == 'radio'">
