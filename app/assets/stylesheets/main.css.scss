@@ -290,7 +290,8 @@ template-form-directive .form-group {
     opacity: .64;
   }
 
-  &:hover {
+  &:hover,
+  &.option-open {
     opacity: 1;
   }
 }

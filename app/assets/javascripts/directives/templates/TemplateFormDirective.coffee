@@ -25,12 +25,10 @@ directives.directive('templateFormDirective',[()->
 			myForm.$dirty = true
 			report.template_ids.push template.id
 			report.saveReport(true, myForm, report).then((res)->
-				console.log res
-				if !res.values
+				if !res.templates
 					report.template_ids.pop()
 				else
-					report.values = res.values
-					report.templates = res.templates
+					report = res
 			)
 
 	]}

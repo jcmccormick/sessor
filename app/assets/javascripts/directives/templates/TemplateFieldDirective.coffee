@@ -1,6 +1,6 @@
 directives = angular.module('directives')
-directives.directive('templateFieldDirective', ['$route', '$compile', '$location','ClassFactory', 'TemplateService',
-($route, $compile, $location, ClassFactory, TemplateService) ->
+directives.directive('templateFieldDirective', ['$compile', 'TemplateService',
+($compile, TemplateService) ->
   
   getTemplate = (field) ->
     type = field.fieldtype
@@ -49,6 +49,10 @@ directives.directive('templateFieldDirective', ['$route', '$compile', '$location
 
     time = inputstart+' type="time" '+clas+' '+ngmodel+' '+inputend
 
+    password = inputstart+' type="password" '+clas+' '+ngmodel+' '+inputend
+
+    labelntext = '<p>{{field.values[0].input}}</p><h4 class="text-center" ng-if="!field.values[0].input">Click to add text.</h4>'
+
     dropdown = '<select value="{{field.values[0].input}}" ng-options="option.name as option.name for option in field.options" '+clas+' '+ngmodel+' '+inputend+'
         <option value="">Select Item</option>
       </select>'
@@ -58,16 +62,12 @@ directives.directive('templateFieldDirective', ['$route', '$compile', '$location
             </div>
             <h4 class="text-center" ng-if="!field.options.length">Click to add options.</h4>'
 
-    password = inputstart+' type="password" '+clas+' '+ngmodel+' '+inputend
-
-    labelntext = '<p>{{field.values[0].input}}</p><h4 class="text-center" ng-if="!field.values[0].input">Click to add text.</h4>'
-
     hidden = inputstart+' type="hidden" value="{{field.values[0].input}}" '+ngmodel+' '+inputend
 
 
     # GET template content from path
     template = getTemplate(scope.field)
-    
+
     switch template
       when "textfield" then element.html fw+textfield+fwend
       when "textarea" then element.html fw+textarea+fwend

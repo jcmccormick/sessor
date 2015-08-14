@@ -2,30 +2,15 @@ services = angular.module('services')
 services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFactory', 'Flash',
 ($location, $q, $rootScope, ClassFactory, Flash)->
 	
-	associateReportValues = (report)->
-		deferred = $q.defer()
-		report.template_ids = []
-		report.templates.forEach((template)->
-			report.template_ids.push template.id
-			template.fields.forEach((field)->
-				field.values = report.values.filter((obj)->
-					return obj.field_id == field.id
-				)
-			)
-		)
-		deferred.resolve(report)
-		return deferred.promise
-	
-	validateReport = (report, errors)->
+	validateReport = (report)->
 		deferred = $q.defer()
 		errors = ''
 		required = ''
 		if report.templates
 			for template in report.templates
 				for field in template.fields
-					if field.required
-						if !field.values[0].input?
-							required += '<li>'+template.name+': '+field.name+'</li>'
+					if field.required && !field.values[0].input?
+						required += '<li>'+template.name+': '+field.name+'</li>'
 
 		if !!required
 			errors += 'The following fields are required<ul>'+required+'</ul>'
@@ -42,20 +27,11 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 
 		newReport: ->
 			report = new ClassFactory()
-			report.livesave = true
-			report.template_ids = []
-			report.hideTitle = false
 			report.saveReport = this.saveReport
+			report.livesave = true
+			report.hideTitle = false
+			report.template_ids = []
 			return report
-
-		getReport: (id)->
-			deferred = $q.defer()
-			ClassFactory.get({class: 'reports', id: id}, (res)->
-				associateReportValues(res).then((rep)->
-					deferred.resolve(rep)
-				)
-			)
-			return deferred.promise
 
 		deleteReport: (report)->
 			report.$delete({class: 'reports', id: report.id}, (res)->
@@ -63,6 +39,17 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 				$location.path("/reports")
 			)
 			return
+
+		getReport: (id)->
+			deferred = $q.defer()
+			ClassFactory.get({class: 'reports', id: id}, (res)->
+				res.hideTitle = false
+				res.template_ids = []
+				for template in res.templates
+					res.template_ids.push template.id
+				deferred.resolve(res)
+			)
+			return deferred.promise
 
 		saveReport: (temp, myForm, report)->
 			deferred = $q.defer()
@@ -74,20 +61,22 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 
 				if !report.id
 					report.$save({class: 'reports'}, (res)->
-						associateReportValues(res).then((res)->
-							$location.path("/reports/#{res.id}/edit")
-							Flash.create('success', '<p>New report created!</p>')
-						)
+						$location.path("/reports/#{res.id}/edit")
+						Flash.create('success', '<p>Report saved!</p>')
 					)
 				else
 					if myForm.$dirty
-						report.values_attributes = report.values
+						report.values_attributes = []
+						for template in report.templates
+							for field in template.fields
+								report.values_attributes.push field.values[0]
 						$rootScope.$broadcast('clearreports')
-						report.$update({class: 'reports', id: report.id}, (res)->
-							Flash.create('success', '<p>Report saved!</p>')
+						report.$update({class: 'reports', id: report.id}, ->
+							Flash.create('success', '<p>Report updated!</p>')
 							myForm.$setPristine()
-							report.getReport(res.id).then((rep)->
-								deferred.resolve(rep)
+							report.getReport(report.id).then((res)->
+								$.extend report, res
+								deferred.resolve(report)
 								if temp != true then $location.path("/reports/#{report.id}")
 							)
 						)

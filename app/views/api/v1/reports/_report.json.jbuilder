@@ -20,14 +20,16 @@ json.templates report.templates do |template|
 		json.required field.required
 		json.disabled field.disabled
 
+		json.values report.values do |value|
+			if value.field_id == field.id && value.report_id == report.id
+				json.id value.id
+				json.input value.input
+				json.field_id value.field_id
+			end
+		end
+
 		json.options field.options do |option|
 			json.name option.name
 		end
 	end
-end
-
-json.values report.values do |value|
-	json.id value.id
-	json.input value.input
-	json.field_id value.field_id
 end
