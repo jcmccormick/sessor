@@ -4,21 +4,21 @@ controllers.controller('UserRegistrationsController', ['$scope', '$auth', '$loca
 	$scope.handleRegBtnClick = ->
 		str = $scope.registrationForm.password
 		if str.length < 8
-			Flash.create('danger',"Please use a password 8 or more characters long.")
+			Flash.create('danger',"Please use a password 8 or more characters long.", 'customAlert')
 		else if str.search(/\d/) == -1
-			Flash.create('danger', "Please include one number in your password.")
+			Flash.create('danger', "Please include one number in your password.", 'customAlert')
 		else if str.search(/[a-zA-Z]/) == -1
-			Flash.create('danger', "Please include one letter in your password.")
+			Flash.create('danger', "Please include one letter in your password.", 'customAlert')
 		else if str.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+]/) != -1
-			Flash.create('danger', "You may only include the following special characters: ! @ # $ % ^ & * ( ) _ +")
+			Flash.create('danger', "You may only include the following special characters: ! @ # $ % ^ & * ( ) _ +", 'customAlert')
 		else if $scope.registrationForm.password != $scope.registrationForm.password_confirmation
-			Flash.create('danger', "The passwords do not match.")
+			Flash.create('danger', "The passwords do not match.", 'customAlert')
 		else
 			$auth.submitRegistration($scope.registrationForm)
 			.success((res)->
 				$location.path('/desktop')
-				Flash.create('success', "Account created! Welcome to Clerkr.")
+				Flash.create('success', "Account created! Welcome to Clerkr.", 'customAlert')
 			).error((err)->
-				Flash.create('danger', "There was an error creating your account. The email may already be in use. Try again and contact support if errors persist.")
+				Flash.create('danger', "There was an error creating your account. The email may already be in use. Try again and contact support if errors persist.", 'customAlert')
 			)
 ])

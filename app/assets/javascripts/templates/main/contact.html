@@ -1,3 +1,7 @@
-<div id="logdout">
-<h1 class="page-header">Contact</h1>
+<page-menu ng-if="user.id">
+	<li><a href="#/contact">Contact</a></li>
+</page-menu>
+<div class="paper" ng-class="{logdout:!user.id}">
+	<h1>Contact</h1>
+	<hr>
 </div>

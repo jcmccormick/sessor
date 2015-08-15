@@ -11,3 +11,4 @@
 * InfiniteScroll
 * ControllerAs
 * Field value reorganization
+* Z-index light-up tour

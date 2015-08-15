@@ -26,7 +26,9 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplateService',
              </label>'
 
     fwend = '<div class="field-overlay" ng-if="editing">
-               <a href="javascript:;" class="close" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this field?<br> It will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="template.deleteField(template, field)">X</a>
+               <a href="javascript:;" class="close" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this field?<br> It will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="template.deleteField(template, field)">
+                 <i class="glyphicon glyphicon-remove"></i>
+               </a>
              </div>
            </div>'
 

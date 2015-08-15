@@ -55,14 +55,14 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 			deferred = $q.defer()
 			validateReport(report).then((errors)->
 				if !!errors 
-					Flash.create('danger', errors)
+					Flash.create('danger', errors, 'customAlert')
 					deferred.resolve(errors)
 					return
 
 				if !report.id
 					report.$save({class: 'reports'}, (res)->
 						$location.path("/reports/#{res.id}/edit")
-						Flash.create('success', '<p>Report saved!</p>')
+						Flash.create('success', '<p>Report saved!</p>', 'customAlert')
 					)
 				else
 					if myForm.$dirty
@@ -72,7 +72,7 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 								report.values_attributes.push field.values[0]
 						$rootScope.$broadcast('clearreports')
 						report.$update({class: 'reports', id: report.id}, ->
-							Flash.create('success', '<p>Report updated!</p>')
+							Flash.create('success', '<p>Report updated!</p>', 'customAlert')
 							myForm.$setPristine()
 							report.getReport(report.id).then((res)->
 								$.extend report, res
@@ -84,7 +84,7 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 					else if !temp
 						deferred.resolve($location.path("/reports/#{report.id}"))
 					else
-						deferred.resolve(Flash.create('info', '<p>Report unchanged.</p>'))
+						deferred.resolve(Flash.create('info', '<p>Report unchanged.</p>', 'customAlert'))
 
 			)
 			return deferred.promise

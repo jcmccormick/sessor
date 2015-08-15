@@ -9,12 +9,14 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash',
     $rootScope.signOut()
 
   $rootScope.$on('auth:login-success', ->
+    Flash.create('success', 'Successfully logged in.', 'customAlert')
     $location.path('/desktop/')
     $httpDefaultCache.removeAll()
     return
   )
 
   $rootScope.$on('auth:logout-success', ->
+    Flash.create('success', 'You\'ve been logged out.', 'customAlert')
     $location.path('/')
     $httpDefaultCache.removeAll()
     return
@@ -22,7 +24,7 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash',
 
   $rootScope.$on('auth:invalid', ->
     error = "Looks like there was an error validating your credentials. Please try logging in again or contact support if problems continue. Make sure cookies and Javascript are enabled in your browser options."
-    Flash.create('danger', error)
+    Flash.create('danger', error, 'customAlert')
     $location.path('/')
     return
   )

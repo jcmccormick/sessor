@@ -1,8 +1,8 @@
-<div id="logdout">
-	<div class="paper">
-		<h2>Welcome to Clerkr!</h2>
-		<p class="lead">
-			<a href="#/sign_up" class="btn btn-default">Sign Up</a> <a href="#/sign_in" class="btn btn-default">Sign In</a>
-		</p>
-	</div>
+<page-menu ng-if="user.id">
+	<li><a href="#/">Info</a></li>
+</page-menu>
+<div class="paper" ng-class="{logdout:!user.id}">
+	<h2>Welcome to Clerkr!</h2>
+	<hr>
+	<a href="#/sign_up" class="btn btn-default">Sign Up</a> <a href="#/sign_in" class="btn btn-default">Sign In</a>
 </div>

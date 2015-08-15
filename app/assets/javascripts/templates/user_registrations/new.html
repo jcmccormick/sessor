@@ -1,46 +1,44 @@
-<div id="logdout">
-  <div class="paper">
-    <h1 class="page-header">Clerkr Registration</h1>
-    <form ng-submit="handleRegBtnClick()" role="form" ng-init="registrationForm = {}">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email"
-               name="email"
-               id="email"
-               ng-model="registrationForm.email"
-               required="required"
-               class="form-control">
-      </div>
+<div class="paper" ng-class="{logdout:!user.id}">
+  <h1 class="page-header">Clerkr Registration</h1>
+  <form ng-submit="handleRegBtnClick()" role="form" ng-init="registrationForm = {}">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email"
+             name="email"
+             id="email"
+             ng-model="registrationForm.email"
+             required="required"
+             class="form-control">
+    </div>
 
-      <div class="form-group">
-        <label for="password">Password</label>
-        <p>Please follow these guidelines:</p>
-        <ul>
-          <li>must be at least 8 characters</li>
-          <li>must contain 1 letter</li>
-          <li>must contain 1 number</li>
-          <li>may contain: !@#$%^&amp;*()_+</li>
-        </ul>
-        <input type="password"
-               name="password"
-               id="password"
-               ng-model="registrationForm.password"
-               required="required"
-               class="form-control">
-      </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <p>Please follow these guidelines:</p>
+      <ul>
+        <li>must be at least 8 characters</li>
+        <li>must contain 1 letter</li>
+        <li>must contain 1 number</li>
+        <li>may contain: !@#$%^&amp;*()_+</li>
+      </ul>
+      <input type="password"
+             name="password"
+             id="password"
+             ng-model="registrationForm.password"
+             required="required"
+             class="form-control">
+    </div>
 
-      <div class="form-group">
-        <label for="password_confirmation">Password Confirmation</label>
-        <p>Repeat your password:</p>
-        <input type="password"
-               name="password_confirmation"
-               id="password_confirmation"
-               ng-model="registrationForm.password_confirmation"
-               required="required"
-               class="form-control">
-      </div>
-      <a href="#/" class="btn btn-default">Back</a>
-      <button type="submit" class="btn btn-primary pull-right">Register</button>
-    </form>
-  </div>
+    <div class="form-group">
+      <label for="password_confirmation">Password Confirmation</label>
+      <p>Repeat your password:</p>
+      <input type="password"
+             name="password_confirmation"
+             id="password_confirmation"
+             ng-model="registrationForm.password_confirmation"
+             required="required"
+             class="form-control">
+    </div>
+    <a href="#/" class="btn btn-default">Back</a>
+    <button type="submit" class="btn btn-primary pull-right">Register</button>
+  </form>
 </div>

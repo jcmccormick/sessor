@@ -1,5 +1,5 @@
 controllers = angular.module('controllers')
-controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$routeParams', '$location', 'ClassFactory', 'Flash', 'TemplateService'
+controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$routeParams', '$location', 'ClassFactory', 'Flash', 'TemplateService',
 ($rootScope, $scope, $routeParams, $location, ClassFactory, Flash, TemplateService)->
 
 	window.TEMPLATE_SCOPE = $scope
@@ -26,7 +26,7 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$rout
 			# save/update template
 			$scope.template.saveTemplate = (temp)->
 				if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test $scope.template.name
-					Flash.create('danger', '<p>Title must begin with a letter and only contain letters and numbers.</p>')
+					Flash.create('danger', '<p>Page names must begin with a letter and only contain letters and numbers.</p>', 'customAlert')
 				else
 					$rootScope.$broadcast('cleartemplates')
 					tempCopy = new ClassFactory()
@@ -37,6 +37,7 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$rout
 						field.values_attributes = field.values
 					)
 					tempCopy.$update({class: 'templates', id: $scope.template.id}, (res)->
+						Flash.create('success', '<p>Page updated!</p>', 'customAlert')
 						if !temp
 							$location.path("/templates/#{res.id}")
 					)
@@ -124,7 +125,7 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$rout
 		$scope.template.hideName = false
 		$scope.template.saveTemplate = ->
 			if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test $scope.template.name
-				Flash.create('danger', '<p>Title must begin with a letter and only contain letters and numbers.</p>')
+				Flash.create('danger', '<p>Title must begin with a letter and only contain letters and numbers.</p>', 'customAlert')
 			else
 				$scope.template.$save({class: 'templates'}, (res)->	$location.path('templates/'+res.id+'/edit')	)
 

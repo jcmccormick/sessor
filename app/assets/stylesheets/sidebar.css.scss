@@ -10,11 +10,11 @@
     padding-top:15px;
 }
 
-#logdout {
+.logdout {
     position: fixed;
-    top: 85px;
-    left: 0;
-    right: 0;
+    top: 105px;
+    left: 5%;
+    right: 5%;
     padding: 20px;
 }
 
@@ -38,11 +38,15 @@
     -moz-box-shadow: 0 -5px 25px 2px rgba(0, 0, 0, 1);
     box-shadow: 0 -5px 25px 2px rgba(0, 0, 0, 1);
     z-index: 7;
+
+    >div>ul>li>a {
+        padding: 10px 5px;
+    }
 }
 
 @media(min-width:768px) {
-    #logdout {
-        top: 35px;
+    .logdout {
+        top: 55px;
     }
     #wrapper {
         padding-left: 225px;
