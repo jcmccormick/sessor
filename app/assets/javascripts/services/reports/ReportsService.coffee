@@ -6,9 +6,11 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 		deferred = $q.defer()
 		errors = ''
 		required = ''
+		report.values_attributes = []
 		if report.templates
 			for template in report.templates
 				for field in template.fields
+					report.values_attributes.push field.values[0]
 					if field.required && !field.values[0].input?
 						required += '<li>'+template.name+': '+field.name+'</li>'
 
@@ -43,10 +45,6 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 		getReport: (id)->
 			deferred = $q.defer()
 			ClassFactory.get({class: 'reports', id: id}, (res)->
-				res.hideTitle = false
-				res.template_ids = []
-				for template in res.templates
-					res.template_ids.push template.id
 				deferred.resolve(res)
 			)
 			return deferred.promise
@@ -64,27 +62,25 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 						$location.path("/reports/#{res.id}/edit")
 						Flash.create('success', '<p>Report saved!</p>', 'customAlert')
 					)
-				else
-					if myForm.$dirty
-						report.values_attributes = []
-						for template in report.templates
-							for field in template.fields
-								report.values_attributes.push field.values[0]
+				else if myForm.$dirty
+					report.values_attributes = []
+					for template in report.templates
+						for field in template.fields
+							report.values_attributes.push field.values[0]
+					report.$update({class: 'reports', id: report.id}, ->
 						$rootScope.$broadcast('clearreports')
-						report.$update({class: 'reports', id: report.id}, ->
-							Flash.create('success', '<p>Report updated!</p>', 'customAlert')
-							myForm.$setPristine()
-							report.getReport(report.id).then((res)->
-								$.extend report, res
-								deferred.resolve(report)
-								if temp != true then $location.path("/reports/#{report.id}")
-							)
-						)
+						Flash.create('success', '<p>Report updated!</p>', 'customAlert')
+						myForm.$setPristine()
+						deferred.resolve('updated')
+						if temp != true then $location.path("/reports/#{report.id}")
+					)
 
-					else if !temp
+				else
+					Flash.create('info', '<p>Report unchanged.</p>', 'customAlert')
+					if !temp
 						deferred.resolve($location.path("/reports/#{report.id}"))
 					else
-						deferred.resolve(Flash.create('info', '<p>Report unchanged.</p>', 'customAlert'))
+						deferred.resolve()
 
 			)
 			return deferred.promise

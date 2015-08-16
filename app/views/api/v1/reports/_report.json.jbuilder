@@ -33,3 +33,5 @@ json.templates report.templates do |template|
 		end
 	end
 end
+
+json.template_ids report.templates.collect { |template| template.id }

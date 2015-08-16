@@ -117,7 +117,7 @@
 
 
 <!-- BEGIN PREVIEW MODAL -->
-<div ng-if="(report.livesave && report.template_ids) || (!report.id && report.livesave)" class="modal fade addTemplateModal" tabindex="-1" role="dialog" aria-labelledby="previewModal" aria-hidden="true">
+<div class="modal fade addTemplateModal" tabindex="-1" role="dialog" aria-labelledby="previewModal" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <form class="modal-content">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -126,7 +126,7 @@
       </div>
       <div class="modal-body row">
         <div class="text-center">
-          <bgf-pagination url="'v1/templates'" collection="templates" url-params="{'d':true,'ts':[report.template_ids]}"></bgf-pagination>
+          <bgf-pagination bind="report.template_ids" url="'v1/templates'" collection="templates" url-params="{'d':true,'ts':[report.template_ids]}"></bgf-pagination>
         </div>
         <div class="text-center" ng-if="templates.length<1">
           <h3>There are no more un-drafted pages to add.</h3>
