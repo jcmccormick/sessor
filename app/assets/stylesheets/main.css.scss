@@ -58,7 +58,10 @@ button.close {
 }
 input::-ms-clear {
   display: none;
-} 
+}
+blockquote {
+  white-space: pre-wrap;
+}
 .ng-hide {
   display: none!important;
 }

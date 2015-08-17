@@ -6,8 +6,8 @@ directives.directive('templateFormDirective',[()->
 	scope:
 		form: '='
 		report: '='
-	controller: ['$scope', 'ReportsService',
-	($scope, ReportsService)->
+	controller: ['$scope',
+	($scope)->
 
 		# Template Designer Features
 		$scope.setSelectedOptions = (optionSet, form)->
@@ -22,15 +22,24 @@ directives.directive('templateFormDirective',[()->
 			$scope.form = template
 
 		$scope.addTemplate = (template, myForm, report)->
-			myForm.$dirty = true
-			report.template_ids.push template.id
-			report.saveReport(true, myForm, report).then((res)->
+			report.addTemplate(template, myForm, report).then((res)->
 				if res != 'updated'
 					report.template_ids.pop()
 				else
 					report.getReport(report.id).then((rep)->
 						report.templates.push rep.templates[rep.templates.length-1]
 					)
+			)
+
+		$scope.removeTemplate = (template, report)->
+			report.removeTemplate(template, report).then((res)->
+				if res == 'deleted'
+					index = report.templates.indexOf(template)
+					report.templates.splice index, 1
+					idindex = report.template_ids.indexOf(template.id)
+					report.template_ids.splice idindex, 1
+					if $scope.form.id == template.id
+						$scope.form = report.templates[0]
 			)
 
 	]}

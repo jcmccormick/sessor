@@ -29,6 +29,7 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 
 		newReport: ->
 			report = new ClassFactory()
+			report.addTemplate = this.addTemplate
 			report.saveReport = this.saveReport
 			report.livesave = true
 			report.hideTitle = false
@@ -84,6 +85,25 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 
 			)
 			return deferred.promise
+
+
+		addTemplate: (template, myForm, report)->
+			deferred = $q.defer()
+			myForm.$dirty = true
+			report.template_ids.push template.id
+			report.saveReport(true, myForm, report).then((res)->
+				deferred.resolve(res)
+			)
+			return deferred.promise
+
+		removeTemplate: (template, report)->
+			deferred = $q.defer()
+			report.$update({class: 'reports', id: report.id, did: template.id}, ->
+				$rootScope.$broadcast('clearreports')
+				deferred.resolve('deleted')
+			)
+			return deferred.promise
+
 
 	}
 ])

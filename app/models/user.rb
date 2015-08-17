@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :reports
 
   # Relate to Fields
-  has_many :fields, through: :reports
+  has_many :fields, through: :templates
 
   # Relate to Values
   has_many :values, through: :reports

@@ -1,26 +1,17 @@
 services = angular.module('services')
 services.service('TemplateService', [->
-  supportedProperties: [
-    'id'
-    'name'
-    'type'
-    'required'
-    'disabled'
-    'glyphicon'
-    'value'
-  ]
   supportedFields: [
+    'labelntext'
     'textfield'
     'textarea'
-    'email'
-    'checkbox'
+    'integer'
     'date'
     'time'
-    'dropdown'
+    'checkbox'
     'radio'
-    'hidden'
-    'password'
-    'labelntext'
+    'dropdown'
+    'email'
+    # 'masked'
   ]
   fields: [
     {
@@ -39,19 +30,14 @@ services.service('TemplateService', [->
       glyphicon: 'glyphicon-comment'
     }
     {
-      name: 'radio'
-      value: 'Radio'
-      glyphicon: 'glyphicon-record'
+      name: 'email'
+      value: 'E-mail'
+      glyphicon: 'glyphicon-envelope'
     }
     {
-      name: 'checkbox'
-      value: 'Checkbox'
-      glyphicon: 'glyphicon-check'
-    }
-    {
-      name: 'dropdown'
-      value: 'Dropdown'
-      glyphicon: 'glyphicon-list'
+      name: 'integer'
+      value: 'Integer'
+      glyphicon: 'glyphicon-th'
     }
     {
       name: 'date'
@@ -64,31 +50,24 @@ services.service('TemplateService', [->
       glyphicon: 'glyphicon-time'
     }
     {
-      name: 'email'
-      value: 'E-mail'
-      glyphicon: 'glyphicon-envelope'
+      name: 'checkbox'
+      value: 'Checkbox'
+      glyphicon: 'glyphicon-check'
     }
     {
-      name: 'password'
-      value: 'Protected'
-      glyphicon: 'glyphicon-lock'
-    }
-  ]
-  columns: [
-    {
-      id: 1
-      width: 'col-xs-12'
-      count: [{}]
+      name: 'radio'
+      value: 'Radio'
+      glyphicon: 'glyphicon-record'
     }
     {
-      id: 2
-      width: 'col-xs-6'
-      count: [{}, {}]
+      name: 'dropdown'
+      value: 'Dropdown'
+      glyphicon: 'glyphicon-list'
     }
-    {
-      id: 3
-      width: 'col-xs-4'
-      count: [{}, {}, {}]
-    }
+    # {
+    #   name: 'masked'
+    #   value: 'Masked'
+    #   glyphicon: 'glyphicon-lock'
+    # }
   ]
 ])

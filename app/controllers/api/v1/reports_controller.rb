@@ -48,6 +48,17 @@ module Api::V1 #:nodoc:
         template = current_user.templates.find(template_id)
         report.templates << template unless report.templates.include?(template)
       end
+      if params[:did]
+        template = report.templates.find(params[:did])
+        template.fields.each do |field|
+          report.values.each do |value|
+            if field.id == value.field_id
+              value.destroy
+            end
+          end
+        end
+        report.templates.delete(template)
+      end
       report.update_attributes(allowed_params)
       current_user.reports << report unless current_user.reports.include?(report)
       head :no_content

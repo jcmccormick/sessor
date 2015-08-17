@@ -24,7 +24,8 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$rout
 				return new Array columns
 
 			# save/update template
-			$scope.template.saveTemplate = (temp)->
+			$scope.template.saveTemplate = (temp, myForm, template)->
+				console.log myForm
 				if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test $scope.template.name
 					Flash.create('danger', '<p>Page names must begin with a letter and only contain letters and numbers.</p>', 'customAlert')
 				else
@@ -62,9 +63,26 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$rout
 
 			# delete section
 			$scope.template.deleteSection = (template, section) ->
-				index = template.sections.indexOf(section)
-				template.sections.splice index, 1
-				template.columns.splice index, 1
+				tempFields = []
+				template.dfids = []
+
+				seindex = template.sections.indexOf(section)
+				template.sections.splice seindex, 1
+				template.columns.splice seindex, 1
+
+				# Make a copy of the fields or else 
+				# indexing will fail after the first deletion
+				angular.copy template.fields, tempFields
+				for field in tempFields
+					if field.section_id == seindex+1
+						template.dfids.push field.id
+						fiindex = template.fields.indexOf(field)
+						template.fields.splice fiindex, 1
+
+				template.$update({class: 'templates', id: template.id}, (res)->
+					template.dfids = undefined
+					tempFields = undefined
+				)
 				return
 
 			# add field

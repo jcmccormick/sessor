@@ -35,10 +35,9 @@ class Template < ActiveRecord::Base
 		eager_load(:fields).as_json(only: [:id, :name, :sections, :draft])
 	end
 
-	# Upon Template creation, set Draft and Private World to true. Setting Private World to true means the Template will be publically available for other Users to search for and add to their own Reports.
+	# Upon Template creation, set Draft to true.
 	def set_defaults
 		self.draft = true
-		self.private_world = true
 	end
 
 end

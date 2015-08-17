@@ -25,11 +25,7 @@
     data-parent="#view-all-accordion" 
     aria-controls="collapse{{report.id}}">
       <h4>#{{report.id}} <span ng-if="report.title != 'Untitled'">{{report.title}}</span> 
-        <small>
-          <ol class="breadcrumb view-reports-crumbs">
-            <li ng-repeat="template in report.templates">{{template.name}}</li>
-          </ol>
-        </small>
+        <small>Pages: {{report.templates.length}}</small>
       </h4>
 
         

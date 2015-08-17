@@ -6,7 +6,7 @@ class Field < ActiveRecord::Base
 	belongs_to :template, inverse_of: :fields
 
 	# Relate to the first Value related to the Field, used as a default value.
-	has_many :values, -> { where report_id: nil }
+	has_many :values, -> { where report_id: nil }, dependent: :destroy
 
 	# Saving a Field saves its associated Values.
 	accepts_nested_attributes_for :values
