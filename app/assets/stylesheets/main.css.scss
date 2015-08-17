@@ -279,7 +279,8 @@ blockquote {
 template-form-directive .form-group {
   position: relative;
 
-  textarea[type='text'] {
+  textarea {
+    height: 107px;
     resize: vertical;
   }
 
