@@ -1,40 +1,41 @@
 module Api::V1#:nodoc:
   class TemplatesController < ApiController
+
     nested_attributes_names = Template.nested_attributes_options.keys.map do |key|
       key.to_s.concat('_attributes').to_sym
     end
     wrap_parameters include: Template.attribute_names + nested_attributes_names
 
     def index
-      max_per_page = 5
 
-      pre_paginated_templates = if params.has_key?(:keywords)
+      render json: current_user.templates.page(params[:page].to_i).per(5).order(id: :desc).index_minned
 
-        keywords = params[:keywords]
+      # max_per_page = 5
+
+      # pre_paginated_templates = if params.has_key?(:keywords)
+
+      #   keywords = params[:keywords]
         
-        query = if keywords.to_i > 0
-          {:id => keywords.to_i}
-        elsif keywords.capitalize == 'Draft'
-          {:draft => 't'}
-        else
-          {:name => keywords}
-        end
-        current_user.templates.where(query)
-      else
-        current_user.templates
-      end
+      #   query = if keywords.to_i > 0
+      #     {:id => keywords.to_i}
+      #   elsif keywords.capitalize == 'Draft'
+      #     {:draft => 't'}
+      #   else
+      #     {:name => keywords}
+      #   end
+      #   current_user.templates.where(query)
+      # else
+      #   current_user.templates
+      # end
 
-      if params.has_key?(:d)
-        pre_paginated_templates = pre_paginated_templates.where(:draft => [nil,'f'])
-      end
+      # if params.has_key?(:d)
+      #   pre_paginated_templates = pre_paginated_templates.where(:draft => [nil,'f'])
+      # end
 
-      if params.has_key?(:ts)
-        pre_paginated_templates = pre_paginated_templates.where.not(:id => params[:ts][1..-2].split(',').collect! {|n| n.to_i})
-      end
+      # if params.has_key?(:ts)
+      #   pre_paginated_templates = pre_paginated_templates.where.not(:id => params[:ts][1..-2].split(',').collect! {|n| n.to_i})
+      # end
 
-      paginate pre_paginated_templates.count, max_per_page do |limit, offset|
-        render json: pre_paginated_templates.order(id: :desc).limit(limit).offset(offset).index_minned
-      end
     end
 
     def show

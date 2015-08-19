@@ -23,7 +23,7 @@ gem 'angular-rails-templates'
 gem "foreman"
 gem 'devise_token_auth'
 gem 'omniauth'
-gem 'clean_pagination'
+gem 'kaminari'
 group :production, :staging do
   # Use postgresql as the database for Heroku
   gem 'pg'

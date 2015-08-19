@@ -11,11 +11,11 @@
     "angular-ui-sortable": "latest",
     "angular-local-storage": "latest",
     "angular-chart.js": "latest",
-    "angular-paginate-anything": "latest",
     "Chart.js": "1.0.1",
     "ng-token-auth": "latest",
     "bootstrap-sass-official": "latest",
     "bootbox": "latest",
-    "ngBootbox": "latest"
+    "ngBootbox": "latest",
+    "ngInfiniteScroll": "latest"
   }
 }

@@ -12,7 +12,6 @@ class ApplicationController < ActionController::Base
 	protect_from_forgery with: :null_session, :if => Proc.new { |c| c.request.format == 'application/json' }
 	
 	# Include depdencies for `clean_pagination`, `devise`, and response types.
-	include CleanPagination
 	include DeviseTokenAuth::Concerns::SetUserByToken
 	include ActionController::MimeResponds
 

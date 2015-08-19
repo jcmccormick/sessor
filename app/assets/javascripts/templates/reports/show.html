@@ -6,16 +6,15 @@
       <li><a href="#/reports"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
     </ul>
   </li>
-  <li><input type="text" class="form-control pull-right" ng-model="keywords" placeholder="Report ID or Title" ng-model-options="{debounce: 1000}"></li>
 </page-menu>
+  
+<!-- <bgf-pagination class="text-center" collection="reports" url="'v1/reports'" url-params="urlParams"></bgf-pagination> -->
 
-<div class="text-center">
-  <bgf-pagination collection="reports" url="'v1/reports'" url-params="urlParams"></bgf-pagination>
-</div>
+<div infinite-scroll="loadNewItems()">
+  <div class="paper" ng-repeat="report in reports">
+    <h4>#{{report.id}} <span ng-if="report.title != 'Untitled'">{{report.title}}</span><br><small>Pages: {{report.templates.length}}</small></h4>
 
-<div class="paper" ng-repeat="report in reports">
-  <h4>#{{report.id}} <span ng-if="report.title != 'Untitled'">{{report.title}}</span> <small>Pages: {{report.templates.length}}</small></h4>
-
-  <a href="#/reports/{{report.id}}" class="btn btn-link">View</a>
-  <a href="#/reports/{{report.id}}/edit" class="btn btn-link">Edit</a>
+    <a href="#/reports/{{report.id}}" class="btn btn-link">View</a>
+    <a href="#/reports/{{report.id}}/edit" class="btn btn-link">Edit</a>
+  </div>
 </div>

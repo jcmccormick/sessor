@@ -6,25 +6,23 @@ module Api::V1 #:nodoc:
     wrap_parameters include: Report.attribute_names + nested_attributes_names
 
     def index
-      max_per_page = 5
 
-      pre_paginated_reports = if params.has_key?(:keywords)
+      render json: current_user.reports.page(params[:page]).per(5).order(id: :desc).index_minned
 
-        keywords = params[:keywords]
+      # pre_paginated_reports = if params.has_key?(:keywords)
 
-        query = if keywords.to_i > 0
-          {:id => keywords.to_i}
-        else
-          {:title => keywords}
-        end
-        current_user.reports.where(query)
-      else
-        current_user.reports
-      end
+      #   keywords = params[:keywords]
 
-      paginate pre_paginated_reports.count, max_per_page do |limit, offset|
-        render json: pre_paginated_reports.order(id: :desc).limit(limit).offset(offset).index_minned
-      end
+      #   query = if keywords.to_i > 0
+      #     {:id => keywords.to_i}
+      #   else
+      #     {:title => keywords}
+      #   end
+      #   current_user.reports.where(query)
+      # else
+      #   current_user.reports
+      # end
+
     end
 
     def show
