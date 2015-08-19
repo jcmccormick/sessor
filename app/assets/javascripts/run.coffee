@@ -29,6 +29,11 @@ sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash',
     return
   )
 
+  $rootScope.$on('auth:account-update-success', ->
+    Flash.create('success', 'Account updated successfully.', 'customAlert')
+    return
+  )
+
   angular.forEach [
     'cleartemplates'
     'clearreports'

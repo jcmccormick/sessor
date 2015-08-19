@@ -1,15 +1,18 @@
+<page-menu>
+	<li><a href="#/profile"><i class="glyphicon glyphicon-user"></i> &nbsp; Profile</a></li>
+</page-menu>
 <div class="paper">
-	<form role="form" ng-submit="updateAccount(updateAccountForm)" ng-init="updateAccountForm = {name: null, nickname: null}">
+	<form role="form" ng-submit="updateAccount(user)">
 		<fieldset ng-disabled="!user.signedIn">
 
 			<h1>Personal Information</h1>
 			<div class="form-group">
 				<label>Full Name</label>
-				<input type="text" name="name" class="form-control" ng-model="updateAccountForm.name">
+				<input type="text" name="name" class="form-control" ng-model="user.name">
 			</div>
 			<div class="form-group">
 				<label>Nickname</label>
-				<input type="text" name="nickname" class="form-control" ng-model="updateAccountForm.nickname">
+				<input type="text" name="nickname" class="form-control" ng-model="user.nickname">
 			</div>
 
     		<button type="submit" class="btn btn-link">Update Account</button>
