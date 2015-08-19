@@ -21,4 +21,5 @@ controllers.controller('UserRegistrationsController', ['$scope', '$auth', '$loca
 			).error((err)->
 				Flash.create('danger', "There was an error creating your account. The email may already be in use. Try again and contact support if errors persist.", 'customAlert')
 			)
+
 ])

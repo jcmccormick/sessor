@@ -47,6 +47,11 @@ sessor.config(['$authProvider', '$routeProvider',
         templateUrl: "user_sessions/destroy.html"
         resolve: authResolver
       )
+      .when('/profile',
+        templateUrl: "user_registrations/edit.html"
+        controller: 'UserRegistrationsController'
+        resolve: authResolver
+      )
       .when('/desktop',
         templateUrl: "main/desktop.html"
         resolve: authResolver

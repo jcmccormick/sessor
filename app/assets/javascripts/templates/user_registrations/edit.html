@@ -1,0 +1,19 @@
+<div class="paper">
+	<form role="form" ng-submit="updateAccount(updateAccountForm)" ng-init="updateAccountForm = {name: null, nickname: null}">
+		<fieldset ng-disabled="!user.signedIn">
+
+			<h1>Personal Information</h1>
+			<div class="form-group">
+				<label>Full Name</label>
+				<input type="text" name="name" class="form-control" ng-model="updateAccountForm.name">
+			</div>
+			<div class="form-group">
+				<label>Nickname</label>
+				<input type="text" name="nickname" class="form-control" ng-model="updateAccountForm.nickname">
+			</div>
+
+    		<button type="submit" class="btn btn-link">Update Account</button>
+
+		</fieldset>
+	</form>
+</div>

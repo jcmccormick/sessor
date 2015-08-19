@@ -309,10 +309,6 @@ template-form-directive .form-group {
     background-color: #f2dede;
   }
 
-  .section-row {
-    padding: 0 !important;
-  }
-
   .field-overlay {
     height: 108%;
     width: 102%;
@@ -337,7 +333,33 @@ template-form-directive .form-group {
       opacity: 1;
     }
   }
+}
+.section-row {
+  padding: 0 !important;
 
+  hr {
+    margin-top: 0;
+  }
+
+  >h3 a.btn,
+  >.close {
+    visibility: hidden;
+  }
+
+  >.close {
+    padding: 5px;
+    color: red;
+  }
+
+  &:not(.no-highlight):hover {
+    background-color: rgba(0,0,0,0.1);
+    outline: 5px solid rgba(0,0,0,0.1);
+
+    >.close,
+    >h3 a.btn {
+      visibility: visible;
+    }
+  }
 }
 
 /* 

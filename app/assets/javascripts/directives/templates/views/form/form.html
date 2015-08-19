@@ -37,7 +37,7 @@
 
       <div ng-if="form.hideName==false" class="paper row">
         <h3>Page Name</h3>
-        <input type="text" class="form-control" ng-model="form.name" placeholder="Start with a name then press Save..."/>
+        <input type="text" class="form-control" ng-model="form.name" placeholder="Start with a name then Save..."/>
       </div>
 
       <div ng-if="(report.hideTitle==false || report.viewing == true) && report.allow_title==true" class="paper row">
@@ -47,14 +47,22 @@
 
       <div ng-show="form.sections" class="paper row">
         <small ng-if="form.draft" class="pull-right">Draft</small>
-        <a href="javascript:;" ng-if="report.editing" class="required-error pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="removeTemplate(form, report)"><i class="glyphicon glyphicon-remove"></i></a>
+        <a href="javascript:;" ng-if="report.editing" class="text-danger close pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="removeTemplate(form, report)"><i class="glyphicon glyphicon-remove"></i></a>
         <h1><center>{{form.name}}</center></h1>
 
         <div ng-if="form.editing && form.sections.length<1" class="text-center h3"><a href data-toggle="modal" data-target=".newSectionModal">Add a Section</a> to get started...</div>
 
-        <div class="container-fluid section-row" ng-repeat="(section_id, section_name) in form.sections track by $index">
-          <a href="javascript:;" ng-if="form.editing" class="required-error pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(form, section_name)"><i class="glyphicon glyphicon-remove"></i></a>
-          <h3>{{section_name}}</h3>
+        <div class="container-fluid section-row" ng-class="{'no-highlight':!form.editing}" ng-repeat="(section_id, section_name) in form.sections track by $index">
+          <a href="javascript:;" ng-if="form.editing" class="text-danger close pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(form, section_name)"><i class="glyphicon glyphicon-remove"></i></a>
+          <h3 ng-init="renaming=false">
+            <span ng-if="renaming != true">{{section_name}}</span><span ng-if="renaming==true"><input type="text" class="form-control" ng-model="form.sections[section_id]"></span>
+            <small>
+              <a href="javascript:;" class="btn btn-link" ng-click="renaming=!renaming">
+                <span ng-if="renaming != true">Rename</span>
+                <span ng-if="renaming == true">Done</span>
+              </a>
+            </small>
+          </h3>
           <hr>
           
           <div class="col-xs-12" ng-class="{'col-md-6':form.columns[section_id] == 2, 'col-md-4':form.columns[section_id] == 3}" ng-repeat="column in columnsArray(form.columns[section_id]) track by $index">

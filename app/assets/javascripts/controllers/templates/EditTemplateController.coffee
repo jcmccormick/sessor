@@ -24,8 +24,7 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$rout
 				return new Array columns
 
 			# save/update template
-			$scope.template.saveTemplate = (temp, myForm, template)->
-				console.log myForm
+			$scope.template.saveTemplate = (temp, template)->
 				if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test $scope.template.name
 					Flash.create('danger', '<p>Page names must begin with a letter and only contain letters and numbers.</p>', 'customAlert')
 				else
