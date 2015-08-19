@@ -2,7 +2,7 @@ controllers = angular.module('controllers')
 controllers.controller('UserRegistrationsController', ['$scope', '$auth', '$location', 'Flash',
 ($scope, $auth, $location, Flash)->
 	$scope.handleRegBtnClick = ->
-		str = $scope.registrationForm.password
+		str = $scope.regForm.password
 		if str.length < 8
 			Flash.create('danger',"Please use a password 8 or more characters long.", 'customAlert')
 		else if str.search(/\d/) == -1
@@ -11,10 +11,10 @@ controllers.controller('UserRegistrationsController', ['$scope', '$auth', '$loca
 			Flash.create('danger', "Please include one letter in your password.", 'customAlert')
 		else if str.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+]/) != -1
 			Flash.create('danger', "You may only include the following special characters: ! @ # $ % ^ & * ( ) _ +", 'customAlert')
-		else if $scope.registrationForm.password != $scope.registrationForm.password_confirmation
+		else if $scope.regForm.password != $scope.regForm.password_confirmation
 			Flash.create('danger', "The passwords do not match.", 'customAlert')
 		else
-			$auth.submitRegistration($scope.registrationForm)
+			$auth.submitRegistration($scope.regForm)
 			.success((res)->
 				$location.path('/desktop')
 				Flash.create('success', "Account created! Welcome to Clerkr.", 'customAlert')

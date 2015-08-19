@@ -6,7 +6,5 @@ module Api::V1
 	class ApiController < ApplicationController
 		devise_token_auth_group :member, contains: [:user, :admin]
 		before_action :authenticate_member!
-
-		skip_before_filter :verify_authenticity_token
 	end
 end

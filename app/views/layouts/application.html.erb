@@ -10,8 +10,8 @@
   <body>
     <div flash-message="7500"></div>
     <%= yield %>
-    <%= javascript_include_tag 'application' %>
     <noscript>Please enable javascript and cookies in your browser.</noscript>
     <script>if (!navigator.cookieEnabled) document.write('Please enable javascript and cookies in your browser.');</script>
+    <%= javascript_include_tag 'application' %>
   </body>
 </html>

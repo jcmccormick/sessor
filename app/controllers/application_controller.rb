@@ -9,39 +9,20 @@
 class ApplicationController < ActionController::Base
 
 	# Protect the site from CSRF
-	protect_from_forgery with: :null_session
+	protect_from_forgery with: :null_session, :if => Proc.new { |c| c.request.format == 'application/json' }
 	
 	# Include depdencies for `clean_pagination`, `devise`, and response types.
 	include CleanPagination
 	include DeviseTokenAuth::Concerns::SetUserByToken
 	include ActionController::MimeResponds
-	
-	# # Return empty object is User is unauthorized
-	# def authenticate_current_user
-	# 	render json: {}, status: :unauthorized if get_current_user.nil?
-	# end
 
-	# # Return the User object after attempting to authenticate.
-	# def get_current_user
+	before_action :configure_permitted_parameters, if: :devise_controller?
 
-	# 	# Set `auth_headers` from request or return nil.
-	# 	return nil unless cookies[:auth_headers]
-	# 	auth_headers = JSON.parse cookies[:auth_headers]
+	protected
 
-	# 	# Set paramters for authentication test.
-	# 	expiration_datetime = DateTime.strptime(auth_headers["expiry"], "%s")
-	# 	current_user = User.find_by uid: auth_headers["uid"]
-
-	# 	# Test whether or not the User's most recent token matches the token sent in `auth_headers`, and that the token is not expired.
-	# 	if current_user &&
-	# 		 current_user.tokens.has_key?(auth_headers["client"]) &&
-	# 		 expiration_datetime > DateTime.now
-
-	# 		@current_user = current_user
-	# 	end
-
-	# 	# Return the User object
-	# 	@current_user
-	# end
+		def configure_permitted_parameters
+			devise_parameter_sanitizer.for(:sign_up) << :nickname
+			devise_parameter_sanitizer.for(:account_update) << [:name, :nickname]
+		end
 
 end
