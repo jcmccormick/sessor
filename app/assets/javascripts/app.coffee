@@ -43,6 +43,9 @@ sessor.config(['$authProvider', '$routeProvider',
         templateUrl: "user_sessions/new.html"
         controller: 'UserSessionsController'
       )
+      .when('/forgot_password',
+        templateUrl: "user_registrations/forgot_password.html"
+      )
       .when('/sign_out',
         templateUrl: "user_sessions/destroy.html"
         resolve: authResolver

@@ -12,7 +12,7 @@
 
 <div infinite-scroll="loadNewItems()">
   <div class="paper" ng-repeat="template in templates">
-    <h4>{{template.name}} <small class="pull-right" ng-show="template.draft">Draft</small></h4>
+    <h4>#{{template.id}} {{template.name}} <small class="pull-right" ng-show="template.draft">Draft</small></h4>
 
     <a href="#/templates/{{template.id}}" class="btn btn-link">View</a>
     <a href="#/templates/{{template.id}}/edit" class="btn btn-link">Edit</a>

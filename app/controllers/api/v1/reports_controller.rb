@@ -1,5 +1,6 @@
 module Api::V1 #:nodoc:
   class ReportsController < ApiController
+    
     nested_attributes_names = Report.nested_attributes_options.keys.map do |key|
       key.to_s.concat('_attributes').to_sym
     end

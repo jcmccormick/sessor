@@ -1,5 +1,6 @@
-sessor = angular.module("sessor")
-sessor.run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash',
+angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 750)
+
+angular.module("sessor").run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash',
 ($rootScope, $location, $cacheFactory, $http, Flash) ->
 
   $httpDefaultCache = $cacheFactory.get('$http')

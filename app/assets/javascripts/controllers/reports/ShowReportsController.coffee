@@ -4,6 +4,7 @@ controllers.controller("ShowReportsController",  ['$scope', 'ClassFactory',
 
 	$scope.page = 1
 	$scope.reports = []
+	more = true
 
 	$scope.loadNewItems = ->
 		ClassFactory.query({class: 'reports', page: $scope.page}, (reports)->

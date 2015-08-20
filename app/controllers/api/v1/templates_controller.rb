@@ -8,9 +8,7 @@ module Api::V1#:nodoc:
 
     def index
 
-      render json: current_user.templates.page(params[:page].to_i).per(5).order(id: :desc).index_minned
-
-      # max_per_page = 5
+      render json: current_user.templates.page(params[:page]).per(5).order(id: :desc).index_minned
 
       # pre_paginated_templates = if params.has_key?(:keywords)
 
