@@ -92,7 +92,9 @@
             <p>Field Label<input type="text" class="form-control" ng-model="form.selectedOptions.name"></p>
             <div>
               <p>Default Value
-                <input ng-show="['checkbox','labelntext','textarea'].indexOf(form.selectedOptions.fieldtype) == -1" type="text" class="form-control" ng-model="form.selectedOptions.values[0].input">
+                <input ng-if="form.selectedOptions.fieldtype == 'date'" type="date" class="form-control" ng-model="form.selectedOptions.values[0].input">
+                <input ng-if="form.selectedOptions.fieldtype == 'time'" type="time" class="form-control" ng-model="form.selectedOptions.values[0].input">
+                <input ng-show="['checkbox','labelntext','textarea','date','time'].indexOf(form.selectedOptions.fieldtype) == -1" type="text" class="form-control" ng-model="form.selectedOptions.values[0].input">
                 <input ng-show="form.selectedOptions.fieldtype == 'checkbox'" type="checkbox" class="form-control" ng-model="form.selectedOptions.values[0].input">
                 <textarea ng-show="['labelntext','textarea'].indexOf(form.selectedOptions.fieldtype) != -1" class="form-control" ng-model="form.selectedOptions.values[0].input"></textarea>
               </p>

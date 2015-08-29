@@ -71,16 +71,14 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$rout
 					else if field.section_id > index+1
 						field.section_id--
 
-				template.fields = $.grep(template.fields, (i) ->
+				template.fields = $.grep template.fields, (i) ->
 					$.inArray(i.id, template.dfids) == -1
-				)
-				
+
 				template.columns.splice index, 1
 				template.sections.splice index, 1
 
-				template.$update({class: 'templates', id: template.id}, (res)->
-					template.dfids = undefined
-				)
+				template.saveTemplate(true, template)
+				template.dfids = undefined
 				return
 
 			# add field

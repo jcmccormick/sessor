@@ -86,13 +86,13 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplateService',
           scope.field.values[0].input = if scope.field.values[0].input?
             new Date(scope.field.values[0].input)
           else
-            ''
+            undefined
           element.html fw+date+fwend
         when "time"
           scope.field.values[0].input = if scope.field.values[0].input?
             new Date(scope.field.values[0].input)
           else
-            ''
+            undefined
           element.html fw+time+fwend
 
         when "checkbox"
