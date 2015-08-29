@@ -6,8 +6,8 @@ directives.directive('templateFormDirective',[()->
 	scope:
 		form: '='
 		report: '='
-	controller: ['$scope',
-	($scope)->
+	controller: ['$scope', 'ClassFactory',
+	($scope, ClassFactory)->
 
 		# Template Designer Features
 		$scope.setSelectedOptions = (optionSet, form)->
@@ -41,6 +41,16 @@ directives.directive('templateFormDirective',[()->
 					if $scope.form.id == template.id
 						$scope.form = report.templates[0]
 			)
+
+		$scope.page = 1
+		$scope.templates = []
+
+		$scope.loadNewItems = ->
+			ClassFactory.query({class: 'templates', page: $scope.page}, (templates)->
+				$scope.templates = $scope.templates.concat(templates)
+				$scope.page += 1
+			)
+
 
 	]}
 ])

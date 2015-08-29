@@ -61,26 +61,25 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$rout
 				return
 
 			# delete section
-			$scope.template.deleteSection = (template, section) ->
-				tempFields = []
+			$scope.template.deleteSection = (template, index) ->
 				template.dfids = []
+				tempFields = []
 
-				seindex = template.sections.indexOf(section)
-				template.sections.splice seindex, 1
-				template.columns.splice seindex, 1
-
-				# Make a copy of the fields or else 
-				# indexing will fail after the first deletion
-				angular.copy template.fields, tempFields
-				for field in tempFields
-					if field.section_id == seindex+1
+				for field in template.fields
+					if field.section_id == index+1
 						template.dfids.push field.id
-						fiindex = template.fields.indexOf(field)
-						template.fields.splice fiindex, 1
+					else if field.section_id > index+1
+						field.section_id--
+
+				template.fields = $.grep(template.fields, (i) ->
+					$.inArray(i.id, template.dfids) == -1
+				)
+				
+				template.columns.splice index, 1
+				template.sections.splice index, 1
 
 				template.$update({class: 'templates', id: template.id}, (res)->
 					template.dfids = undefined
-					tempFields = undefined
 				)
 				return
 
@@ -134,6 +133,38 @@ controllers.controller('EditTemplateController', ['$rootScope', '$scope', '$rout
 				$.extend option, new ClassFactory()
 				option.$delete({class: 'options', id: option.id})
 				return
+
+			# Reordering
+			$scope.template.moveSectionUp = (template, index)->
+				tempSection = template.sections[index]
+				template.sections[index] = template.sections[index-1]
+				template.sections[index-1] = tempSection
+
+				tempColumn = template.columns[index]
+				template.columns[index] = template.columns[index-1]
+				template.columns[index-1] = tempColumn
+				
+				for field in template.fields
+					if field.section_id == index+1
+						field.section_id--
+					else if field.section_id == index
+						field.section_id++
+
+			$scope.template.moveSectionDown = (template, index)->
+				
+				tempSection = template.sections[index]
+				template.sections[index] = template.sections[index+1]
+				template.sections[index+1] = tempSection
+
+				tempColumn = template.columns[index]
+				template.columns[index] = template.columns[index+1]
+				template.columns[index+1] = tempColumn
+
+				for field in template.fields
+					if field.section_id == index+1
+						field.section_id++
+					else if field.section_id == index+2
+						field.section_id--
 
 		)
 	else

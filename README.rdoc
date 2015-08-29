@@ -8,7 +8,7 @@
 * Appointments
 * Talk
 * Email
-* InfiniteScroll
 * ControllerAs
 * Field value reorganization
 * Z-index light-up tour
+* Template tags

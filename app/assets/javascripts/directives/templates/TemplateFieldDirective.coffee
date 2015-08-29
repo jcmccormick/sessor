@@ -22,7 +22,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplateService',
 
     # Create a format for field input box layout
     fwstart = '<div class="form-group">'
-    fwmid = '<label class="control-label">{{field.name}}
+    fwmid = '<label class="control-label"  ng-if="field.name">{{field.name}}
                <span class="required-error" ng-if="field.required && !field.values[0].input">*</span>
              </label>'
 

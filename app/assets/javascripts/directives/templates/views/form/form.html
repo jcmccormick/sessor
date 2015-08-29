@@ -52,18 +52,23 @@
 
         <div ng-if="form.editing && form.sections.length<1" class="text-center h3"><a href data-toggle="modal" data-target=".newSectionModal">Add a Section</a> to get started...</div>
 
-        <div class="container-fluid section-row" ng-class="{'no-highlight':!form.editing}" ng-repeat="(section_id, section_name) in form.sections track by $index">
-          <a href="javascript:;" ng-if="form.editing" class="text-danger close pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(form, section_name)"><i class="glyphicon glyphicon-remove"></i></a>
-          <h3 ng-init="renaming=false">
-            <span ng-if="renaming != true">{{section_name}}</span><span ng-if="renaming==true"><input type="text" class="form-control" ng-model="form.sections[section_id]"></span>
-            <small>
-              <a href="javascript:;" class="btn btn-link" ng-click="renaming=!renaming">
-                <span ng-if="renaming != true">Rename</span>
-                <span ng-if="renaming == true">Done</span>
-              </a>
-            </small>
+        <div class="container-fluid section-row" ng-init="section[section_id].renaming = false" ng-mouseenter="show_options = true" ng-mouseleave="show_options = false" ng-class="{'no-highlight':!form.editing}" ng-repeat="(section_id, section_name) in form.sections track by $index">
+          <div class="section-options" ng-if="form.editing && show_options == true">
+            <a href="javascript:;" class="btn btn-default" ng-click="section[section_id].renaming =! section[section_id].renaming">
+              <span ng-if="section[section_id].renaming != true">Rename</span>
+              <span ng-if="section[section_id].renaming == true">Save Name</span>
+            </a>
+            <div class="pull-right">
+              <a href="javascript:;" class="btn btn-default" ng-click="form.moveSectionUp(form, section_id)" ng-if="!$first"><i class="glyphicon glyphicon-arrow-up"></i></a>
+              <a href="javascript:;" class="btn btn-default" ng-click="form.moveSectionDown(form, section_id)" ng-if="!$last"><i class="glyphicon glyphicon-arrow-down"></i></a>
+              <a href="javascript:;" class="text-danger close" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(form, section_id)"><i class="glyphicon glyphicon-remove"></i></a>
+            </div>
+          </div>
+          <h3>
+            <span ng-if="section[section_id].renaming != true">{{section_name}}</span>
+            <span ng-if="section[section_id].renaming == true"><input type="text" class="form-control" ng-model="form.sections[section_id]"></span>
           </h3>
-          <hr>
+          <hr ng-if="section_name">
           
           <div class="col-xs-12" ng-class="{'col-md-6':form.columns[section_id] == 2, 'col-md-4':form.columns[section_id] == 3}" ng-repeat="column in columnsArray(form.columns[section_id]) track by $index">
             <div ng-if="(report.livesave && report.editing) || report.viewing || (!report && form)" ng-click="setSelectedOptions(field, form)" ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section_id+1}">
@@ -76,10 +81,6 @@
 
     </div>
 
-
-    <!-- DELETE SECTION BUTTON
-     <button class="btn btn-danger" data-toggle="collapse" data-target="#sec{{section_id+1}}" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this section?</h4></center>" ng-bootbox-confirm-action="deleteSection(template, section_name)">
-    -->
     <div ng-if="form.selectedOptions && !report" class="template-options">
       <nav ng-if="form.selectedOptions.fieldtype" class="navbar-inverse">
         <ul class="nav">
@@ -135,21 +136,20 @@
         <h2 class="modal-title">Page Selection</h2>
       </div>
       <div class="modal-body row">
-        <div class="text-center">
-          <bgf-pagination url="'v1/templates'" collection="templates" url-params="{'d':true,'ts':[report.template_ids]}"></bgf-pagination>
-        </div>
-        <div role="button" class="col-xs-6" data-dismiss="modal" ng-click="addTemplate(template, myForm, report)" ng-repeat="template in templates">
-          <ul class="list-group">
-            <li class="list-group-item"><h4>{{template.name}}</h3></li>
-            <li class="list-group-item" ng-if="template.allow_title">Title</li>
-            <li class="list-group-item" ng-repeat="section_name in template.sections track by $index">{{section_name}}</li>
-          </ul>
-        </div>
-        <div class="container-fluid" ng-if="templates.length<1">
-          <h3>Nothing here?</h3>
-          <p>Make sure the Page you want to add is not marked as Draft. Uncheck the "Draft" option when editing a Page, then save it.</p>
-          <p>Pages may only be added to a report once.</p>
-          <button class="btn btn-primary" data-dismiss="modal">Close</button>
+        <div infinite-scroll="loadNewItems()">
+          <div role="button" class="paper" data-dismiss="modal" ng-click="addTemplate(template, myForm, report)" ng-repeat-start="template in templates">
+            <ul class="list-group">
+              <li class="list-group-item"><h4>{{template.name}}</h3></li>
+              <li class="list-group-item" ng-if="template.allow_title">Title</li>
+              <li class="list-group-item" ng-repeat="section_name in template.sections track by $index">{{section_name}}</li>
+            </ul>
+          </div>
+          <div class="container-fluid" ng-if="templates.length<1" ng-repeat-end>
+            <h3>Nothing here?</h3>
+            <p>Make sure the Page you want to add is not marked as Draft. Uncheck the "Draft" option when editing a Page, then save it.</p>
+            <p>Pages may only be added to a report once.</p>
+            <button class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </form>
