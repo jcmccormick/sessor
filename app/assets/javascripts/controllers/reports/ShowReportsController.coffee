@@ -22,13 +22,8 @@ controllers.controller("ShowReportsController",  ['$scope', 'ClassFactory',
 				report.templates = report.templates.map((item) ->
 					n = sorting.indexOf(item.id)
 					sorting[n] = ''
-					[
-						n
-						item
-					]
-				).sort().map((j) ->
-					j[1]
-				)
+					[n, item]
+				).sort().map((j) ->	j[1])
 		)
 
 	$scope.sortTemplates = (report)->

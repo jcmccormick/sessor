@@ -45,6 +45,17 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 		getReport: (id)->
 			deferred = $q.defer()
 			ClassFactory.get({class: 'reports', id: id}, (res)->
+				console.log res.templates
+				console.log res.template_order
+				sorting = []
+				angular.copy res.template_order, sorting
+				res.templates = res.templates.map((item) ->
+					n = sorting.indexOf(item.id)
+					sorting[n] = ''
+					[n, item]
+				).sort().map((j) ->	j[1])
+				console.log res.templates
+				console.log res.template_order
 				deferred.resolve(res)
 			)
 			return deferred.promise
