@@ -1,6 +1,4 @@
-json.(@report, :id, :title, :allow_title)
-
-json.template_ids report.templates.collect { |template| template.id }
+json.(@report, :id, :title, :allow_title, :template_order)
 
 json.users report.users do |user|
 	json.id user.id

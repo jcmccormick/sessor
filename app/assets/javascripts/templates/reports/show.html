@@ -6,14 +6,16 @@
       <li><a href="#/reports"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
     </ul>
   </li>
+  <li class="col-xs-6"><input type="text" class="form-control" placeholder="Search ID or Title" ng-model="keywords"></li>
+  <li><a href="javascript:;" ng-click="search(keywords)"><i class="glyphicon glyphicon-search"></i></a></li>
+  <li><a href="javascript:;" ng-click="search();keywords=undefined"><i class="glyphicon glyphicon-remove"></i></a></li>
 </page-menu>
-  
-<!-- <bgf-pagination class="text-center" collection="reports" url="'v1/reports'" url-params="urlParams"></bgf-pagination> -->
 
 <div infinite-scroll="loadNewItems()">
   <div class="paper" ng-repeat="report in reports">
-    <h4>#{{report.id}} <span ng-if="report.title != 'Untitled'">{{report.title}}</span><br><small>Pages: {{report.templates.length}}</small></h4>
-
+    <h4>#{{report.id}} <span ng-if="report.title != 'Untitled'">{{report.title}}</span></h4>
+    <span ng-repeat="template in report.templates track by $index">{{template.name}}<span ng-show="!$last">, </span></span>
+    <hr>
     <a href="#/reports/{{report.id}}" class="btn btn-link">View</a>
     <a href="#/reports/{{report.id}}/edit" class="btn btn-link">Edit</a>
   </div>

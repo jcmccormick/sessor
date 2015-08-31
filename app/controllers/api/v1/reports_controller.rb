@@ -8,21 +8,20 @@ module Api::V1 #:nodoc:
 
     def index
 
-      render json: current_user.reports.page(params[:page]).per(5).order(id: :desc).index_minned
 
-      # pre_paginated_reports = if params.has_key?(:keywords)
+      queried_reports = if params.has_key?(:keywords)
 
-      #   keywords = params[:keywords]
+        keywords = params[:keywords]
 
-      #   query = if keywords.to_i > 0
-      #     {:id => keywords.to_i}
-      #   else
-      #     {:title => keywords}
-      #   end
-      #   current_user.reports.where(query)
-      # else
-      #   current_user.reports
-      # end
+        query = if keywords.to_i > 0
+          {:id => keywords.to_i}
+        else
+          {:title => keywords}
+        end
+        render json: current_user.reports.where(query).page(params[:page]).per(5).order(id: :desc).index_minned
+      else
+        render json: current_user.reports.page(params[:page]).per(5).order(id: :desc).index_minned
+      end
 
     end
 
@@ -33,9 +32,9 @@ module Api::V1 #:nodoc:
     end
 
     def create
-      templates = current_user.templates.find(params[:template_ids])
+      template = current_user.templates.find(params[:template_order])
       @report = current_user.reports.new(allowed_params)
-      @report.templates << templates
+      @report.templates << template
       @report.save
       current_user.reports << @report
       render 'show', status: 201
@@ -43,11 +42,12 @@ module Api::V1 #:nodoc:
 
     def update
       report = current_user.reports.find(params[:id])
-      params[:template_ids].each do |template_id|
+      report.template_order = params[:template_order]
+      params[:template_order].each do |template_id|
         template = current_user.templates.find(template_id)
         report.templates << template unless report.templates.include?(template)
       end
-      if params[:did]
+      if params.has_key?(:did)
         template = report.templates.find(params[:did])
         template.fields.each do |field|
           report.values.each do |value|
@@ -57,8 +57,9 @@ module Api::V1 #:nodoc:
           end
         end
         report.templates.delete(template)
+      else
+        report.update_attributes(allowed_params)
       end
-      report.update_attributes(allowed_params)
       current_user.reports << report unless current_user.reports.include?(report)
       head :no_content
     end
@@ -72,9 +73,9 @@ module Api::V1 #:nodoc:
     private
       def allowed_params
         params.require(:report).permit(
-          :title, :allow_title, :submission, :response, :active, :location,
+          :id, :title, {:template_order => []}, :allow_title, :submission, :response, :active, :location,
           values_attributes: [
-            :id, :input
+            :id, :input, :field_id
           ]      
         )
       end

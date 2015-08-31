@@ -22,13 +22,16 @@ directives.directive('templateFormDirective',[()->
 			$scope.form = template
 
 		$scope.addTemplate = (template, myForm, report)->
-			report.addTemplate(template, myForm, report).then((res)->
-				if res != 'updated'
-					report.template_ids.pop()
-				else
-					report.getReport(report.id).then((rep)->
+			myForm.$dirty = true
+			report.template_order.push template.id
+			report.saveReport(true, myForm, report).then((res)->
+				report.getReport(report.id).then((rep)->
+					if rep.templates[rep.templates.length-1].id != template.id
+						report.template_order.pop()
+					else
 						report.templates.push rep.templates[rep.templates.length-1]
-					)
+						$scope.loadNewItems()
+				)
 			)
 
 		$scope.removeTemplate = (template, report)->
@@ -36,19 +39,17 @@ directives.directive('templateFormDirective',[()->
 				if res == 'deleted'
 					index = report.templates.indexOf(template)
 					report.templates.splice index, 1
-					idindex = report.template_ids.indexOf(template.id)
-					report.template_ids.splice idindex, 1
+					idindex = report.template_order.indexOf(template.id)
+					report.template_order.splice idindex, 1
 					if $scope.form.id == template.id
 						$scope.form = report.templates[0]
+					$scope.loadNewItems()
 			)
 
-		$scope.page = 1
-		$scope.templates = []
 
 		$scope.loadNewItems = ->
-			ClassFactory.query({class: 'templates', page: $scope.page}, (templates)->
-				$scope.templates = $scope.templates.concat(templates)
-				$scope.page += 1
+			ClassFactory.query({class: 'templates', ts: [$scope.report.template_order]}, (templates)->
+				$scope.templates = templates
 			)
 
 

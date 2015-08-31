@@ -24,6 +24,7 @@ class Report < ActiveRecord::Base
   has_and_belongs_to_many :templates
   has_many :fields, through: :templates
   has_many :values, dependent: :destroy
+  serialize :template_order, Array
   accepts_nested_attributes_for :values
   validates :title, format: { with: /\A[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
   after_create :populate_values
@@ -31,7 +32,7 @@ class Report < ActiveRecord::Base
 
   # Use a method to get as little information as needed when viewing all reports. Usable on ActiveRecord Relation.
   def self.index_minned
-    includes(:templates).as_json(only: [:id, :title], include: {templates: {only: [:id, :name]}})
+    includes(:templates).as_json(only: [:id, :title, :template_order], include: {templates: {only: [:id, :name]}})
   end
 
   # Populate the Values of the Fields associated with the Report.

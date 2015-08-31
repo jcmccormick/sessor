@@ -8,31 +8,27 @@ module Api::V1#:nodoc:
 
     def index
 
-      render json: current_user.templates.page(params[:page]).per(5).order(id: :desc).index_minned
+      queried_templates = if params.has_key?(:keywords)
 
-      # pre_paginated_templates = if params.has_key?(:keywords)
-
-      #   keywords = params[:keywords]
+        keywords = params[:keywords]
         
-      #   query = if keywords.to_i > 0
-      #     {:id => keywords.to_i}
-      #   elsif keywords.capitalize == 'Draft'
-      #     {:draft => 't'}
-      #   else
-      #     {:name => keywords}
-      #   end
-      #   current_user.templates.where(query)
-      # else
-      #   current_user.templates
-      # end
+        query = if keywords.to_i > 0
+          {:id => keywords.to_i}
+        elsif keywords.capitalize == 'Draft'
+          {:draft => 't'}
+        else
+          {:name => keywords}
+        end
+        current_user.templates.where(query)
+      else
+        current_user.templates
+      end
 
-      # if params.has_key?(:d)
-      #   pre_paginated_templates = pre_paginated_templates.where(:draft => [nil,'f'])
-      # end
-
-      # if params.has_key?(:ts)
-      #   pre_paginated_templates = pre_paginated_templates.where.not(:id => params[:ts][1..-2].split(',').collect! {|n| n.to_i})
-      # end
+      if params.has_key?(:ts)
+        render json: queried_templates.where(:draft => [nil,'f']).where.not(:id => params[:ts][1..-2].split(',').collect! {|n| n.to_i}).index_minned
+      else
+        render json: queried_templates.page(params[:page]).per(5).order(id: :desc).index_minned
+      end
 
     end
 
@@ -48,39 +44,40 @@ module Api::V1#:nodoc:
     end
 
     def update
-      template = current_user.templates.find(params[:id])
-      template.sections = params[:sections]
-      template.columns = params[:columns]
-      if params[:dfids]
-        params[:dfids].each do |field_id|
-          field = template.fields.find(field_id)
-          field.destroy
-        end
-      end
-      template.update_attributes(allowed_params)
-      current_user.templates << template unless current_user.templates.include?(template)
-      head :no_content
-    end
+    render json: params[:columns]
+    #   template = current_user.templates.find(params[:id])
+    #   template.sections = params[:sections]
+    #   template.columns = params[:columns]
+    #   if params.has_key?(:dfids)
+    #     params[:dfids].each do |field_id|
+    #       field = template.fields.find(field_id)
+    #       field.destroy
+    #     end
+    #   end
+    #   template.update_attributes(allowed_params)
+    #   current_user.templates << template unless current_user.templates.include?(template)
+    #   head :no_content
+    # end
 
-    def destroy
-      template = current_user.templates.find(params[:id])
-      template.destroy
-      head :no_content
+    # def destroy
+    #   template = current_user.templates.find(params[:id])
+    #   template.destroy
+    #   head :no_content
     end
 
     private
       def allowed_params
         params.require(:template).permit(
-          :name, :creator_uid, :sections, :columns, :private_group, :private_world, :group_id, :group_edit, :group_editors, :draft,
-          fields_attributes: [
+          :name, :creator_uid, {:sections => []}, {:columns => []}, :private_group, :private_world, :group_id, :group_edit, :group_editors, :draft,
+          {:fields_attributes => [
             :id, :name, :fieldtype, :required, :disabled, :glyphicon, :section_id, :column_id,
-            values_attributes: [
-              :id, :input
-            ],
-            options_attributes: [
+            {:values_attributes => [
+              :id, :input, :field_id
+            ]},
+            {:options_attributes => [
               :id, :name
-            ]
-          ]
+            ]}
+          ]}
         )
       end
   end

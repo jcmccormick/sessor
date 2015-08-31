@@ -129,8 +129,8 @@
 </div>
 
 
-<!-- BEGIN PREVIEW MODAL -->
-<div ng-if="(report.livesave && report.template_ids) || (!report.id && report.livesave)" class="modal fade addTemplateModal" tabindex="-1" role="dialog" aria-labelledby="previewModal" aria-hidden="true">
+<!-- BEGIN ADD TEMPLATE MODAL -->
+<div ng-if="(report.livesave && report.template_order) || (!report.id && report.livesave)" class="modal fade addTemplateModal" tabindex="-1" role="dialog" aria-labelledby="previewModal" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <form class="modal-content">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -139,7 +139,7 @@
       </div>
       <div class="modal-body row">
         <div infinite-scroll="loadNewItems()">
-          <div role="button" class="paper" data-dismiss="modal" ng-click="addTemplate(template, myForm, report)" ng-repeat-start="template in templates">
+          <div role="button" class="col-xs-4 col-md-3" data-dismiss="modal" ng-click="addTemplate(template, myForm, report)" ng-repeat-start="template in templates">
             <ul class="list-group">
               <li class="list-group-item"><h4>{{template.name}}</h3></li>
               <li class="list-group-item" ng-if="template.allow_title">Title</li>
@@ -157,4 +157,4 @@
     </form>
   </div>
 </div>
-<!-- END PREVIEW MODAL -->
+<!-- END ADD TEMPLATE MODAL -->

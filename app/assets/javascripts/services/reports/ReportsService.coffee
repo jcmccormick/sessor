@@ -29,11 +29,10 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 
 		newReport: ->
 			report = new ClassFactory()
-			report.addTemplate = this.addTemplate
 			report.saveReport = this.saveReport
 			report.livesave = true
 			report.hideTitle = false
-			report.template_ids = []
+			report.template_order = []
 			return report
 
 		deleteReport: (report)->
@@ -58,17 +57,20 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 					deferred.resolve(errors)
 					return
 
-				if !report.id
-					report.$save({class: 'reports'}, (res)->
+				repCopy = new ClassFactory()
+				$.extend repCopy, report
+
+				if !repCopy.id
+					repCopy.$save({class: 'reports'}, (res)->
 						$location.path("/reports/#{res.id}/edit")
 						Flash.create('success', '<p>Report saved!</p>', 'customAlert')
 					)
 				else if myForm.$dirty
-					report.values_attributes = []
-					for template in report.templates
+					repCopy.values_attributes = []
+					for template in repCopy.templates
 						for field in template.fields
-							report.values_attributes.push field.values[0]
-					report.$update({class: 'reports', id: report.id}, ->
+							repCopy.values_attributes.push field.values[0]
+					repCopy.$update({class: 'reports', id: repCopy.id}, ->
 						$rootScope.$broadcast('clearreports')
 						Flash.create('success', '<p>Report updated!</p>', 'customAlert')
 						myForm.$setPristine()
@@ -83,16 +85,6 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 					else
 						deferred.resolve()
 
-			)
-			return deferred.promise
-
-
-		addTemplate: (template, myForm, report)->
-			deferred = $q.defer()
-			myForm.$dirty = true
-			report.template_ids.push template.id
-			report.saveReport(true, myForm, report).then((res)->
-				deferred.resolve(res)
 			)
 			return deferred.promise
 

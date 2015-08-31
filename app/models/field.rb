@@ -16,4 +16,6 @@ class Field < ActiveRecord::Base
 
 	# Saving a Field saves its associated Options.
 	accepts_nested_attributes_for :options
+
+	default_scope { eager_load([:options, :values]) }
 end
