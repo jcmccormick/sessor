@@ -99,6 +99,20 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 			)
 			return deferred.promise
 
+		addTemplate = (template, myForm, report)->
+		deferred = $q.defer()
+		myForm.$dirty = true
+		report.template_order.push template.id
+		report.saveReport(true, myForm, report).then((res)->
+			report.getReport(report.id).then((rep)->
+				if rep.templates[rep.templates.length-1].id != template.id
+					report.template_order.pop()
+				else
+					report.templates.push rep.templates[rep.templates.length-1]
+					$scope.loadNewItems()
+			)
+		)
+
 		removeTemplate: (template, report)->
 			deferred = $q.defer()
 			report.$update({class: 'reports', id: report.id, did: template.id}, ->

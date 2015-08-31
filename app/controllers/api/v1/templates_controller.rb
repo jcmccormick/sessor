@@ -44,25 +44,24 @@ module Api::V1#:nodoc:
     end
 
     def update
-    render json: params[:columns]
-    #   template = current_user.templates.find(params[:id])
-    #   template.sections = params[:sections]
-    #   template.columns = params[:columns]
-    #   if params.has_key?(:dfids)
-    #     params[:dfids].each do |field_id|
-    #       field = template.fields.find(field_id)
-    #       field.destroy
-    #     end
-    #   end
-    #   template.update_attributes(allowed_params)
-    #   current_user.templates << template unless current_user.templates.include?(template)
-    #   head :no_content
-    # end
+      template = current_user.templates.find(params[:id])
+      template.sections = params[:sections]
+      template.columns = params[:columns]
+      if params.has_key?(:dfids)
+        params[:dfids].each do |field_id|
+          field = template.fields.find(field_id)
+          field.destroy
+        end
+      end
+      template.update_attributes(allowed_params)
+      current_user.templates << template unless current_user.templates.include?(template)
+      head :no_content
+    end
 
-    # def destroy
-    #   template = current_user.templates.find(params[:id])
-    #   template.destroy
-    #   head :no_content
+    def destroy
+      template = current_user.templates.find(params[:id])
+      template.destroy
+      head :no_content
     end
 
     private
