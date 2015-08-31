@@ -115,15 +115,12 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 
 		removeTemplate: (template, report)->
 			deferred = $q.defer()
-			console.log report.templates
-			index = report.templates.indexOf(template)
-			console.log index
-			report.templates.splice index, 1
-			console.log report.templates
-			idindex = report.template_order.indexOf(template.id)
-			report.template_order.splice idindex, 1
 			report.$update({class: 'reports', id: report.id, did: template.id}, ->
 				$rootScope.$broadcast('clearreports')
+				index = report.templates.indexOf(template)
+				report.templates.splice index, 1
+				idindex = report.template_order.indexOf(template.id)
+				report.template_order.splice idindex, 1
 				deferred.resolve(report)
 			)
 			return deferred.promise
