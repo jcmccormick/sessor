@@ -42,11 +42,6 @@ module Api::V1 #:nodoc:
 
     def update
       report = current_user.reports.find(params[:id])
-      report.template_order = params[:template_order]
-      params[:template_order].each do |template_id|
-        template = current_user.templates.find(template_id)
-        report.templates << template unless report.templates.include?(template)
-      end
       if params.has_key?(:did)
         template = report.templates.find(params[:did])
         template.fields.each do |field|
@@ -58,6 +53,11 @@ module Api::V1 #:nodoc:
         end
         report.templates.delete(template)
       else
+        report.template_order = params[:template_order]
+        report.template_order.each do |template_id|
+          template = current_user.templates.find(template_id)
+          report.templates << template unless report.templates.include?(template)
+        end
         report.update_attributes(allowed_params)
       end
       current_user.reports << report unless current_user.reports.include?(report)

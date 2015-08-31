@@ -29,6 +29,7 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 
 		newReport: ->
 			report = new ClassFactory()
+			report.addTemplate = this.addTemplate
 			report.saveReport = this.saveReport
 			report.livesave = true
 			report.hideTitle = false
@@ -45,8 +46,6 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 		getReport: (id)->
 			deferred = $q.defer()
 			ClassFactory.get({class: 'reports', id: id}, (res)->
-				console.log res.templates
-				console.log res.template_order
 				sorting = []
 				angular.copy res.template_order, sorting
 				res.templates = res.templates.map((item) ->
@@ -54,8 +53,6 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 					sorting[n] = ''
 					[n, item]
 				).sort().map((j) ->	j[1])
-				console.log res.templates
-				console.log res.template_order
 				deferred.resolve(res)
 			)
 			return deferred.promise
@@ -99,25 +96,35 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 			)
 			return deferred.promise
 
-		addTemplate = (template, myForm, report)->
-		deferred = $q.defer()
-		myForm.$dirty = true
-		report.template_order.push template.id
-		report.saveReport(true, myForm, report).then((res)->
-			report.getReport(report.id).then((rep)->
-				if rep.templates[rep.templates.length-1].id != template.id
-					report.template_order.pop()
-				else
-					report.templates.push rep.templates[rep.templates.length-1]
-					$scope.loadNewItems()
+		addTemplate: (template, myForm, report)->
+			deferred = $q.defer()
+			myForm.$dirty = true
+			report.template_order.push template.id
+			report.saveReport(true, myForm, report).then((res)->
+				if res == 'updated'
+					report.getReport(report.id).then((rep)->
+						if rep.templates[rep.templates.length-1].id != template.id
+							report.template_order.pop()
+							Flash.create('danger', '<p>There was an issue adding the page to this report. Try reloading the page or re-logging in.</p>', 'customAlert')
+						else
+							report.templates.push rep.templates[rep.templates.length-1]
+							deferred.resolve(report)
+					)
 			)
-		)
+			return deferred.promise
 
 		removeTemplate: (template, report)->
 			deferred = $q.defer()
+			console.log report.templates
+			index = report.templates.indexOf(template)
+			console.log index
+			report.templates.splice index, 1
+			console.log report.templates
+			idindex = report.template_order.indexOf(template.id)
+			report.template_order.splice idindex, 1
 			report.$update({class: 'reports', id: report.id, did: template.id}, ->
 				$rootScope.$broadcast('clearreports')
-				deferred.resolve('deleted')
+				deferred.resolve(report)
 			)
 			return deferred.promise
 
