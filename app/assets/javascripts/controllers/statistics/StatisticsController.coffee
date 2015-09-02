@@ -1,6 +1,6 @@
 controllers = angular.module('controllers')
-controllers.controller("StatisticsController",  ['$scope', 'ClassFactory', 'TemplateService', 'StatisticsService',
-($scope, ClassFactory, TemplateService, StatisticsService)->
+controllers.controller("StatisticsController",  ['$scope', 'ClassFactory', 'StatisticsService',
+($scope, ClassFactory, StatisticsService)->
 	## Var Declare
 	$scope.dataProps = []
 	$scope.dataProps.templates = []

@@ -179,31 +179,26 @@ blockquote {
   &.alert-info:before {
     content: "Just some notes...";
   }
-
 }
 
 /*
  * Breadcrumbz
  */
 
-.view-reports-crumbs {
-  display: inherit;
-}
-
 .edit-report-crumbs {
   background-color: white !important;
   padding: 0 !important;
   border-radius: 0 !important;
-  margin-top: 40px;
-  padding: 10px 0 !important;
+  margin: 40px 15px;
+  padding: 20px !important;
   font-size: 16px;
   text-transform: capitalize;
   -webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
 
-  @include respond(mobile) {
-    margin-top: 20px;
+  @include respond(tablet) {
+    margin:30px 20px;
   }
 }
 
@@ -212,15 +207,37 @@ blockquote {
  */
 
 .paper {
-  margin: 20px 0;
   padding: 15px 20px;
   background-color: white;
-  -webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0 5px 25px 2px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 5px 25px 2px rgba(0, 0, 0, 0.4);
+  box-shadow:  0 5px 25px 2px rgba(0, 0, 0, 0.4);
+  
+  &.row {
+    margin: 20px 15px;
+    &:first-child {
+      margin-top: 40px;
+    }
+    &:last-child {
+      margin-bottom: 15px;
+    }
+  }
+
+  h1 {
+    white-space: pre;
+    word-wrap: break-word;
+  }
 
   @include respond(tablet) {
-    margin: 15px;
+    &.row {
+      margin: 20px;
+      &:first-child {
+        margin-top: 30px;
+      }
+      &:last-child {
+        margin-bottom: 30px;
+      }
+    }
     padding: 35px 45px;
   }
 }
@@ -228,6 +245,25 @@ blockquote {
   @include respond(desktop) {
     width: 100% !important;
     padding-right: 245px !important;
+  }
+}
+
+
+/*
+ * Reports
+ */
+.add-template-list {
+
+  &:hover {
+    .add-template-list-section {
+      display: block;
+    }
+  }
+
+  .add-template-list-section {
+    display: none;
+    z-index: 20;
+    position: fixed;
   }
 }
 
@@ -261,10 +297,9 @@ blockquote {
 
   .nav {
     padding: 15px;
-    border-bottom: 1px solid black;
-    -webkit-box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 1);
-    -moz-box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 1);
-    box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 1);
+    -webkit-box-shadow: 0 5px 25px -2px rgba(0, 0, 0, .5);
+    -moz-box-shadow: 0 5px 25px -2px rgba(0, 0, 0, .5);
+    box-shadow: 0 5px 25px -2px rgba(0, 0, 0, .5);
 
     input,
     textarea {
@@ -296,39 +331,42 @@ blockquote {
 
 .section-row {
   padding: 0 !important;
-
-  .section-options {
-    margin: 0;
-    padding: 5px;
-    background-color: rgba(0,0,0,0.5);
-    outline: 5px solid rgba(0,0,0,0.5);
-
-    a:nth-last-child(2) {
-      margin-right: 15px;
-    }
-  }
-
+  -webkit-transition: background-color .2s ease;
+  -moz-transition: background-color .2s ease;
+  
   hr {
     margin-top: 0;
   }
 
-  a.btn,
-  >.close {
-    visibility: hidden;
+  .section-options {
+    display: none;
   }
 
-  >.close {
-    padding: 5px;
-    color: red;
-  }
+  &:not(.no-highlight) {
 
-  &:not(.no-highlight):hover {
-    background-color: rgba(0,0,0,0.1);
-    outline: 5px solid rgba(0,0,0,0.1);
+    &:hover,
+    &.force-hover {
+      margin-top: 10px;
 
-    a.btn,
-    >.close {
-      visibility: visible;
+      .section-options {
+        display: block;
+        margin: 0;
+        padding: 5px;
+        border-radius: 5px;
+        background-color: rgba(0,0,0,0.25) !important;
+        -webkit-box-shadow: 0 10px 25px 2px rgba(0, 0, 0, .3);
+        -moz-box-shadow: 0 10px 25px 2px rgba(0, 0, 0, .3);
+        box-shadow: 0 10px 25px 2px rgba(0, 0, 0, .3);
+
+        .close {
+          padding: 5px;
+          color: red;
+        }
+
+        a:nth-last-child(2) {
+          margin-right: 15px;
+        }
+      }
     }
   }
 }
@@ -385,7 +423,7 @@ template-form-directive .form-group {
     }
 
     &:hover,
-    &.option-open {
+    &.force-hover {
       opacity: 1;
     }
   }

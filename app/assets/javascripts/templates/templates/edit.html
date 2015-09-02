@@ -1,47 +1,49 @@
-<page-menu>
-  <li class="dropdown">
-    <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-file"></i> &nbsp; Pages <b class="caret"></b></a>
-    <ul class="dropdown-menu">
-      <li><a href ng-click="template.saveTemplate(false, template)" ng-if="template.id"><i class="glyphicon glyphicon-save"></i> &nbsp; Save/Finish</a></li>
-      <li><a href="#/templates/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
-      <li><a href="#/templates"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
-      <li ng-if="template.id" class="divider"></li>
-      <li><a href ng-if="template.id" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this page?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="template.deleteTemplate()"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
-    </ul>
-  </li>
-  <li><a href ng-click="template.saveTemplate(true, template)"><i class="glyphicon glyphicon-floppy-disk"></i> &nbsp; Save</a></li>
-  <li class="dropdown" ng-if="template.id">
-    <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-plus"></i> &nbsp; Add <b class="caret"></b></a>
-    <ul class="dropdown-menu">
-      <li><a href data-toggle="modal" data-target=".newSectionModal"><i class="glyphicon glyphicon-modal-window"></i> &nbsp; Section</a></li>
-      <li ng-repeat-start="type in template.fieldTypes"><a href ng-click="template.setFieldType(type)" ng-class="{disabled:template.sections.length<1}" data-toggle="modal" data-target=".newFieldModal"><i class="glyphicon {{type.glyphicon}}"></i> &nbsp; {{type.value}}</a></li>
-      <li ng-repeat-end class="divider" ng-if="['labelntext','email','time'].indexOf(type.name) != -1"></li>
-    </ul>
-  </li>
-  <li class="dropdown" ng-if="template.id">
-    <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> &nbsp; Options <b class="caret"></b></a>
-    <ul class="dropdown-menu">
-      <li><span>Page</span></li>
-      <li><span><label><input ng-model="template.hideName" type="checkbox"> Hide Name</span></li>
-      <li><span><label for="template_draft"><input type="checkbox" id="template_draft" name="template_draft" ng-model="template.draft"> Draft</label></span></li>
-      <li class="divider"></li>
-      <li><span>Sharing</span></li>
-      <li><span><label for="private_world"><input type="checkbox" id="private_world" name="private_world" ng-model="template.private_world"> Share Public</label></span></li>
-      <li><span><label for="private_group"><input type="checkbox" id="private_group" name="private_group" ng-model="template.private_group"> Share Group</label></span></li>
-      <div ng-if="template.private_group == 1">
+<div ng-form="tempForm">
+  <page-menu>
+    <li class="dropdown">
+      <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-file"></i> &nbsp; Pages <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <li><a href ng-click="vt.template.saveTemplate(false, tempForm, vt.template)" ng-if="vt.template.id"><i class="glyphicon glyphicon-save"></i> &nbsp; Save/Finish</a></li>
+        <li><a href="#/templates/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
+        <li><a href="#/templates"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
+        <li ng-if="vt.template.id" class="divider"></li>
+        <li><a href ng-if="vt.template.id" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this page?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vt.template.deleteTemplate(vt.template)"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
+      </ul>
+    </li>
+    <li><a href ng-click="vt.template.saveTemplate(true, tempForm, vt.template)"><span ng-class="{'text-warning':tempForm.$dirty}"><i class="glyphicon glyphicon-floppy-disk"></i> &nbsp; Save</span></a></li>
+    <li class="dropdown" ng-if="vt.template.id">
+      <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-plus"></i> &nbsp; Add <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <li><a href data-toggle="modal" data-target=".newSectionModal"><i class="glyphicon glyphicon-modal-window"></i> &nbsp; Section</a></li>
+        <li ng-repeat-start="type in vt.fields"><a href ng-click="vt.template.setFieldType(type, vt.template)" ng-class="{disabled:vt.template.sections.length<1}" data-toggle="modal" data-target=".newFieldModal"><i class="glyphicon {{type.glyphicon}}"></i> &nbsp; {{type.value}}</a></li>
+        <li ng-repeat-end class="divider" ng-if="['labelntext','email','time'].indexOf(type.name) != -1"></li>
+      </ul>
+    </li>
+    <li class="dropdown" ng-if="vt.template.id">
+      <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> &nbsp; Options <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <li><span>Page</span></li>
+        <li><span><label><input ng-model="vt.template.hideName" type="checkbox"> Hide Name</span></li>
+        <li><span><label for="template_draft"><input type="checkbox" id="template_draft" name="template_draft" ng-model="vt.template.draft"> Draft</label></span></li>
         <li class="divider"></li>
-        <li><span>Group</span></li>
-        <li><span><label for="group_edit"><input type="checkbox" id="group_edit" name="group_edit" ng-model="template.group_edit"> Allow Editing</label></span></li>
-        <div ng-if="template.group_edit">
-          <li><span>Editors</span></li>
-          <li><span><a role="button">Add</a> / <a role="button">Remove</a></span></li>
+        <li><span>Sharing</span></li>
+        <li><span><label for="private_world"><input type="checkbox" id="private_world" name="private_world" ng-model="vt.template.private_world"> Share Public</label></span></li>
+        <li><span><label for="private_group"><input type="checkbox" id="private_group" name="private_group" ng-model="vt.template.private_group"> Share Group</label></span></li>
+        <div ng-if="vt.template.private_group == 1">
+          <li class="divider"></li>
+          <li><span>Group</span></li>
+          <li><span><label for="group_edit"><input type="checkbox" id="group_edit" name="group_edit" ng-model="vt.template.group_edit"> Allow Editing</label></span></li>
+          <div ng-if="vt.template.group_edit">
+            <li><span>Editors</span></li>
+            <li><span><a role="button">Add</a> / <a role="button">Remove</a></span></li>
+          </div>
         </div>
-      </div>
-    </ul>
-  </li>
-</page-menu>
+      </ul>
+    </li>
+  </page-menu>
 
-<template-form-directive form="template"></template-form-directive>
+  <template-form-directive form="vt.template"></template-form-directive>
+</div>
 
 <!-- BEGIN NEW SECTION MODAL -->
 <div class="modal fade newSectionModal" tabindex="-1" role="dialog" aria-labelledby="newSectionModal" aria-hidden="true">
@@ -52,12 +54,12 @@
         <h4 class="modal-title">Section Design</h4>
       </div>
       <div class="modal-body">
-        <label class="control-label">Section Title</label>
-        <input type="text" class="form-control" ng-model="newSectionName" value="{{section_name}}">
+        <h4>Title <small>OPTIONAL</small></h4>
+        <input type="text" class="form-control" ng-model="vt.template.newSectionName" value="{{section_name}}">
 
-        <label class="control-label">Number of Columns</label>
+        <h4>Columns <small>CHOOSE ONE</small></h4>
         <ul class="btn-group btn-group-justified list-unstyled">
-          <li class="btn btn-default" data-dismiss="modal" ng-repeat="column in [1,2,3]" ng-click="template.addNewSection(newSectionName, column)">
+          <li class="btn btn-default" data-dismiss="modal" ng-repeat="column in [1,2,3]" ng-click="vt.template.addNewSection(vt.template.newSectionName, column, tempForm, vt.template)">
             {{column}}
           </li>
         </ul>
@@ -76,18 +78,18 @@
         <h4 class="modal-title">Field Design</h4>
       </div>
       <div class="modal-body">
-        <label class="control-label">Field Name</label>
-        <input type="text" class="form-control" ng-model="newFieldName" required>
+        <h4>Field Name <small>REQUIRED</small></h4>
+        <input type="text" class="form-control" ng-model="vt.template.newFieldName" required>
 
-        <label class="control-label">Section</label>
-        <select class="form-control" ng-model="newFieldSection" ng-options="key as value for (key, value) in template.sections">
+        <h4>Section</h4>
+        <select class="form-control" ng-model="newFieldSection" ng-options="key as value for (key, value) in vt.template.sections">
           <option value="">Select Section</option>
         </select>
         
-        <div ng-if="newFieldSection && newFieldSection+1>0">
-          <label class="control-label">Column</label>
+        <div ng-show="newFieldSection && newFieldSection+1>0 && vt.template.newFieldName">
+          <h4>Column</h4>
           <ul class="btn-group btn-group-justified list-unstyled">
-            <li class="btn btn-default" data-dismiss="modal" ng-click="template.addNewField(template, 1*newFieldSection+1, $index+1, newFieldType, newFieldName)" ng-repeat="column_id in template.countColumns(template.columns[newFieldSection]) track by $index">
+            <li class="btn btn-default" data-dismiss="modal" ng-click="vt.template.addNewField(vt.template, 1*newFieldSection+1, $index+1, vt.template.newFieldType, vt.template.newFieldName)" ng-repeat="column_id in vt.template.countColumns(vt.template.columns[newFieldSection]) track by $index">
               Column {{$index+1}}
             </li>
           </ul>

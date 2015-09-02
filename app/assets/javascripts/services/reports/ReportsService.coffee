@@ -27,25 +27,36 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 
 	{
 
+		setBreadcrumb: (template, report)->
+			report.form = template
+
 		newReport: ->
 			report = new ClassFactory()
-			report.addTemplate = this.addTemplate
-			report.saveReport = this.saveReport
 			report.livesave = true
 			report.hideTitle = false
 			report.template_order = []
+			report.addTemplate = this.addTemplate
+			report.saveReport = this.saveReport
+			this.getTemplates(report).then((res)-> report = res)
 			return report
-
-		deleteReport: (report)->
-			report.$delete({class: 'reports', id: report.id}, (res)->
-				$rootScope.$broadcast('clearreports')
-				$location.path("/reports")
-			)
-			return
 
 		getReport: (id)->
 			deferred = $q.defer()
+			report = new ClassFactory()
+			report.livesave = true
+			report.editing = true
+			report.hideTitle = false
+			report.setBreadcrumb = this.setBreadcrumb
+			report.getReport = this.getReport
+			report.saveReport = this.saveReport
+			report.deleteReport = this.deleteReport
+			report.addTemplate = this.addTemplate
+			report.removeTemplate = this.removeTemplate
+			report.getTemplates = this.getTemplates
+
 			ClassFactory.get({class: 'reports', id: id}, (res)->
+				$.extend report, res
+
 				sorting = []
 				angular.copy res.template_order, sorting
 				res.templates = res.templates.map((item) ->
@@ -53,7 +64,13 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 					sorting[n] = ''
 					[n, item]
 				).sort().map((j) ->	j[1])
-				deferred.resolve(res)
+
+				report.form = report.templates[0]
+				
+				report.getTemplates(report).then((res)->
+					report.add_templates = res.add_templates
+					deferred.resolve(report)
+				)
 			)
 			return deferred.promise
 
@@ -74,16 +91,12 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 						Flash.create('success', '<p>Report saved!</p>', 'customAlert')
 					)
 				else if myForm.$dirty
-					repCopy.values_attributes = []
-					for template in repCopy.templates
-						for field in template.fields
-							repCopy.values_attributes.push field.values[0]
-					repCopy.$update({class: 'reports', id: repCopy.id}, ->
-						$rootScope.$broadcast('clearreports')
+					repCopy.$update({class: 'reports', id: repCopy.id}, (res)->
 						Flash.create('success', '<p>Report updated!</p>', 'customAlert')
+						$rootScope.$broadcast('clearreports')
 						myForm.$setPristine()
 						deferred.resolve('updated')
-						if temp != true then $location.path("/reports/#{report.id}")
+						if !temp then $location.path("/reports/#{res.id}")
 					)
 
 				else
@@ -96,6 +109,21 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 			)
 			return deferred.promise
 
+		deleteReport: (report)->
+			report.$delete({class: 'reports', id: report.id}, (res)->
+				$rootScope.$broadcast('clearreports')
+				$location.path("/reports")
+			)
+			return
+
+		getTemplates: (report)->
+			deferred = $q.defer()
+			ClassFactory.query({class: 'templates', ts: [report.template_order]}, (templates)->
+				report.add_templates = templates
+				deferred.resolve(report)
+			)
+			return deferred.promise
+
 		addTemplate: (template, myForm, report)->
 			deferred = $q.defer()
 			myForm.$dirty = true
@@ -103,28 +131,31 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 			report.saveReport(true, myForm, report).then((res)->
 				if res == 'updated'
 					report.getReport(report.id).then((rep)->
-						if rep.templates[rep.templates.length-1].id != template.id
-							report.template_order.pop()
-							Flash.create('danger', '<p>There was an issue adding the page to this report. Try reloading the page or re-logging in.</p>', 'customAlert')
-						else
-							report.templates.push rep.templates[rep.templates.length-1]
-							deferred.resolve(report)
+						templateindex = report.add_templates.indexOf(template)
+						report.add_templates.splice templateindex, 1
+						report.templates.push rep.templates[rep.templates.length-1]
+						report.form = rep.templates[rep.templates.length-1]
+						deferred.resolve(report)
 					)
+				else
+					report.template_order.pop()
 			)
 			return deferred.promise
 
 		removeTemplate: (template, report)->
 			deferred = $q.defer()
+			templateindex = report.templates.indexOf(template)
+			orderindex = report.template_order.indexOf(template.id)
+			report.templates.splice templateindex, 1
+			report.template_order.splice orderindex, 1
+			report.add_templates.push template
+			report.form = if templateindex==0 then report.templates[0] else report.templates[templateindex-1]
 			report.$update({class: 'reports', id: report.id, did: template.id}, ->
+				Flash.create('success', '<p>'+template.name+' has been removed from the report.</p>', 'customAlert')
 				$rootScope.$broadcast('clearreports')
-				index = report.templates.indexOf(template)
-				report.templates.splice index, 1
-				idindex = report.template_order.indexOf(template.id)
-				report.template_order.splice idindex, 1
 				deferred.resolve(report)
 			)
 			return deferred.promise
-
 
 	}
 ])

@@ -1,4 +1,4 @@
-<page-menu>
+<page-menu keywords="keywords">
   <li class="dropdown">
     <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-inbox"></i> &nbsp; Reports <b class="caret"></b></a>
     <ul class="dropdown-menu">
@@ -12,11 +12,21 @@
 </page-menu>
 
 <div infinite-scroll="loadNewItems()">
-  <div class="paper" ng-repeat="report in reports">
-    <h4>#{{report.id}} <span ng-if="report.title != 'Untitled'">{{report.title}}</span></h4>
-    <span ng-repeat="template in report.templates track by $index">{{template.name}}<span ng-show="!$last">, </span></span>
-    <hr>
-    <a href="#/reports/{{report.id}}" class="btn btn-link">View</a>
-    <a href="#/reports/{{report.id}}/edit" class="btn btn-link">Edit</a>
+  <div class="paper row" ng-repeat="report in reports">
+    <div class="col-xs-2 col-md-1">
+      <label>ID</label>
+      <h4>{{report.id}}</h4>
+    </div>
+    <div class="col-xs-7 col-md-9">
+      <label>Pages</label>
+      <h4><span ng-repeat="template in report.templates track by $index">{{template.name}}<span ng-show="!$last">, </span></span></h4>
+    </div>
+    <div class="col-xs-2">
+      <label>Actions</label>
+      <h4>
+        <a href="#/reports/{{report.id}}" class="btn btn-link">View</a>
+        <a href="#/reports/{{report.id}}/edit" class="btn btn-link">Edit</a>
+      </h4>
+    </div>
   </div>
 </div>

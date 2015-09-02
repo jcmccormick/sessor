@@ -1,10 +1,10 @@
 directives = angular.module('directives')
-directives.directive('templateFieldDirective', ['$compile', 'TemplateService',
-($compile, TemplateService) ->
+directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
+($compile, TemplatesService) ->
   
   getTemplate = (field) ->
     type = field.fieldtype
-    supportedFields = TemplateService.supportedFields
+    supportedFields = TemplatesService.supportedFields
 
     __indexOf = [].indexOf || (item)->
       i = 0
@@ -26,7 +26,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplateService',
                <span class="required-error" ng-if="field.required && !field.values[0].input">*</span>
              </label>'
 
-    fwend = '<div class="field-overlay" ng-if="template.editing">
+    fwend = '<div class="field-overlay" ng-class="{\'force-hover\':template.selectedOptions.id == field.id}" ng-if="template.editing">
                <a href="javascript:;" class="close" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this field?<br><br>It will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="template.deleteField(template, field)">
                  <i class="glyphicon glyphicon-remove"></i>
                </a>

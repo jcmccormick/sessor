@@ -47,7 +47,7 @@ module Api::V1#:nodoc:
       template = current_user.templates.find(params[:id])
       template.sections = params[:sections]
       template.columns = params[:columns]
-      if params.has_key?(:dfids)
+      if params[:dfids]
         params[:dfids].each do |field_id|
           field = template.fields.find(field_id)
           field.destroy

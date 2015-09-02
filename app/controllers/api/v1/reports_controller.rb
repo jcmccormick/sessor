@@ -32,9 +32,11 @@ module Api::V1 #:nodoc:
     end
 
     def create
-      template = current_user.templates.find(params[:template_order])
       @report = current_user.reports.new(allowed_params)
-      @report.templates << template
+      if params[:template_order]
+        template = current_user.templates.find(params[:template_order])
+        @report.templates << template
+      end
       @report.save
       current_user.reports << @report
       render 'show', status: 201
@@ -42,6 +44,7 @@ module Api::V1 #:nodoc:
 
     def update
       report = current_user.reports.find(params[:id])
+      report.template_order = params[:template_order]
       if params.has_key?(:did)
         template = report.templates.find(params[:did])
         template.fields.each do |field|
@@ -51,9 +54,9 @@ module Api::V1 #:nodoc:
             end
           end
         end
+        report.update_attributes(params.require(:report).permit({:template_order => []}))
         report.templates.delete(template)
       else
-        report.template_order = params[:template_order]
         report.template_order.each do |template_id|
           template = current_user.templates.find(template_id)
           report.templates << template unless report.templates.include?(template)

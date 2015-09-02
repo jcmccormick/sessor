@@ -58,7 +58,7 @@ sessor.config(['$authProvider', '$routeProvider',
       .when('/desktop',
         templateUrl: "main/desktop.html"
         resolve: authResolver
-      ) #                                       REPORTS ROUTES #
+      ) # REPORTS ROUTES #
       .when('/reports',
         templateUrl: "reports/show.html"
         controller: 'ShowReportsController'
@@ -81,7 +81,7 @@ sessor.config(['$authProvider', '$routeProvider',
         controller: 'EditReportController'
         controllerAs: 'vr'
         resolve: authResolver
-      ) #                                       TEMPLATES ROUTES #
+      ) # TEMPLATES ROUTES #
       .when('/templates',
         templateUrl: "templates/show.html"
         controller: 'ShowTemplatesController'
@@ -90,18 +90,21 @@ sessor.config(['$authProvider', '$routeProvider',
       .when('/templates/new',
         templateUrl: "templates/edit.html"
         controller: 'EditTemplateController'
+        controllerAs: 'vt'
         resolve: authResolver
       )
       .when('/templates/:templateId',
         templateUrl: "templates/view.html"
         controller: 'ViewTemplateController'
+        controllerAs: 'vt'
         resolve: authResolver
       )
       .when('/templates/:templateId/edit'
         templateUrl: "templates/edit.html"
         controller: 'EditTemplateController'
+        controllerAs: 'vt'
         resolve: authResolver
-      ) #                                       STATISTICS ROUTES #
+      ) # STATISTICS ROUTES #
       .when('/statistics',
         templateUrl: "statistics/show.html"
         controller: 'StatisticsController'
