@@ -6,7 +6,7 @@
         <li class="dropdown">
           <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-inbox"></i> &nbsp; Reports <b class="caret"></b></a>
           <ul class="dropdown-menu" role="menu">
-            <li ng-if="report.id"><a href="javascript:;" ng-click="report.saveReport(false, myForm, report)"><i class="glyphicon glyphicon-save"></i> &nbsp; Save/Finish</a></li>
+            <li ng-if="report.id"><a href="javascript:;" ng-click="report.saveReport(false, myForm, report)"><i class="glyphicon glyphicon-save"></i> &nbsp; Save/View</a></li>
             <li><a href="#/reports/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
             <li><a href="#/reports"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
             <li ng-if="report.id" class="divider"></li>
@@ -34,7 +34,6 @@
       <li ng-repeat="template in report.templates"><a href="javascript:;" ng-click="report.setBreadcrumb(template, report)">{{template.name}}</a></li>
     </ol>
 
-
     <div ng-if="form.hideName==false" class="paper row">
       <h3>Page Name</h3>
       <input type="text" class="form-control" ng-model="form.name" placeholder="Start with a name then Save..."/>
@@ -46,11 +45,13 @@
     </div>
 
     <div ng-show="form.sections" class="paper row">
+
       <small ng-if="form.draft" class="pull-right">Draft</small>
       <a href="javascript:;" ng-if="report.editing" class="text-danger close pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="report.removeTemplate(form, report)"><i class="glyphicon glyphicon-remove"></i></a>
       <h1><center>{{form.name}}</center></h1>
-
-      <div ng-if="form.editing && form.sections.length<1" class="text-center h3"><a href data-toggle="modal" data-target=".newSectionModal">Add a Section</a> to get started...</div>
+      <div ng-if="form.editing && form.sections.length<1" class="text-center h3">
+        <a href data-toggle="modal" data-target=".newSectionModal">Add a Section</a> to get started...
+      </div>
 
       <div class="container-fluid section-row" ng-init="section[section_id].renaming = false" ng-class="{'no-highlight':!form.editing,'force-hover':form.selectedOptions.section_id == section_id+1 || section[section_id].renaming}" ng-repeat="(section_id, section_name) in form.sections track by $index">
         <div class="section-options" ng-show="form.editing">
@@ -58,11 +59,10 @@
             <span ng-if="section[section_id].renaming != true">Rename</span>
             <span ng-if="section[section_id].renaming == true">Save Name</span>
           </a>
-          <div class="pull-right">
-            <a href="javascript:;" class="btn btn-default" ng-click="form.moveSectionUp(form, section_id)" ng-if="!$first"><i class="glyphicon glyphicon-arrow-up"></i></a>
-            <a href="javascript:;" class="btn btn-default" ng-click="form.moveSectionDown(form, section_id)" ng-if="!$last"><i class="glyphicon glyphicon-arrow-down"></i></a>
-            <a href="javascript:;" class="text-danger close" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(form, section_id)"><i class="glyphicon glyphicon-remove"></i></a>
-          </div>
+          &nbsp;
+          <a href="javascript:;" class="btn btn-default" ng-click="form.moveSectionUp(form, section_id)" ng-if="!$first"><i class="glyphicon glyphicon-arrow-up"></i></a>
+          <a href="javascript:;" class="btn btn-default" ng-click="form.moveSectionDown(form, section_id)" ng-if="!$last"><i class="glyphicon glyphicon-arrow-down"></i></a>
+          <a href="javascript:;" class="text-danger close" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(form, section_id)"><i class="glyphicon glyphicon-remove"></i></a>
         </div>
         <h3>
           <span ng-if="section[section_id].renaming != true">{{section_name}}</span>
@@ -77,6 +77,7 @@
         </div>
 
       </div>
+
     </div>
 
   </div>
@@ -120,7 +121,6 @@
           </div>
         </li>
       </ul>
-
     </nav>
   </div>
 

@@ -3,7 +3,6 @@ controllers.controller('EditTemplateController', ['$routeParams',  'TemplatesSer
 ($routeParams, TemplatesService)->
 
 	vt = this
-	vt.fields = TemplatesService.fields
 
 	if $routeParams.templateId
 		TemplatesService.getTemplate($routeParams.templateId).then((res)->
@@ -12,6 +11,7 @@ controllers.controller('EditTemplateController', ['$routeParams',  'TemplatesSer
 	else
 		vt.template = TemplatesService.newTemplate()
 
+	vt.fields = TemplatesService.fields
 	return vt
 
 ])

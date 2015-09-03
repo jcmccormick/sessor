@@ -1,4 +1,4 @@
-json.(@template, :id, :creator_uid, :name, :draft, :sections, :columns, :private_world, :private_group, :group_id, :group_edit, :group_editors)
+json.(@template, :id, :name, :draft, :private_world, :private_group, :group_id, :group_edit, :group_editors, :sections, :columns)
 
 json.fields template.fields do |field|
 	

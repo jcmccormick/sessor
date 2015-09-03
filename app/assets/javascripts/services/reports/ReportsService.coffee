@@ -87,8 +87,8 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 
 				if !repCopy.id
 					repCopy.$save({class: 'reports'}, (res)->
-						$location.path("/reports/#{res.id}/edit")
 						Flash.create('success', '<p>Report saved!</p>', 'customAlert')
+						$location.path("/reports/#{res.id}/edit")
 					)
 				else if myForm.$dirty
 					repCopy.$update({class: 'reports', id: repCopy.id}, (res)->
@@ -98,7 +98,6 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 						deferred.resolve('updated')
 						if !temp then $location.path("/reports/#{res.id}")
 					)
-
 				else
 					Flash.create('info', '<p>Report unchanged.</p>', 'customAlert')
 					if !temp

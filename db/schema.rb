@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150831034307) do
+ActiveRecord::Schema.define(version: 20150902201155) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "provider",               limit: 255,                null: false
@@ -123,7 +123,6 @@ ActiveRecord::Schema.define(version: 20150831034307) do
 
   create_table "templates", force: :cascade do |t|
     t.string   "name",          limit: 255
-    t.string   "creator_uid",   limit: 255
     t.boolean  "private_world", limit: 1
     t.boolean  "private_group", limit: 1
     t.integer  "group_id",      limit: 4

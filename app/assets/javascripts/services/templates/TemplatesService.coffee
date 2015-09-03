@@ -30,21 +30,23 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			template.newFieldType = type
 			return
 
+		# select a field's settings on template editing
 		setSelectedOptions: (optionSet, template)->
 			if template.editing
 				template.selectedOptions = optionSet
 
+		# add create new template object
 		newTemplate: ->
 			template = new ClassFactory()
 			template.hideName = false
-			template.creator_uid = $rootScope.user
 			template.saveTemplate = this.saveTemplate
 			return template
 
+		# retrieve template and grant services
 		getTemplate: (id)->
 			deferred = $q.defer()
 			template = new ClassFactory()
-			template.hideName = false
+			template.hideName = true
 			template.editing = true
 			template.countColumns = this.countColumns
 			template.setFieldType = this.setFieldType
@@ -82,14 +84,20 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 						$location.path("/templates/#{res.id}/edit")
 						Flash.create('success', '<p>Template saved!</p>', 'customAlert')
 					)
-				else
+				else if tempForm.$dirty || typeof tempForm == 'string'
 					tempCopy.$update({class: 'templates', id: tempCopy.id}, (res)->
 						$rootScope.$broadcast('cleartemplates')
 						Flash.create('success', '<p>Template updated!</p>', 'customAlert')
-						if tempForm != 'delsec' then tempForm.$setPristine()
+						if tempForm.$dirty then tempForm.$setPristine()
 						if !temp then $location.path("/templates/#{res.id}")
 						deferred.resolve('updated')
 					)
+				else
+					Flash.create('info', '<p>Template unchanged.</p>', 'customAlert')
+					if !temp
+						deferred.resolve($location.path("/templates/#{template.id}"))
+					else
+						deferred.resolve()
 			)
 			return deferred.promise
 
@@ -103,13 +111,12 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 
 		# add section
 		addNewSection: (name, columns, tempForm, template)->
+			tempForm.$dirty = true
 			if !template.sections
 				template.sections = []
 				template.columns = []
 			template.sections.push name
 			template.columns.push columns
-
-			tempForm.$dirty = true
 			template.saveTemplate(true, tempForm, template)
 			template.newSectionName = ''
 			return
@@ -156,9 +163,9 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 
 		# delete field
 		deleteField: (template, field) ->
+			if template.selectedOptions.id == field.id then template.selectedOptions = undefined
 			index = template.fields.indexOf(field)
 			template.fields.splice index, 1
-			template.selectedOptions = undefined
 			$.extend field, new ClassFactory()
 			field.$delete({class: 'fields', id: field.id})
 			return
