@@ -10,5 +10,8 @@ directives.directive('templateFormDirective',[()->
 		$scope.columnsArray = (columns)->
 			new Array columns
 
+		$scope.setBreadcrumb = (template)->
+			$scope.form = template
+
 	]}
 ])

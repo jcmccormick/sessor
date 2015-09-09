@@ -27,9 +27,6 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 
 	{
 
-		setBreadcrumb: (template, report)->
-			report.form = template
-
 		newReport: ->
 			report = new ClassFactory()
 			report.livesave = true
@@ -46,7 +43,6 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 			report.livesave = true
 			report.editing = true
 			report.hideTitle = false
-			report.setBreadcrumb = this.setBreadcrumb
 			report.getReport = this.getReport
 			report.saveReport = this.saveReport
 			report.deleteReport = this.deleteReport

@@ -88,7 +88,10 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 					tempCopy.$update({class: 'templates', id: tempCopy.id}, (res)->
 						$rootScope.$broadcast('cleartemplates')
 						Flash.create('success', '<p>Template updated!</p>', 'customAlert')
-						if tempForm.$dirty then tempForm.$setPristine()
+						if typeof tempForm == 'string'
+							tempForm.$dirty = false
+						else
+							tempForm.$setPristine()
 						if !temp then $location.path("/templates/#{res.id}")
 						deferred.resolve('updated')
 					)
@@ -111,7 +114,6 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 
 		# add section
 		addNewSection: (name, columns, tempForm, template)->
-			tempForm.$dirty = true
 			if !template.sections
 				template.sections = []
 				template.columns = []
@@ -122,7 +124,8 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			return
 
 		# delete section
-		deleteSection: (template, index) ->
+		deleteSection: (template, index, tempForm) ->
+			tempForm.$dirty = true
 			template.dfids = []
 
 			for field in template.fields
@@ -135,13 +138,13 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			template.columns.splice index, 1
 			template.sections.splice index, 1
 
-			template.saveTemplate(true, 'delsec', template).then((res)-> 
+			template.saveTemplate(true, tempForm, template).then((res)-> 
 				template.dfids = undefined
 			)
 			return
 
 		# add field
-		addNewField: (template, section_id, column_id, type, name)->
+		addNewField: (template, section_id, column_id, type, name, tempForm)->
 			field = new ClassFactory()
 			field.template_id = template.id
 			field.section_id = section_id
@@ -156,6 +159,8 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 				value.$save({class: 'values'}, (val)->
 					field.values.push val
 					template.fields.push res
+					tempForm.$setPristine()
+					Flash.create('success', '<p>'+field.name+' successfully added to '+template.name+'.</p>', 'customAlert')
 				)
 			)
 			template.newFieldName = ''
@@ -167,7 +172,9 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			index = template.fields.indexOf(field)
 			template.fields.splice index, 1
 			$.extend field, new ClassFactory()
-			field.$delete({class: 'fields', id: field.id})
+			field.$delete({class: 'fields', id: field.id}, (res)->
+				Flash.create('success', '<p>'+field.name+' successfully deleted from '+template.name+'.</p>', 'customAlert')
+			)
 			return
 
 		# add field option

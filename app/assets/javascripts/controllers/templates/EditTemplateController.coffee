@@ -12,6 +12,8 @@ controllers.controller('EditTemplateController', ['$routeParams',  'TemplatesSer
 		vt.template = TemplatesService.newTemplate()
 
 	vt.fields = TemplatesService.fields
+	vt.newSectionAdd = false
+	vt.newFieldAdd = false
 	return vt
 
 ])

@@ -6,6 +6,7 @@ controllers.controller('ViewReportController', ['$routeParams', 'ReportsService'
 	ReportsService.getReport($routeParams.reportId).then((res)->
 		vr.report = res
 		vr.report.viewing = true
+		vr.report.livesave = false
 		vr.report.editing = false
 	)
 
