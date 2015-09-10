@@ -47,18 +47,17 @@
     <div ng-show="form.sections" class="paper row">
 
       <small ng-if="form.draft" class="pull-right">Draft</small>
-      <a href="javascript:;" ng-if="report.editing" class="text-danger close pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="report.removeTemplate(form, report)"><i class="glyphicon glyphicon-remove"></i></a>
+      <a href="javascript:;" ng-if="report.editing" class="text-danger close" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="report.removeTemplate(form, report)"><i class="glyphicon glyphicon-remove"></i></a>
       <h1><center>{{form.name}}</center></h1>
 
       <div class="container-fluid section-row" ng-init="section[section_id].renaming = false" ng-class="{'no-highlight':!form.editing,'force-hover':form.selectedOptions.section_id == section_id+1 || section[section_id].renaming}" ng-repeat="(section_id, section_name) in form.sections track by $index">
         <div class="section-options" ng-show="form.editing">
-          <a href="javascript:;" class="btn btn-default" ng-click="section[section_id].renaming = !section[section_id].renaming">
-            <span ng-if="section[section_id].renaming != true">Rename</span>
-            <span ng-if="section[section_id].renaming == true">Save Name</span>
-          </a>
+          <a href="javascript:;" class="btn btn-default" ng-if="section[section_id].renaming == false" ng-click="section[section_id].renaming = true">Rename</a>
+          <a href="javascript:;" class="btn btn-default" ng-if="section[section_id].renaming == true" ng-click="section[section_id].renaming = false;form.saveTemplate(true, myForm.$$parentForm, form)">Done</a>
           &nbsp;
           <a href="javascript:;" class="btn btn-default" ng-click="form.moveSectionUp(form, section_id);myForm.$$parentForm.$dirty=true" ng-if="!$first"><i class="glyphicon glyphicon-arrow-up"></i></a>
           <a href="javascript:;" class="btn btn-default" ng-click="form.moveSectionDown(form, section_id);myForm.$$parentForm.$dirty=true" ng-if="!$last"><i class="glyphicon glyphicon-arrow-down"></i></a>
+
           <a href="javascript:;" class="text-danger close" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(form, section_id, myForm.$$parentForm)"><i class="glyphicon glyphicon-remove"></i></a>
         </div>
         <h3>

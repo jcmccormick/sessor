@@ -82,12 +82,12 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 				if !tempCopy.id
 					tempCopy.$save({class: 'templates'}, (res)->
 						$location.path("/templates/#{res.id}/edit")
-						Flash.create('success', '<p>Template saved!</p>', 'customAlert')
+						Flash.create('success', '<p>Page saved!</p>', 'customAlert')
 					)
 				else if tempForm.$dirty || typeof tempForm == 'string'
 					tempCopy.$update({class: 'templates', id: tempCopy.id}, (res)->
 						$rootScope.$broadcast('cleartemplates')
-						Flash.create('success', '<p>Template updated!</p>', 'customAlert')
+						Flash.create('success', '<p>Page updated!</p>', 'customAlert')
 						if typeof tempForm == 'string'
 							tempForm.$dirty = false
 						else
@@ -96,7 +96,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 						deferred.resolve('updated')
 					)
 				else
-					Flash.create('info', '<p>Template unchanged.</p>', 'customAlert')
+					Flash.create('info', '<p>Page unchanged.</p>', 'customAlert')
 					if !temp
 						deferred.resolve($location.path("/templates/#{template.id}"))
 					else
@@ -160,7 +160,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 					field.values.push val
 					template.fields.push res
 					tempForm.$setPristine()
-					Flash.create('success', '<p>'+field.name+' successfully added to '+template.name+'.</p>', 'customAlert')
+					Flash.create('success', '<p>'+field.name+' successfully added to '+template.name+': '+template.sections[section_id-1]+'.</p>', 'customAlert')
 				)
 			)
 			template.newFieldName = ''

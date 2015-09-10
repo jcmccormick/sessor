@@ -64,8 +64,9 @@
     <div ng-if="vt.newFieldAdd" class="paper row">
       <button type="button" class="close" ng-click="vt.newFieldAdd=false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <h3>Add {{vt.template.newFieldType.value}}</h3>
+      <small>ALL REQUIRED</small>
 
-      <h4>Field Name <small>REQUIRED</small></h4>
+      <h4>Field Name</h4>
       <input type="text" class="form-control" ng-model="vt.template.newFieldName" required>
 
       <h4>Section</h4>

@@ -5,4 +5,8 @@ vendor/
 Gemfile.lock
 .bundle
 erd.pdf
-*.sublime*
+*.sublime*
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
