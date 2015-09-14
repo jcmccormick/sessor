@@ -63,8 +63,8 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 
 				report.form = report.templates[0]
 				
-				report.getTemplates(report).then((res)->
-					report.add_templates = res.add_templates
+				report.getTemplates(report).then((rep)->
+					report.add_templates = rep.add_templates
 					deferred.resolve(report)
 				)
 			)

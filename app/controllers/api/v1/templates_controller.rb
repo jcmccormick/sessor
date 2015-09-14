@@ -27,7 +27,7 @@ module Api::V1#:nodoc:
       if params.has_key?(:ts)
         render json: queried_templates.where(:draft => [nil,'f']).where.not(:id => params[:ts][1..-2].split(',').collect! {|n| n.to_i}).index_minned
       else
-        render json: queried_templates.page(params[:page]).per(5).order(id: :desc).index_minned
+        render json: queried_templates.page(params[:page]).per(10).order(id: :desc).index_minned
       end
 
     end

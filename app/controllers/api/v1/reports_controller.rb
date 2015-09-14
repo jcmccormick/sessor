@@ -18,9 +18,9 @@ module Api::V1 #:nodoc:
         else
           {:title => keywords}
         end
-        render json: current_user.reports.where(query).page(params[:page]).per(5).order(id: :desc).index_minned
+        render json: current_user.reports.where(query).page(params[:page]).per(10).order(id: :desc).index_minned
       else
-        render json: current_user.reports.page(params[:page]).per(5).order(id: :desc).index_minned
+        render json: current_user.reports.page(params[:page]).per(10).order(id: :desc).index_minned
       end
 
     end

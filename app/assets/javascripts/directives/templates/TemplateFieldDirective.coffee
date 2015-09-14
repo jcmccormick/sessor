@@ -40,28 +40,29 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     clas = 'class="form-control"'
     ngmodel = 'ng-model="field.values[0].input"'
     inputend = 'name="{{field.name}}" ng-required="field.required" ng-disabled="field.disabled">'
+    standard = clas+' '+ngmodel+' '+inputend
 
     # Define the particulars of each supported field
     labelntext = '<p>{{field.values[0].input}}</p><h4 class="text-center" ng-if="!field.values[0].input">Click to add text.</h4>'
 
-    textfield = inputstart+' type="text" '+clas+' '+ngmodel+' '+inputend 
-    textarea = '<textarea type="text" '+clas+' '+ngmodel+' '+inputend+'</textarea>'
+    textfield = inputstart+' type="text" '+ 
+    textarea = '<textarea type="text" '+standard+'</textarea>'
 
-    integer = inputstart+' type="number" '+clas+' '+ngmodel+' '+inputend
-    date = inputstart+' type="date" '+clas+' '+ngmodel+' '+inputend
-    time = inputstart+' type="time" '+clas+' '+ngmodel+' '+inputend
+    integer = inputstart+' type="number" '+standard
+    date = inputstart+' type="date" '+standard
+    time = inputstart+' type="time" '+standard
 
     checkbox = inputstart+' type="checkbox" ng-model="$parent.field.values[0].input" '+inputend
     radio = '<div ng-repeat="option in field.options">
               <label>'+inputstart+' type="radio" ng-value="option.name" '+ngmodel+' '+inputend+'&nbsp;{{option.name}}</label>
             </div>
             <h4 class="text-center" ng-if="!field.options.length">Click to add options.</h4>'
-    dropdown = '<select value="{{field.values[0].input}}" ng-options="option.name as option.name for option in field.options" '+clas+' '+ngmodel+' '+inputend+'
+    dropdown = '<select value="{{field.values[0].input}}" ng-options="option.name as option.name for option in field.options" '+standard+'
         <option value="">Select Item</option>
       </select>'
 
-    email = inputstart+' type="email" placeholder="Email" '+clas+' '+ngmodel+' '+inputend
-    # masked = inputstart+' type="password" '+clas+' '+ngmodel+' '+inputend
+    email = inputstart+' type="email" placeholder="Email" '+standard
+    # masked = inputstart+' type="password" '+standard
 
     # GET template content from path
     cur_field = getTemplate(scope.field)

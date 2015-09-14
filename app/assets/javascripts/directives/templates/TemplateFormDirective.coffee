@@ -7,6 +7,7 @@ directives.directive('templateFormDirective',[()->
 		form: '='
 		report: '='
 	controller: ['$scope', ($scope)->
+		
 		$scope.columnsArray = (columns)->
 			new Array columns
 
