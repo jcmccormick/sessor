@@ -16,6 +16,7 @@ json.templates report.templates do |template|
 		json.name field.name
 		json.section_id field.section_id
 		json.column_id field.column_id
+		json.column_order field.column_order
 		json.fieldtype field.fieldtype
 		json.required field.required
 		json.disabled field.disabled

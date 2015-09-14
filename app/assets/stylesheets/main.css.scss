@@ -339,8 +339,7 @@ blockquote {
 
   .section-options {
     opacity: .25;
-    padding-top: 10px;
-    border-top: 3px solid rgba(102, 175, 233, 0.6);
+    margin: -10px 0 15px;
     -webkit-transition: opacity .5s ease;
     -moz-transition: opacity .5s ease;
 
@@ -356,14 +355,9 @@ blockquote {
 
       .section-options {
         opacity: 1;
-        margin: 0;
 
         .close {
           color: red;
-        }
-
-        a:nth-last-child(2) {
-          margin-right: 15px;
         }
       }
     }

@@ -20,9 +20,10 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 		deferred.resolve(errors)
 		return deferred.promise
 
-	newFieldOrdering = (template, column_id)->
+	newFieldOrdering = (template, section_id, column_id)->
 		count = $.grep template.fields, (i)->
-			column_id == i.column_id
+			if section_id == i.section_id
+				column_id == i.column_id
 		return count.length+1
 
 	{
@@ -53,6 +54,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			template = new ClassFactory()
 			template.hideName = true
 			template.editing = true
+			template.newFieldSection = 0
 			template.countColumns = this.countColumns
 			template.setFieldType = this.setFieldType
 			template.setSelectedOptions = this.setSelectedOptions
@@ -156,17 +158,16 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			field.template_id = template.id
 			field.section_id = section_id
 			field.column_id = column_id
-			console.log newFieldOrdering(template, column_id)
-			field.column_order = newFieldOrdering(template, column_id)
+			field.column_order = newFieldOrdering(template, section_id, column_id)
 			field.fieldtype = type.name
 			field.glyphicon = type.glyphicon
 			field.name = name
 			field.$save({class: 'fields'}, (res)->
-				field.values = []
+				res.values = []
 				value = new ClassFactory()
 				value.field_id = res.id
 				value.$save({class: 'values'}, (val)->
-					field.values.push val
+					res.values.push val
 					template.fields.push res
 					tempForm.$setPristine()
 					Flash.create('success', '<p>'+field.name+' successfully added to '+template.name+': '+template.sections[section_id-1]+'.</p>', 'customAlert')
@@ -190,14 +191,16 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 		changeFieldColumn: (template, field, column_id)->
 			if field.column_id != column_id
 				old_column_fields = $.grep template.fields, (i)->
-					field.column_id == i.column_id
+					if field.section_id == i.section_id
+						field.column_id == i.column_id
 
 				for old_field in old_column_fields
 					if old_field.column_order > field.column_order
 						old_field.column_order--
 
 				new_column_fields = $.grep template.fields, (i)->
-					column_id == i.column_id
+					if field.section_id == i.section_id
+						column_id == i.column_id
 
 				for new_field in new_column_fields
 					new_field.column_order++
@@ -211,7 +214,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 		moveField: (template, field, direction)->
 
 			field_switch = $.grep template.fields, (i)->
-				if field.column_id == i.column_id
+				if field.column_id == i.column_id && field.section_id == i.section_id
 					if direction == 'up'
 						field.column_order-1 == i.column_order
 					else

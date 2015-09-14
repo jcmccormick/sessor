@@ -67,17 +67,15 @@
       <small>ALL REQUIRED</small>
 
       <h4>Field Name</h4>
-      <input type="text" class="form-control" ng-model="vt.template.newFieldName" required>
+      <input type="text" class="form-control" ng-model="vt.template.newFieldName" required autofocus>
 
       <h4>Section</h4>
-      <select class="form-control" ng-model="newFieldSection" ng-options="key as value for (key, value) in vt.template.sections">
-        <option value="">Select Section</option>
-      </select>
+      <a href="javascript:;" class="btn" ng-class="{'btn-primary':vt.template.newFieldSection==$index}" ng-repeat="section in vt.template.sections track by $index" ng-click="vt.template.newFieldSection=$index">{{section}}</a>
       
-      <div ng-show="newFieldSection && newFieldSection+1>0 && vt.template.newFieldName">
+      <div ng-show="vt.template.newFieldSection + 1 > 0 && vt.template.newFieldName">
         <h4>Column</h4>
         <ul class="btn-group btn-group-justified list-unstyled">
-          <li class="btn btn-default" ng-repeat="column_id in vt.template.countColumns(vt.template.columns[newFieldSection]) track by $index" ng-click="vt.template.addNewField(vt.template, 1*newFieldSection+1, $index+1, vt.template.newFieldType, vt.template.newFieldName, vt.tempForm);vt.newFieldAdd=false">
+          <li class="btn btn-default" ng-repeat="column_id in vt.template.countColumns(vt.template.columns[vt.template.newFieldSection]) track by $index" ng-click="vt.template.addNewField(vt.template, 1*vt.template.newFieldSection+1, $index+1, vt.template.newFieldType, vt.template.newFieldName, vt.tempForm);vt.newFieldAdd=false">
             Column {{$index+1}}
           </li>
         </ul>
