@@ -87,7 +87,7 @@
             <p>{{form.selectedOptions.fieldtype | uppercase}}</p>
           </small></h4>
 
-          <label>Field Label</label>
+          <label>Field Name</label>
           <p>
             <input type="text" class="form-control" ng-model="form.selectedOptions.name">
           </p>
@@ -101,9 +101,23 @@
             <textarea ng-show="['labelntext','textarea'].indexOf(form.selectedOptions.fieldtype) != -1" class="form-control" ng-model="form.selectedOptions.values[0].input"></textarea>
           </p>
 
+          <div ng-show="form.selectedOptions.fieldtype != 'labelntext'">
+            <label>Required</label>
+            <p class="btn-group btn-group-justified" ng-click="form.selectedOptions.required = !form.selectedOptions.required;myForm.$$parentForm.$dirty=true">
+              <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':form.selectedOptions.required}">Yes</a>
+              <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!form.selectedOptions.required}">No</a>
+            </p>
+
+            <label>Disabled</label>
+            <p class="btn-group btn-group-justified" ng-click="form.selectedOptions.disabled = !form.selectedOptions.disabled;myForm.$$parentForm.$dirty=true">
+              <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':form.selectedOptions.disabled}">Yes</a>
+              <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!form.selectedOptions.disabled}">No</a>
+            </p>
+          </div>
+
           <label>Column Order</label>
           <p class="btn-group btn-group-justified">
-            <a href="javascript:;" class="btn btn-default" ng-class="{'active':$index+1==form.selectedOptions.column_id}" ng-click="form.selectedOptions.column_id = $index+1;myForm.$$parentForm.$dirty=true" ng-repeat="column in columnsArray(form.columns[form.selectedOptions.section_id-1]) track by $index">{{$index+1}}</a>
+            <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':$index+1==form.selectedOptions.column_id}" ng-click="form.changeFieldColumn(form, form.selectedOptions, $index+1);myForm.$$parentForm.$dirty=true" ng-repeat="column in columnsArray(form.columns[form.selectedOptions.section_id-1]) track by $index">{{$index+1}}</a>
           </p>
 
           <label>Field Order</label>
@@ -111,10 +125,7 @@
             <a href="javascript:;" class="btn btn-default" ng-click="form.moveField(form, form.selectedOptions, 'up');myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-arrow-up"></i></a>
             <a href="javascript:;" class="btn btn-default" ng-click="form.moveField(form, form.selectedOptions, 'down');myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-arrow-down"></i></a>
           </p>
-          <div ng-show="form.selectedOptions.fieldtype != 'labelntext'">
-            <p><label><input type="checkbox" ng-model="form.selectedOptions.required"/> Required</label></p>
-            <p><label><input type="checkbox" ng-model="form.selectedOptions.disabled"/> Disabled</label></p>
-          </div>
+
         </li>
       </ul>
       <ul class="nav" ng-show="form.selectedOptions.fieldtype == 'dropdown' || form.selectedOptions.fieldtype == 'radio'">

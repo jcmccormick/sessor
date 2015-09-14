@@ -63,6 +63,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			template.addNewField = this.addNewField
 			template.deleteField = this.deleteField
 			template.moveField = this.moveField
+			template.changeFieldColumn = this.changeFieldColumn
 			template.addOption = this.addOption
 			template.deleteOption = this.deleteOption
 			template.moveSectionUp = this.moveSectionUp
@@ -185,22 +186,45 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			)
 			return
 
+		# change a field's column_id
+		changeFieldColumn: (template, field, column_id)->
+			if field.column_id != column_id
+				old_column_fields = $.grep template.fields, (i)->
+					field.column_id == i.column_id
+
+				for old_field in old_column_fields
+					if old_field.column_order > field.column_order
+						old_field.column_order--
+
+				new_column_fields = $.grep template.fields, (i)->
+					column_id == i.column_id
+
+				for new_field in new_column_fields
+					new_field.column_order++
+
+				field.column_id = column_id
+				field.column_order = 1
+
+			return
+
+		# change a field's column_order
 		moveField: (template, field, direction)->
 
 			field_switch = $.grep template.fields, (i)->
-				if direction == 'up'
-					field.column_order-1 == i.column_order
-				else
-					field.column_order+1 == i.column_order
+				if field.column_id == i.column_id
+					if direction == 'up'
+						field.column_order-1 == i.column_order
+					else
+						field.column_order+1 == i.column_order
 
 			field_switch = field_switch[0]
 			
 			if !field_switch
 				return
 			else
-				old_column_order = field.column_order
-				field.column_order = field_switch.column_order
-				field_switch.column_order = old_column_order
+				target = field_switch.column_order
+				field_switch.column_order = field.column_order
+				field.column_order = target
 
 			return
 
