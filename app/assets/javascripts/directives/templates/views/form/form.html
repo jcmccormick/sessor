@@ -67,7 +67,7 @@
         <hr ng-if="section_name">
         
         <div class="col-xs-12" ng-class="{'col-md-6':form.columns[section_id] == 2, 'col-md-4':form.columns[section_id] == 3}" ng-repeat="column in columnsArray(form.columns[section_id]) track by $index">
-          <div ng-if="(report.livesave && report.editing) || report.viewing || (!report && form)" ng-click="form.setSelectedOptions(field, form)" ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section_id+1}">
+          <div ng-if="(report.livesave && report.editing) || report.viewing || (!report && form)" ng-click="form.setSelectedOptions(field, form)" ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section_id+1} | orderBy:'column_order'">
             <template-field-directive myForm="myForm" field="field" template="form" report="report"></template-field-directive>
           </div>
         </div>
@@ -86,25 +86,34 @@
             <p><a href="javascript:;" class="btn btn-link" ng-click="form.setSelectedOptions(undefined, form)">Done</a></p>
             <p>{{form.selectedOptions.fieldtype | uppercase}}</p>
           </small></h4>
-          <p><label>Field Label</label>
+
+          <label>Field Label</label>
+          <p>
             <input type="text" class="form-control" ng-model="form.selectedOptions.name">
           </p>
-          <p><label>Default Value</label>
+
+          <label>Default Value</label>
+          <p>
             <input ng-if="form.selectedOptions.fieldtype == 'date'" type="date" class="form-control" ng-model="form.selectedOptions.values[0].input">
             <input ng-if="form.selectedOptions.fieldtype == 'time'" type="time" class="form-control" ng-model="form.selectedOptions.values[0].input">
             <input ng-show="['checkbox','labelntext','textarea','date','time'].indexOf(form.selectedOptions.fieldtype) == -1" type="text" class="form-control" ng-model="form.selectedOptions.values[0].input">
             <input ng-show="form.selectedOptions.fieldtype == 'checkbox'" type="checkbox" class="form-control" ng-model="form.selectedOptions.values[0].input">
             <textarea ng-show="['labelntext','textarea'].indexOf(form.selectedOptions.fieldtype) != -1" class="form-control" ng-model="form.selectedOptions.values[0].input"></textarea>
           </p>
+
+          <label>Column Order</label>
+          <p class="btn-group btn-group-justified">
+            <a href="javascript:;" class="btn btn-default" ng-class="{'active':$index+1==form.selectedOptions.column_id}" ng-click="form.selectedOptions.column_id = $index+1;myForm.$$parentForm.$dirty=true" ng-repeat="column in columnsArray(form.columns[form.selectedOptions.section_id-1]) track by $index">{{$index+1}}</a>
+          </p>
+
+          <label>Field Order</label>
+          <p class="btn-group btn-group-justified">
+            <a href="javascript:;" class="btn btn-default" ng-click="form.moveField(form, form.selectedOptions, 'up');myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-arrow-up"></i></a>
+            <a href="javascript:;" class="btn btn-default" ng-click="form.moveField(form, form.selectedOptions, 'down');myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-arrow-down"></i></a>
+          </p>
           <div ng-show="form.selectedOptions.fieldtype != 'labelntext'">
             <p><label><input type="checkbox" ng-model="form.selectedOptions.required"/> Required</label></p>
             <p><label><input type="checkbox" ng-model="form.selectedOptions.disabled"/> Disabled</label></p>
-            <div ng-if="form.columns[form.selectedOptions.section_id-1] > 1">
-              <label>Column Order</label>
-              <div class="btn-group btn-group-justified">
-                <a href="javascript:;" class="btn btn-default" ng-class="{'active':$index+1==form.selectedOptions.column_id}" ng-click="form.selectedOptions.column_id = $index+1;myForm.$$parentForm.$dirty=true" ng-repeat="column in columnsArray(form.columns[form.selectedOptions.section_id-1]) track by $index">{{$index+1}}</a>
-              </div>
-            </div>
           </div>
         </li>
       </ul>

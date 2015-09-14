@@ -20,6 +20,11 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 		deferred.resolve(errors)
 		return deferred.promise
 
+	newFieldOrdering = (template, column_id)->
+		count = $.grep template.fields, (i)->
+			column_id == i.column_id
+		return count.length+1
+
 	{
 		# return an array for column repeating
 		countColumns: (columns)->
@@ -57,6 +62,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			template.deleteSection = this.deleteSection
 			template.addNewField = this.addNewField
 			template.deleteField = this.deleteField
+			template.moveField = this.moveField
 			template.addOption = this.addOption
 			template.deleteOption = this.deleteOption
 			template.moveSectionUp = this.moveSectionUp
@@ -124,7 +130,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			return
 
 		# delete section
-		deleteSection: (template, index, tempForm) ->
+		deleteSection: (template, index, tempForm)->
 			tempForm.$dirty = true
 			template.dfids = []
 
@@ -133,7 +139,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 					template.dfids.push field.id
 				else if field.section_id > index+1
 					field.section_id--
-			template.fields = $.grep template.fields, (i) ->
+			template.fields = $.grep template.fields, (i)->
 				$.inArray(i.id, template.dfids) == -1
 			template.columns.splice index, 1
 			template.sections.splice index, 1
@@ -149,6 +155,8 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			field.template_id = template.id
 			field.section_id = section_id
 			field.column_id = column_id
+			console.log newFieldOrdering(template, column_id)
+			field.column_order = newFieldOrdering(template, column_id)
 			field.fieldtype = type.name
 			field.glyphicon = type.glyphicon
 			field.name = name
@@ -167,7 +175,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			return
 
 		# delete field
-		deleteField: (template, field) ->
+		deleteField: (template, field)->
 			if template.selectedOptions.id == field.id then template.selectedOptions = undefined
 			index = template.fields.indexOf(field)
 			template.fields.splice index, 1
@@ -175,6 +183,25 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			field.$delete({class: 'fields', id: field.id}, (res)->
 				Flash.create('success', '<p>'+field.name+' successfully deleted from '+template.name+'.</p>', 'customAlert')
 			)
+			return
+
+		moveField: (template, field, direction)->
+
+			field_switch = $.grep template.fields, (i)->
+				if direction == 'up'
+					field.column_order-1 == i.column_order
+				else
+					field.column_order+1 == i.column_order
+
+			field_switch = field_switch[0]
+			
+			if !field_switch
+				return
+			else
+				old_column_order = field.column_order
+				field.column_order = field_switch.column_order
+				field_switch.column_order = old_column_order
+
 			return
 
 		# add field option
@@ -188,7 +215,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			return
 
 		# delete field option
-		deleteOption: (field, option) ->
+		deleteOption: (field, option)->
 			index = field.options.indexOf(option)
 			field.options.splice index, 1
 			$.extend option, new ClassFactory()
