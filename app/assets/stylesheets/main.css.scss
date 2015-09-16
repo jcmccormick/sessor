@@ -3,9 +3,9 @@
  * Last Updated: 7-25-15
  */
 
-@import url(//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
 
-/*
+
+/* @import url(//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
  * Mixin Settings
  */
 
@@ -51,6 +51,9 @@ body {
   @include respond(mobile) {
     margin-top: 150px;
   }
+}
+.navbar-header {
+  float: none !important;
 }
 button.close {
   font-size: 30px;
@@ -186,19 +189,30 @@ blockquote {
  */
 
 .edit-report-crumbs {
-  background-color: white !important;
-  padding: 0 !important;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background-color: #444 !important;
   border-radius: 0 !important;
-  margin: 40px 15px;
-  padding: 20px !important;
+  margin: 0 !important;
+  padding: 0 20px 20px !important;
   font-size: 16px;
   text-transform: capitalize;
-  -webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
+  display: block;
+
+  h3,
+  a:not(.btn-primary) {
+    color: #aaa;
+  }
 
   @include respond(tablet) {
-    margin:30px 20px;
+    left: 225px;
+  }
+
+  @include respond(desktop) {
+    display: none;
   }
 }
 
@@ -214,13 +228,7 @@ blockquote {
   box-shadow:  0 5px 25px 2px rgba(0, 0, 0, 0.4);
   
   &.row {
-    margin: 20px 15px;
-    &:first-child {
-      margin-top: 40px;
-    }
-    &:last-child {
-      margin-bottom: 15px;
-    }
+    margin: 0 20px 20px;
   }
 
   h1 {
@@ -230,13 +238,7 @@ blockquote {
 
   @include respond(tablet) {
     &.row {
-      margin: 20px;
-      &:first-child {
-        margin-top: 30px;
-      }
-      &:last-child {
-        margin-bottom: 30px;
-      }
+      margin: 30px 20px;
     }
     padding: 35px 45px;
   }
@@ -254,16 +256,16 @@ blockquote {
  */
 .add-template-list {
 
-  &:hover {
-    .add-template-list-section {
-      display: block;
-    }
-  }
-
   .add-template-list-section {
     display: none;
     z-index: 20;
     position: fixed;
+  }
+
+  &:hover {
+    .add-template-list-section {
+      display: block;
+    }
   }
 }
 
@@ -273,12 +275,12 @@ blockquote {
 
 .template-options {
   color: #aaa;
-  background-color: #222;
+  background-color: #555;
   position: fixed;
   top: 101px;
   bottom: 0;
   right: 0;
-  width: 225px;
+  width: 70%;
   padding: 0;
   overflow-y: auto;
   -webkit-box-shadow: 5px 10px 25px 2px rgba(0, 0, 0, 1);
@@ -286,8 +288,30 @@ blockquote {
   box-shadow: 5px 10px 25px 2px rgba(0, 0, 0, 1);
   z-index: 8;
 
+
+  &.report-pages {
+    display: none;
+
+    a:not(.btn-primary) {
+      color: #aaa;
+      text-decoration: none !important;
+      word-wrap: nowrap;
+    }
+
+    .navbar-text {
+      float: none;
+    }
+  }
+
   @include respond(tablet){
+    width: 225px;
     z-index: 6;
+  }
+
+  @include respond(desktop){
+    &.report-pages {
+      display: block;
+    }
   }
 
   textarea {
@@ -297,6 +321,7 @@ blockquote {
 
   .nav {
     padding: 15px;
+    background-color: #444;
     -webkit-box-shadow: 0 5px 25px -2px rgba(0, 0, 0, .5);
     -moz-box-shadow: 0 5px 25px -2px rgba(0, 0, 0, .5);
     box-shadow: 0 5px 25px -2px rgba(0, 0, 0, .5);
@@ -316,11 +341,15 @@ blockquote {
   }
 
   .input-group {
-    padding: 5px;
+    padding: 5px 0;
 
     a.btn {
       margin: 0;
     }
+  }
+
+  .navbar-inverse {
+    background-color: #444;
   }
 }
 
@@ -330,38 +359,23 @@ blockquote {
  */
 
 .section-row {
-  margin-top: 10px;
-  padding: 0 !important;
-  
-  hr {
-    margin-top: 0;
-  }
 
-  .section-options {
-    opacity: .25;
-    margin: -10px 0 15px;
-    -webkit-transition: opacity .5s ease;
-    -moz-transition: opacity .5s ease;
+  h3 {
 
-    .close {
-      padding: 5px;
+    hr {
+      margin-top: 0;
     }
-  }
 
-  &:not(.no-highlight) {
+    &:not(.no-highlight) {
+      cursor: alias;
 
-    &:hover,
-    &.force-hover {
-
-      .section-options {
-        opacity: 1;
-
-        .close {
-          color: red;
-        }
+      &:hover,
+      &.force-hover {
+        box-shadow: 0 -5px 0 #aaa;
       }
     }
   }
+
 }
 template-form-directive .form-group {
   position: relative;
@@ -396,28 +410,17 @@ template-form-directive .form-group {
     background-color: #f2dede;
   }
 
-  .field-overlay {
-    height: 108%;
-    width: 102%;
-    top: 0;
-    left: -1%;
-    position: absolute;
-    box-shadow: 0 0 3px 2px rgba(102, 175, 233, 0.6);
-    border-radius: 5px;
-    z-index: 2;
-    background:rgba(102,175,233,.1);
-    cursor: alias;
-    opacity:0;
-    -webkit-transition: opacity .25s ease;
-    -moz-transition: opacity .25s ease;
 
-    .close {
-      color: red !important;
-    }
+  .field-overlay {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    cursor: alias;
 
     &:hover,
     &.force-hover {
-      opacity: 1;
+      box-shadow: 0 -5px 0 #aaa;
     }
   }
 }

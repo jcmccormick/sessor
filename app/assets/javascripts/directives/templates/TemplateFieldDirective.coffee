@@ -22,15 +22,11 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 
     # Create a format for field input box layout
     fwstart = '<div class="form-group">'
-    fwmid = '<label class="control-label"  ng-if="field.name">{{field.name}} {{field.column_order}}
+    fwmid = '<label class="control-label"  ng-if="field.name">{{field.name}}
                <span class="required-error" ng-if="field.required && !field.values[0].input">*</span>
              </label>'
 
-    fwend = '<div class="field-overlay" ng-class="{\'force-hover\':template.selectedOptions.id == field.id}" ng-if="template.editing">
-               <a href="javascript:;" class="close" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this field?<br><br>It will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="template.deleteField(template, field)">
-                 <i class="glyphicon glyphicon-remove"></i>
-               </a>
-             </div>
+    fwend = '<div class="field-overlay" ng-class="{\'force-hover\':template.selectedOptions.id == field.id}" ng-if="template.editing"></div>
            </div>'
 
     fw = fwstart+fwmid

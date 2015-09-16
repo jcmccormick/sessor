@@ -60,9 +60,12 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			template.setSelectedOptions = this.setSelectedOptions
 			template.saveTemplate = this.saveTemplate
 			template.deleteTemplate = this.deleteTemplate
-			template.addNewSection = this.addNewSection
+			template.addSection = this.addSection
+			template.addSectionColumn = this.addSectionColumn
+			template.deleteSectionColumn = this.deleteSectionColumn
 			template.deleteSection = this.deleteSection
-			template.addNewField = this.addNewField
+			template.moveSection = this.moveSection
+			template.addField = this.addField
 			template.deleteField = this.deleteField
 			template.moveField = this.moveField
 			template.changeFieldColumn = this.changeFieldColumn
@@ -122,7 +125,8 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			return
 
 		# add section
-		addNewSection: (name, columns, tempForm, template)->
+		addSection: (name, columns, tempForm, template)->
+			tempForm.$dirty = true
 			if !template.sections
 				template.sections = []
 				template.columns = []
@@ -130,10 +134,33 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			template.columns.push columns
 			template.saveTemplate(true, tempForm, template)
 			template.newSectionName = ''
+			template.selectedOptions = template.sections.indexOf(name)
+			return
+
+		# add section column
+		addSectionColumn: (template, section_id, tempForm)->
+			tempForm.$dirty = true
+			template.columns[section_id]++
+			template.saveTemplate(true, tempForm, template)
+			return
+
+		# delete section column
+		deleteSectionColumn: (template, section_id, tempForm)->
+			for field in template.fields
+				if field.section_id == section_id+1 && field.column_id == template.columns[section_id]
+					prevent = true
+
+			if prevent
+				Flash.create('danger', '<p>Please move any fields out of the last column.</p>', 'customAlert')
+			else
+				tempForm.$dirty = true
+				template.columns[section_id]--
+				template.saveTemplate(true, tempForm, template)
 			return
 
 		# delete section
 		deleteSection: (template, index, tempForm)->
+			if template.selectedOptions && !template.selectedOptions.fieldtype then template.selectedOptions = undefined
 			tempForm.$dirty = true
 			template.dfids = []
 
@@ -152,8 +179,34 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			)
 			return
 
+		# reorder section up or down
+		moveSection: (template, index, direction)->
+			directed_index = if direction == 'up' then index-1 else index+1
+
+			if template.sections[directed_index] != undefined
+				target = template.sections[directed_index]
+				template.sections[directed_index] = template.sections[index]
+				template.sections[index] = target
+
+				target = template.columns[directed_index]
+				template.columns[directed_index] = template.columns[index]
+				template.columns[index] = target
+
+				for field in template.fields
+					if direction == 'up'
+						if field.section_id == index+1
+							field.section_id--
+						else if field.section_id == index
+							field.section_id++
+					if direction == 'down'
+						if field.section_id == index+1
+							field.section_id++
+						else if field.section_id == index+2
+							field.section_id--
+				template.selectedOptions = directed_index
+
 		# add field
-		addNewField: (template, section_id, column_id, type, name, tempForm)->
+		addField: (template, section_id, column_id, type, name, tempForm)->
 			field = new ClassFactory()
 			field.template_id = template.id
 			field.section_id = section_id
@@ -171,46 +224,44 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 					template.fields.push res
 					tempForm.$setPristine()
 					Flash.create('success', '<p>'+field.name+' successfully added to '+template.name+': '+template.sections[section_id-1]+'.</p>', 'customAlert')
+					template.selectedOptions = res
 				)
 			)
-			template.newFieldName = ''
+			template.newFieldName = undefined
+			template.newFieldAdd = undefined
 			return
 
 		# delete field
-		deleteField: (template, field)->
+		deleteField: (template, field, tempForm)->
+			tempForm.$dirty = true
 			if template.selectedOptions.id == field.id then template.selectedOptions = undefined
 			index = template.fields.indexOf(field)
 			template.fields.splice index, 1
+			for fie in template.fields
+				if field.section_id == fie.section_id && field.column_id == fie.column_id && field.column_order < fie.column_order
+					fie.column_order--
 			$.extend field, new ClassFactory()
 			field.$delete({class: 'fields', id: field.id}, (res)->
-				Flash.create('success', '<p>'+field.name+' successfully deleted from '+template.name+'.</p>', 'customAlert')
+				template.saveTemplate(true, tempForm, template)
 			)
 			return
 
 		# change a field's column_id
 		changeFieldColumn: (template, field, column_id)->
 			if field.column_id != column_id
-				old_column_fields = $.grep template.fields, (i)->
-					if field.section_id == i.section_id
-						field.column_id == i.column_id
-
-				for old_field in old_column_fields
-					if old_field.column_order > field.column_order
-						old_field.column_order--
-
-				new_column_fields = $.grep template.fields, (i)->
-					if field.section_id == i.section_id
-						column_id == i.column_id
-
-				for new_field in new_column_fields
-					new_field.column_order++
+				for tempField in template.fields
+					if field.section_id == tempField.section_id
+						if field.column_id == tempField.column_id && field.column_order < tempField.column_order
+							tempField.column_order--
+						else if column_id == tempField.column_id
+							tempField.column_order++
 
 				field.column_id = column_id
 				field.column_order = 1
 
 			return
 
-		# change a field's column_order
+		# reorder field up or down
 		moveField: (template, field, direction)->
 
 			field_switch = $.grep template.fields, (i)->
@@ -247,39 +298,6 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			field.options.splice index, 1
 			$.extend option, new ClassFactory()
 			option.$delete({class: 'options', id: option.id})
-			return
-
-		# Section Reordering
-		moveSectionUp: (template, index)->
-			tempSection = template.sections[index]
-			template.sections[index] = template.sections[index-1]
-			template.sections[index-1] = tempSection
-
-			tempColumn = template.columns[index]
-			template.columns[index] = template.columns[index-1]
-			template.columns[index-1] = tempColumn
-			
-			for field in template.fields
-				if field.section_id == index+1
-					field.section_id--
-				else if field.section_id == index
-					field.section_id++
-			return
-
-		moveSectionDown: (template, index)->
-			tempSection = template.sections[index]
-			template.sections[index] = template.sections[index+1]
-			template.sections[index+1] = tempSection
-
-			tempColumn = template.columns[index]
-			template.columns[index] = template.columns[index+1]
-			template.columns[index+1] = tempColumn
-
-			for field in template.fields
-				if field.section_id == index+1
-					field.section_id++
-				else if field.section_id == index+2
-					field.section_id--
 			return
 
 		supportedFields: [

@@ -1,7 +1,7 @@
 == TODO
 
 * Front Page/Contact/Support
-* Desktop Integrations
+* Desktop Page Integrations
 * Groups
 * Timekeeping
 * Scheduling
@@ -12,3 +12,8 @@
 * Field value reorganization
 * Z-index light-up tour
 * Template tags
+* Field Other ng-show/hide
+
+== BUGS
+
+* Unnamed sections
