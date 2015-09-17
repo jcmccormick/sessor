@@ -28,7 +28,7 @@
   </nav>
 
   
-  <div ng-class="{'paper-width':(form.selectedOptions != undefined && form.editing) || report}">
+  <div ng-class="{'paper-width':(form.selectedOptions != undefined && form.editing) || report.templates}">
 
     <ol ng-if="report.templates.length" class="breadcrumb edit-report-crumbs text-center" ng-init="setBreadcrumb(report.templates[0])"><h3>Pages</h3>
       <li ng-repeat="template in report.templates"><a href="javascript:;" class="btn" ng-class="{'btn-primary':form == template}" ng-click="setBreadcrumb(template)">{{template.name}}</a></li>
@@ -39,9 +39,12 @@
       <input type="text" class="form-control" ng-model="form.name" placeholder="Start with a name then Save..."/>
     </div>
 
-    <div ng-if="(report.hideTitle==false || report.viewing == true) && report.allow_title==true" class="paper row">
-      <h3>Report Title</h3>
-      <input class="form-control" type="text" ng-model="report.title">
+    <div ng-if="report.hideTitle==false && report.allow_title==true" class="paper row">
+      <div ng-if="report.editing">
+        <h3>Report Title</h3>
+        <input class="form-control" type="text" ng-model="report.title">
+      </div>
+      <h2 ng-if="report.viewing" class="text-center">{{report.title}}</h2>
     </div>
 
     <div ng-show="form.sections" class="paper row">
@@ -66,10 +69,10 @@
 
   </div>
 
-  <div ng-if="(form.selectedOptions != undefined && form.editing) || report" class="template-options" ng-class="{'report-pages':report}">
+  <div ng-if="(form.selectedOptions != undefined && form.editing) || report.templates" class="template-options" ng-class="{'report-pages':report}">
 
     <!-- REPORT PAGES -->
-    <nav ng-if="report" class="navbar-inverse">
+    <nav ng-if="report.templates" class="navbar-inverse">
       <ul class="nav">
         <li class="navbar-text">
           <h3>Pages</h3>

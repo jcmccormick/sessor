@@ -10,6 +10,7 @@
     "angular-cookie": "latest",
     "angular-ui-sortable": "latest",
     "angular-local-storage": "latest",
+    "angular-google-chart": "latest",
     "angular-chart.js": "latest",
     "Chart.js": "1.0.1",
     "ng-token-auth": "latest",
@@ -17,5 +18,8 @@
     "bootbox": "latest",
     "ngBootbox": "latest",
     "ngInfiniteScroll": "latest"
+  },
+  "resolutions": {
+    "angular": "1.4.0"
   }
 }

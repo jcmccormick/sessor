@@ -7,6 +7,7 @@ sessor = angular.module('sessor', [
   'ngBootbox',
   'ipCookie',
   'ui.sortable',
+  'googlechart',
   'chart.js',
   'infinite-scroll',
   'flash',
@@ -108,6 +109,7 @@ sessor.config(['$authProvider', '$routeProvider',
       .when('/statistics',
         templateUrl: "statistics/show.html"
         controller: 'StatisticsController'
+        controllerAs: 'sv'
         resolve: authResolver
       )
       .otherwise('/')
