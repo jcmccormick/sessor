@@ -25,22 +25,15 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 			sv.listFields = this.listFields
 			sv.showData = this.showData
 			sv.graphTypes = this.graphTypes
-
-			sv.needLegend = true
-			sv.type = 'BarChart'
+			sv.templates = []
+			sv.fields = undefined
+			sv.search = []
+			sv.type = 'PieChart'
 			sv.data = {}
 			sv.data.cols = [
 				{id: 't', label: 'Name', type: 'string'}
 				{id: 's', label: 'Count', type: 'number'}
 			]
-
-			sv.templates = []
-			sv.fields = []
-			sv.search = []
-
-			sv.search.key = 'name'
-			sv.search.date = {}
-			sv.search.time = {}
 
 			ClassFactory.query({class: 'values_statistics'}, (res)->
 				for template in res
@@ -62,9 +55,6 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 			deferred = $q.defer()
 			sv.data.rows = []
 			sv.values = []
-			sv.options = {
-				'title': field.name
-			}
 
 			ClassFactory.query({class: 'values', field_id: field.id, stats: true}, (res)->
 				for value in res
@@ -72,21 +62,27 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 
 				sv.all_data = countD(sv.values)
 
+				n = 0
 				i = 0
 				while i < sv.all_data[0].length
 					if sv.all_data[0][i] != null
 						sv.data.rows.push {c: [
-							{v:sv.all_data[0][i]}
+							{v:sv.all_data[0][i]+' ('+sv.all_data[1][i]+')'}
 							{v:sv.all_data[1][i]}
 						]}
+						n += sv.all_data[1][i]
 					i++
+
+				sv.options = {
+					'title': field.name + ' (n=' + n + ')'
+				}
 
 				deferred.resolve(sv)
 			)
 
 			return deferred.promise
 
-		graphTypes: ['PieChart','BarChart','ColumnChart']
+		graphTypes: ['PieChart','ColumnChart','BarChart']
 
 	}
 ])

@@ -22,7 +22,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 
     # Create a format for field input box layout
     fwstart = '<div class="form-group">'
-    fwmid = '<label class="control-label"  ng-if="field.name">{{field.name}}
+    fwmid = '<label class="control-label" for="{{field.name}}" ng-if="field.name">{{field.name}}
                <span class="required-error" ng-if="field.required && !field.values[0].input">*</span>
              </label>'
 
@@ -35,7 +35,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     inputstart = '<input'
     clas = 'class="form-control"'
     ngmodel = 'ng-model="field.values[0].input"'
-    inputend = 'name="{{field.name}}" ng-required="field.required" ng-disabled="field.disabled">'
+    inputend = 'name="{{field.name}}" ng-required="field.required" ng-disabled="field.disabled">&nbsp;'
     standard = clas+' '+ngmodel+' '+inputend
 
     # Define the particulars of each supported field
@@ -48,9 +48,9 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     date = inputstart+' type="date" '+standard
     time = inputstart+' type="time" '+standard
 
-    checkbox = inputstart+' type="checkbox" ng-model="$parent.field.values[0].input" '+inputend
+    checkbox = inputstart+' id="{{field.name}}" type="checkbox" ng-model="$parent.field.values[0].input" '+inputend
     radio = '<div ng-repeat="option in field.options">
-              <label>'+inputstart+' type="radio" ng-value="option.name" '+ngmodel+' '+inputend+'&nbsp;{{option.name}}</label>
+              <label>'+inputstart+' type="radio" ng-value="option.name" '+ngmodel+' '+inputend+'{{option.name}}</label>
             </div>
             <h4 class="text-center" ng-if="!field.options.length">Click to add options.</h4>'
     dropdown = '<select value="{{field.values[0].input}}" ng-options="option.name as option.name for option in field.options" '+standard+'
@@ -111,8 +111,10 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
         scope.field.values[0].input = new Date(scope.field.values[0].input).format("hh:mm TT")
       else if cur_field == "number"
         scope.field.values[0].input = parseInt(scope.field.values[0].input, 10)
+      else if cur_field == "checkbox"
+        scope.field.values[0].input = if scope.field.values[0].input == 't' then 'Yes' else 'No'
       else if !scope.field.values[0].input? || scope.field.values[0].input == ''
-        scope.field.values[0].input = 'No information provided.'
+        scope.field.values[0].input = 'No Data'
 
       element.html '<h4><strong>'+scope.field.name+'</strong></h4><blockquote>'+scope.field.values[0].input+'</blockquote>'
 

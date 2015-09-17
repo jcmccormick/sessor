@@ -2,23 +2,17 @@
 	<li><a href="#/statistics"><i class="glyphicon glyphicon-stats"></i> &nbsp; Statistics</a></li>
 </page-menu>
 
-<div class="paper row">
+<div class="paper row" ng-if="!sv.data.rows">
 	<form class="form-search" ng-init="dateSearch = false; timeSearch = false">
-		<h4>Template</h4>
-		<p class="input-group">
-			<select class="form-control" ng-model="sv.search.template" ng-options="template.name for template in sv.templates"></select>
-			<span class="input-group-btn">
-				<a href class="btn btn-primary stats-button" ng-click="sv.listFields(sv.search.template, sv)">Select</a>
-			</span>
-		</p>
-		<h4>Field</h4>
-		<p class="input-group">
-			<select class="form-control" ng-model="sv.search.field" ng-options="field.name for field in sv.fields"></select>
-			<span class="input-group-btn">
-				<a href class="btn btn-primary stats-button" ng-click="sv.showData(sv.search.field, sv)">Select</a>
-			</span>
-		</p>
-		<p>
+		<div ng-if="!sv.fields">
+			<h4>Template</h4>
+			<a href="javascript:;" class="btn" ng-class="{'btn-primary':sv.search.template == template}" ng-repeat="template in sv.templates" ng-click="sv.listFields(template, sv)">{{template.name}}</a>
+		</div>
+		<div ng-if="sv.fields && !sv.data.rows">
+			<h4>Field</h4>
+			<a href="javascript:;" class="btn" ng-class="{'btn-primary':sv.search.field == field}" ng-repeat="field in sv.fields" ng-click="sv.showData(field, sv)">{{field.name}}</a>
+		</div>
+		<!-- <p>
 			<a href ng-click="dateSearch=!dateSearch">Date</a> - <a href ng-click="timeSearch=!timeSearch">Time</a> 
 		</p>
 		<div ng-show="dateSearch" class="col-xs-6">
@@ -40,7 +34,7 @@
 				<h4>End Time</h4>
 				<input type="time" class="form-control" ng-model="sv.search.time.endTime">
 			</div>
-		</div>
+		</div> -->
 	</form>
 </div>
 
@@ -48,20 +42,12 @@
 	<div class="lead">
 		<h4>Graph Type</h4>
 		<div class="btn-group btn-group-justified">
-			<a href="javascript:;" class="btn btn-success" ng-click="sv.type=select_graphtype" ng-repeat="select_graphtype in sv.graphTypes">{{select_graphtype}}</a>
+			<a href="javascript:;" class="btn btn-success" ng-class="{'active':sv.type==select_graphtype}" ng-click="sv.type=select_graphtype" ng-repeat="select_graphtype in sv.graphTypes">{{select_graphtype}}</a>
+			<a href="javascript:;" class="btn btn-primary" ng-click="sv.data.rows=undefined;sv.fields=undefined">Reset</a>
 		</div>
 	</div>
 
-	<div google-chart chart="sv" style="height:600px;width:100%;"></div>
+	<h4 ng-if="sv.search.field && !sv.data.rows">Loading Chart</h4> 
 
-<!-- 	<div ng-show="sv.needLegend" class="col-md-2">
-		<canvas class="chart chart-pie hide col-md-2 pull-left" data="sv.pie" labels="sv.labels" legend="true">
-	</div>
-	<canvas ng-show="sv.graphtype == 'pie'" id="pie" class="chart chart-pie" data="sv.pie" labels="sv.labels"></canvas>
-	<canvas ng-show="sv.graphtype == 'doughnut'" id="doughnut" class="chart chart-doughnut" data="sv.pie" labels="sv.labels"></canvas>
-	<canvas ng-show="sv.graphtype == 'polar-area'" id="polar-area" class="chart chart-polar-area" data="sv.pie" labels="sv.labels"></canvas>
-
-	<canvas ng-show="sv.graphtype == 'line'" id="line" class="chart chart-line" data="sv.line" labels="sv.labels"></canvas>
-	<canvas ng-show="sv.graphtype == 'bar'" id="bar" class="chart chart-bar" data="sv.line" labels="sv.labels"></canvas>
-	<canvas ng-show="sv.graphtype == 'radar'" id="radar" class="chart chart-radar" data="sv.line" labels="sv.labels"></canvas> -->
+	<div google-chart chart="sv" style="height:900px;width:100%;"></div>
 </div>

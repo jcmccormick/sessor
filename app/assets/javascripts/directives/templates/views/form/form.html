@@ -28,10 +28,11 @@
   </nav>
 
   
-  <div ng-class="{'paper-width':(form.selectedOptions != undefined && form.editing) || report.templates}">
+  <div ng-class="{'paper-width':(form.selectedOptions != undefined && form.editing) || report.templates, 'paper-height':report.templates}">
 
-    <ol ng-if="report.templates.length" class="breadcrumb edit-report-crumbs text-center" ng-init="setBreadcrumb(report.templates[0])"><h3>Pages</h3>
-      <li ng-repeat="template in report.templates"><a href="javascript:;" class="btn" ng-class="{'btn-primary':form == template}" ng-click="setBreadcrumb(template)">{{template.name}}</a></li>
+    <ol ng-init="report.showPages=false;setBreadcrumb(report.templates[0])" ng-click="report.showPages=!report.showPages" ng-if="report.templates.length" class="breadcrumb edit-report-crumbs text-center">
+      <h3>Pages</h3>
+      <li ng-show="report.showPages" ng-repeat="template in report.templates"><a href="javascript:;" class="btn" ng-class="{'btn-primary':form == template}" ng-click="setBreadcrumb(template)">{{template.name}}</a></li>
     </ol>
 
     <div ng-if="form.hideName==false" class="paper row">
@@ -61,6 +62,7 @@
           <div ng-if="(report.livesave && report.editing) || report.viewing || (!report && form)" ng-click="form.setSelectedOptions(field, form)" ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section_id+1} | orderBy:'column_order'">
             <template-field-directive myForm="myForm" field="field" template="form" report="report"></template-field-directive>
           </div>
+          <a href="javascript:;" ng-if="form.editing && $first" ng-click="form.newFieldAdd = true;form.newFieldSection=section_id;form.newFieldColumn=$index">Add field to {{section_name}}</a>
         </div>
 
       </div>

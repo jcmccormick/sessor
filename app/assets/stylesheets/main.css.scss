@@ -194,7 +194,7 @@ blockquote {
   right: 0;
   bottom: 0;
   z-index: 10;
-  background-color: #222 !important;
+  background-color: #555 !important;
   border-radius: 0 !important;
   margin: 0 !important;
   padding: 0 20px 20px !important;
@@ -213,6 +213,11 @@ blockquote {
 
   @include respond(desktop) {
     display: none;
+  }
+
+  &:hover {
+    background-color: #222 !important;
+    cursor: pointer;
   }
 }
 
@@ -249,6 +254,13 @@ blockquote {
     padding-right: 225px !important;
   }
 }
+.paper-height {
+  margin-bottom: 110px;
+
+  @include respond(desktop) {
+    margin-bottom: 0;
+  }
+}
 
 
 /*
@@ -277,7 +289,7 @@ blockquote {
   color: #aaa;
   background-color: #666;
   position: fixed;
-  top: 101px;
+  top: 102px;
   bottom: 0;
   right: 0;
   width: 70%;
@@ -322,17 +334,13 @@ blockquote {
   .nav {
     padding: 15px;
     background-color: #555;
-    -webkit-box-shadow: 0 0 25px -2px rgba(0, 0, 0, .5);
-    -moz-box-shadow: 0 0 25px -2px rgba(0, 0, 0, .5);
-    box-shadow: 0 0 25px -2px rgba(0, 0, 0, .5);
+    -webkit-box-shadow: 0 5px 25px -2px rgba(0, 0, 0, .5);
+    -moz-box-shadow: 0 5px 25px -2px rgba(0, 0, 0, .5);
+    box-shadow: 0 5px 25px -2px rgba(0, 0, 0, .5);
 
     input,
     textarea {
       margin: 0;
-    }
-
-    &:nth-child(2) {
-      z-index: 3 !important;
     }
 
     @include respond(tablet) {
@@ -422,6 +430,12 @@ template-form-directive .form-group {
     &.force-hover {
       box-shadow: 0 -5px 0 #aaa;
     }
+  }
+}
+template-field-directive {
+  
+  blockquote {
+    word-wrap: break-word !important;
   }
 }
 

@@ -8,7 +8,6 @@ sessor = angular.module('sessor', [
   'ipCookie',
   'ui.sortable',
   'googlechart',
-  'chart.js',
   'infinite-scroll',
   'flash',
   'controllers',
