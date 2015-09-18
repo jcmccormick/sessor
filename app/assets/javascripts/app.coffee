@@ -62,6 +62,7 @@ sessor.config(['$authProvider', '$routeProvider',
       .when('/reports',
         templateUrl: "reports/show.html"
         controller: 'ShowReportsController'
+        controllerAs: 'vrs'
         resolve: authResolver
       )
       .when('/reports/new/',

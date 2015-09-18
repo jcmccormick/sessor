@@ -3,9 +3,9 @@
  * Last Updated: 7-25-15
  */
 
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
 
-
-/* @import url(//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+/* 
  * Mixin Settings
  */
 
@@ -190,8 +190,7 @@ blockquote {
 
 .edit-report-crumbs {
   position: fixed;
-  left: 0;
-  right: 0;
+  width: 100%;
   bottom: 0;
   z-index: 10;
   background-color: #555 !important;
@@ -202,8 +201,7 @@ blockquote {
   text-transform: capitalize;
   display: block;
 
-  h3,
-  a:not(.btn-primary) {
+  h3 {
     color: #aaa;
   }
 
@@ -303,12 +301,6 @@ blockquote {
 
   &.report-pages {
     display: none;
-
-    a:not(.btn-primary) {
-      color: #aaa;
-      text-decoration: none !important;
-      word-wrap: nowrap;
-    }
 
     .navbar-text {
       float: none;
@@ -439,53 +431,17 @@ template-field-directive {
   }
 }
 
-/* 
- * Statistics 
- */
+.report-pages,
+.edit-report-crumbs {
+  a {
+    color: #aaa !important;
+    text-decoration: none !important;
+    word-wrap: break-word !important;
 
-canvas#pie {
-  margin-right:0;
-
-  @include respond(mobile) {
-    padding: 0;
-  }
-}
-
-.chart-legend, .bar-legend, .line-legend, .pie-legend, .radar-legend, .polararea-legend, .doughnut-legend {
-  list-style-type: none;
-  position:absolute;
-  top: 0;
-  left: 0;
-  padding:0;
-
-  li {
-    white-space: inherit;
-    position: relative;
-    margin-bottom: 4px;
-    border-radius: 5px;
-    padding: 2px 8px 2px 28px;
-    font-size: smaller;
-    cursor: default;
-    word-wrap:break-word;
-    width: 90px;
-
-    @include respond(mobile) {
-      width:200px;
-    }
-
-    span {
-      display: block;
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 20px;
-      height: 20px;
-      border-radius: 5px;
+    &.selected {
+      color: white;
+      font-weight: 700;
+      font-style: italic;
     }
   }
-}
-.chart-underlay {
-  padding: 15px;
-  background-color: #31b0d5; 
-  border-radius: 10px;
 }

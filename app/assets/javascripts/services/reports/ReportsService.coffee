@@ -25,6 +25,35 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 		deferred.resolve(errors)
 		return deferred.promise
 
+	sortTemplates = (reports)->
+		deferred = $q.defer()
+
+		if reports.length == undefined
+			reports = [reports]
+			return_one = true
+
+		for report in reports
+			sorted = []
+			for key in report.template_order
+				found = false
+				report.templates = report.templates.filter((template)->
+					if !found && template.id == key
+						sorted.push template
+						found = true
+						return false
+					else
+						return true
+				)
+
+			report.templates = sorted
+
+		if return_one
+			deferred.resolve(reports[0])
+		else
+			deferred.resolve(reports)
+
+		return deferred.promise
+
 	{
 
 		newReport: ->
@@ -51,22 +80,14 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 			report.getTemplates = this.getTemplates
 
 			ClassFactory.get({class: 'reports', id: id}, (res)->
+
 				$.extend report, res
-
-				sorting = []
-				angular.copy res.template_order, sorting
-				res.templates = res.templates.map((item) ->
-					n = sorting.indexOf(item.id)
-					sorting[n] = ''
-					[n, item]
-				).sort().map((j) ->	j[1])
-
-				report.form = report.templates[0]
-				
-				report.getTemplates(report).then((rep)->
-					report.add_templates = rep.add_templates
-					deferred.resolve(report)
-				)
+				sortTemplates(report).then((rep)->
+					rep.getTemplates(rep).then((rez)->
+						rep.add_templates = rez.add_templates
+						deferred.resolve(rep)
+					)
+				)				
 			)
 			return deferred.promise
 
@@ -109,6 +130,32 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 				$rootScope.$broadcast('clearreports')
 				$location.path("/reports")
 			)
+			return
+
+		newView: (view)->
+			view.reports = []
+			view.page = 1
+			view.getReports = this.getReports
+			view.searchReports = this.searchReports
+			return view
+
+		getReports: (view)->
+			deferred = $q.defer()
+			if view.keywords && view.page == 1
+				view.reports = []
+			ClassFactory.query({class: 'reports', page: view.page, keywords: view.keywords}, (reports)->
+				sortTemplates(reports).then((reps)->
+					view.page++
+					view.reports = view.reports.concat(reps)
+					deferred.resolve(view)
+				)
+			)
+			return deferred.promise
+
+		searchReports: (view)->
+			view.reports = []
+			view.page = 1
+			this.getReports(view)
 			return
 
 		getTemplates: (report)->
