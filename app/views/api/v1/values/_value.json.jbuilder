@@ -1,1 +1,1 @@
-json.(value, :id, :input)
+json.(value, :id, :input, :created_at)

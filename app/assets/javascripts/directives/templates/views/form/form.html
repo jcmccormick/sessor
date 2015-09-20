@@ -30,11 +30,6 @@
   
   <div ng-class="{'paper-width':(form.selectedOptions != undefined && form.editing) || report.templates, 'paper-height':report.templates}">
 
-    <ol ng-init="report.showPages=false;setBreadcrumb(report.templates[0])" ng-click="report.showPages=!report.showPages" ng-if="report.templates.length" class="breadcrumb edit-report-crumbs slide">
-      <h3>Pages</h3>
-      <li ng-show="report.showPages" ng-repeat="template in report.templates"><a href="javascript:;" ng-class="{'selected':template==form}" ng-click="setBreadcrumb(template)">{{template.name}}</a></li>
-    </ol>
-
     <div ng-if="form.hideName==false" class="paper row">
       <h3>Page Name</h3>
       <input type="text" class="form-control" ng-model="form.name" placeholder="Start with a name then Save..."/>
@@ -49,22 +44,31 @@
     </div>
 
     <div ng-show="form.sections" class="paper row">
-      <small ng-if="form.editing">Click items to edit</small>
+      <small ng-if="form.editing" class="pull-left">Click items to edit</small>
       <small ng-if="form.draft" class="pull-right">Draft</small>
+
       <a href="javascript:;" ng-if="report.editing" class="text-danger close" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="report.removeTemplate(form, report)"><i class="glyphicon glyphicon-remove"></i></a>
+
       <h1><center>{{form.name}}</center></h1>
 
-      <div class="container-fluid section-row" ng-init="section[section_id].renaming = false" ng-class="{'no-highlight':!form.editing,'force-hover':form.selectedOptions.section_id == section_id+1 || section[section_id].renaming}" ng-repeat="(section_id, section_name) in form.sections track by $index">
+      <div class="container-fluid section-row" ng-repeat="(section_id, section_name) in form.sections track by $index">
 
-        <h3 ng-class="{'no-highlight':!form.editing,'force-hover':form.selectedOptions == section_id}" ng-click="form.selectedOptions=section_id">{{section_name}} <small ng-if="!section_name && form.editing">Click to add a section name</small><hr></h3>
+        <h3 ng-class="{'no-highlight':!form.editing,'force-hover':form.selectedOptions == section_id}" ng-click="form.selectedOptions=section_id">
+          {{section_name}} 
+          <div ng-if="!section_name && !form.editing">&nbsp;</div>
+          <small ng-if="!section_name && form.editing">Click to add a section name</small>
+          <hr>
+        </h3>
 
         <div class="col-xs-12" ng-class="{'col-md-6':form.columns[section_id] == 2, 'col-md-4':form.columns[section_id] == 3}" ng-repeat="column in columnsArray(form.columns[section_id]) track by $index">
 
           <div ng-if="(report.livesave && report.editing) || report.viewing || (!report && form)" ng-click="form.setSelectedOptions(field, form)" ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section_id+1} | orderBy:'column_order'">
             <template-field-directive myForm="myForm" field="field" template="form" report="report"></template-field-directive>
           </div>
-          <a href="javascript:;" ng-if="form.editing && $first" ng-click="form.newFieldAdd = true;form.newFieldSection=section_id;form.newFieldColumn=$index">Add field to {{section_name}}</a>
+
         </div>
+
+        <div ng-if="!form.editing">&nbsp;</div><a href="javascript:;" ng-if="form.editing" ng-click="form.newFieldAdd = true;form.newFieldSection=section_id">Add field to {{section_name}}<span ng-if="!section_name">this section</span></a>
 
       </div>
 
@@ -72,9 +76,10 @@
 
   </div>
 
+  <!-- RIGHT SIDEBAR -->
   <div ng-if="(form.selectedOptions != undefined && form.editing) || report.templates" class="template-options" ng-class="{'report-pages':report}">
 
-    <!-- REPORT PAGES -->
+    <!-- REPORT PAGES DESKTOP -->
     <nav ng-if="report.templates" class="navbar-inverse">
       <ul class="nav">
         <li class="navbar-text">
@@ -207,6 +212,12 @@
 
 </div>
 
+<!-- REPORT PAGES MOBILE BOTTOM BAR BREADCRUMBS -->
+<ol ng-init="report.showPages=false;setBreadcrumb(report.templates[0])" ng-click="report.showPages=!report.showPages" ng-if="report.templates.length" class="breadcrumb edit-report-crumbs slide">
+  <h3>Pages</h3>
+  <li ng-show="report.showPages" ng-repeat="template in report.templates"><a href="javascript:;" ng-class="{'selected':template==form}" ng-click="setBreadcrumb(template)">{{template.name}}</a></li>
+</ol>
+
 
 <!-- BEGIN ADD TEMPLATE MODAL -->
 <div ng-if="(report.livesave && report.template_order) || (!report.id && report.livesave)" class="modal fade addTemplateModal" tabindex="-1" role="dialog" aria-labelledby="previewModal" aria-hidden="true">
@@ -217,22 +228,20 @@
         <h2 class="modal-title">Page Selection</h2>
       </div>
       <div class="modal-body row">
-        <div>
-          <div role="button" class="col-xs-4 col-md-3" data-dismiss="modal" ng-click="report.addTemplate(template, myForm, report)" ng-repeat-start="template in report.add_templates | orderBy:'id'">
-            <ul class="list-group add-template-list">
-              <li class="list-group-item"><h5>{{template.name}}</h5></li>
-              <li class="list-group-item add-template-list-section col-xs-4">
-                <label>Sections</label>
-                <p ng-repeat="section_name in template.sections track by $index">{{section_name}}</p>
-              </li>
-            </ul>
-          </div>
-          <div class="container-fluid" ng-if="report.add_templates.length<1" ng-repeat-end>
-            <h3>Nothing here?</h3>
-            <p>Make sure the Page you want to add is not marked as Draft. Uncheck the "Draft" option when editing a Page, then save it.</p>
-            <p>Pages may only be added to a report once.</p>
-            <button class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
+        <div role="button" class="col-xs-4 col-md-3" ng-click="report.addTemplate(template, myForm, report)" ng-repeat-start="template in report.add_templates | orderBy:'id'" data-dismiss="modal">
+          <ul class="list-group add-template-list">
+            <li class="list-group-item"><h5>{{template.name}}</h5></li>
+            <li class="list-group-item add-template-list-section col-xs-4">
+              <label>Sections</label>
+              <p ng-repeat="section_name in template.sections track by $index">{{section_name}}</p>
+            </li>
+          </ul>
+        </div>
+        <div class="container-fluid" ng-if="report.add_templates.length<1" ng-repeat-end>
+          <h3>Nothing here?</h3>
+          <p>Make sure the Page you want to add is not marked as Draft. Uncheck the "Draft" option when editing a Page, then save it.</p>
+          <p>Pages may only be added to a report once.</p>
+          <button class="btn btn-primary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </form>

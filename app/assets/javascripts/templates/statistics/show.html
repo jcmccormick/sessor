@@ -1,53 +1,46 @@
 <page-menu>
 	<li><a href="#/statistics"><i class="glyphicon glyphicon-stats"></i> &nbsp; Statistics</a></li>
+	<li><a href="javascript:;" ng-click="sv.showOptions=!sv.showOptions"><i class="glyphicon glyphicon-cog"></i> &nbsp; Toggle Options</a></li>
 </page-menu>
-
-<div class="paper row" ng-if="!sv.data.rows">
-	<form class="form-search" ng-init="dateSearch = false; timeSearch = false">
-		<div ng-if="!sv.fields">
-			<h4>Template</h4>
-			<a href="javascript:;" class="btn" ng-class="{'btn-primary':sv.search.template == template}" ng-repeat="template in sv.templates" ng-click="sv.listFields(template, sv)">{{template.name}}</a>
-		</div>
-		<div ng-if="sv.fields && !sv.data.rows">
-			<h4>Field</h4>
-			<a href="javascript:;" class="btn" ng-class="{'btn-primary':sv.search.field == field}" ng-repeat="field in sv.fields" ng-click="sv.showData(field, sv)">{{field.name}}</a>
-		</div>
-		<!-- <p>
-			<a href ng-click="dateSearch=!dateSearch">Date</a> - <a href ng-click="timeSearch=!timeSearch">Time</a> 
-		</p>
-		<div ng-show="dateSearch" class="col-xs-6">
-			<div class="grid-column">
-				<h4>Start Date</h4>
-				<input type="date" class="form-control" ng-model="sv.search.date.startDate">
-			</div>
-			<div class="grid-column">
-				<h4>End Date</h4>
-				<input type="date" class="form-control" ng-model="sv.search.date.endDate">
-			</div>
-		</div> 
-		<div ng-show="timeSearch" class="col-xs-6">
-			<div class="grid-column">
-				<h4>Start Time</h4>
-				<input type="time" class="form-control" ng-model="sv.search.time.startTime">
-			</div>
-			<div class="grid-column">
-				<h4>End Time</h4>
-				<input type="time" class="form-control" ng-model="sv.search.time.endTime">
-			</div>
-		</div> -->
-	</form>
+<div ng-class="{'paper-width':sv.showOptions}">
+	<div class="paper row">
+		<h3 class="text-center" ng-show="!sv.data.rows">Start by selecting options...</h3>
+		<div ng-show="sv.data.rows" google-chart chart="sv" style="height:550px;width:100%;"></div>
+	</div>
 </div>
 
-<div class="paper row" ng-show="sv.data.rows">
-	<div class="lead">
-		<h4>Graph Type</h4>
-		<div class="btn-group btn-group-justified">
-			<a href="javascript:;" class="btn btn-success" ng-class="{'active':sv.type==select_graphtype}" ng-click="sv.type=select_graphtype" ng-repeat="select_graphtype in sv.graphTypes">{{select_graphtype}}</a>
-			<a href="javascript:;" class="btn btn-primary" ng-click="sv.data.rows=undefined;sv.fields=undefined">Reset</a>
-		</div>
-	</div>
+<div ng-if="sv.showOptions" class="template-options">
+	<nav class="navbar-inverse">
+		<ul class="nav">
+			<li class="navbar-text">
+				<h4>Graph Options<small>
+					<p><a href="javascript:;" class="btn btn-link" ng-click="sv.showOptions=false"><i class="glyphicon glyphicon-ok"></i> &nbsp; Done</a></p>
+				</small></h4>
 
-	<h4 ng-if="sv.search.field && !sv.data.rows">Loading Chart</h4> 
+				<label>Page</label>
+				<p><select class="form-control" ng-model="sv.search.selectedTemplate" ng-options="template as template.name for template in sv.templates" ng-change="sv.listFields(sv.search.selectedTemplate, sv)"></select></p>
+				
+				<div ng-if="sv.search.selectedTemplate">
+					<label>Field</label>
+					<p ng-if="sv.search.selectedTemplate"><select class="form-control" ng-model="sv.search.selectedField" ng-options="field as field.name for field in sv.fields"></select></p>
 
-	<div google-chart chart="sv" style="height:900px;width:100%;"></div>
+					<label>Start Date <small>OPTIONAL</small></label>
+					<p><input type="date" class="form-control" ng-model="sv.search.startDate"></p>
+
+					<label>End Date <small>OPTIONAL</small></label>
+					<p><input type="date" class="form-control" ng-model="sv.search.endDate"></p>
+
+					<div ng-if="sv.search.selectedField">
+						<label>Graph Type</label>
+						<p><select class="form-control" ng-model="sv.type" ng-options="type for type in sv.graphTypes"></select></p>
+
+						&nbsp;
+						<p class="btn-group btn-group-justified">
+							<a href="javascript:;" class="btn btn-primary" ng-click="sv.showData(sv.search.selectedField, sv)">Graph</a>
+						</p>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</nav>
 </div>
