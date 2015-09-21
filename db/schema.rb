@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150914030124) do
+ActiveRecord::Schema.define(version: 20150921041515) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "provider",               limit: 255,                null: false
@@ -59,18 +59,19 @@ ActiveRecord::Schema.define(version: 20150914030124) do
   add_index "admins_templates", ["template_id"], name: "index_admins_templates_on_template_id", using: :btree
 
   create_table "fields", force: :cascade do |t|
-    t.string   "name",         limit: 255
-    t.string   "fieldtype",    limit: 255
-    t.boolean  "required",     limit: 1
-    t.boolean  "disabled",     limit: 1
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.integer  "column_id",    limit: 4
-    t.string   "glyphicon",    limit: 255
-    t.integer  "section_id",   limit: 4
-    t.integer  "template_id",  limit: 4
-    t.text     "options",      limit: 65535
-    t.integer  "column_order", limit: 4
+    t.string   "name",          limit: 255
+    t.string   "fieldtype",     limit: 255
+    t.boolean  "required",      limit: 1
+    t.boolean  "disabled",      limit: 1
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "column_id",     limit: 4
+    t.string   "glyphicon",     limit: 255
+    t.integer  "section_id",    limit: 4
+    t.integer  "template_id",   limit: 4
+    t.text     "options",       limit: 65535
+    t.integer  "column_order",  limit: 4
+    t.text     "default_value", limit: 65535
   end
 
   add_index "fields", ["column_id"], name: "index_fields_on_column_id", using: :btree

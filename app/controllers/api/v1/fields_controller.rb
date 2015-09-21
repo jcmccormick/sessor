@@ -35,7 +35,7 @@ module Api::V1 #:nodoc:
 
     private
       def allowed_params
-        params.require(:field).permit(:section_id, :column_id, :column_order, :name, :fieldtype, :required, :disabled, :glyphicon)
+        params.require(:field).permit(:section_id, :column_id, :column_order, :name, :fieldtype, :required, :disabled, :glyphicon, :default_value)
       end
   end
 end

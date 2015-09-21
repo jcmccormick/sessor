@@ -43,8 +43,8 @@ class Report < ActiveRecord::Base
   # 4. Save the newly created Report Value.
   def populate_values
     fields.each do |f|
-      if values.where(field: f).blank?
-        value = Value.new(report: self, field: f, input: f.values.first.input)
+      if values.where(field_id: f.id).blank?
+        value = Value.new(report: self, field_id: f.id, input: f.default_value)
         value.save
       end
     end

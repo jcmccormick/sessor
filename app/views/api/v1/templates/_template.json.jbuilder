@@ -10,12 +10,7 @@ json.fields template.fields do |field|
 	json.fieldtype field.fieldtype
 	json.required field.required
 	json.disabled field.disabled
-
-	json.values field.values do |value|
-		json.id value.id
-		json.input value.input
-		json.field_id value.field_id
-	end
+	json.default_value field.default_value
 
 	json.options field.options do |option|
 		json.id option.id

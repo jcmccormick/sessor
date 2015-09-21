@@ -34,21 +34,31 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     # Break apart an <input> tag into common denominators
     inputstart = '<input'
     clas = 'class="form-control"'
-    ngmodel = 'ng-model="field.values[0].input"'
-    inputend = 'name="{{field.name}}" ng-required="field.required" ng-disabled="field.disabled">&nbsp;'
+
+    ngmodel = if scope.report
+      'ng-model="field.values[0].input"'
+    else
+      'ng-model="field.default_value"'
+
+    checkboxmodel = if scope.report then 'ng-model="$parent.field.values[0].input"' else 'ng-model="$parent.field.default_value"'
+
+    inputend = ' name="{{field.name}}" ng-required="field.required" ng-disabled="field.disabled">&nbsp;'
+    
     standard = clas+' '+ngmodel+' '+inputend
 
     # Define the particulars of each supported field
-    labelntext = '<p>{{field.values[0].input}}</p><h4 class="text-center" ng-if="!field.values[0].input">Click to add text.</h4>'
+    labelntext = '<p>{{field.values[0].input}}{{field.default_value}}</p>
+    <h4 class="text-center" ng-if="!field.values[0].input && !field.default_value">Click to add text.</h4>'
 
     textfield = inputstart+' type="text" '+standard
     textarea = '<textarea type="text" '+standard+'</textarea>'
+    email = inputstart+' type="email" placeholder="Email" '+standard
 
     integer = inputstart+' type="number" '+standard
     date = inputstart+' type="date" '+standard
     time = inputstart+' type="time" '+standard
 
-    checkbox = inputstart+' id="{{field.name}}" type="checkbox" ng-model="$parent.field.values[0].input" '+inputend
+    checkbox = inputstart+' id="{{field.name}}" type="checkbox" '+checkboxmodel+inputend
     radio = '<div ng-repeat="option in field.options">
               <label>'+inputstart+' type="radio" ng-value="option.name" '+ngmodel+' '+inputend+'{{option.name}}</label>
             </div>
@@ -57,62 +67,57 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
         <option value="">Select Item</option>
       </select>'
 
-    email = inputstart+' type="email" placeholder="Email" '+standard
     # masked = inputstart+' type="password" '+standard
 
     # GET template content from path
     cur_field = getTemplate(scope.field)
-    cur_value = scope.field.values[0].input
+    cur_value = if scope.report then scope.field.values[0].input else scope.field.default_value
+
+    if cur_value?
+      if cur_field == 'integer'
+        cur_value = parseInt(cur_value, 10)
+      else if cur_field == 'date' || cur_field == 'time'
+        cur_value = if cur_value != '1970-01-01T00:00:00.000Z' then new Date(cur_value) else ''
+      else if cur_field == 'checkbox'
+        cur_value = cur_value == 't' ? 1 : 0
+
+    if scope.field.default_value != undefined
+      scope.field.default_value = cur_value
+    else
+      scope.field.values[0].input = cur_value
 
     # Compile the field display after doublechecking that values are appropriate for their fieldtype
     # If editing/viewing a template or editing a report, show <input> fields
-    if (scope.template && (scope.template.editing || scope.template.viewing)) || (scope.report && scope.report.editing)
+    if !(scope.report && scope.report.viewing)
       switch cur_field
         when "labelntext" then element.html fw+labelntext+fwend
 
         when "textfield" then element.html fw+textfield+fwend
         when "textarea" then element.html fw+textarea+fwend
+        when "email" then element.html fw+email+fwend
 
-        when "integer"
-          scope.field.values[0].input = if scope.field.values[0].input?
-            parseInt(scope.field.values[0].input, 10)
-          else
-            ''
-          element.html fw+integer+fwend
-        when "date"
-          scope.field.values[0].input = if scope.field.values[0].input?
-            new Date(scope.field.values[0].input)
-          else
-            undefined
-          element.html fw+date+fwend
-        when "time"
-          scope.field.values[0].input = if scope.field.values[0].input?
-            new Date(scope.field.values[0].input)
-          else
-            undefined
-          element.html fw+time+fwend
+        when "integer" then element.html fw+integer+fwend
+        when "date" then element.html fw+date+fwend
+        when "time" then element.html fw+time+fwend
 
-        when "checkbox"
-          if scope.field.values && scope.field.values[0].input?
-            scope.field.values[0].input = scope.field.values[0].input == 't' ? 1 : 0
-          element.html fwstart+checkbox+fwmid+fwend
+        when "checkbox" then element.html fwstart+checkbox+fwmid+fwend
         when "radio" then element.html fw+radio+fwend
         when "dropdown" then element.html fw+dropdown+fwend
 
-        when "email" then element.html fw+email+fwend
         # when "masked" then element.html fw+masked+fwend
     else
       # Else we're viewing a report, so only show 
       # input text and not an actual <input> field
 
-      if cur_field == "date" && scope.field.values[0].input != ''
+      if cur_field == "date" && scope.field.values[0].input != '' && scope.field.values[0].input?
         scope.field.values[0].input = new Date(scope.field.values[0].input).format("DDDD, MMMM DS, YYYY")
-      else if cur_field == "time" && scope.field.values[0].input != ''
+      else if cur_field == "time" && scope.field.values[0].input != '' && scope.field.values[0].input?
+        console.log scope.field.values[0].input
         scope.field.values[0].input = new Date(scope.field.values[0].input).format("hh:mm TT")
       else if cur_field == "number"
         scope.field.values[0].input = parseInt(scope.field.values[0].input, 10)
       else if cur_field == "checkbox"
-        scope.field.values[0].input = if scope.field.values[0].input == 't' then 'Yes' else 'No'
+        scope.field.values[0].input = if scope.field.values[0].input == true then 'True' else 'False'
       else if !scope.field.values[0].input? || scope.field.values[0].input == ''
         scope.field.values[0].input = 'No Data'
 

@@ -83,10 +83,13 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 
 				$.extend report, res
 				sortTemplates(report).then((rep)->
-					rep.getTemplates(rep).then((rez)->
-						rep.add_templates = rez.add_templates
+					if $location.path().indexOf('edit') != -1
+						rep.getTemplates(rep).then((rez)->
+							rep.add_templates = rez.add_templates
+							deferred.resolve(rep)
+						)
+					else
 						deferred.resolve(rep)
-					)
 				)				
 			)
 			return deferred.promise

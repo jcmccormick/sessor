@@ -17,5 +17,5 @@ Rails.application.routes.draw do
       as :admin do
       end
     end
-  end
+  end  
 end

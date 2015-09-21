@@ -54,6 +54,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			template = new ClassFactory()
 			template.hideName = true
 			template.editing = true
+			template.addFieldTypes = this.addFieldTypes
 			template.newFieldSection = 0
 			template.countColumns = this.countColumns
 			template.setFieldType = this.setFieldType
@@ -208,24 +209,18 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 		# add field
 		addField: (template, section_id, column_id, type, name, tempForm)->
 			field = new ClassFactory()
+			field.name = name
 			field.template_id = template.id
 			field.section_id = section_id
 			field.column_id = column_id
-			field.column_order = newFieldOrdering(template, section_id, column_id)
 			field.fieldtype = type.name
 			field.glyphicon = type.glyphicon
-			field.name = name
+			field.column_order = newFieldOrdering(template, section_id, column_id)
 			field.$save({class: 'fields'}, (res)->
-				res.values = []
-				value = new ClassFactory()
-				value.field_id = res.id
-				value.$save({class: 'values'}, (val)->
-					res.values.push val
-					template.fields.push res
-					tempForm.$setPristine()
-					Flash.create('success', '<p>'+field.name+' successfully added to '+template.name+': '+template.sections[section_id-1]+'.</p>', 'customAlert')
-					template.selectedOptions = res
-				)
+				template.fields.push res
+				tempForm.$setPristine()
+				Flash.create('success', '<p>'+field.name+' successfully added to '+template.name+': '+template.sections[section_id-1]+'.</p>', 'customAlert')
+				template.selectedOptions = res
 			)
 			template.newFieldName = undefined
 			template.newFieldAdd = undefined
@@ -261,7 +256,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 
 			return
 
-		# reorder field up or down
+		# reorder field up or down in a column
 		moveField: (template, field, direction)->
 
 			field_switch = $.grep template.fields, (i)->
@@ -284,7 +279,6 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 
 		# add field option
 		addOption: (field) ->
-			if !field.options then field.options = new Array
 			option = new ClassFactory()
 			option.name = ''
 			option.field_id = field.id
@@ -304,17 +298,17 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			'labelntext'
 			'textfield'
 			'textarea'
+			'email'
 			'integer'
 			'date'
 			'time'
 			'checkbox'
 			'radio'
 			'dropdown'
-			'email'
 			# 'masked'
 		]
 
-		fields: [
+		addFieldTypes: [
 			{
 				name: 'labelntext'
 				value: 'Label and Text'
