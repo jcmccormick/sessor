@@ -27,16 +27,11 @@ module Api::V1 #:nodoc:
 
     def show
       @report = current_user.reports.find(params[:id])
-      @report.populate_values
-      @report
     end
 
     def create
       @report = current_user.reports.new(allowed_params)
-      if params[:template_order]
-        template = current_user.templates.find(params[:template_order])
-        @report.templates << template
-      end
+      @report.populate_values
       @report.save
       current_user.reports << @report
       render 'show', status: 201
@@ -58,10 +53,6 @@ module Api::V1 #:nodoc:
         report.templates.delete(template)
       else
         report.populate_values
-        report.template_order.each do |template_id|
-          template = current_user.templates.find(template_id)
-          report.templates << template unless report.templates.include?(template)
-        end
         report.update_attributes(allowed_params)
       end
       current_user.reports << report unless current_user.reports.include?(report)

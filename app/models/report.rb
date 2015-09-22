@@ -27,7 +27,6 @@ class Report < ActiveRecord::Base
   serialize :template_order, Array
   accepts_nested_attributes_for :values
   validates :title, format: { with: /\A[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
-  before_create :populate_values
 
   default_scope { eager_load([{:templates => :fields}, :values])}
 
@@ -43,7 +42,9 @@ class Report < ActiveRecord::Base
 
   def populate_values
     template_order.each do |template_id|
-      if !template = templates.find_by_id(template_id)
+      template = Template.find(template_id)
+      unless templates.include?(template)
+        templates << template
         Template.find_by_id(template_id).fields.each do |field|
           values.new(report: self, field_id: field.id, input: field.default_value)
         end
