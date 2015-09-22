@@ -57,6 +57,7 @@ module Api::V1 #:nodoc:
         report.update_attributes(params.require(:report).permit({:template_order => []}))
         report.templates.delete(template)
       else
+        report.populate_values
         report.template_order.each do |template_id|
           template = current_user.templates.find(template_id)
           report.templates << template unless report.templates.include?(template)

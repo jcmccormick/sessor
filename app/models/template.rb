@@ -18,7 +18,7 @@ class Template < ActiveRecord::Base
 	accepts_nested_attributes_for :fields
 
 	# Create a scope that assures the loading of all Template associations in a single DB call. Used as `Templates.minned`.
-	# scope :minned, ->{eager_load(:fields)}
+	#default_scope { eager_load(:fields) }
 
 	# Titles must start with a letter and only contain letters and numbers. 
 	validates :name, format: { with: /\A[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }

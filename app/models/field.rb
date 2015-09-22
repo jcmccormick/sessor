@@ -5,11 +5,6 @@ class Field < ActiveRecord::Base
 	# Relate to Columns.
 	belongs_to :template, inverse_of: :fields
 
-	# Relate to Options.
-	has_many :options, dependent: :destroy
-
-	# Saving a Field saves its associated Options.
-	accepts_nested_attributes_for :options
-
-	default_scope { eager_load([:options]) }
+	serialize :options, Array
+	
 end

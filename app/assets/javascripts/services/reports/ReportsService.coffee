@@ -10,8 +10,8 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 		if report.templates
 			for template in report.templates
 				for field in template.fields
-					report.values_attributes.push field.values[0]
-					if field.required && !field.values[0].input?
+					report.values_attributes.push field.value
+					if field.required && !field.value.input?
 						required += '<li>'+template.name+': '+field.name+'</li>'
 
 		if !!required

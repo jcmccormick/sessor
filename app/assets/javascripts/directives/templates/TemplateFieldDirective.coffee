@@ -23,7 +23,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     # Create a format for field input box layout
     fwstart = '<div class="form-group">'
     fwmid = '<label class="control-label" for="{{field.name}}" ng-if="field.name">{{field.name}}
-               <span class="required-error" ng-if="field.required && !field.values[0].input">*</span>
+               <span class="required-error" ng-if="field.required && !field.value.input">*</span>
              </label>'
 
     fwend = '<div class="field-overlay" ng-class="{\'force-hover\':template.selectedOptions.id == field.id}" ng-if="template.editing"></div>
@@ -35,35 +35,31 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     inputstart = '<input'
     clas = 'class="form-control"'
 
-    ngmodel = if scope.report
-      'ng-model="field.values[0].input"'
-    else
-      'ng-model="field.default_value"'
-
-    checkboxmodel = if scope.report then 'ng-model="$parent.field.values[0].input"' else 'ng-model="$parent.field.default_value"'
+    ngmodel = if scope.report then 'ng-model="field.value.input"' else 'ng-model="field.default_value"'
+    checkboxmodel = if scope.report then 'ng-model="$parent.field.value.input"' else 'ng-model="$parent.field.default_value"'
 
     inputend = ' name="{{field.name}}" ng-required="field.required" ng-disabled="field.disabled">&nbsp;'
     
     standard = clas+' '+ngmodel+' '+inputend
 
     # Define the particulars of each supported field
-    labelntext = '<p>{{field.values[0].input}}{{field.default_value}}</p>
-    <h4 class="text-center" ng-if="!field.values[0].input && !field.default_value">Click to add text.</h4>'
+    labelntext = '<p>{{field.value.input}}{{field.default_value}}</p>
+    <h4 class="text-center" ng-if="!field.value.input && !field.default_value">Click to add text.</h4>'
 
     textfield = inputstart+' type="text" '+standard
     textarea = '<textarea type="text" '+standard+'</textarea>'
     email = inputstart+' type="email" placeholder="Email" '+standard
 
-    integer = inputstart+' type="number" '+standard
+    integer = inputstart+' type="number" placeholder="Number" '+standard
     date = inputstart+' type="date" '+standard
     time = inputstart+' type="time" '+standard
 
     checkbox = inputstart+' id="{{field.name}}" type="checkbox" '+checkboxmodel+inputend
-    radio = '<div ng-repeat="option in field.options">
-              <label>'+inputstart+' type="radio" ng-value="option.name" '+ngmodel+' '+inputend+'{{option.name}}</label>
+    radio = '<div ng-repeat="option in field.options track by $index">
+              <label>'+inputstart+' type="radio" ng-value="field.options[$index]" '+ngmodel+inputend+'{{option}}</label>
             </div>
             <h4 class="text-center" ng-if="!field.options.length">Click to add options.</h4>'
-    dropdown = '<select value="{{field.values[0].input}}" ng-options="option.name as option.name for option in field.options" '+standard+'
+    dropdown = '<select ng-options="option for option in field.options" '+standard+'
         <option value="">Select Item</option>
       </select>'
 
@@ -71,7 +67,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 
     # GET template content from path
     cur_field = getTemplate(scope.field)
-    cur_value = if scope.report then scope.field.values[0].input else scope.field.default_value
+    cur_value = if scope.report then scope.field.value.input else scope.field.default_value
 
     if cur_value?
       if cur_field == 'integer'
@@ -84,7 +80,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     if scope.field.default_value != undefined
       scope.field.default_value = cur_value
     else
-      scope.field.values[0].input = cur_value
+      scope.field.value.input = cur_value
 
     # Compile the field display after doublechecking that values are appropriate for their fieldtype
     # If editing/viewing a template or editing a report, show <input> fields
@@ -109,19 +105,19 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
       # Else we're viewing a report, so only show 
       # input text and not an actual <input> field
 
-      if cur_field == "date" && scope.field.values[0].input != '' && scope.field.values[0].input?
-        scope.field.values[0].input = new Date(scope.field.values[0].input).format("DDDD, MMMM DS, YYYY")
-      else if cur_field == "time" && scope.field.values[0].input != '' && scope.field.values[0].input?
-        console.log scope.field.values[0].input
-        scope.field.values[0].input = new Date(scope.field.values[0].input).format("hh:mm TT")
+      if cur_field == "date" && scope.field.value.input != '' && scope.field.value.input?
+        scope.field.value.input = new Date(scope.field.value.input).format("DDDD, MMMM DS, YYYY")
+      else if cur_field == "time" && scope.field.value.input != '' && scope.field.value.input?
+        console.log scope.field.value.input
+        scope.field.value.input = new Date(scope.field.value.input).format("hh:mm TT")
       else if cur_field == "number"
-        scope.field.values[0].input = parseInt(scope.field.values[0].input, 10)
+        scope.field.value.input = parseInt(scope.field.value.input, 10)
       else if cur_field == "checkbox"
-        scope.field.values[0].input = if scope.field.values[0].input == true then 'True' else 'False'
-      else if !scope.field.values[0].input? || scope.field.values[0].input == ''
-        scope.field.values[0].input = 'No Data'
+        scope.field.value.input = if scope.field.value.input == true then 'True' else 'False'
+      else if (!scope.field.value.input? || scope.field.value.input == '')
+        scope.field.value.input = 'No Data'
 
-      element.html '<h4><strong>'+scope.field.name+'</strong></h4><blockquote>'+scope.field.values[0].input+'</blockquote>'
+      element.html '<h4><strong>'+scope.field.name+'</strong></h4><blockquote>'+scope.field.value.input+'</blockquote>'
 
     $compile(element.contents()) scope
     return

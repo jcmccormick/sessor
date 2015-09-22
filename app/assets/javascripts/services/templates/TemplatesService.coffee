@@ -7,10 +7,6 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 		errors = ''
 
 		template.fields_attributes = template.fields
-		template.fields && template.fields_attributes.forEach((field)->
-			field.options_attributes = field.options
-			field.values_attributes = field.values
-		)
 
 		if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test template.name
 			errors += '<p>Template names must begin with a letter and only contain letters and numbers.</p>'
@@ -205,6 +201,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 						else if field.section_id == index+2
 							field.section_id--
 				template.selectedOptions = directed_index
+			return
 
 		# add field
 		addField: (template, section_id, column_id, type, name, tempForm)->
@@ -279,19 +276,16 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 
 		# add field option
 		addOption: (field) ->
-			option = new ClassFactory()
-			option.name = ''
-			option.field_id = field.id
-			field.options.push option
-			option.$save({class: 'options'})
+			number = field.options.length + 1
+			field.options.push 'Option '+number
 			return
 
 		# delete field option
-		deleteOption: (field, option)->
+		deleteOption: (field, option, template, tempForm)->
+			tempForm.$dirty = true
 			index = field.options.indexOf(option)
 			field.options.splice index, 1
-			$.extend option, new ClassFactory()
-			option.$delete({class: 'options', id: option.id})
+			template.saveTemplate(true, tempForm, template)
 			return
 
 		supportedFields: [

@@ -27,8 +27,9 @@ class Report < ActiveRecord::Base
   serialize :template_order, Array
   accepts_nested_attributes_for :values
   validates :title, format: { with: /\A[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
-  after_create :populate_values
-  before_update :populate_values
+  before_create :populate_values
+
+  default_scope { eager_load([{:templates => :fields}, :values])}
 
   # Use a method to get as little information as needed when viewing all reports. Usable on ActiveRecord Relation.
   def self.index_minned
@@ -36,16 +37,16 @@ class Report < ActiveRecord::Base
   end
 
   # Populate the Values of the Fields associated with the Report.
-  # (A Report cannot contain the same Values as a Template, or every Report would have the same Values. Therefore creating a Report must somehow create a new Value in the DB, linked to a Report, and based on a Template's default Values. The following describes that process.)
-  # 1. Loop through each Template Field associated with the Report.
-  # 2. Create a `value` object based on the first Value found with the same Report and Field ID. If none is found, create a Value tied to the Report and Field. (A Value will have a Field ID, as this is needed upon Value creation. However, if a Value has no Report ID associated with it, that means it must be the first Value created for the Field. This is a Field's default Value.
-  # 3. If a Value has no input, set it as the original Field's default Value input. If the default Value's input is nil, no harm done. Otherwise, the default Value's input will be placed into the newly created Report Value's input.
-  # 4. Save the newly created Report Value.
+  # Look over all the templates to see which are not yet associated with the report
+  # For unassociated templates, iterate through its fields and create report values
+  # Ussable on single report objects
+
   def populate_values
-    fields.each do |f|
-      if values.where(field_id: f.id).blank?
-        value = Value.new(report: self, field_id: f.id, input: f.default_value)
-        value.save
+    template_order.each do |template_id|
+      if !template = templates.find_by_id(template_id)
+        Template.find_by_id(template_id).fields.each do |field|
+          values.new(report: self, field_id: field.id, input: field.default_value)
+        end
       end
     end
   end

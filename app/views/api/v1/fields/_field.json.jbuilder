@@ -1,1 +1,1 @@
-json.(field, :id, :section_id, :column_id, :column_order, :name, :fieldtype, :required, :disabled, :glyphicon, :options, :default_value)
+json.(field, :id, :section_id, :column_id, :column_order, :name, :fieldtype, :required, :disabled, :glyphicon, :default_value, :options)

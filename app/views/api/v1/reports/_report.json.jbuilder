@@ -1,10 +1,10 @@
 json.(@report, :id, :title, :allow_title, :template_order)
 
-json.users report.users do |user|
+json.users @report.users do |user|
 	json.id user.id
 end
 
-json.templates report.templates do |template|
+json.templates @report.templates do |template|
 	
 	json.id template.id
 	json.name template.name
@@ -20,17 +20,16 @@ json.templates report.templates do |template|
 		json.fieldtype field.fieldtype
 		json.required field.required
 		json.disabled field.disabled
+		json.options field.options
 
-		json.values report.values do |value|
-			if value.field_id == field.id && value.report_id == report.id
-				json.id value.id
-				json.input value.input
-				json.field_id value.field_id
+		json.value do
+			@report.values.each do |value|
+				if value.field_id == field.id
+					json.id value.id
+					json.input value.input
+				end
 			end
 		end
 
-		json.options field.options do |option|
-			json.name option.name
-		end
 	end
 end
