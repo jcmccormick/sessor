@@ -26,7 +26,11 @@ module Api::V1 #:nodoc:
     end
 
     def show
-      @report = current_user.reports.find(params[:id])
+      @report = if @report
+        @report
+      else
+        current_user.reports.find(params[:id])
+      end
     end
 
     def create
@@ -41,16 +45,8 @@ module Api::V1 #:nodoc:
       report = current_user.reports.find(params[:id])
       report.template_order = params[:template_order]
       if params.has_key?(:did)
-        template = report.templates.find(params[:did])
-        template.fields.each do |field|
-          report.values.each do |value|
-            if field.id == value.field_id
-              value.destroy
-            end
-          end
-        end
+        report.disassociate_template(params[:did])
         report.update_attributes(params.require(:report).permit({:template_order => []}))
-        report.templates.delete(template)
       else
         report.populate_values
         report.update_attributes(allowed_params)

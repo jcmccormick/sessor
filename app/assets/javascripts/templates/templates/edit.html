@@ -42,14 +42,14 @@
     </li>
   </page-menu>
 
-  <div ng-if="vt.template.id" ng-class="{'paper-width':vt.template.selectedOptions != undefined}">
+  <div ng-if="vt.template.id" ng-class="{'paper-width':vt.template.selectedOptions != undefined}" id="page_additions">
     <!-- BEGIN NEW SECTION ADD -->
     <div ng-if="vt.template.newSectionAdd==true || !vt.template.sections.length" class="paper row">
       <button type="button" class="close" ng-if="vt.template.newSectionAdd && vt.template.sections.length" ng-click="vt.template.newSectionAdd=false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <h3>Add Section</h3>
 
       <h4>Name <small>OPTIONAL</small></h4>
-      <input type="text" class="form-control" ng-model="vt.template.newSectionName" value="{{section_name}}">
+      <input type="text" id="page_addition" class="form-control" ng-model="vt.template.newSectionName" value="{{section_name}}">
 
       <h4>Columns <small>REQUIRED</small></h4>
       <ul class="btn-group btn-group-justified list-unstyled">
@@ -67,7 +67,7 @@
       <small>ALL REQUIRED</small>
 
       <h4>Name</h4>
-      <input type="text" class="form-control" ng-model="vt.template.newFieldName" required autofocus>
+      <input type="text" id="page_addition" class="form-control" ng-model="vt.template.newFieldName" required>
 
       <h4>Type</h4>
       <ul class="list-inline"><li ng-repeat="type in vt.template.addFieldTypes" class="text-center" ng-click="vt.template.newFieldType=type"><a href="javascript:;" class="btn" ng-class="{'btn-primary':vt.template.newFieldType == type}"><i class="glyphicon {{type.glyphicon}}"></i> &nbsp; {{type.value}}</a></ul>

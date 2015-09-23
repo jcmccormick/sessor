@@ -13,6 +13,8 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 					report.values_attributes.push field.value
 					if field.required && !field.value.input?
 						required += '<li>'+template.name+': '+field.name+'</li>'
+					if !field.options.length
+						field.options = undefined
 
 		if !!required
 			errors += 'The following fields are required<ul>'+required+'</ul>'
@@ -104,6 +106,7 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 
 				repCopy = new ClassFactory()
 				$.extend repCopy, report
+				repCopy.add_templates = undefined
 
 				if !repCopy.id
 					repCopy.$save({class: 'reports'}, (res)->

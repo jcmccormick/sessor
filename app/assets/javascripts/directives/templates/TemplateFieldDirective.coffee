@@ -38,12 +38,12 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     ngmodel = if scope.report then 'ng-model="field.value.input"' else 'ng-model="field.default_value"'
     checkboxmodel = if scope.report then 'ng-model="$parent.field.value.input"' else 'ng-model="$parent.field.default_value"'
 
-    inputend = ' name="{{field.name}}" ng-required="field.required" ng-disabled="field.disabled">&nbsp;'
+    inputend = ' name="{{field.name}}" ng-required="field.required" ng-disabled="field.disabled">'
     
     standard = clas+' '+ngmodel+' '+inputend
 
     # Define the particulars of each supported field
-    labelntext = '<p>{{field.value.input}}{{field.default_value}}</p>
+    labelntext = '<p class="labelntext">{{field.value.input}}{{field.default_value}}</p>
     <h4 class="text-center" ng-if="!field.value.input && !field.default_value">Click to add text.</h4>'
 
     textfield = inputstart+' type="text" '+standard
@@ -54,9 +54,9 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     date = inputstart+' type="date" '+standard
     time = inputstart+' type="time" '+standard
 
-    checkbox = inputstart+' id="{{field.name}}" type="checkbox" '+checkboxmodel+inputend
+    checkbox = inputstart+' id="{{field.name}}" type="checkbox" '+checkboxmodel+inputend+' '
     radio = '<div ng-repeat="option in field.options track by $index">
-              <label>'+inputstart+' type="radio" ng-value="field.options[$index]" '+ngmodel+inputend+'{{option}}</label>
+              <label>'+inputstart+' type="radio" ng-value="field.options[$index]" '+ngmodel+inputend+' {{option}}</label>
             </div>
             <h4 class="text-center" ng-if="!field.options.length">Click to add options.</h4>'
     dropdown = '<select ng-options="option for option in field.options" '+standard+'

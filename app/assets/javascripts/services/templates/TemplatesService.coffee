@@ -122,11 +122,8 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			return
 
 		# add section
-		addSection: (name, columns, tempForm, template)->
+		addSection: (name='', columns, tempForm, template)->
 			tempForm.$dirty = true
-			if !template.sections
-				template.sections = []
-				template.columns = []
 			template.sections.push name
 			template.columns.push columns
 			template.saveTemplate(true, tempForm, template)

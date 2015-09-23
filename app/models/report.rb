@@ -45,10 +45,24 @@ class Report < ActiveRecord::Base
       template = Template.find(template_id)
       unless templates.include?(template)
         templates << template
-        Template.find_by_id(template_id).fields.each do |field|
+        template.fields.each do |field|
           values.new(report: self, field_id: field.id, input: field.default_value)
         end
       end
     end
   end
+
+  def disassociate_template(did, unvalued=[])
+    template = templates.find(did)
+    template.fields.each do |field|
+      values.each do |value|
+        if field.id == value.field_id
+          unvalued.push value.id
+        end
+      end
+    end
+    values.where(:id => unvalued).destroy_all
+    templates.delete(template)
+  end
+
 end

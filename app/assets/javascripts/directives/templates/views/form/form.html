@@ -54,10 +54,12 @@
       <div class="container-fluid section-row" ng-repeat="(section_id, section_name) in form.sections track by $index">
 
         <h3 ng-class="{'no-highlight':!form.editing,'force-hover':form.selectedOptions == section_id}" ng-click="form.selectedOptions=section_id">
-          {{section_name}} 
-          <div ng-if="!section_name && !form.editing">&nbsp;</div>
-          <small ng-if="!section_name && form.editing">Click to add a section name</small>
-          <hr>
+          {{section_name}}
+          <hr ng-if="section_name">
+          <div ng-if="!section_name">
+            <div ng-if="!form.editing">&nbsp;</div>
+            <small ng-if="form.editing">Click to add a section name, or leave blank</small>
+          </div>
         </h3>
 
         <div class="col-xs-12" ng-class="{'col-md-6':form.columns[section_id] == 2, 'col-md-4':form.columns[section_id] == 3}" ng-repeat="column in columnsArray(form.columns[section_id]) track by $index">
@@ -68,7 +70,7 @@
 
         </div>
 
-        <p class="clearfix"><div ng-if="!form.editing">&nbsp;</div><a href="javascript:;" ng-if="form.editing" ng-click="form.newSectionAdd=false;form.newFieldAdd=true;form.newFieldSection=section_id">Add field to {{section_name}}<span ng-if="!section_name">this section</span></a></p>
+        <p class="clearfix"><div ng-if="!form.editing">&nbsp;</div><a href="javascript:;" ng-if="form.editing" ng-click="form.newSectionAdd=false;form.newFieldAdd=true;form.newFieldSection=section_id" scroll-to="#page_additions">Add field to {{section_name}}<span ng-if="!section_name">this section</span></a></p>
 
       </div>
 
@@ -95,9 +97,10 @@
     <nav ng-if="!report && !form.selectedOptions.fieldtype" class="navbar-inverse">
       <ul class="nav">
         <li class="navbar-text">
-          <h4>Section Settings<small>
-            <p><a href="javascript:;" class="btn btn-link" ng-click="form.setSelectedOptions(undefined, form)"><i class="glyphicon glyphicon-ok"></i> &nbsp; Done</a></p>
-          </small></h4>
+          <h3>
+            <p>SECTION</p>
+            <small><p class="clearfix"><a href="javascript:;" class="btn btn-success" ng-click="form.setSelectedOptions(undefined, form)"><i class="glyphicon glyphicon-ok"></i> &nbsp; Done</a></p></small>
+          </h3>
 
           <label>Name</label>
           <p>
@@ -133,28 +136,12 @@
     <!-- FIELD OPTIONS -->
     <nav ng-if="!report && form.selectedOptions.fieldtype" class="navbar-inverse">
 
-      <ul class="nav" ng-show="form.selectedOptions.fieldtype == 'dropdown' || form.selectedOptions.fieldtype == 'radio'">
-        <li class="navbar-text">
-          <h4>Field Options<small>
-            <p><a href="javascript:;" class="btn btn-link" ng-click="form.addOption(form.selectedOptions)"><i class="glyphicon glyphicon-plus"></i> &nbsp; Add</a></p>
-          </small></h4>
-          <div class="input-group" ng-repeat="option in form.selectedOptions.options track by $index">
-            <input type="text" class="form-control" ng-model="form.selectedOptions.options[$index]">
-            <span class="input-group-btn">
-              <a href="javascript:;" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this option?<br><br>It will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="form.deleteOption(form.selectedOptions, option, form, myForm.$$parentForm)">
-                <i class="glyphicon glyphicon-remove"></i>
-              </a>
-            </span>
-          </div>
-        </li>
-      </ul>
-
       <ul class="nav">
         <li class="navbar-text">
-          <h4>Field Settings<small>
-            <p><a href="javascript:;" class="btn btn-link" ng-click="form.setSelectedOptions(undefined, form)"><i class="glyphicon glyphicon-ok"></i> &nbsp; Done</a></p>
+          <h3>
             <p>{{form.selectedOptions.fieldtype | uppercase}}</p>
-          </small></h4>
+            <small><p class="clearfix"><a href="javascript:;" class="btn btn-success" ng-click="form.setSelectedOptions(undefined, form)"><i class="glyphicon glyphicon-ok"></i> &nbsp; Done</a></p></small>
+          </h3>
 
           <label>Name</label>
           <p>
@@ -196,6 +183,23 @@
             </p>
           </div>
 
+        </li>
+      </ul>
+
+      <ul class="nav" ng-if="form.selectedOptions.fieldtype == 'dropdown' || form.selectedOptions.fieldtype == 'radio'">
+        <li class="navbar-text">
+          <h4>
+            <p>Options</p>
+            <small><p class="clearfix"><a href="javascript:;" class="btn btn-default" ng-click="form.addOption(form.selectedOptions);myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-plus"></i> &nbsp; Add</a></p></small>
+          </h4>
+          <div class="input-group" ng-repeat="option in form.selectedOptions.options track by $index">
+            <input type="text" class="form-control" ng-model="form.selectedOptions.options[$index]">
+            <span class="input-group-btn">
+              <a href="javascript:;" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this option?<br><br>It will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="form.deleteOption(form.selectedOptions, option, form, myForm.$$parentForm)">
+                <i class="glyphicon glyphicon-remove"></i>
+              </a>
+            </span>
+          </div>
         </li>
       </ul>
 

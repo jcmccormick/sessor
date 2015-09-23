@@ -3,7 +3,23 @@ angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 750)
 angular.module("sessor").run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash',
 ($rootScope, $location, $cacheFactory, $http, Flash) ->
 
+  $('input[rel="txtTooltip"]').tooltip()
+
+  $(document).on 'click.nav li', '.navbar-collapse.in', (e) ->
+    if $(e.target).is('a')
+      $(this).removeClass('in').addClass 'collapse'
+    return
+
   $httpDefaultCache = $cacheFactory.get('$http')
+
+  angular.forEach [
+    'cleartemplates'
+    'clearreports'
+  ], (value) ->
+    $rootScope.$on value, (event) ->
+      $httpDefaultCache.removeAll()
+      return
+    return
 
   $rootScope.handleSignOut = ->
     $location.path('/sign_out')
@@ -34,21 +50,5 @@ angular.module("sessor").run (['$rootScope', '$location', '$cacheFactory', '$htt
     Flash.create('success', 'Account updated successfully.', 'customAlert')
     return
   )
-
-  angular.forEach [
-    'cleartemplates'
-    'clearreports'
-  ], (value) ->
-    $rootScope.$on value, (event) ->
-      $httpDefaultCache.removeAll()
-      return
-    return
-
-  $('input[rel="txtTooltip"]').tooltip()
-
-  $(document).on 'click.nav li', '.navbar-collapse.in', (e) ->
-    if $(e.target).is('a')
-      $(this).removeClass('in').addClass 'collapse'
-    return
 
 ])
