@@ -4,10 +4,12 @@ controllers.controller('ViewReportController', ['$routeParams', 'ReportsService'
 	vr = this
 	
 	ReportsService.getReport($routeParams.reportId).then((res)->
+		console.log res
 		vr.report = res
 		vr.report.viewing = true
 		vr.report.livesave = false
 		vr.report.editing = false
+		vr.report.form = vr.report.templates[0]
 	)
 
 	return vr

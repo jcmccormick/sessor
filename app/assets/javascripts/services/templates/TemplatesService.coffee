@@ -239,10 +239,10 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 		changeFieldColumn: (template, field, column_id)->
 			if field.column_id != column_id
 				for tempField in template.fields
-					if field.section_id == tempField.section_id
-						if field.column_id == tempField.column_id && field.column_order < tempField.column_order
+					if tempField.section_id == field.section_id
+						if tempField.column_id == field.column_id && tempField.column_order > field.column_order
 							tempField.column_order--
-						else if column_id == tempField.column_id
+						else if tempField.column_id == column_id
 							tempField.column_order++
 
 				field.column_id = column_id

@@ -13,8 +13,6 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 					report.values_attributes.push field.value
 					if field.required && !field.value.input?
 						required += '<li>'+template.name+': '+field.name+'</li>'
-					if !field.options.length
-						field.options = undefined
 
 		if !!required
 			errors += 'The following fields are required<ul>'+required+'</ul>'
@@ -63,6 +61,7 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 			report.livesave = true
 			report.hideTitle = false
 			report.template_order = []
+			report.newPageAdd = true
 			report.addTemplate = this.addTemplate
 			report.saveReport = this.saveReport
 			this.getTemplates(report).then((res)-> report = res)
@@ -74,6 +73,7 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 			report.livesave = true
 			report.editing = true
 			report.hideTitle = false
+			report.newPageAdd = false
 			report.getReport = this.getReport
 			report.saveReport = this.saveReport
 			report.deleteReport = this.deleteReport
@@ -98,15 +98,16 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 
 		saveReport: (temp, myForm, report)->
 			deferred = $q.defer()
-			validateReport(report).then((errors)->
+
+			repCopy = new ClassFactory()
+			$.extend repCopy, report
+			repCopy.add_templates = undefined
+
+			validateReport(repCopy).then((errors)->
 				if !!errors 
 					Flash.create('danger', errors, 'customAlert')
 					deferred.resolve(errors)
 					return
-
-				repCopy = new ClassFactory()
-				$.extend repCopy, report
-				repCopy.add_templates = undefined
 
 				if !repCopy.id
 					repCopy.$save({class: 'reports'}, (res)->

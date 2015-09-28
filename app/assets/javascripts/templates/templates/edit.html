@@ -14,8 +14,8 @@
     <li class="dropdown" ng-if="vt.template.id">
       <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-plus"></i> &nbsp; Add <b class="caret"></b></a>
       <ul class="dropdown-menu">
-        <li><a href="javascript:;" ng-click="vt.template.newSectionAdd=true;vt.template.newFieldAdd=false"><i class="glyphicon glyphicon-modal-window"></i> &nbsp; Section</a></li>
-        <li ng-repeat-start="type in vt.template.addFieldTypes"><a href="javascript:;" ng-click="vt.template.setFieldType(type, vt.template);vt.template.newFieldAdd=true;vt.template.newSectionAdd=false" ng-class="{disabled:vt.template.sections.length<1}"><i class="glyphicon {{type.glyphicon}}"></i> &nbsp; {{type.value}}</a></li>
+        <li><a href="javascript:;" ng-click="vt.template.newSectionAdd=true;vt.template.newFieldAdd=false" scroll-to="#page_additions"><i class="glyphicon glyphicon-modal-window"></i> &nbsp; Section</a></li>
+        <li ng-repeat-start="type in vt.template.addFieldTypes"><a href="javascript:;" ng-click="vt.template.setFieldType(type, vt.template);vt.template.newFieldAdd=true;vt.template.newSectionAdd=false" ng-class="{disabled:vt.template.sections.length<1}" scroll-to="#page_additions"><i class="glyphicon {{type.glyphicon}}"></i> &nbsp; {{type.value}}</a></li>
         <li ng-repeat-end class="divider" ng-if="['labelntext','email','time'].indexOf(type.name) != -1"></li>
       </ul>
     </li>
@@ -49,11 +49,11 @@
       <h3>Add Section</h3>
 
       <h4>Name <small>OPTIONAL</small></h4>
-      <input type="text" id="page_addition" class="form-control" ng-model="vt.template.newSectionName" value="{{section_name}}">
+      <input type="text" class="form-control page_addition" ng-model="vt.template.newSectionName" value="{{section_name}}">
 
       <h4>Columns <small>REQUIRED</small></h4>
       <ul class="btn-group btn-group-justified list-unstyled">
-        <li class="btn btn-default" ng-repeat="column in [1,2,3]" ng-click="vt.template.addSection(vt.template.newSectionName, column, vt.tempForm, vt.template);vt.template.newSectionAdd=false">
+        <li class="btn btn-default" ng-repeat="column in [1,2,3]" ng-click="vt.template.addSection(vt.template.newSectionName, column, vt.tempForm, vt.template);vt.template.newSectionAdd=false" scroll-to=".force-hover">
           {{column}}
         </li>
       </ul>
@@ -67,7 +67,7 @@
       <small>ALL REQUIRED</small>
 
       <h4>Name</h4>
-      <input type="text" id="page_addition" class="form-control" ng-model="vt.template.newFieldName" required>
+      <input type="text" class="form-control page_addition" ng-model="vt.template.newFieldName" required>
 
       <h4>Type</h4>
       <ul class="list-inline"><li ng-repeat="type in vt.template.addFieldTypes" class="text-center" ng-click="vt.template.newFieldType=type"><a href="javascript:;" class="btn" ng-class="{'btn-primary':vt.template.newFieldType == type}"><i class="glyphicon {{type.glyphicon}}"></i> &nbsp; {{type.value}}</a></ul>
@@ -78,7 +78,7 @@
       <div ng-show="vt.template.newFieldSection + 1 > 0 && vt.template.newFieldName && vt.template.newFieldType">
         <h4>Column</h4>
         <ul class="btn-group btn-group-justified list-unstyled">
-          <li class="btn btn-default" ng-repeat="column_id in vt.template.countColumns(vt.template.columns[vt.template.newFieldSection]) track by $index" ng-click="vt.template.addField(vt.template, 1*vt.template.newFieldSection+1, $index+1, vt.template.newFieldType, vt.template.newFieldName, vt.tempForm);vt.template.newFieldAdd=false">
+          <li class="btn btn-default" ng-repeat="column_id in vt.template.countColumns(vt.template.columns[vt.template.newFieldSection]) track by $index" ng-click="vt.template.addField(vt.template, 1*vt.template.newFieldSection+1, $index+1, vt.template.newFieldType, vt.template.newFieldName, vt.tempForm);vt.template.newFieldAdd=false" scroll-to=".force-hover">
             Column {{$index+1}}
           </li>
         </ul>

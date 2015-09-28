@@ -1,1 +1,62 @@
-<template-form-directive report="vr.report" form="vr.report.form"></template-form-directive>
+<div ng-form="vr.myForm" class="form">
+	<page-menu>
+		<li class="dropdown">
+			<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-inbox"></i> &nbsp; Reports <b class="caret"></b></a>
+			<ul class="dropdown-menu" role="menu">
+				<li ng-if="vr.report.id"><a href="javascript:;" ng-click="vr.report.saveReport(false, vr.myForm, vr.report)"><i class="glyphicon glyphicon-save"></i> &nbsp; Save/View</a></li>
+				<li><a href="#/reports/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
+				<li><a href="#/reports"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
+				<li ng-if="vr.report.id" class="divider"></li>
+				<li ng-if="vr.report.id"><a href="javascript:;" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this report?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vr.report.deleteReport(vr.report)"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
+			</ul>
+		</li>
+		<li><a href="javascript:;" ng-click="vr.report.saveReport(true, vr.myForm, vr.report)"><span ng-class="{'text-warning':vr.myForm.$dirty}"><i class="glyphicon glyphicon-floppy-disk"></i> &nbsp; Save</span></a></li>
+		<li><a href="javascript:;" ng-click="vr.report.newPageAdd=true"><i class="glyphicon glyphicon-plus"></i> &nbsp; Page</a></li>
+		<li class="dropdown">
+			<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> &nbsp; Options <b class="caret"></b></a>
+			<ul class="dropdown-menu" role="menu">
+				<li><span>Page</span></li>
+				<li><span><label><input ng-model="vr.report.allow_title" type="checkbox"> Add Title</label></span></li>
+				<li ng-if="vr.report.allow_title"><span><label><input ng-model="vr.report.hideTitle" type="checkbox"> Hide Title</label></span></li>
+			</ul>
+		</li>
+
+	</page-menu>
+
+	<div ng-if="!vr.report.templates || vr.report.newPageAdd == true" ng-class="{'paper-width':vr.report.id}">
+		<!-- BEGIN PAGE ADD -->
+		<div class="paper row">
+			<button type="button" class="close" ng-if="vr.report.newPageAdd && vr.report.templates.length" ng-click="vr.report.newPageAdd=false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h3>Page Selection</h3>
+
+			<div class="row">
+				<div role="button" class="col-xs-4 col-md-3" ng-click="vr.report.addTemplate(template, vr.myForm, vr.report);vr.report.newPageAdd=false" ng-repeat-start="template in vr.report.add_templates | orderBy:'id'">
+					<ul class="list-group add-template-list">
+						<li class="list-group-item"><h5>{{template.name}}</h5></li>
+						<li class="list-group-item add-template-list-section col-xs-4">
+							<label>Sections</label>
+							<p ng-repeat="section_name in template.sections track by $index">{{section_name}}</p>
+						</li>
+					</ul>
+				</div>
+				<div class="container-fluid" ng-if="!vr.report.add_templates.length" ng-repeat-end>
+					<h3>Nothing here?</h3>
+					<p>Make sure the Page you want to add is not marked as Draft. Uncheck the "Draft" option when editing a Page, then save it.</p>
+					<p>Pages may only be added to a report once.</p>
+					<button class="btn btn-primary" ng-click="vr.report.newPageAdd=false">Close</button>
+				</div>
+			</div>
+		</div>
+		<!-- END PAGE ADD -->
+	</div>
+
+	<template-form-directive report="vr.report" form="vr.report.form"></template-form-directive>
+
+</div>
+
+
+<!-- REPORT PAGES MOBILE BOTTOM BAR BREADCRUMBS -->
+<ol ng-init="vr.report.showPages=false;vr.report.form = vr.report.templates[0]" ng-click="vr.report.showPages=!vr.report.showPages" ng-if="vr.report.templates.length" class="breadcrumb edit-report-crumbs">
+	<h3>Pages</h3>
+	<li ng-show="vr.report.showPages" ng-class="{'in':vr.report.showPages,'selected':template==vr.report.form}" ng-repeat="template in vr.report.templates"><a href="javascript:;" ng-click="vr.report.form = template">{{template.name}}</a></li>
+</ol>

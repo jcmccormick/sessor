@@ -44,7 +44,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 
     # Define the particulars of each supported field
     labelntext = '<p class="labelntext">{{field.value.input}}{{field.default_value}}</p>
-    <h4 class="text-center" ng-if="!field.value.input && !field.default_value">Click to add text.</h4>'
+    <p><a ng-if="!field.value.input && !field.default_value">Click to add text.</a></p>'
 
     textfield = inputstart+' type="text" '+standard
     textarea = '<textarea type="text" '+standard+'</textarea>'
@@ -58,7 +58,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     radio = '<div ng-repeat="option in field.options track by $index">
               <label>'+inputstart+' type="radio" ng-value="field.options[$index]" '+ngmodel+inputend+' {{option}}</label>
             </div>
-            <h4 class="text-center" ng-if="!field.options.length">Click to add options.</h4>'
+            <p><a ng-if="!field.options.length">Click to add options.</a></p>'
     dropdown = '<select ng-options="option for option in field.options" '+standard+'
         <option value="">Select Item</option>
       </select>'

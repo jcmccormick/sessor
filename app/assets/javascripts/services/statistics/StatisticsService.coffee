@@ -33,6 +33,11 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 			sv.type = 'PieChart'
 			sv.data = {}
 
+			sv.data.cols = [
+				{id: 't', label: 'Name', type: 'string'}
+				{id: 's', label: 'Count', type: 'number'}
+			]
+
 			ClassFactory.query({class: 'values_statistics'}, (res)->
 				for template in res
 					sv.templates.push template
@@ -75,11 +80,6 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 					]}
 					n += sv.all_data[1][i]
 					i++
-
-				sv.data.cols = [
-					{id: 't', label: 'Name', type: 'string'}
-					{id: 's', label: 'Count', type: 'number'}
-				]
 
 				sv.options = {
 					title: field.name + ' (n=' + n + ')'

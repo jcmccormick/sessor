@@ -1,32 +1,4 @@
 <div ng-form="myForm" class="form">
-
-  <nav ng-if="report.livesave" id="page-menu" class="navbar navbar-inverse">
-    <div class="navbar-header">
-      <ul class="nav navbar-left top-nav">
-        <li class="dropdown">
-          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-inbox"></i> &nbsp; Reports <b class="caret"></b></a>
-          <ul class="dropdown-menu" role="menu">
-            <li ng-if="report.id"><a href="javascript:;" ng-click="report.saveReport(false, myForm, report)"><i class="glyphicon glyphicon-save"></i> &nbsp; Save/View</a></li>
-            <li><a href="#/reports/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
-            <li><a href="#/reports"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
-            <li ng-if="report.id" class="divider"></li>
-            <li ng-if="report.id"><a href="javascript:;" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this report?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="report.deleteReport(report)"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
-          </ul>
-        </li>
-        <li><a href="javascript:;" ng-click="report.saveReport(true, myForm, report)"><span ng-class="{'text-warning':myForm.$dirty}"><i class="glyphicon glyphicon-floppy-disk"></i> &nbsp; Save</span></a></li>
-        <li><a href data-toggle="modal" data-target=".addTemplateModal"><i class="glyphicon glyphicon-plus"></i> &nbsp; Page</a></li>
-        <li class="dropdown">
-          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> &nbsp; Options <b class="caret"></b></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><span>Page</span></li>
-            <li><span><label><input ng-model="report.allow_title" type="checkbox"> Add Title</label></span></li>
-            <li ng-if="report.allow_title"><span><label><input ng-model="report.hideTitle" type="checkbox"> Hide Title</label></span></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </nav>
-
   
   <div ng-class="{'paper-width':(form.selectedOptions != undefined && form.editing) || report.templates, 'paper-height':report.templates}">
 
@@ -53,7 +25,7 @@
 
       <div class="container-fluid section-row" ng-repeat="(section_id, section_name) in form.sections track by $index">
 
-        <h3 ng-class="{'no-highlight':!form.editing,'force-hover':form.selectedOptions == section_id}" ng-click="form.selectedOptions=section_id">
+        <h3 ng-class="{'no-highlight':!form.editing,'force-hover':form.selectedOptions == section_id}" ng-click="form.selectedOptions=section_id" scroll-to=".force-hover" report="report">
           {{section_name}}
           <hr ng-if="section_name">
           <div ng-if="!section_name">
@@ -64,7 +36,7 @@
 
         <div class="col-xs-12" ng-class="{'col-md-6':form.columns[section_id] == 2, 'col-md-4':form.columns[section_id] == 3}" ng-repeat="column in columnsArray(form.columns[section_id]) track by $index">
 
-          <div ng-click="form.setSelectedOptions(field, form)" ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section_id+1} | orderBy:'column_order'">
+          <div ng-click="form.setSelectedOptions(field, form)" ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section_id+1} | orderBy:'column_order'" scroll-to=".force-hover" report="report">
             <template-field-directive myForm="myForm" field="field" template="form" report="report"></template-field-directive>
           </div>
 
@@ -79,7 +51,7 @@
   </div>
 
   <!-- RIGHT SIDEBAR -->
-  <div ng-if="(form.selectedOptions != undefined && form.editing) || report.templates" class="template-options" ng-class="{'report-pages':report}">
+  <div id="right-sidebar" ng-show="(form.selectedOptions != undefined && form.editing) || report.templates" class="template-options" ng-class="{'report-pages':report}">
 
     <!-- REPORT PAGES DESKTOP -->
     <nav ng-if="report.templates" class="navbar-inverse">
@@ -97,10 +69,10 @@
     <nav ng-if="!report && !form.selectedOptions.fieldtype" class="navbar-inverse">
       <ul class="nav">
         <li class="navbar-text">
-          <h3>
-            <p>SECTION</p>
-            <small><p class="clearfix"><a href="javascript:;" class="btn btn-success" ng-click="form.setSelectedOptions(undefined, form)"><i class="glyphicon glyphicon-ok"></i> &nbsp; Done</a></p></small>
-          </h3>
+          <h3>SECTION</h3>
+          <p class="clearfix">
+            <a href="javascript:;" class="btn btn-success" ng-click="form.setSelectedOptions(undefined, form)"><i class="glyphicon glyphicon-ok"></i> &nbsp; Done</a>
+          </p>
 
           <label>Name</label>
           <p>
@@ -138,10 +110,10 @@
 
       <ul class="nav">
         <li class="navbar-text">
-          <h3>
-            <p>{{form.selectedOptions.fieldtype | uppercase}}</p>
-            <small><p class="clearfix"><a href="javascript:;" class="btn btn-success" ng-click="form.setSelectedOptions(undefined, form)"><i class="glyphicon glyphicon-ok"></i> &nbsp; Done</a></p></small>
-          </h3>
+          <h3>{{form.selectedOptions.fieldtype | uppercase}}</h3>
+          <p class="clearfix">
+            <a href="javascript:;" class="btn btn-success" ng-click="form.setSelectedOptions(undefined, form)"><i class="glyphicon glyphicon-ok"></i> &nbsp; Done</a>
+          </p>
 
           <label>Name</label>
           <p>
@@ -216,40 +188,3 @@
   </div>
 
 </div>
-
-<!-- REPORT PAGES MOBILE BOTTOM BAR BREADCRUMBS -->
-<ol ng-init="report.showPages=false;setBreadcrumb(report.templates[0])" ng-click="report.showPages=!report.showPages" ng-if="report.templates.length" class="breadcrumb edit-report-crumbs slide">
-  <h3>Pages</h3>
-  <li ng-show="report.showPages" ng-repeat="template in report.templates"><a href="javascript:;" ng-class="{'selected':template==form}" ng-click="setBreadcrumb(template)">{{template.name}}</a></li>
-</ol>
-
-
-<!-- BEGIN ADD TEMPLATE MODAL -->
-<div class="modal fade addTemplateModal" tabindex="-1" role="dialog" aria-labelledby="previewModal" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <form class="modal-content">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <div class="modal-header">
-        <h2 class="modal-title">Page Selection</h2>
-      </div>
-      <div class="modal-body row">
-        <div role="button" class="col-xs-4 col-md-3" ng-click="report.addTemplate(template, myForm, report)" ng-repeat-start="template in report.add_templates | orderBy:'id'" data-dismiss="modal">
-          <ul class="list-group add-template-list">
-            <li class="list-group-item"><h5>{{template.name}}</h5></li>
-            <li class="list-group-item add-template-list-section col-xs-4">
-              <label>Sections</label>
-              <p ng-repeat="section_name in template.sections track by $index">{{section_name}}</p>
-            </li>
-          </ul>
-        </div>
-        <div class="container-fluid" ng-if="report.add_templates.length<1" ng-repeat-end>
-          <h3>Nothing here?</h3>
-          <p>Make sure the Page you want to add is not marked as Draft. Uncheck the "Draft" option when editing a Page, then save it.</p>
-          <p>Pages may only be added to a report once.</p>
-          <button class="btn btn-primary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-<!-- END ADD TEMPLATE MODAL -->
