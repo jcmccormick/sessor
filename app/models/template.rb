@@ -30,6 +30,9 @@ class Template < ActiveRecord::Base
 	# Link up Template defaults method on creation.
 	before_create :set_defaults
 
+	# Prevent destroy if attached to any reports
+	before_destroy :allow_destroy
+
 	# Use a method to get as little information as needed when viewing all templates. Usable on ActiveRecord Relationship.
 	def self.index_minned
 		eager_load(:fields).as_json(only: [:id, :name, :sections, :draft])
@@ -38,6 +41,11 @@ class Template < ActiveRecord::Base
 	# Upon Template creation, set Draft to true.
 	def set_defaults
 		self.draft = true
+	end
+
+	# Check for existing report associations
+	def allow_destroy
+		reports.empty?
 	end
 
 end

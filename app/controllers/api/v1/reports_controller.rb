@@ -8,7 +8,6 @@ module Api::V1 #:nodoc:
 
     def index
 
-
       queried_reports = if params.has_key?(:keywords)
 
         keywords = params[:keywords]

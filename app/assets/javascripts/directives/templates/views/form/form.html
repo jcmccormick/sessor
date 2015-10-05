@@ -12,7 +12,7 @@
         <h3>Report Title</h3>
         <input class="form-control" type="text" ng-model="report.title">
       </div>
-      <h2 ng-if="report.viewing" class="text-center">{{report.title}}</h2>
+      <h1 ng-if="report.viewing" class="text-center">{{report.title}}</h1>
     </div>
 
     <div ng-show="form.sections" class="paper row">
@@ -25,7 +25,7 @@
 
       <div class="container-fluid section-row" ng-repeat="(section_id, section_name) in form.sections track by $index">
 
-        <h3 ng-class="{'no-highlight':!form.editing,'force-hover':form.selectedOptions == section_id}" ng-click="form.selectedOptions=section_id" scroll-to=".force-hover" report="report">
+        <h3 ng-class="{'no-highlight':!form.editing,'force-hover':form.selectedOptions == section_id}" ng-click="form.selectedOptions=section_id" scroll-to=".force-hover" template="form">
           {{section_name}}
           <hr ng-if="section_name">
           <div ng-if="!section_name">
@@ -36,13 +36,13 @@
 
         <div class="col-xs-12" ng-class="{'col-md-6':form.columns[section_id] == 2, 'col-md-4':form.columns[section_id] == 3}" ng-repeat="column in columnsArray(form.columns[section_id]) track by $index">
 
-          <div ng-click="form.setSelectedOptions(field, form)" ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section_id+1} | orderBy:'column_order'" scroll-to=".force-hover" report="report">
+          <div ng-click="form.setSelectedOptions(field, form)" ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section_id+1} | orderBy:'column_order'" scroll-to=".force-hover" template="form">
             <template-field-directive myForm="myForm" field="field" template="form" report="report"></template-field-directive>
           </div>
 
         </div>
 
-        <p class="clearfix"><div ng-if="!form.editing">&nbsp;</div><a href="javascript:;" ng-if="form.editing" ng-click="form.newSectionAdd=false;form.newFieldAdd=true;form.newFieldSection=section_id" scroll-to="#page_additions">Add field to {{section_name}}<span ng-if="!section_name">this section</span></a></p>
+        <p class="clearfix"><div ng-if="!form.editing">&nbsp;</div><a href="javascript:;" ng-if="form.editing" ng-click="form.newSectionAdd=false;form.newFieldAdd=true;form.newFieldSection=section_id" scroll-to="#page_additions" template="form">Add field to {{section_name}}<span ng-if="!section_name">this section</span></a></p>
 
       </div>
 

@@ -3,7 +3,7 @@
 class User < ActiveRecord::Base
 
   # Relate to Group.
-  belongs_to :group, inverse_of: :users
+  belongs_to :group
 
   # Relate to Templates.
   has_and_belongs_to_many :templates

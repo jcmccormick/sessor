@@ -3,6 +3,6 @@
 class Value < ActiveRecord::Base
 
 	# Relates to Report.
-	belongs_to :report
+	belongs_to :report, :touch => true
 
 end

@@ -7,7 +7,7 @@ module Api::V1 #:nodoc:
     
     def index
       if params.has_key?(:stats)
-        render json: current_user.fields.only(['fields.id', 'fields.name']).where(:template_id => params[:template_id]).where.not(:fieldtype => 'labelntext').uniq { |f| f.id }
+        render json: current_user.fields.where(:template_id => params[:template_id]).where.not(:fieldtype => 'labelntext').as_json(only: [:id, :name])
       end
     end
 

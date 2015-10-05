@@ -1,3 +1,4 @@
 Devise.setup do |config|
-  config.navigational_formats = [:json]
+	config.mailer_sender = "support@clerkr.com"
+	config.navigational_formats = [:json]
 end

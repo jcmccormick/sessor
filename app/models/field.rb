@@ -3,7 +3,7 @@
 class Field < ActiveRecord::Base
 
 	# Relate to Columns.
-	belongs_to :template, inverse_of: :fields
+	belongs_to :template, inverse_of: :fields, :touch => true
 
 	serialize :options, Array
 	

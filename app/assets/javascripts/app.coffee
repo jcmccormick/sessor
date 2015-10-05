@@ -16,8 +16,9 @@ sessor = angular.module('sessor', [
   'services'
 ])
 
-sessor.config(['$authProvider', '$routeProvider',
-  ($authProvider, $routeProvider)->
+sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
+  ($authProvider, $httpProvider, $routeProvider)->
+      $httpProvider.interceptors.push('httpInterceptor')
       $authProvider.configure(
         apiUrl: ""
       )
