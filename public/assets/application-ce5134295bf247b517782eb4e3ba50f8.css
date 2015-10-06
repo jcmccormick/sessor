@@ -223,15 +223,12 @@ blockquote {
 .paper {
   padding: 15px 20px;
   background-color: white;
-  -webkit-box-shadow: 0 5px 25px 2px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0 5px 25px 2px rgba(0, 0, 0, 0.4);
-  box-shadow: 0 5px 25px 2px rgba(0, 0, 0, 0.4);
 }
-/* line 232, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 229, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .paper.row {
   margin: 0 20px 20px;
 }
-/* line 236, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 233, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .paper h1 {
   white-space: pre;
   word-wrap: break-word;
@@ -241,26 +238,26 @@ blockquote {
   .paper {
     padding: 35px 45px;
   }
-  /* line 242, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+  /* line 239, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
   .paper.row {
     margin: 30px 20px;
   }
 }
 
 @media screen and (min-width: 60em) {
-  /* line 248, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+  /* line 245, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
   .paper-width {
     width: 100% !important;
     padding-right: 225px !important;
   }
 }
 
-/* line 254, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 251, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .paper-height {
   margin-bottom: 110px;
 }
 @media screen and (min-width: 60em) {
-  /* line 254, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+  /* line 251, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
   .paper-height {
     margin-bottom: 0;
   }
@@ -269,13 +266,13 @@ blockquote {
 /*
  * Reports
  */
-/* line 268, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 265, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .add-template-list .add-template-list-section {
   display: none;
   z-index: 20;
   position: fixed;
 }
-/* line 275, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 272, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .add-template-list:hover .add-template-list-section {
   display: block;
 }
@@ -283,7 +280,7 @@ blockquote {
 /*
  * Page Design
  */
-/* line 284, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 281, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .template-options {
   color: #aaa;
   background-color: #666;
@@ -294,102 +291,93 @@ blockquote {
   width: 70%;
   padding: 0;
   overflow-y: auto;
-  -webkit-box-shadow: 5px -5px 25px 2px black;
-  -moz-box-shadow: 5px -5px 25px 2px black;
-  box-shadow: 5px -5px 25px 2px black;
   z-index: 6;
 }
-/* line 300, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 294, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .template-options.report-pages {
   display: none;
 }
-/* line 303, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 297, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .template-options.report-pages .navbar-text {
   float: none;
 }
 @media screen and (min-width: 48em) {
-  /* line 284, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+  /* line 281, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
   .template-options {
     width: 225px;
   }
 }
 @media screen and (min-width: 60em) {
-  /* line 313, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+  /* line 307, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
   .template-options.report-pages {
     display: block;
   }
 }
-/* line 318, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 312, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .template-options textarea {
   margin: 2px;
   resize: vertical;
 }
-/* line 323, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 317, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .template-options .nav {
   padding: 15px;
   background-color: #555;
-  -webkit-box-shadow: inset 0 10px 25px -15px black;
-  -moz-box-shadow: inset 0 10px 25px -15px black;
-  box-shadow: inset 0 10px 25px -15px black;
 }
-/* line 330, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 321, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .template-options .nav input,
 .template-options .nav textarea {
   margin: 0;
 }
 @media screen and (min-width: 48em) {
-  /* line 323, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+  /* line 317, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
   .template-options .nav {
     padding: 0;
   }
 }
-/* line 340, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 331, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .template-options .input-group {
   padding: 5px 0;
 }
-/* line 343, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 334, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .template-options .input-group a.btn {
   margin: 0;
 }
-/* line 348, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 339, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .template-options .navbar-inverse {
   background-color: #444;
-  -webkit-box-shadow: 0px 0px 25px 0px black;
-  -moz-box-shadow: 0px 0px 25px 0px black;
-  box-shadow: 0px 0px 25px 0px black;
 }
 
 /* 
  * Template and Field Display
  */
-/* line 366, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 354, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .section-row h3 hr {
   margin-top: 0;
 }
-/* line 370, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 358, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .section-row h3:not(.no-highlight) {
   cursor: alias;
 }
-/* line 373, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 361, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .section-row h3:not(.no-highlight):hover, .section-row h3:not(.no-highlight).force-hover {
   box-shadow: 0 -5px 0 #aaa;
 }
 
-/* line 382, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 370, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 template-form-directive .form-group {
   position: relative;
 }
-/* line 386, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 374, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 template-form-directive .form-group textarea {
   height: 113px;
   resize: vertical;
 }
-/* line 391, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 379, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 template-form-directive .form-group label {
   font-size: 18px;
   word-wrap: break-word;
 }
-/* line 396, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 384, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 template-form-directive .form-group p {
   word-wrap: break-word;
   white-space: pre-wrap;
@@ -397,15 +385,15 @@ template-form-directive .form-group p {
   font-size: 18px;
   line-height: 1.7em;
 }
-/* line 404, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 392, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 template-form-directive .form-group .form-field-label {
   display: inline;
 }
-/* line 408, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 396, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 template-form-directive .form-group .ng-invalid-required.ng-touched {
   background-color: #f2dede;
 }
-/* line 413, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 401, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 template-form-directive .form-group .field-overlay {
   position: absolute;
   top: 0;
@@ -413,24 +401,24 @@ template-form-directive .form-group .field-overlay {
   height: 100%;
   cursor: alias;
 }
-/* line 420, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 408, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 template-form-directive .form-group .field-overlay:hover, template-form-directive .form-group .field-overlay.force-hover {
   box-shadow: 0 -5px 0 #aaa;
 }
 
-/* line 432, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 420, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 template-field-directive blockquote {
   word-wrap: break-word !important;
 }
 
-/* line 439, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 427, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .report-pages a,
 .edit-report-crumbs a {
   color: #aaa !important;
   text-decoration: none !important;
   word-wrap: break-word !important;
 }
-/* line 444, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 432, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .report-pages a.selected,
 .edit-report-crumbs a.selected {
   color: white;
@@ -476,87 +464,81 @@ template-field-directive blockquote {
   top: 50px;
   left: 0;
   right: 0;
-  -webkit-box-shadow: inset 20px 20px 25px -20px black, 0px 0px 25px 0px black;
-  -moz-box-shadow: inset 20px 20px 25px -20px black, 0px 0px 25px 0px black;
-  box-shadow: inset 20px 20px 25px -20px black, 0px 0px 25px 0px black;
   z-index: 7;
   font-size: 10px;
 }
-/* line 44, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 41, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 #page-menu > div > ul > li > a {
   padding: 10px 5px;
 }
 
 @media (min-width: 375px) {
-  /* line 50, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+  /* line 47, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
   #page-menu {
     font-size: 12px;
   }
 }
 @media (min-width: 768px) {
-  /* line 56, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+  /* line 53, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
   .logdout {
     top: 55px;
   }
 
-  /* line 59, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+  /* line 56, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
   #wrapper {
     padding-left: 225px;
   }
 
-  /* line 62, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+  /* line 59, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
   #page-wrapper {
     padding: 0 20px;
     margin-top: 100px;
   }
 
-  /* line 66, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+  /* line 63, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
   #page-menu {
     font-size: 14px;
     left: 224px;
   }
 
-  /* line 70, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+  /* line 67, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
   .navbar-fixed-top {
     padding: 0 70px;
   }
 }
 /* Top Navigation */
-/* line 77, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 74, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .navbar-fixed-top {
   z-index: 7;
-  -webkit-box-shadow: 0 -5px 25px 2px black;
-  -moz-box-shadow: 0 -5px 25px 2px black;
-  box-shadow: 0 -5px 25px 2px black;
 }
 
-/* line 83, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 77, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .navbar-inverse {
   border-color: transparent !important;
 }
 
-/* line 87, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 81, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .nav > li {
   padding: 5px;
 }
 
-/* line 91, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 85, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 nav input[type='text'] {
   margin: 2px;
 }
 
-/* line 95, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 89, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .top-nav {
   padding: 0 15px;
 }
 
-/* line 99, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 93, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .top-nav > li {
   display: inline-block;
   float: left;
 }
 
-/* line 104, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 98, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .dropdown-menu {
   margin-top: 1px;
   border-top-left-radius: 0;
@@ -564,7 +546,7 @@ nav input[type='text'] {
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
 }
-/* line 112, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 106, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .dropdown-menu li > span {
   display: block;
   padding: 3px 20px;
@@ -574,13 +556,13 @@ nav input[type='text'] {
   white-space: nowrap;
   z-index: 16;
 }
-/* line 120, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 114, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .dropdown-menu li > span label {
   font-weight: 100;
   cursor: pointer;
 }
 
-/* line 127, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 121, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .top-nav > li > a {
   padding-top: 15px;
   padding-bottom: 15px;
@@ -588,7 +570,7 @@ nav input[type='text'] {
   color: #999;
 }
 
-/* line 135, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 129, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .top-nav > li:hover ul {
   display: block;
   margin-top: 0;
@@ -596,17 +578,17 @@ nav input[type='text'] {
   border-top-right-radius: 0;
 }
 
-/* line 143, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 137, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .top-nav > .open > a,
 .top-nav > li > a:focus,
 .top-nav > .open > a:focus,
 .top-nav > li > a:hover,
 .top-nav > .open > a:hover {
   color: #fff;
-  background-color: #222 !important;
+  background-color: transparent !important;
 }
 
-/* line 152, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 146, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .top-nav > .open > .dropdown-menu {
   margin-top: 0;
   border-top-left-radius: 0;
@@ -615,56 +597,48 @@ nav input[type='text'] {
 
 /* Side Navigation */
 @media (min-width: 768px) {
-  /* line 163, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+  /* line 157, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
   .side-nav {
     z-index: 2;
     position: fixed;
     top: 50px;
     left: 0;
+    bottom: 0;
     width: 225px;
     border: none;
     border-radius: 0;
     overflow-y: auto;
     background-color: #333;
     overflow-x: hidden;
-    -webkit-box-shadow: inset 0 15px 25px -20px black, 15px 15px 25px -20px black;
-    -moz-box-shadow: inset 0 15px 25px -20px black, 15px 15px 25px -20px black;
-    box-shadow: inset 0 15px 25px -20px black, 15px 15px 25px -20px black;
   }
-  /* line 178, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+  /* line 170, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
   .side-nav > li > a {
     padding: 30px;
     width: 225px;
     font-size: 18px;
   }
-  /* line 184, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+  /* line 176, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
   .side-nav li {
     padding: 0;
   }
-  /* line 188, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+  /* line 180, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
   .side-nav li a:hover,
   .side-nav li a:focus {
     outline: none;
     background-color: #aaa !important;
   }
 }
-/* line 197, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
-.huge {
-  font-size: 50px;
-  line-height: normal;
-}
-
 /*
  * Loading Rotate
  */
-/* line 206, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 192, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 loading {
   display: block;
   color: white;
   font-size: 20px;
   padding: 8px 10px 0;
 }
-/* line 212, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 198, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 loading i {
   -moz-animation: .6s rotateRight infinite linear;
   -webkit-animation: .6s rotateRight infinite linear;
