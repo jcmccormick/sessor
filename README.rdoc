@@ -18,8 +18,9 @@
 * Graphs by date
 * Graphs tables showing data
 * Graphs export to various formats
-* Color scheme for inner layout
+* Color scheme for inner layout, styling for paper across all pages
 * Landing fill-out newsletter/sign-up database discount
 * Desktop Stat Graphs
 * Lockdown by admin
 * Z-index light-up tour
+* Attractive page designer field-overlay, input boxes more minimal
