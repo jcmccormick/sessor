@@ -24,3 +24,4 @@
 * Lockdown by admin
 * Z-index light-up tour
 * Attractive page designer field-overlay, input boxes more minimal
+* Resolve root -> desktop or desktop -> root
