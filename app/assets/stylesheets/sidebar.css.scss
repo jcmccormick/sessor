@@ -206,41 +206,6 @@ loading {
     100%{ -webkit-transform:rotate(360deg); }
 }
 
-/*
- * Landing
- */
-.landing {
-    background-color: white;
-    margin-top: 80px;
-
-    .approach,
-    .features {
-    }
-
-    .approach {
-        height: 700px;
-        padding-top: 300px;
-        padding-right: 150px;
-        background: #d8f0fc;
-    }
-
-    .down {
-        cursor: pointer;
-    }
-
-    .features {
-        i {
-            font-size: 80px;
-        }
-
-        .col-xs-6 {
-            margin: 100px 0;
-            padding: 50px;
-        }
-    }
-
-}
-
 /*Vertical Flip*/
 .verticalFlip{
     display: inline;

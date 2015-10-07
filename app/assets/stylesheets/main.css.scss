@@ -429,3 +429,45 @@ template-field-directive {
     }
   }
 }
+
+/*
+ * Landing
+ */
+.landing {
+  background-color: white;
+  margin-top: 160px;
+
+  @include respond(desktop) {
+    margin-top: 80px;
+  }
+
+  .approach {
+    padding: 200px 20px;
+    background: #d8f0fc;
+
+    @include respond(desktop) {
+      text-align: center;
+      padding: 17.5% 10% 280px 0;
+    }
+  }
+
+  .down {
+    cursor: pointer;
+  }
+
+  .features {
+    i {
+      font-size: 80px;
+    }
+
+    > * > * {
+      margin: 30px 0;
+
+      @include respond(desktop) {
+        margin: 100px 0 0;
+        padding: 50px 100px;
+      }
+    }
+  }
+
+}
