@@ -1,7 +1,5 @@
 == TODO
-
-* Front Page/Contact/Support
-* Desktop Page Integrations
+* Contact/Support
 * Groups
 * Timekeeping
 * Scheduling
@@ -9,11 +7,19 @@
 * Talk
 * Email
 * ControllerAs
-* Field value reorganization
-* Z-index light-up tour
-* Template tags
+* Template tags for public searching
 * Field Other ng-show/hide
 
 == BUGS
-
 * Unnamed sections
+
+== Roadmap for V1
+* FAQ/Support Pages
+* Graphs by date
+* Graphs tables showing data
+* Graphs export to various formats
+* Color scheme for inner layout
+* Landing fill-out newsletter/sign-up database discount
+* Desktop Stat Graphs
+* Lockdown by admin
+* Z-index light-up tour
