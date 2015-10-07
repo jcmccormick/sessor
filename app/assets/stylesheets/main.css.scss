@@ -45,7 +45,7 @@ $desktop: 60em;
 
 body {
   font-family: 'Open Sans', sans-serif !important;
-  background-color: #aaa !important;
+  background-color: #f5f5f5 !important;
 }
 .disabled {
     pointer-events: none;
@@ -222,23 +222,17 @@ blockquote {
  */
 
 .paper {
+  margin: 0 !important;
   padding: 15px 20px;
   background-color: white;
   
-  &.row {
-    margin: 0 20px 20px;
-  }
-
   h1 {
     white-space: pre;
     word-wrap: break-word;
   }
 
   @include respond(tablet) {
-    &.row {
-      margin: 30px 20px;
-    }
-    padding: 35px 45px;
+    padding: 45px;
   }
 }
 .paper-width {

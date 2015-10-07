@@ -12,7 +12,7 @@
 /* line 47, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 body {
   font-family: 'Open Sans', sans-serif !important;
-  background-color: #aaa !important;
+  background-color: #f5f5f5 !important;
 }
 
 /* line 51, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
@@ -221,14 +221,11 @@ blockquote {
  */
 /* line 225, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .paper {
+  margin: 0 !important;
   padding: 15px 20px;
   background-color: white;
 }
-/* line 229, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
-.paper.row {
-  margin: 0 20px 20px;
-}
-/* line 233, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 230, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .paper h1 {
   white-space: pre;
   word-wrap: break-word;
@@ -236,28 +233,24 @@ blockquote {
 @media screen and (min-width: 48em) {
   /* line 225, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
   .paper {
-    padding: 35px 45px;
-  }
-  /* line 239, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
-  .paper.row {
-    margin: 30px 20px;
+    padding: 45px;
   }
 }
 
 @media screen and (min-width: 60em) {
-  /* line 245, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+  /* line 239, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
   .paper-width {
     width: 100% !important;
     padding-right: 225px !important;
   }
 }
 
-/* line 251, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 245, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .paper-height {
   margin-bottom: 110px;
 }
 @media screen and (min-width: 60em) {
-  /* line 251, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+  /* line 245, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
   .paper-height {
     margin-bottom: 0;
   }
@@ -266,13 +259,13 @@ blockquote {
 /*
  * Reports
  */
-/* line 265, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 259, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .add-template-list .add-template-list-section {
   display: none;
   z-index: 20;
   position: fixed;
 }
-/* line 272, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 266, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .add-template-list:hover .add-template-list-section {
   display: block;
 }
@@ -280,7 +273,7 @@ blockquote {
 /*
  * Page Design
  */
-/* line 281, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 275, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .template-options {
   color: #aaa;
   background-color: #666;
@@ -293,56 +286,56 @@ blockquote {
   overflow-y: auto;
   z-index: 6;
 }
-/* line 294, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 288, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .template-options.report-pages {
   display: none;
 }
-/* line 297, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 291, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .template-options.report-pages .navbar-text {
   float: none;
 }
 @media screen and (min-width: 48em) {
-  /* line 281, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+  /* line 275, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
   .template-options {
     width: 225px;
   }
 }
 @media screen and (min-width: 60em) {
-  /* line 307, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+  /* line 301, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
   .template-options.report-pages {
     display: block;
   }
 }
-/* line 312, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 306, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .template-options textarea {
   margin: 2px;
   resize: vertical;
 }
-/* line 317, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 311, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .template-options .nav {
   padding: 15px;
   background-color: #555;
 }
-/* line 321, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 315, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .template-options .nav input,
 .template-options .nav textarea {
   margin: 0;
 }
 @media screen and (min-width: 48em) {
-  /* line 317, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+  /* line 311, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
   .template-options .nav {
     padding: 0;
   }
 }
-/* line 331, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 325, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .template-options .input-group {
   padding: 5px 0;
 }
-/* line 334, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 328, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .template-options .input-group a.btn {
   margin: 0;
 }
-/* line 339, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 333, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .template-options .navbar-inverse {
   background-color: #444;
 }
@@ -350,34 +343,34 @@ blockquote {
 /* 
  * Template and Field Display
  */
-/* line 354, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 348, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .section-row h3 hr {
   margin-top: 0;
 }
-/* line 358, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 352, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .section-row h3:not(.no-highlight) {
   cursor: alias;
 }
-/* line 361, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 355, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .section-row h3:not(.no-highlight):hover, .section-row h3:not(.no-highlight).force-hover {
   box-shadow: 0 -5px 0 #aaa;
 }
 
-/* line 370, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 364, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 template-form-directive .form-group {
   position: relative;
 }
-/* line 374, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 368, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 template-form-directive .form-group textarea {
   height: 113px;
   resize: vertical;
 }
-/* line 379, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 373, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 template-form-directive .form-group label {
   font-size: 18px;
   word-wrap: break-word;
 }
-/* line 384, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 378, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 template-form-directive .form-group p {
   word-wrap: break-word;
   white-space: pre-wrap;
@@ -385,15 +378,15 @@ template-form-directive .form-group p {
   font-size: 18px;
   line-height: 1.7em;
 }
-/* line 392, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 386, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 template-form-directive .form-group .form-field-label {
   display: inline;
 }
-/* line 396, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 390, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 template-form-directive .form-group .ng-invalid-required.ng-touched {
   background-color: #f2dede;
 }
-/* line 401, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 395, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 template-form-directive .form-group .field-overlay {
   position: absolute;
   top: 0;
@@ -401,24 +394,24 @@ template-form-directive .form-group .field-overlay {
   height: 100%;
   cursor: alias;
 }
-/* line 408, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 402, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 template-form-directive .form-group .field-overlay:hover, template-form-directive .form-group .field-overlay.force-hover {
   box-shadow: 0 -5px 0 #aaa;
 }
 
-/* line 420, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 414, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 template-field-directive blockquote {
   word-wrap: break-word !important;
 }
 
-/* line 427, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 421, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .report-pages a,
 .edit-report-crumbs a {
   color: #aaa !important;
   text-decoration: none !important;
   word-wrap: break-word !important;
 }
-/* line 432, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 426, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 .report-pages a.selected,
 .edit-report-crumbs a.selected {
   color: white;
@@ -433,30 +426,22 @@ template-field-directive blockquote {
 /* Global Styles */
 /* line 10, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .view-frame {
-  padding-top: 10px;
-}
-
-/* line 14, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
-.logdout {
   position: absolute;
-  top: 105px;
-  left: 5%;
-  right: 5%;
-  padding: 20px;
+  top: 100px;
+  right: 0;
 }
 
-/* line 22, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
-#wrapper {
-  padding-left: 0;
+/* line 16, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+.logdout {
+  background-color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
-/* line 26, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
-#page-wrapper {
-  margin-top: 110px;
-  background-color: #aaa;
-}
-
-/* line 31, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 25, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 #page-menu {
   background-color: #444;
   border-radius: 0;
@@ -467,78 +452,80 @@ template-field-directive blockquote {
   z-index: 7;
   font-size: 10px;
 }
-/* line 41, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 35, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 #page-menu > div > ul > li > a {
   padding: 10px 5px;
 }
 
 @media (min-width: 375px) {
-  /* line 47, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+  /* line 41, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
   #page-menu {
     font-size: 12px;
   }
 }
 @media (min-width: 768px) {
-  /* line 53, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+  /* line 47, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+  .view-frame {
+    padding: 20px;
+    left: 225px;
+  }
+
+  /* line 51, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
   .logdout {
-    top: 55px;
+    left: 0;
+    padding: 0;
+    margin: 0;
   }
 
   /* line 56, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
-  #wrapper {
-    padding-left: 225px;
-  }
-
-  /* line 59, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
-  #page-wrapper {
-    padding: 0 20px;
-    margin-top: 100px;
-  }
-
-  /* line 63, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
   #page-menu {
     font-size: 14px;
-    left: 224px;
+    left: 225px;
   }
 
-  /* line 67, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+  /* line 60, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
   .navbar-fixed-top {
     padding: 0 70px;
   }
 }
 /* Top Navigation */
-/* line 74, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 67, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+.navbar {
+  border: none !important;
+}
+
+/* line 71, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .navbar-fixed-top {
   z-index: 7;
 }
 
-/* line 77, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 74, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .navbar-inverse {
   border-color: transparent !important;
 }
 
-/* line 81, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 78, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .nav > li {
   padding: 5px;
 }
 
-/* line 85, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 82, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 nav input[type='text'] {
   margin: 2px;
 }
 
-/* line 89, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 86, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .top-nav {
   padding: 0 15px;
 }
 
-/* line 93, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 90, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .top-nav > li {
   display: inline-block;
   float: left;
 }
 
-/* line 98, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 95, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .dropdown-menu {
   margin-top: 1px;
   border-top-left-radius: 0;
@@ -546,7 +533,7 @@ nav input[type='text'] {
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
 }
-/* line 106, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 103, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .dropdown-menu li > span {
   display: block;
   padding: 3px 20px;
@@ -556,13 +543,13 @@ nav input[type='text'] {
   white-space: nowrap;
   z-index: 16;
 }
-/* line 114, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 111, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .dropdown-menu li > span label {
   font-weight: 100;
   cursor: pointer;
 }
 
-/* line 121, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 118, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .top-nav > li > a {
   padding-top: 15px;
   padding-bottom: 15px;
@@ -570,7 +557,7 @@ nav input[type='text'] {
   color: #999;
 }
 
-/* line 129, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 126, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .top-nav > li:hover ul {
   display: block;
   margin-top: 0;
@@ -578,7 +565,7 @@ nav input[type='text'] {
   border-top-right-radius: 0;
 }
 
-/* line 137, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 134, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .top-nav > .open > a,
 .top-nav > li > a:focus,
 .top-nav > .open > a:focus,
@@ -588,7 +575,7 @@ nav input[type='text'] {
   background-color: transparent !important;
 }
 
-/* line 146, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 143, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 .top-nav > .open > .dropdown-menu {
   margin-top: 0;
   border-top-left-radius: 0;
@@ -597,7 +584,7 @@ nav input[type='text'] {
 
 /* Side Navigation */
 @media (min-width: 768px) {
-  /* line 157, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+  /* line 154, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
   .side-nav {
     z-index: 2;
     position: fixed;
@@ -611,17 +598,18 @@ nav input[type='text'] {
     background-color: #333;
     overflow-x: hidden;
   }
-  /* line 170, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+  /* line 167, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
   .side-nav > li > a {
     padding: 30px;
     width: 225px;
+    height: 50px;
     font-size: 18px;
   }
-  /* line 176, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+  /* line 174, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
   .side-nav li {
     padding: 0;
   }
-  /* line 180, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+  /* line 178, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
   .side-nav li a:hover,
   .side-nav li a:focus {
     outline: none;
@@ -631,14 +619,14 @@ nav input[type='text'] {
 /*
  * Loading Rotate
  */
-/* line 192, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 190, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 loading {
   display: block;
   color: white;
   font-size: 20px;
   padding: 8px 10px 0;
 }
-/* line 198, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+/* line 196, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
 loading i {
   -moz-animation: .6s rotateRight infinite linear;
   -webkit-animation: .6s rotateRight infinite linear;
@@ -660,6 +648,163 @@ loading i {
   }
   100% {
     -webkit-transform: rotate(360deg);
+  }
+}
+/*
+ * Landing
+ */
+/* line 213, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+.landing {
+  background-color: white;
+  margin-top: 80px;
+}
+/* line 221, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+.landing .approach {
+  height: 700px;
+  padding-top: 300px;
+  padding-right: 150px;
+  background: #d8f0fc;
+}
+/* line 228, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+.landing .down {
+  cursor: pointer;
+}
+/* line 233, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+.landing .features i {
+  font-size: 80px;
+}
+/* line 237, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+.landing .features .col-xs-6 {
+  margin: 100px 0;
+  padding: 50px;
+}
+
+/*Vertical Flip*/
+/* line 246, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+.verticalFlip {
+  display: inline;
+  text-indent: 8px;
+}
+
+/* line 250, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+.verticalFlip span {
+  animation: vertical 12.5s linear infinite 0s;
+  -ms-animation: vertical 12.5s linear infinite 0s;
+  -webkit-animation: vertical 12.5s linear infinite 0s;
+  color: #00abe9;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+}
+
+/* line 259, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+.verticalFlip span:nth-child(2) {
+  animation-delay: 2.5s;
+  -ms-animation-delay: 2.5s;
+  -webkit-animation-delay: 2.5s;
+}
+
+/* line 264, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+.verticalFlip span:nth-child(3) {
+  animation-delay: 5s;
+  -ms-animation-delay: 5s;
+  -webkit-animation-delay: 5s;
+}
+
+/* line 269, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+.verticalFlip span:nth-child(4) {
+  animation-delay: 7.5s;
+  -ms-animation-delay: 7.5s;
+  -webkit-animation-delay: 7.5s;
+}
+
+/* line 274, c:/xampp/htdocs/sessor/app/assets/stylesheets/sidebar.css.scss */
+.verticalFlip span:nth-child(5) {
+  animation-delay: 10s;
+  -ms-animation-delay: 10s;
+  -webkit-animation-delay: 10s;
+}
+
+/*Vertical Flip Animation*/
+@-moz-keyframes vertical {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 0;
+    -moz-transform: rotateX(180deg);
+  }
+  10% {
+    opacity: 1;
+    -moz-transform: translateY(0px);
+  }
+  25% {
+    opacity: 1;
+    -moz-transform: translateY(0px);
+  }
+  30% {
+    opacity: 0;
+    -moz-transform: translateY(0px);
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes vertical {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 0;
+    -webkit-transform: rotateX(180deg);
+  }
+  10% {
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+  }
+  25% {
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+  }
+  30% {
+    opacity: 0;
+    -webkit-transform: translateY(0px);
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-ms-keyframes vertical {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 0;
+    -ms-transform: rotateX(180deg);
+  }
+  10% {
+    opacity: 1;
+    -ms-transform: translateY(0px);
+  }
+  25% {
+    opacity: 1;
+    -ms-transform: translateY(0px);
+  }
+  30% {
+    opacity: 0;
+    -ms-transform: translateY(0px);
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
   }
 }
 

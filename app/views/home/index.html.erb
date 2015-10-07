@@ -1,10 +1,4 @@
 <!-- Navigation -->
-<ng-include src="'main/menu.html'"></ng-include>
+<ng-include ng-if="user.id" src="'main/menu.html'"></ng-include>
 
-<div id="wrapper">
-
-  <div id="page-wrapper">
-    <div class="view-frame animate-view" ng-view bs-popover></div>
-  </div>
-
-</div>
+<div class="view-frame animate-view" ng-class="{'logdout':!user.id}" ng-view bs-popover></div>
