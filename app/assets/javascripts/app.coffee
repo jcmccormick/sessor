@@ -1,3 +1,8 @@
+# Clerkr
+# Copyright Joe McCormick 2015 All Rights Reserved
+# 
+#
+#
 sessor = angular.module('sessor', [
   'templates',
   'ngRoute',
