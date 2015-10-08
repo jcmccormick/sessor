@@ -7,8 +7,6 @@ Gemfile.lock
 erd.pdf
 *.sublime*
 
-config/secrets.yml
-
 # Elastic Beanstalk Files
 
 .elasticbeanstalk/*
