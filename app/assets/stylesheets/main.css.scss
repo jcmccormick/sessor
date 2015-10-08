@@ -474,4 +474,46 @@ template-field-directive {
     }
   }
 
+  newsletter {
+    display: block;
+    padding: 350px 20%;
+    background-color: #FCE4D8;
+
+    .input-group {
+      margin: 60px 0;
+
+      input {
+        background-color: #FCE4D8;
+      }
+      .btn {
+        background-color: #FCE4D8;
+        color: #00abe9;
+        height: 60px;
+        font-size: 32px;
+      }
+    }
+  }
+
+  .officials {
+    padding: 60px 100px;
+
+    .extras {
+      margin-top: 50px;
+      margin-bottom: 50px;
+      min-height: 600px;
+    }
+  }
+}
+
+/*
+ * Input Modern
+ */
+textarea.imod,
+input.imod {
+  border: none;
+  border-radius: 0;
+  box-shadow: none !important;
+  border-bottom: 2px solid #aaa;
+  height: 60px;
+  font-size: 32px;
 }

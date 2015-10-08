@@ -2,9 +2,6 @@
 
 class Template < ActiveRecord::Base
 
-	# Relate to Admins.
-	has_and_belongs_to_many :admins
-
 	# Relate to Users.
 	has_and_belongs_to_many :users
 

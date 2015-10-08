@@ -11,36 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150921041515) do
-
-  create_table "admins", force: :cascade do |t|
-    t.string   "provider",               limit: 255,                null: false
-    t.string   "uid",                    limit: 255,   default: "", null: false
-    t.string   "encrypted_password",     limit: 255,   default: "", null: false
-    t.string   "reset_password_token",   limit: 255
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,     default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
-    t.string   "confirmation_token",     limit: 255
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email",      limit: 255
-    t.string   "name",                   limit: 255
-    t.string   "nickname",               limit: 255
-    t.string   "image",                  limit: 255
-    t.string   "email",                  limit: 255
-    t.text     "tokens",                 limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "admins", ["email"], name: "index_admins_on_email", using: :btree
-  add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
-  add_index "admins", ["uid", "provider"], name: "index_admins_on_uid_and_provider", unique: true, using: :btree
+ActiveRecord::Schema.define(version: 20151008182559) do
 
   create_table "admins_reports", id: false, force: :cascade do |t|
     t.integer "admin_id",  limit: 4
@@ -57,6 +28,13 @@ ActiveRecord::Schema.define(version: 20150921041515) do
 
   add_index "admins_templates", ["admin_id"], name: "index_admins_templates_on_admin_id", using: :btree
   add_index "admins_templates", ["template_id"], name: "index_admins_templates_on_template_id", using: :btree
+
+  create_table "contacts", force: :cascade do |t|
+    t.string   "email",      limit: 255
+    t.text     "message",    limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "fields", force: :cascade do |t|
     t.string   "name",          limit: 255
@@ -86,14 +64,11 @@ ActiveRecord::Schema.define(version: 20150921041515) do
     t.datetime "updated_at",               null: false
   end
 
-  create_table "options", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.integer  "field_id",   limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+  create_table "newsletters", force: :cascade do |t|
+    t.text     "email",      limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
-
-  add_index "options", ["field_id"], name: "index_options_on_field_id", using: :btree
 
   create_table "reports", force: :cascade do |t|
     t.string   "title",          limit: 255

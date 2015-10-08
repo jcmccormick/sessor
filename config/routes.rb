@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   root 'home#index' 
 
   mount_devise_token_auth_for 'User', at: 'auth'
-  mount_devise_token_auth_for 'Admin', at: 'admin_auth'
+  
+  resources :newsletters, only: :create
+  resources :contacts, only: :create
 
   scope module: 'api' do
     namespace :v1 do
@@ -10,13 +12,9 @@ Rails.application.routes.draw do
       resources :reports, only: [:index, :show, :create, :update, :destroy]
       resources :templates, only: [:index, :show, :create, :update, :destroy]
       resources :fields, only: [:index, :show, :create, :update, :destroy]
-      resources :options, only: [:show, :create, :update, :destroy]
       resources :values, only: [:index, :show, :create, :update, :destroy]
       resources :values_statistics, only: :index
       resources :desktop_statistics, only: :index
-      
-      as :admin do
-      end
     end
   end  
 end

@@ -45,10 +45,6 @@ sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
         templateUrl: "user_registrations/new.html"
         controller: 'UserRegistrationsController'
       )
-      .when('/sign_in',
-        templateUrl: "user_sessions/new.html"
-        controller: 'UserSessionsController'
-      )
       .when('/forgot_password',
         templateUrl: "user_registrations/forgot_password.html"
       )

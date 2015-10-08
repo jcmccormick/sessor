@@ -1,5 +1,3 @@
-# The application is a Reporting system. HTML forms are saved as a Template object (themselves containing Sections, Columns, Fields, Values, and Options). Templates are used as a single page of a Report object. New Reports duplicate its Templates' Values, as to allow for default Template Values, and unique Report Values. Statistics, Groups, Schedules, and Appointments provide small-business functionalities.
-
 # Author:: Joe McCormick (mailto:joe.c.mccormick@gmail.com)
 # Copyright:: Copyright (c) 2015 Joe McCormick
 # License:: May not replicate or duplicate in any way.

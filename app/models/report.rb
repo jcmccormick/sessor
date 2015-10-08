@@ -7,7 +7,6 @@
 # * Active - UNUSED
 # * Location - UNUSED
 # ==== Use Case
-# * Belongs to many Admins.
 # * Belongs to many Users.
 # * Belongs to many Templates.
 # * Has many Fields through Templates.
@@ -19,7 +18,6 @@
 # * Updated Reports check for new Values associated with new Template.fields and create Values tied to the Report.
 
 class Report < ActiveRecord::Base
-  has_and_belongs_to_many :admins
   has_and_belongs_to_many :users
   has_and_belongs_to_many :templates
   has_many :fields, through: :templates

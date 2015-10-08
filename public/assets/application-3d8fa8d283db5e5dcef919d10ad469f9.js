@@ -52221,14 +52221,14 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
 // source: app/assets/javascripts/templates/main/index.html
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("main/index.html", '<page-menu ng-if="user.id">\n	<li><a href="#/"><i class="glyphicon glyphicon-home"></i> &nbsp; Info</a></li>\n</page-menu>\n\n\n<form ng-submit="submitLogin(loginForm)" role="form" ng-init="loginForm = {}">\n	<div class="col-xs-12">\n		<div class="col-xs-12 col-md-5 col-md-offset-2"><h1>Clerkr</h1></div>\n		<div class="col-xs-12 col-md-5">\n			<p>\n				<div class="col-xs-5 col-md-3">\n					<input type="email" name="email" id="email" placeholder="Email" ng-model="loginForm.email" required="required" class="form-control">\n				</div>\n	\n				<div class="col-xs-5 col-md-3">\n					<input type="password" name="password" id="password" placeholder="Password" ng-model="loginForm.password" required="required" class="form-control">\n				</div>\n				<div class="col-xs-2 col-md-1">\n					<button type="submit" class="btn btn-success">Login</button>\n				</div>\n				<div class="col-xs-10 col-md-6">\n					<a href="#/forgot_password" class="btn">Forgot password?</a>\n					<a href="#/sign_up" class="btn pull-right">Register</a>\n				</div>\n			</p>\n		</div>\n	</div>\n</form>\n\n<div class="landing" ng-if="!user.id">\n\n	<div class="approach">\n		<h1>Connect your data. Easy. Are you a\n			<div class="verticalFlip">\n				<span>Hobbyist?</span>\n				<span>Scientist?</span>\n				<span>Teacher?</span>\n				<span>Researcher?</span>\n				<span>Clerkr?</span>\n			</div>\n		</h1>\n	</div>\n\n	<h1 class="text-center down" scroll-to=".features" bypass="true"><i class="glyphicon glyphicon-chevron-down"></i></h1>\n\n	<div class="features container-fluid">\n		<div class="col-xs-12 first-feature">\n			<div class="col-xs-12 col-md-6">\n				<i class="glyphicon glyphicon-file"></i>\n				<h1>Designed Data</h1>\n				<h3>Clerkr bases its services on the pages of data you create. Fine tune your process and increase productivity and efficiency.</h3>\n			</div>\n			<div class="col-xs-12 col-md-6">\n				<i class="glyphicon glyphicon-inbox"></i>\n				<h1>Unlimited Reports</h1>\n				<h3>Go crazy. It\'s on us. Individual users pay nothing to store an endless amount of data.</h3>\n			</div>\n		</div>\n		<div class="col-xs-12">\n			<div class="col-xs-12 col-md-6">\n				<i class="glyphicon glyphicon-briefcase"></i>\n				<h1>Group Time</h1>\n				<h3>Got a crew? Let\'s join forces. Got a business? We can help with that too: scheduling, appointments, client engagement, all integrated with your pages.</h3>\n			</div>\n			<div class="col-xs-12 col-md-6">\n				<i class="glyphicon glyphicon-stats"></i>\n				<h1>Nerd Out</h1>\n				<h3>Take a break and reflect on our various charts and graphs. Save your visualizations and export the data for use elsewhere.</h3>\n			</div>\n		</div>\n	</div>\n</div>')
+  $templateCache.put("main/index.html", '<page-menu ng-if="user.id">\n	<li><a href="#/"><i class="glyphicon glyphicon-home"></i> &nbsp; Info</a></li>\n</page-menu>\n\n\n<form role="form" ng-init="loginForm = {}">\n	<div class="col-xs-12">\n\n		<h1 class="col-md-4 col-md-offset-2">Clerkr \n			<small class="pull-right">\n				<a href="javascript:;" class="btn" ng-click="extra=\'about\'" scroll-to=".officials" bypass="true">About</a>\n				<a href="javascript:;" class="btn" ng-click="extra=\'development\'" scroll-to=".officials" bypass="true">Development</a>\n				<a href="javascript:;" class="btn" ng-click="extra=\'contact\'" scroll-to=".officials" bypass="true">Contact</a>\n			</small>\n		</h1>\n		<div class="h4">\n			<div class="input-group col-md-4">\n				<input type="email" placeholder="Email" ng-model="loginForm.email" required="required" class="form-control">\n				<span class="input-group-btn" style="width:0px;"></span>\n				<input type="password" placeholder="Password" ng-model="loginForm.password" required="required" class="form-control" style="margin-left:-1px">\n				<span class="input-group-btn">\n					<a href="javascript:;" class="btn btn-success" ng-click="submitLogin(loginForm)">Login</a>\n				</span>\n			</div>\n			<div class="col-md-4" bs-popover>\n				<div rel="popover" data-container="body" data-placement="bottom" data-html="true" data-title="Under Development" data-content="<p>Registrations are currently limited right now while we develop the site. For now, you can sign up to our newsletter below.</p>">\n					<a disabled="disabled" href="#/forgot_password" class="btn">Forgot password?</a>\n					<a disabled="disabled" href="#/sign_up" class="btn pull-right">Register</a>\n				</div>\n			</div>\n		</div>\n	</div>\n</form>\n\n<div class="landing" ng-if="!user.id">\n\n	<div class="approach">\n		<h1>Connect your data. Easy. Are you a\n			<div class="verticalFlip">\n				<span>Hobbyist?</span>\n				<span>Scientist?</span>\n				<span>Teacher?</span>\n				<span>Researcher?</span>\n				<span>Clerkr?</span>\n			</div>\n		</h1>\n	</div>\n\n	<h1 class="text-center down" scroll-to=".features" bypass="true"><i class="glyphicon glyphicon-chevron-down"></i></h1>\n\n	<div class="features container-fluid">\n		<div class="col-xs-12">\n			<div class="col-xs-12 col-md-6">\n				<i class="glyphicon glyphicon-file"></i>\n				<h1>Designed Data</h1>\n				<h3>Clerkr bases its services on the pages of data you create. Fine tune your process and increase productivity and efficiency.</h3>\n			</div>\n			<div class="col-xs-12 col-md-6">\n				<i class="glyphicon glyphicon-inbox"></i>\n				<h1>Unlimited Reports</h1>\n				<h3>Go crazy. It\'s on us. Individual users pay nothing to store an endless amount of data.</h3>\n			</div>\n		</div>\n		<div class="col-xs-12">\n			<div class="col-xs-12 col-md-6">\n				<i class="glyphicon glyphicon-briefcase"></i>\n				<h1>Group Time</h1>\n				<h3>Got a crew? Let\'s join forces. Got a business? We can help with that too: scheduling, appointments, client engagement, all integrated with your pages.</h3>\n			</div>\n			<div class="col-xs-12 col-md-6">\n				<i class="glyphicon glyphicon-stats"></i>\n				<h1>Nerd Out</h1>\n				<h3>Take a break and reflect on our various charts and graphs. Save your visualizations and export the data for use elsewhere.</h3>\n			</div>\n		</div>\n	</div>\n\n	<newsletter id="newsletter" class="newsletter container-fluid text-center">\n		<h1>Get the news</h1>\n		<div class="input-group">\n			<input type="email" class="form-control imod" placeholder="Email" ng-model="nv.email">\n			<span class="input-group-btn">\n				<a href="javascript:;" class="btn" ng-click="nv.newSubscribe(nv.email)">Submit</a>\n			</span>\n		</div>\n	</newsletter>\n\n	<div class="officials container-fluid">\n		<div class="text-center">\n			<a href="javascript:;" class="btn" ng-class="{\'btn-default\':extra==\'about\'}" ng-click="extra=\'about\'" scroll-to="#about" bypass="true">About</a>\n			<a href="javascript:;" class="btn" ng-class="{\'btn-default\':extra==\'development\'}" ng-click="extra=\'development\'" scroll-to="#development" bypass="true">Development</a>\n			<a href="javascript:;" class="btn" ng-class="{\'btn-default\':extra==\'contact\'}" ng-click="extra=\'contact\'" scroll-to="#contact" bypass="true">Contact</a>\n		</div>\n		<div ng-show="extra" class="extras col-xs-12 col-md-6 col-md-offset-3">\n			<a href="javascript:;" class="close pull-right h1" ng-click="extra=\'\'">\n				<i class="glyphicon glyphicon-remove"></i>\n			</a>\n			<div ng-show="extra==\'about\'" id="about" class="h3">\n				<h3>Clerkr offfers services for individuals and more for businesses.</h3>\n				<h2>For individuals...</h2>\n				<ul>\n					<li>Keep track of things like hobbies, sports, exercise, research, anything.</li>\n					<li>Use your pages for surveys.</li>\n					<li>Create, print, and save visually appealing graphs.</li>\n				</ul>\n				<h2>For businesses...</h2>\n				<ul>\n					<li>Schedule employees and keep track of their time online.</li>\n					<li>Use pages on your site and for online or kiosk-based customer submissions.</li>\n					<li>Interact with customers in online appointments.</li>\n					<li>Get combined and individual stats for the members in your group.</li>\n				</ul>\n			</div>\n			<contact ng-show="extra==\'contact\'" id="contact">\n				<input type="email" class="form-control imod" placeholder="Email" ng-model="cv.email">\n				<textarea type="text" rows="8" class="form-control imod" placeholder="Message" ng-model="cv.message"></textarea>\n				<a href="javascript:;" class="btn btn-success pull-right h1" ng-click="cv.newContact(cv.email, cv.message)">Submit</a>\n			</contact>\n			<div ng-show="extra==\'development\'" id="development">\n				<h3>We\'re currently under development and looking to begin open individual-use testing in Spring 2016.</h3>\n			</div>\n		</div>\n\n	</div>\n	<h4 id="copyright" class="text-center col-xs-12">&copy; Clerkr 2015</h4>\n</div>')
 }]);
 
 // Angular Rails Template
 // source: app/assets/javascripts/templates/main/menu.html
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("main/menu.html", '<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">\n  <!-- Brand and toggle get grouped for better mobile display -->\n  <div class="navbar-header">\n    <button type="button" ng-if="user.uid" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">\n      <span class="sr-only">Toggle navigation</span>\n      <span class="icon-bar"></span>\n      <span class="icon-bar"></span>\n      <span class="icon-bar"></span>\n    </button>\n    <a href="#/" class="navbar-brand">Clerkr</a>\n    <!-- Top Menu Items -->\n    <ul class="nav top-nav pull-right">\n      <li><loading></loading></li>\n      <li class="dropdown">\n        <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i>&nbsp; {{user.nickname}} <b class="caret"></b></a>\n        <ul class="dropdown-menu">\n          <li ng-if="user.uid"><a href="#/profile"><i class="glyphicon glyphicon-user"></i> Profile</a></li>\n          <li><a href="#/contact"><i class="glyphicon glyphicon-globe"></i> Contact</a></li>\n          <li><a href="#/support"><i class="glyphicon glyphicon-question-sign"></i> Support</a></li>\n          <li ng-if="user.uid" class="divider"></li>\n          <li ng-if="user.uid"><a href ng-click="handleSignOut()"><i class="glyphicon glyphicon-off"></i> Sign Out</a></li>\n        </ul>\n      </li>\n    </ul>\n  </div>\n  <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->\n  <div class="collapse navbar-collapse navbar-main-collapse" ng-if="user.uid">\n    <ul class="nav navbar-nav side-nav">\n      <li><a href="#/desktop"><i class="glyphicon glyphicon-dashboard"></i> Desktop</a></li>\n      <li><a href="#/templates"><i class="glyphicon glyphicon-file"></i> Pages</a></li>\n      <li><a href="#/reports"><i class="glyphicon glyphicon-inbox"></i> Reports</a></li>\n      <li><a href="#/group"><i class="glyphicon glyphicon-briefcase"></i> Group</a></li>\n      <li><a href="#/statistics"><i class="glyphicon glyphicon-stats"></i> Statistics</a></li>\n      <li><a href="#/mastery"><i class="glyphicon glyphicon-education"></i> Mastery</a></li>\n    </ul>\n  </div>\n  <!-- /.navbar-collapse -->\n</nav>')
+  $templateCache.put("main/menu.html", '<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">\n  <!-- Brand and toggle get grouped for better mobile display -->\n  <div class="navbar-header">\n    <button type="button" ng-if="user.uid" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">\n      <span class="sr-only">Toggle navigation</span>\n      <span class="icon-bar"></span>\n      <span class="icon-bar"></span>\n      <span class="icon-bar"></span>\n    </button>\n    <!-- Top Menu Items -->\n    <ul class="nav top-nav pull-right">\n      <li><loading></loading></li>\n      <li class="dropdown">\n        <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i>&nbsp; {{user.nickname}} <b class="caret"></b></a>\n        <ul class="dropdown-menu">\n          <li ng-if="user.uid"><a href="#/profile"><i class="glyphicon glyphicon-user"></i> Profile</a></li>\n          <li><a href="#/contact"><i class="glyphicon glyphicon-globe"></i> Contact</a></li>\n          <li><a href="#/support"><i class="glyphicon glyphicon-question-sign"></i> Support</a></li>\n          <li ng-if="user.uid" class="divider"></li>\n          <li ng-if="user.uid"><a href ng-click="handleSignOut()"><i class="glyphicon glyphicon-off"></i> Sign Out</a></li>\n        </ul>\n      </li>\n    </ul>\n  </div>\n  <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->\n  <div class="collapse navbar-collapse navbar-main-collapse" ng-if="user.uid">\n    <ul class="nav navbar-nav side-nav">\n      <li><a href="#/desktop"><i class="glyphicon glyphicon-dashboard"></i> Desktop</a></li>\n      <li><a href="#/templates"><i class="glyphicon glyphicon-file"></i> Pages</a></li>\n      <li><a href="#/reports"><i class="glyphicon glyphicon-inbox"></i> Reports</a></li>\n      <li><a href="#/group"><i class="glyphicon glyphicon-briefcase"></i> Group</a></li>\n      <li><a href="#/statistics"><i class="glyphicon glyphicon-stats"></i> Statistics</a></li>\n      <li><a href="#/mastery"><i class="glyphicon glyphicon-education"></i> Mastery</a></li>\n    </ul>\n  </div>\n  <!-- /.navbar-collapse -->\n</nav>')
 }]);
 
 // Angular Rails Template
@@ -52298,14 +52298,14 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
 // source: app/assets/javascripts/templates/user_registrations/forgot_password.html
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("user_registrations/forgot_password.html", '<div class="paper row">\n	<h3>Forgot Password</h3>\n	<hr>\n	<form role="form" ng-submit="requestPasswordReset(passwordResetForm)" ng-init="passwordResetForm = {}">\n\n		<p>We\'ll email you a link to reset your password.</p>\n		\n		<div class="form-group">\n			<label>Email</label>\n			<input type="email" name="email" class="form-control" ng-model="passwordResetForm.email">\n		</div>\n\n		<button type="submit" class="btn btn-link">Submit</button>\n\n	</form>\n</div>')
+  $templateCache.put("user_registrations/forgot_password.html", '<div class="paper row">\n	<h3>Forgot Password</h3>\n	<hr>\n	<form role="form" ng-submit="requestPasswordReset(passwordResetForm)" ng-init="passwordResetForm = {}">\n\n		<p>We\'ll email you a link to reset your password.</p>\n		\n		<div class="form-group">\n			<label>Email</label>\n			<input type="email" name="email" class="form-control" ng-model="passwordResetForm.email">\n		</div>\n\n		<a href="#/" class="btn btn-link">Back</a>\n		<button type="submit" class="btn btn-primary pull-right">Submit</button>\n\n	</form>\n</div>')
 }]);
 
 // Angular Rails Template
 // source: app/assets/javascripts/templates/user_registrations/new.html
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("user_registrations/new.html", '<div class="paper row">\n  <h3>Clerkr Registration</h3>\n  <hr>\n  <form ng-submit="handleRegBtnClick()" role="form" ng-init="regForm = {}">\n    <div class="col-xs-12 col-md-6">\n      <div class="form-group">\n        <label for="email">Email</label>\n        <input type="email" class="form-control" name="email" id="email" ng-model="regForm.email" required="required">\n      </div>\n\n      <div class="form-group">\n        <label for="name">Full Name</label>\n        <input type="text" class="form-control" name="name" id="name" ng-model="regForm.name" required="required">\n      </div>\n\n      <div class="form-group">\n        <label for="nickname">Nickname</label>\n        <p>Your nickname is what other users will see you as.</p>\n        <input type="text" class="form-control" name="nickname" id="nickname" ng-model="regForm.nickname" required="required">\n      </div>\n    </div>\n\n    <div class="col-xs-12 col-md-6">\n      <div class="form-group">\n        <label for="password">Password</label>\n        <ul>\n          <li>must be at least 8 characters</li>\n          <li>must contain 1 letter</li>\n          <li>must contain 1 number</li>\n          <li>may contain: !@#$%^&amp;*()_+</li>\n        </ul>\n        <input type="password" class="form-control" name="password" id="password" ng-model="regForm.password" required="required">\n      </div>\n\n      <div class="form-group">\n        <label for="password_confirmation">Password Confirmation</label>\n        <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" ng-model="regForm.password_confirmation" required="required">\n      </div>\n    </div>\n\n    <div class="col-xs-12">\n      <a href="#/" class="btn btn-link">Back</a>\n      <button type="submit" class="btn btn-primary pull-right">Register</button>\n    </div>\n  </form>\n</div>')
+  $templateCache.put("user_registrations/new.html", '<div class="paper row">\n  <h3>Clerkr Registration</h3>\n  <hr>\n  <form ng-submit="handleRegBtnClick()" role="form" ng-init="regForm = {}">\n    <fieldset disabled="disabled">\n      <div class="col-xs-12 col-md-6">\n        <div class="form-group">\n          <label for="email">Email</label>\n          <input type="email" class="form-control" name="email" id="email" ng-model="regForm.email" required="required">\n        </div>\n\n        <div class="form-group">\n          <label for="name">Full Name</label>\n          <input type="text" class="form-control" name="name" id="name" ng-model="regForm.name" required="required">\n        </div>\n\n        <div class="form-group">\n          <label for="nickname">Nickname</label>\n          <p>Your nickname is what other users will see you as.</p>\n          <input type="text" class="form-control" name="nickname" id="nickname" ng-model="regForm.nickname" required="required">\n        </div>\n      </div>\n\n      <div class="col-xs-12 col-md-6">\n        <div class="form-group">\n          <label for="password">Password</label>\n          <ul>\n            <li>must be at least 8 characters</li>\n            <li>must contain 1 letter</li>\n            <li>must contain 1 number</li>\n            <li>may contain: !@#$%^&amp;*()_+</li>\n          </ul>\n          <input type="password" class="form-control" name="password" id="password" ng-model="regForm.password" required="required">\n        </div>\n\n        <div class="form-group">\n          <label for="password_confirmation">Password Confirmation</label>\n          <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" ng-model="regForm.password_confirmation" required="required">\n        </div>\n      </div>\n    </div>\n\n    <div class="col-xs-12">\n      <a href="#/" class="btn btn-link">Back</a>\n      <button type="submit" disabled="disabled" class="btn btn-primary pull-right">Register</button>\n    </div>\n  </form>\n</div>')
 }]);
 
 // Angular Rails Template
@@ -52313,13 +52313,6 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
   $templateCache.put("user_sessions/destroy.html", '<div class="paper row text-center"><h4>Signing out...</h4></div>')
-}]);
-
-// Angular Rails Template
-// source: app/assets/javascripts/templates/user_sessions/new.html
-
-angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("user_sessions/new.html", '<div class="paper row">\n  <h3>Sign In to Clerkr</h3>\n  <hr>\n  <form ng-submit="submitLogin(loginForm)" role="form" ng-init="loginForm = {}">\n    <div class="form-group">\n      <label for="email">Email</label>\n      <input type="email" name="email" id="email" ng-model="loginForm.email" required="required" class="form-control">\n    </div>\n\n    <div class="form-group">\n      <label for="password">Password</label>\n      <input type="password" name="password" id="password" ng-model="loginForm.password" required="required" class="form-control">\n    </div>\n    <a href="#/" class="btn btn-default">Back</a>\n    <button type="submit" class="btn btn-primary pull-right">Sign in</button> \n    <a href="#/forgot_password" class="btn btn-link pull-right">Forgot Password</a>\n  </form>\n</div>')
 }]);
 
 (function() {
@@ -52350,9 +52343,6 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
       }).when('/sign_up', {
         templateUrl: "user_registrations/new.html",
         controller: 'UserRegistrationsController'
-      }).when('/sign_in', {
-        templateUrl: "user_sessions/new.html",
-        controller: 'UserSessionsController'
       }).when('/forgot_password', {
         templateUrl: "user_registrations/forgot_password.html"
       }).when('/sign_out', {
@@ -52612,6 +52602,37 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
 
   directives = angular.module('directives');
 
+  directives.directive('contact', [
+    function() {
+      return {
+        controllerAs: 'cv',
+        controller: [
+          '$http', 'Flash', function($http, Flash) {
+            var cv;
+            cv = this;
+            cv.newContact = function(email, message) {
+              return $http.post('/contacts', {
+                email: email,
+                message: message
+              }).then(function(res) {
+                Flash.create('success', '<p>Thanks for your message.</p>', 'customAlert');
+                cv.email = void 0;
+                return cv.message = void 0;
+              });
+            };
+            return cv;
+          }
+        ]
+      };
+    }
+  ]);
+
+}).call(this);
+(function() {
+  var directives;
+
+  directives = angular.module('directives');
+
   directives.directive('desktop', [
     function() {
       return {
@@ -52726,6 +52747,35 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
 
   directives = angular.module('directives');
 
+  directives.directive('newsletter', [
+    function() {
+      return {
+        controllerAs: 'nv',
+        controller: [
+          '$http', 'Flash', function($http, Flash) {
+            var nv;
+            nv = this;
+            nv.newSubscribe = function(email) {
+              return $http.post('/newsletters', {
+                email: email
+              }).then(function(res) {
+                Flash.create('success', '<p>Thanks for signing up! We\'ll keep you up-to-date on all our developments.</p>', 'customAlert');
+                return nv.email = void 0;
+              });
+            };
+            return nv;
+          }
+        ]
+      };
+    }
+  ]);
+
+}).call(this);
+(function() {
+  var directives;
+
+  directives = angular.module('directives');
+
   directives.directive('pageMenu', [
     function() {
       return {
@@ -52765,10 +52815,12 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
 
   directives.directive('bsPopover', [
     function() {
-      return function(scope, element, attrs) {
-        return element.find("i[rel=popover]").popover({
-          trigger: 'hover'
-        });
+      return {
+        link: function(scope, element, attrs) {
+          return $(element).find("[rel=popover]").popover({
+            trigger: 'hover'
+          });
+        }
       };
     }
   ]);
@@ -52791,7 +52843,7 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
         link: function(scope, element, attrs) {
           var length;
           if ((scope.template && scope.template.editing) || scope.bypass) {
-            length = scope.bypass ? -125 : 250;
+            length = scope.bypass ? 0 : 250;
             return element.on('click', function() {
               return setTimeout((function() {
                 return $('html, body').animate({
@@ -52930,18 +52982,18 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
         fwstart = '<div class="form-group">';
         fwmid = '<label class="control-label" for="{{field.name}}" ng-if="field.name">{{field.name}} <span class="required-error" ng-if="field.required && !field.value.input">*</span> </label>';
         fwend = '<div class="field-overlay" ng-class="{\'force-hover\':template.selectedOptions.id == field.id}" ng-if="template.editing"></div> </div>';
-        fw = fwstart + fwmid;
+        fw = fwstart;
         inputstart = '<input';
-        clas = 'class="form-control"';
+        clas = 'class="form-control imod"';
         ngmodel = scope.report ? 'ng-model="field.value.input"' : 'ng-model="field.default_value"';
         checkboxmodel = scope.report ? 'ng-model="$parent.field.value.input"' : 'ng-model="$parent.field.default_value"';
-        inputend = ' name="{{field.name}}" ng-required="field.required" ng-disabled="field.disabled">';
+        inputend = ' placeholder="{{field.name}}" name="{{field.name}}" ng-required="field.required" ng-disabled="field.disabled">';
         standard = clas + ' ' + ngmodel + ' ' + inputend;
         labelntext = '<p class="labelntext">{{field.value.input}}{{field.default_value}}</p> <p><a ng-if="!field.value.input && !field.default_value">Click to add text.</a></p>';
         textfield = inputstart + ' type="text" ' + standard;
         textarea = '<textarea type="text" ' + standard + '</textarea>';
-        email = inputstart + ' type="email" placeholder="Email" ' + standard;
-        integer = inputstart + ' type="number" placeholder="Number" ' + standard;
+        email = inputstart + ' type="email" ' + standard;
+        integer = inputstart + ' type="number" ' + standard;
         date = inputstart + ' type="date" ' + standard;
         time = inputstart + ' type="time" ' + standard;
         checkbox = inputstart + ' id="{{field.name}}" type="checkbox" ' + checkboxmodel + inputend + ' ';

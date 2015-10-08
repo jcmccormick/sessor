@@ -29,16 +29,16 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     fwend = '<div class="field-overlay" ng-class="{\'force-hover\':template.selectedOptions.id == field.id}" ng-if="template.editing"></div>
            </div>'
 
-    fw = fwstart+fwmid
+    fw = fwstart
 
     # Break apart an <input> tag into common denominators
     inputstart = '<input'
-    clas = 'class="form-control"'
+    clas = 'class="form-control imod"'
 
     ngmodel = if scope.report then 'ng-model="field.value.input"' else 'ng-model="field.default_value"'
     checkboxmodel = if scope.report then 'ng-model="$parent.field.value.input"' else 'ng-model="$parent.field.default_value"'
 
-    inputend = ' name="{{field.name}}" ng-required="field.required" ng-disabled="field.disabled">'
+    inputend = ' placeholder="{{field.name}}" name="{{field.name}}" ng-required="field.required" ng-disabled="field.disabled">'
     
     standard = clas+' '+ngmodel+' '+inputend
 
@@ -48,9 +48,9 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 
     textfield = inputstart+' type="text" '+standard
     textarea = '<textarea type="text" '+standard+'</textarea>'
-    email = inputstart+' type="email" placeholder="Email" '+standard
+    email = inputstart+' type="email" '+standard
 
-    integer = inputstart+' type="number" placeholder="Number" '+standard
+    integer = inputstart+' type="number" '+standard
     date = inputstart+' type="date" '+standard
     time = inputstart+' type="time" '+standard
 

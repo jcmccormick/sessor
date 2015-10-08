@@ -2,45 +2,47 @@
   <h3>Clerkr Registration</h3>
   <hr>
   <form ng-submit="handleRegBtnClick()" role="form" ng-init="regForm = {}">
-    <div class="col-xs-12 col-md-6">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" class="form-control" name="email" id="email" ng-model="regForm.email" required="required">
+    <fieldset disabled="disabled">
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" name="email" id="email" ng-model="regForm.email" required="required">
+        </div>
+
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" class="form-control" name="name" id="name" ng-model="regForm.name" required="required">
+        </div>
+
+        <div class="form-group">
+          <label for="nickname">Nickname</label>
+          <p>Your nickname is what other users will see you as.</p>
+          <input type="text" class="form-control" name="nickname" id="nickname" ng-model="regForm.nickname" required="required">
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="name">Full Name</label>
-        <input type="text" class="form-control" name="name" id="name" ng-model="regForm.name" required="required">
-      </div>
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label for="password">Password</label>
+          <ul>
+            <li>must be at least 8 characters</li>
+            <li>must contain 1 letter</li>
+            <li>must contain 1 number</li>
+            <li>may contain: !@#$%^&amp;*()_+</li>
+          </ul>
+          <input type="password" class="form-control" name="password" id="password" ng-model="regForm.password" required="required">
+        </div>
 
-      <div class="form-group">
-        <label for="nickname">Nickname</label>
-        <p>Your nickname is what other users will see you as.</p>
-        <input type="text" class="form-control" name="nickname" id="nickname" ng-model="regForm.nickname" required="required">
-      </div>
-    </div>
-
-    <div class="col-xs-12 col-md-6">
-      <div class="form-group">
-        <label for="password">Password</label>
-        <ul>
-          <li>must be at least 8 characters</li>
-          <li>must contain 1 letter</li>
-          <li>must contain 1 number</li>
-          <li>may contain: !@#$%^&amp;*()_+</li>
-        </ul>
-        <input type="password" class="form-control" name="password" id="password" ng-model="regForm.password" required="required">
-      </div>
-
-      <div class="form-group">
-        <label for="password_confirmation">Password Confirmation</label>
-        <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" ng-model="regForm.password_confirmation" required="required">
+        <div class="form-group">
+          <label for="password_confirmation">Password Confirmation</label>
+          <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" ng-model="regForm.password_confirmation" required="required">
+        </div>
       </div>
     </div>
 
     <div class="col-xs-12">
       <a href="#/" class="btn btn-link">Back</a>
-      <button type="submit" class="btn btn-primary pull-right">Register</button>
+      <button type="submit" disabled="disabled" class="btn btn-primary pull-right">Register</button>
     </div>
   </form>
 </div>
