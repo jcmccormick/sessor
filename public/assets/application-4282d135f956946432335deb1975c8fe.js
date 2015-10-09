@@ -53189,7 +53189,7 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
           page: $location.url()
         });
         if (!$rootScope.user.id && $location.url() === '/') {
-          return $('.landing-page').removeClass('ng-hide');
+          return $('.landing-page').removeClass('landing-hide');
         }
       });
       $('input[rel="txtTooltip"]').tooltip();
