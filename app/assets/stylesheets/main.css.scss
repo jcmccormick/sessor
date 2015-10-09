@@ -366,7 +366,7 @@ template-form-directive {
 
   .form-group {
     position: relative;
-
+    margin-bottom: 60px;
 
     textarea {
       height: 113px;
@@ -404,7 +404,8 @@ template-form-directive {
 
       &:hover,
       &.force-hover {
-        box-shadow: 0 -5px 0 #aaa;
+        background-color: rgba(255,255,255,.7);
+        #box-shadow: 0 -5px 0 #aaa;
       }
     }
   }
@@ -446,12 +447,12 @@ template-field-directive {
   }
 
   .approach {
-    padding: 200px 20px;
+    padding: 300px 20px;
     background: #d8f0fc;
 
     @include respond(desktop) {
       text-align: center;
-      padding: 17.5% 9% 17.5% 0;
+      padding: 20% 9% 20% 0;
     }
   }
 
@@ -508,6 +509,7 @@ template-field-directive {
 /*
  * Input Modern
  */
+select.imod,
 textarea.imod,
 input.imod {
   border: none;
@@ -516,4 +518,8 @@ input.imod {
   border-bottom: 2px solid #aaa;
   height: 60px;
   font-size: 32px;
+
+  &[type=checkbox] {
+    position: absolute;
+  }
 }

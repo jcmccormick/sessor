@@ -1,7 +1,11 @@
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 750)
 
-angular.module("sessor").run (['$rootScope', '$location', '$cacheFactory', '$http', 'Flash',
-($rootScope, $location, $cacheFactory, $http, Flash) ->
+angular.module("sessor").run (['$rootScope', '$location', '$cacheFactory', '$http', '$window', 'Flash',
+($rootScope, $location, $cacheFactory, $http, $window, Flash) ->
+
+  $rootScope.$on('$routeChangeSuccess', ->
+    $window.ga('send', 'pageview', { page: $location.url() })
+  )
 
   $('input[rel="txtTooltip"]').tooltip()
 

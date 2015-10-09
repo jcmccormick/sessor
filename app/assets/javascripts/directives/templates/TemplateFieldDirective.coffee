@@ -22,9 +22,9 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 
     # Create a format for field input box layout
     fwstart = '<div class="form-group">'
-    fwmid = '<label class="control-label" for="{{field.name}}" ng-if="field.name">{{field.name}}
+    fwmid = '<h2 for="{{field.name}}" ng-if="field.name">{{field.name}}
                <span class="required-error" ng-if="field.required && !field.value.input">*</span>
-             </label>'
+             </h2>'
 
     fwend = '<div class="field-overlay" ng-class="{\'force-hover\':template.selectedOptions.id == field.id}" ng-if="template.editing"></div>
            </div>'
@@ -43,7 +43,8 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     standard = clas+' '+ngmodel+' '+inputend
 
     # Define the particulars of each supported field
-    labelntext = '<p class="labelntext">{{field.value.input}}{{field.default_value}}</p>
+    labelntext = '<h2 for="{{field.name}}">{{field.name}}</h2>
+    <p class="labelntext">{{field.value.input}}{{field.default_value}}</p>
     <p><a ng-if="!field.value.input && !field.default_value">Click to add text.</a></p>'
 
     textfield = inputstart+' type="text" '+standard
@@ -54,13 +55,13 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     date = inputstart+' type="date" '+standard
     time = inputstart+' type="time" '+standard
 
-    checkbox = inputstart+' id="{{field.name}}" type="checkbox" '+checkboxmodel+inputend+' '
+    checkbox = inputstart+' type="checkbox" id="{{field.name}}" class="imod pull-left" '+checkboxmodel+inputend+' '
     radio = '<div ng-repeat="option in field.options track by $index">
               <label>'+inputstart+' type="radio" ng-value="field.options[$index]" '+ngmodel+inputend+' {{option}}</label>
             </div>
             <p><a ng-if="!field.options.length">Click to add options.</a></p>'
     dropdown = '<select ng-options="option for option in field.options" '+standard+'
-        <option value="">Select Item</option>
+        <option value="">{{field.name}}</option>
       </select>'
 
     # masked = inputstart+' type="password" '+standard
