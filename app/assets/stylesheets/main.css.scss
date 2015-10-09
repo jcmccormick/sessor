@@ -443,6 +443,29 @@ template-field-directive {
 
   .brand-bar {
     display: inline-block;
+
+    .h1 {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-top: 20px;
+    }
+
+    .h4 {
+      margin: 0;
+    }
+
+    @include respond(desktop) {
+      .h1,
+      h1 {
+        margin-top: 25px !important;
+      }
+      .h4 {
+        margin-top: 18px;
+        margin-bottom: 0;
+      }
+    }
   }
 
   .approach {
