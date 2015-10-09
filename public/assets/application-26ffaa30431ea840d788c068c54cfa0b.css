@@ -429,83 +429,98 @@ template-field-directive blockquote {
  * Landing
  */
 /* line 442, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
-.landing {
+.landing-page {
   background-color: white;
-  margin-top: 160px;
 }
-@media screen and (min-width: 60em) {
-  /* line 442, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
-  .landing {
-    margin-top: 80px;
-  }
-}
-/* line 450, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
-.landing .approach {
-  padding: 300px 20px;
+/* line 445, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+.landing-page .approach {
   background: #d8f0fc;
+  padding: 170px 20px;
+}
+/* line 449, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+.landing-page .approach h1 {
+  font-size: 24px;
 }
 @media screen and (min-width: 60em) {
-  /* line 450, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
-  .landing .approach {
+  /* line 445, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+  .landing-page .approach {
     text-align: center;
     padding: 20% 9% 20% 0;
   }
+  /* line 457, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+  .landing-page .approach h1 {
+    font-size: 40px;
+  }
 }
-/* line 460, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
-.landing .down {
+/* line 463, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+.landing-page .down {
   cursor: pointer;
 }
-/* line 465, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
-.landing .features i {
+/* line 467, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+.landing-page .features {
+  /* Fine-tune grid layout */
+}
+/* line 468, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+.landing-page .features i {
   font-size: 80px;
 }
-/* line 469, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
-.landing .features > * > * {
+/* line 473, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+.landing-page .features > * > * {
   margin: 30px 0;
 }
 @media screen and (min-width: 60em) {
-  /* line 469, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
-  .landing .features > * > * {
+  /* line 473, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+  .landing-page .features > * > * {
     margin: 100px 0 0;
     padding: 50px 100px;
   }
 }
-/* line 479, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
-.landing newsletter {
+/* line 483, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+.landing-page newsletter {
   display: block;
-  padding: 350px 20%;
+  padding: 160px  40px;
   background-color: #FCE4D8;
 }
-/* line 484, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
-.landing newsletter .input-group {
-  margin: 60px 0;
-}
-/* line 487, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
-.landing newsletter .input-group input {
-  background-color: #FCE4D8;
-}
-/* line 490, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
-.landing newsletter .input-group .btn {
+/* line 488, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+.landing-page newsletter input,
+.landing-page newsletter .btn {
+  font-size: 24px !important;
   background-color: #FCE4D8;
   color: #00abe9;
   height: 60px;
-  font-size: 32px;
+  line-height: 1.75;
 }
-/* line 499, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
-.landing .officials {
-  padding: 60px 100px;
+@media screen and (min-width: 60em) {
+  /* line 483, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+  .landing-page newsletter {
+    padding: 250px 20%;
+  }
+  /* line 500, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+  .landing-page newsletter .input-group {
+    margin: 110px 0;
+  }
+  /* line 504, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+  .landing-page newsletter input,
+  .landing-page newsletter .btn {
+    font-size: 32px !important;
+  }
 }
-/* line 502, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
-.landing .officials .extras {
-  margin-top: 50px;
-  margin-bottom: 50px;
-  min-height: 600px;
+/* line 511, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+.landing-page .officials {
+  padding: 60px 10px;
+}
+@media screen and (min-width: 60em) {
+  /* line 516, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+  .landing-page .officials .extras {
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
 }
 
 /*
  * Input Modern
  */
-/* line 513, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 529, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 select.imod,
 textarea.imod,
 input.imod {
@@ -516,7 +531,7 @@ input.imod {
   height: 60px;
   font-size: 32px;
 }
-/* line 523, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
+/* line 539, c:/xampp/htdocs/sessor/app/assets/stylesheets/main.css.scss */
 select.imod[type=checkbox],
 textarea.imod[type=checkbox],
 input.imod[type=checkbox] {

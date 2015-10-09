@@ -438,21 +438,24 @@ template-field-directive {
 /*
  * Landing
  */
-.landing {
+.landing-page {
   background-color: white;
-  margin-top: 160px;
-
-  @include respond(desktop) {
-    margin-top: 80px;
-  }
 
   .approach {
-    padding: 300px 20px;
     background: #d8f0fc;
+    padding: 170px 20px;
+
+    h1 {
+      font-size: 24px;
+    }
 
     @include respond(desktop) {
       text-align: center;
       padding: 20% 9% 20% 0;
+
+      h1 {
+        font-size: 40px;
+      }
     }
   }
 
@@ -465,6 +468,7 @@ template-field-directive {
       font-size: 80px;
     }
 
+    /* Fine-tune grid layout */
     > * > * {
       margin: 30px 0;
 
@@ -477,34 +481,46 @@ template-field-directive {
 
   newsletter {
     display: block;
-    padding: 350px 20%;
+    padding: 160px  40px;
     background-color: #FCE4D8;
 
-    .input-group {
-      margin: 60px 0;
+    input,
+    .btn {
+      font-size: 24px !important;
+      background-color: #FCE4D8;
+      color: #00abe9;
+      height: 60px;
+      line-height: 1.75;
+    }
 
-      input {
-        background-color: #FCE4D8;
+    @include respond(desktop) {
+      padding: 250px 20%;
+
+      .input-group {
+        margin: 110px 0;
       }
+
+      input,
       .btn {
-        background-color: #FCE4D8;
-        color: #00abe9;
-        height: 60px;
-        font-size: 32px;
+        font-size: 32px !important;
       }
     }
   }
 
   .officials {
-    padding: 60px 100px;
+    padding: 60px 10px;
 
-    .extras {
-      margin-top: 50px;
-      margin-bottom: 50px;
-      min-height: 600px;
+    @include respond(desktop) {
+
+      .extras {
+        margin-top: 50px;
+        margin-bottom: 50px;
+      }
     }
   }
+
 }
+
 
 /*
  * Input Modern

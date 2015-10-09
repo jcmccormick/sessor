@@ -1,38 +1,31 @@
 <page-menu ng-if="user.id">
 	<li><a href="#/"><i class="glyphicon glyphicon-home"></i> &nbsp; Info</a></li>
 </page-menu>
-<span class="landing-page" ng-init="landing={}">
+<span class="landing-page" ng-init="landing={}" ng-if="!user.id">
 
-	<form role="form" ng-init="loginForm = {}" ng-if="!user.id">
-		<div class="col-xs-12">
-
-			<h1 class="col-md-4 col-md-offset-2">Clerkr 
-				<small class="pull-right">
-					<a href="javascript:;" class="btn" ng-click="landing.extra='about'" scroll-to=".officials" bypass="true">About</a>
-					<a href="javascript:;" class="btn" ng-click="landing.extra='development'" scroll-to=".officials" bypass="true">Development</a>
-					<a href="javascript:;" class="btn" ng-click="landing.extra='contact'" scroll-to=".officials" bypass="true">Contact</a>
-				</small>
-			</h1>
-			<div class="h4">
-				<div class="input-group col-md-4">
-					<input type="email" placeholder="Email" ng-model="loginForm.email" required="required" class="form-control">
-					<span class="input-group-btn" style="width:0px;"></span>
-					<input type="password" placeholder="Password" ng-model="loginForm.password" required="required" class="form-control" style="margin-left:-1px">
-					<span class="input-group-btn">
-						<a href="javascript:;" class="btn btn-success" ng-click="submitLogin(loginForm)">Login</a>
-					</span>
-				</div>
-				<div class="col-md-4" bs-popover>
-					<div rel="popover" data-container="body" data-placement="bottom" data-html="true" data-title="Under Development" data-content="<p>Registrations are currently limited right now while we develop the site. For now, you can sign up to our newsletter below.</p>">
-						<a disabled="disabled" href="#/forgot_password" class="btn">Forgot password?</a>
-						<a disabled="disabled" href="#/sign_up" class="btn pull-right">Register</a>
-					</div>
-				</div>
+	<form role="form" class="brand-bar" ng-init="loginForm = {}">
+		<h1 class="col-md-1 col-md-offset-2">Clerkr</h1>
+		<div class="h1 col-md-3">
+			<a href="javascript:;" class="btn" ng-click="landing.extra='about'" scroll-to="#about" bypass="true">About</a>
+			<a href="javascript:;" class="btn" ng-click="landing.extra='development'" scroll-to="#development" bypass="true">Development</a>
+			<a href="javascript:;" class="btn" ng-click="landing.extra='contact'" scroll-to="#contact" bypass="true">Contact</a>
+		</div>
+		<div class="h4 col-md-4" bs-popover>
+			<div class="input-group">
+				<input type="email" placeholder="Email" ng-model="loginForm.email" required="required" class="form-control">
+				<span class="input-group-btn" style="width:0px;"></span>
+				<input type="password" placeholder="Password" ng-model="loginForm.password" required="required" class="form-control" style="margin-left:-1px">
+				<span class="input-group-btn">
+					<a href="javascript:;" class="btn btn-success" ng-click="submitLogin(loginForm)">Login</a>
+				</span>
+			</div>
+			<div rel="popover" data-container="body" data-placement="bottom" data-html="true" data-title="Under Development" data-content="<p>Registrations are currently limited right now while we develop the site. For now, you can sign up to our newsletter below.</p>">
+				<a disabled="disabled" href="#/forgot_password" class="btn">Forgot password?</a>
+				<a disabled="disabled" href="#/sign_up" class="btn pull-right">Register</a>
 			</div>
 		</div>
 	</form>
 
-	<div class="landing">
 
 		<div class="approach">
 			<h1>Connect your data. Easy. Are you a
@@ -85,23 +78,20 @@
 			</div>
 		</newsletter>
 
-		<div class="officials container-fluid">
+		<div class="officials">
 			<div class="text-center">
 				<a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='about'}" ng-click="landing.extra='about'" scroll-to="#about" bypass="true">About</a>
 				<a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='development'}" ng-click="landing.extra='development'" scroll-to="#development" bypass="true">Development</a>
 				<a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='contact'}" ng-click="landing.extra='contact'" scroll-to="#contact" bypass="true">Contact</a>
 			</div>
 			<div ng-show="landing.extra" class="extras col-xs-12 col-md-6 col-md-offset-3">
-				<a href="javascript:;" class="close pull-right h1" ng-click="landing={}">
-					<i class="glyphicon glyphicon-remove"></i>
-				</a>
 				<div ng-show="landing.extra=='about'" id="about" class="h3">
-					<h3>Clerkr offfers services for individuals and more for businesses.</h3>
+					<h3>Clerkr offers services for individuals and more for businesses.</h3>
 					<br />
 					<h1>For individuals...</h1>
-					<blockquote><h3>Keep track of things like hobbies, sports, exercise, research, anything you can think of.</h3>
+					<blockquote><h3>Keep track of hobbies, sports, exercise, research, anything you can think of.</h3>
 									<h3>Use your pages for surveys.</h3>
-									<h3>Create, print, and save visually appealing graphs.</h3></blockquote>
+									<h3>Create interactive and visually-appealing graphs; print, save, and export your data views.</h3></blockquote>
 					<br />
 					<h1>For businesses...</h1>
 					<blockquote><h3>Schedule employees and keep track of their time online.</h3>
@@ -112,15 +102,15 @@
 				<contact ng-show="landing.extra=='contact'" id="contact">
 					<input type="email" class="form-control imod" placeholder="Email" ng-model="cv.email">
 					<br /><br />
-					<textarea type="text" rows="8" class="form-control imod" placeholder="Message" ng-model="cv.message"></textarea>
+					<textarea type="text" rows="6" class="form-control imod" placeholder="Message" ng-model="cv.message"></textarea>
 					<a href="javascript:;" class="btn btn-success pull-right h1" ng-click="cv.newContact(cv.email, cv.message)">Submit</a>
 				</contact>
 				<div ng-show="landing.extra=='development'" id="development">
 					<h3>We're currently under development and looking to begin open individual-use testing in Spring 2016.</h3>
 				</div>
+				<a href="javascript:;" class="close pull-left h1" ng-click="landing={}">Close</a>
 			</div>
 
 		</div>
 		<h4 id="copyright" class="text-center col-xs-12">&copy; Clerkr 2015</h4>
-	</div>
 </span>
