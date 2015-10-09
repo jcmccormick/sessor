@@ -4,10 +4,9 @@
     <title>Clerkr</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <%= csrf_meta_tags %>
-    <style>.landing-hide{visibility:hidden;}</style>
   </head>
   <body>
-    <span class="landing-page landing-hide" ng-init="landing={}" ng-if="false || !user.id">
+    <span class="landing-page" ng-init="landing={}" ng-if="false || !user.id">
       <form role="form" class="brand-bar" ng-init="loginForm = {}">
         <h1 class="col-xs-4 col-md-2 col-md-offset-1">Clerkr</h1>
         <div class="h1 col-xs-12 col-md-4">
@@ -129,11 +128,9 @@
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
     ga('create', 'UA-68636218-1', 'auto');
-
   </script>
+  <%= javascript_include_tag 'application' %>
   <noscript>Please enable javascript and cookies in your browser.</noscript>
   <script>if (!navigator.cookieEnabled) document.write('Please enable javascript and cookies in your browser.');</script>
-  <%= javascript_include_tag 'application' %>
 </html>
