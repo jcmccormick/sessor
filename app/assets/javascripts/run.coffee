@@ -5,7 +5,10 @@ angular.module("sessor").run (['$rootScope', '$location', '$cacheFactory', '$htt
 
   $rootScope.$on('$routeChangeSuccess', ->
     $window.ga('send', 'pageview', { page: $location.url() })
+    if !$rootScope.user.id && $location.url() == '/'
+      $('.landing-page').removeClass('ng-hide')
   )
+
 
   $('input[rel="txtTooltip"]').tooltip()
 

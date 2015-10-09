@@ -13,12 +13,7 @@
 }
 
 .logdout {
-    background-color: white;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    display: none;
 }
 
 #page-menu {
@@ -209,6 +204,7 @@ loading {
 
 /*Vertical Flip*/
 .verticalFlip{
+    padding-right: 125px;
     display: inline;
     text-indent: 8px;
 }

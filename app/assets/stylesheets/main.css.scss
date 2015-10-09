@@ -63,9 +63,6 @@ input::-ms-clear {
 blockquote {
   white-space: pre-wrap;
 }
-.ng-hide {
-  display: none!important;
-}
 .required-error {
   color:red;
   font-size: smaller;
@@ -441,17 +438,29 @@ template-field-directive {
 .landing-page {
   background-color: white;
 
+  .brand-bar {
+    display: inline-block;
+  }
+
   .approach {
     background: #d8f0fc;
-    padding: 170px 20px;
+    text-align: center;
+    padding: 120px 20px;
 
     h1 {
       font-size: 24px;
     }
 
+    @include respond(mobile) {
+      padding: 280px 20px;
+      
+      h1 {
+        font-size: 32px;
+      }
+    }
+
     @include respond(desktop) {
-      text-align: center;
-      padding: 20% 9% 20% 0;
+      padding: 300px 0;
 
       h1 {
         font-size: 40px;

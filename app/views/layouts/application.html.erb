@@ -4,10 +4,124 @@
     <title>Clerkr</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <style>.ng-hide{display:none!important;}</style>
   </head>
   <body>
     <div flash-message="7500"></div>
+    <span class="landing-page ng-hide" ng-init="landing={}" ng-if="!user.id">
+
+      <form role="form" class="brand-bar" ng-init="loginForm = {}">
+        <h1 class="col-xs-4 col-md-2 col-md-offset-1">Clerkr</h1>
+        <div class="h1 col-xs-12 col-md-4">
+          <a href="javascript:;" class="btn" ng-click="landing.extra='about'" scroll-to="#about" bypass="true">About</a>
+          <a href="javascript:;" class="btn" ng-click="landing.extra='development'" scroll-to="#development" bypass="true">Development</a>
+          <a href="javascript:;" class="btn" ng-click="landing.extra='contact'" scroll-to="#contact" bypass="true">Contact</a>
+        </div>
+        <div class="h4 col-xs-12 col-md-4" bs-popover>
+          <div class="input-group">
+            <input type="email" name="email" placeholder="Email" ng-model="loginForm.email" required="required" class="form-control">
+            <span class="input-group-btn" style="width:0px;"></span>
+            <input type="password" name="password" placeholder="Password" ng-model="loginForm.password" required="required" class="form-control" style="margin-left:-1px">
+            <span class="input-group-btn">
+              <a href="javascript:;" class="btn btn-success" ng-click="submitLogin(loginForm)">Login</a>
+            </span>
+          </div>
+          <div rel="popover" data-container="body" data-placement="bottom" data-html="true" data-title="Under Development" data-content="<p>Registrations are currently limited right now while we develop the site. For now, you can sign up to our newsletter below.</p>">
+            <a disabled="disabled" href="#/forgot_password" class="btn">Forgot password?</a>
+            <a disabled="disabled" href="#/sign_up" class="btn pull-right">Register</a>
+          </div>
+        </div>
+      </form>
+
+
+      <div class="approach">
+        <h1>Connect your data. Easy. Are you a
+          <div class="verticalFlip">
+            <span>Hobbyist?</span>
+            <span>Scientist?</span>
+            <span>Teacher?</span>
+            <span>Researcher?</span>
+            <span>Clerkr?</span>
+          </div>
+        </h1>
+      </div>
+
+      <h1 class="text-center down" scroll-to=".features" bypass="true"><i class="glyphicon glyphicon-chevron-down"></i></h1>
+
+      <div class="features container-fluid">
+        <div class="col-xs-12">
+          <div class="col-xs-12 col-md-6">
+            <i class="glyphicon glyphicon-file"></i>
+            <h1>Designed Data</h1>
+            <h3>Clerkr bases its services on the pages of data you create. Fine tune your process and increase productivity and efficiency.</h3>
+          </div>
+          <div class="col-xs-12 col-md-6">
+            <i class="glyphicon glyphicon-inbox"></i>
+            <h1>Unlimited Reports</h1>
+            <h3>Go crazy. It's on us. Individual users pay nothing to store an endless amount of data.</h3>
+          </div>
+        </div>
+        <div class="col-xs-12">
+          <div class="col-xs-12 col-md-6">
+            <i class="glyphicon glyphicon-briefcase"></i>
+            <h1>Group Time</h1>
+            <h3>Got a crew? Let's join forces. Got a business? We can help with that too: scheduling, appointments, client engagement, all integrated with your pages.</h3>
+          </div>
+          <div class="col-xs-12 col-md-6">
+            <i class="glyphicon glyphicon-stats"></i>
+            <h1>Nerd Out</h1>
+            <h3>Take a break and reflect on our various charts and graphs. Save your visualizations and export the data for use elsewhere.</h3>
+          </div>
+        </div>
+      </div>
+
+      <newsletter id="newsletter" class="newsletter container-fluid text-center">
+        <h1>Get the news</h1>
+        <div class="input-group">
+          <input type="email" name="email" class="form-control imod" placeholder="Email" ng-model="nv.email">
+          <span class="input-group-btn">
+            <a href="javascript:;" class="btn" ng-click="nv.newSubscribe(nv.email)">Submit</a>
+          </span>
+        </div>
+      </newsletter>
+
+      <div class="officials">
+        <div class="text-center">
+          <a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='about'}" ng-click="landing.extra='about'" scroll-to="#about" bypass="true">About</a>
+          <a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='development'}" ng-click="landing.extra='development'" scroll-to="#development" bypass="true">Development</a>
+          <a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='contact'}" ng-click="landing.extra='contact'" scroll-to="#contact" bypass="true">Contact</a>
+        </div>
+        <div ng-show="landing.extra" class="extras col-xs-12 col-md-6 col-md-offset-3">
+          <div ng-show="landing.extra=='about'" id="about" class="h3">
+            <h3>Clerkr offers services for individuals and more for businesses.</h3>
+            <br />
+            <h1>For individuals...</h1>
+            <blockquote><h3>Keep track of hobbies, sports, exercise, research, anything you can think of.</h3>
+                    <h3>Use your pages for surveys.</h3>
+                    <h3>Create interactive and visually-appealing graphs; print, save, and export your data views.</h3></blockquote>
+            <br />
+            <h1>For businesses...</h1>
+            <blockquote><h3>Schedule employees and keep track of their time online.</h3>
+                    <h3>Use pages on your site and for online or kiosk-based customer submissions.</h3>
+                    <h3>Interact with customers in online appointments.</h3>
+                    <h3>Get combined and individual stats for the members in your group.</h3></blockquote>
+          </div>
+          <contact ng-show="landing.extra=='contact'" id="contact">
+            <input type="email" name="email" class="form-control imod" placeholder="Email" ng-model="cv.email">
+            <br /><br />
+            <textarea type="text" rows="6" class="form-control imod" placeholder="Message" ng-model="cv.message"></textarea>
+            <a href="javascript:;" class="btn btn-success pull-right h1" ng-click="cv.newContact(cv.email, cv.message)">Submit</a>
+          </contact>
+          <div ng-show="landing.extra=='development'" id="development">
+            <h3>We're currently under development and looking to begin open individual-use testing in Spring 2016.</h3>
+          </div>
+          <a href="javascript:;" class="close pull-left h1" ng-click="landing={}">Close</a>
+        </div>
+
+      </div>
+      <h4 id="copyright" class="text-center col-xs-12">&copy; Clerkr 2015</h4>
+    </span>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= yield %>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
