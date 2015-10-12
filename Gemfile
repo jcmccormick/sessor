@@ -16,6 +16,7 @@ gem "foreman"
 gem 'devise_token_auth'
 gem 'omniauth'
 gem 'kaminari'
+gem 'figaro'
 group :production, :staging do
   gem 'pg'
   gem "rails_12factor"

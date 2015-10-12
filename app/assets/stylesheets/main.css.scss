@@ -225,10 +225,6 @@ blockquote {
   margin: 0 0 20px 0 !important;
   padding: 15px 20px;
   background-color: white;
-  
-  &:last-child {
-    margin: 0 !important;
-  }
 
   h1 {
     white-space: pre;
@@ -277,9 +273,9 @@ blockquote {
  */
 .template-options {
   color: #aaa;
-  background-color: #666;
+  background-color: #f5f5f5;
   position: fixed;
-  top: 100px;
+  top: 50px;
   bottom: 0;
   right: 0;
   width: 70%;
@@ -313,7 +309,6 @@ blockquote {
 
   .nav {
     padding: 15px;
-    background-color: #555;
 
     input,
     textarea {
@@ -331,11 +326,6 @@ blockquote {
     a.btn {
       margin: 0;
     }
-  }
-
-  .navbar-inverse {
-    background-color: #444;
-    
   }
 }
 

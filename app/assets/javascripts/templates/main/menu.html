@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-fixed-top" role="navigation">
   <!-- Brand and toggle get grouped for better mobile display -->
   <div class="navbar-header">
     <button type="button" ng-if="user.uid" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
@@ -11,7 +11,7 @@
     <ul class="nav top-nav pull-right">
       <li><loading></loading></li>
       <li class="dropdown">
-        <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i>&nbsp; {{user.nickname}} <b class="caret"></b></a>
+        <a href class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i>&nbsp; <b class="caret"></b></a>
         <ul class="dropdown-menu">
           <li ng-if="user.uid"><a href="#/profile"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
           <li><a href="#/contact"><i class="glyphicon glyphicon-globe"></i> Contact</a></li>
