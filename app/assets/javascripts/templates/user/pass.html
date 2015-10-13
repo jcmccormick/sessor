@@ -1,9 +1,9 @@
 <page-menu>
-	<li><a href="#/profile"><i class="glyphicon glyphicon-user"></i> &nbsp; Profile</a></li>
+	<li><a href="#/pass_reset">Password Reset</a></li>
 </page-menu>
 <div class="paper row">
 	<clerkr-registration>
-		<form name="passForm">
+		<form class="col-xs-12" name="passForm">
 			<div class="form-group">
 				<input type="password" class="form-control imod" name="password" placeholder="Password" ng-model="regForm.password" required="required">
 				<ul class="h4">
@@ -18,7 +18,7 @@
 				<input type="password" class="form-control imod" name="password_confirmation" placeholder="Confirm Password" ng-model="regForm.password_confirmation" required="required">
 			</div>
 			
-			<a href="javascript:;" class="btn btn-primary pull-right" ng-click="subPass()" ng-disabled="!passForm.$valid">Update Password<loading></loading></a>
+			<a href="javascript:;" class="btn btn-primary pull-right" ng-click="subPass()" ng-disabled="!passForm.$valid">Update Password</a>
 		</form>
 	</clerkr-registration>
 </div>

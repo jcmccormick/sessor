@@ -1,8 +1,8 @@
 <page-menu ng-if="user.id">
 	<li><a href="#/contact">Contact</a></li>
 </page-menu>
-<div class="paper">
-	<contact>
+<div class="paper row">
+	<contact class="col-xs-12">
 		<input type="email" class="form-control imod" placeholder="Email" ng-model="cv.email">
 		<br /><br />
 		<textarea type="text" rows="8" class="form-control imod" placeholder="Message" ng-model="cv.message"></textarea>

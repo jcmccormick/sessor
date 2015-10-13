@@ -3,7 +3,7 @@
 		<li class="dropdown">
 			<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Reports <b class="caret"></b></a>
 			<ul class="dropdown-menu" role="menu">
-				<li ng-if="vr.report.id"><a href="javascript:;" ng-click="vr.report.saveReport(false, vr.myForm, vr.report)">Save/View</a></li>
+				<li ng-if="vr.report.id"><a href="javascript:;" ng-click="vr.report.saveReport(false, vr.myForm, vr.report)"><i class="glyphicon glyphicon-save"></i> &nbsp; Save/View</a></li>
 				<li><a href="#/reports/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
 				<li><a href="#/reports"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
 				<li ng-if="vr.report.id" class="divider"></li>
@@ -26,22 +26,22 @@
 	<div ng-if="!vr.report.templates || vr.report.newPageAdd" ng-class="{'paper-width':vr.report.id}">
 		<!-- BEGIN PAGE ADD -->
 		<div class="paper row">
+			<div class="col-xs-12">
+				<button type="button" class="close" ng-if="vr.report.newPageAdd && vr.report.templates.length" ng-click="vr.report.newPageAdd=false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h3>Page Selection</h3>
 
-			<button type="button" class="close" ng-if="vr.report.newPageAdd && vr.report.templates.length" ng-click="vr.report.newPageAdd=false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h3>Page Selection</h3>
-
-			<ul class="list-inline">
-				<li ng-repeat-start="template in vr.report.add_templates | orderBy:'id'" ng-click="vr.report.addTemplate(template, vr.myForm, vr.report);vr.report.newPageAdd=false">
-					<a href="javascript:;" class="btn">{{template.name}}</a>
-				</li>
-				<li ng-if="!vr.report.add_templates.length" ng-repeat-end>
-					<h3>Nothing here?</h3>
-					<p>Make sure the Page you want to add is not marked as Draft. Uncheck the "Draft" option when editing a Page, then save it.</p>
-					<p>Pages may only be added to a report once.</p>
-					<button class="btn btn-primary" ng-click="vr.report.newPageAdd=false">Close</button>
-				</li>
-			</ul>
-
+				<ul class="list-inline">
+					<li ng-repeat-start="template in vr.report.add_templates | orderBy:'id'" ng-click="vr.report.addTemplate(template, vr.myForm, vr.report);vr.report.newPageAdd=false">
+						<a href="javascript:;" class="btn">{{template.name}}</a>
+					</li>
+					<li ng-if="!vr.report.add_templates.length" ng-repeat-end>
+						<h3>Nothing here?</h3>
+						<p>Make sure the Page you want to add is not marked as Draft. Uncheck the "Draft" option when editing a Page, then save it.</p>
+						<p>Pages may only be added to a report once.</p>
+						<button class="btn btn-primary" ng-click="vr.report.newPageAdd=false">Close</button>
+					</li>
+				</ul>
+			</div>
 		</div>
 		<!-- END PAGE ADD -->
 	</div>

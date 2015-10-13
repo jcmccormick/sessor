@@ -3,16 +3,16 @@
   <div ng-class="{'paper-width':(form.selectedOptions != undefined && form.editing) || report.templates, 'paper-height':report.templates}">
 
     <div ng-if="form.hideName==false" class="paper row">
-      <h3>Page Name</h3>
-      <input type="text" class="form-control" ng-model="form.name" placeholder="Start with a name then Save..."#/>
+      <div class="col-xs-12">
+        <input type="text" class="form-control imod" placeholder="Enter Name then Save" ng-model="form.name">
+      </div>
     </div>
 
     <div ng-if="report.hideTitle==false && report.allow_title==true" class="paper row">
-      <div ng-if="report.editing">
-        <h3>Report Title</h3>
-        <input class="form-control" type="text" ng-model="report.title">
+      <div class="col-xs-12">
+        <input ng-if="report.editing" type="text" class="form-control imod" placeholder="Title" ng-model="report.title">
+        <h1 ng-if="report.viewing" class="text-center">{{report.title}}</h1>
       </div>
-      <h1 ng-if="report.viewing" class="text-center">{{report.title}}</h1>
     </div>
 
     <div ng-show="form.sections" class="paper row">
@@ -23,15 +23,17 @@
         <a href="javascript:;" ng-if="report.editing" class="text-danger close pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="report.removeTemplate(form, report)"><i class="glyphicon glyphicon-remove"></i></a>
       </div>
 
-      <h1><center>{{form.name}}</center></h1>
+      <h1>
+        <center>{{form.name}}</center>
+      </h1>
 
-      <div class="container-fluid section-row" ng-repeat="(section_id, section_name) in form.sections track by $index">
+      <div class="col-xs-12 section-row" ng-repeat="(section_id, section_name) in form.sections track by $index">
 
         <h2 ng-class="{'no-highlight':!form.editing,'force-hover':form.selectedOptions == section_id}" ng-click="form.selectedOptions=section_id" scroll-to=".force-hover" template="form">
           {{section_name}}
           <span ng-if="!section_name">
             <span ng-if="!form.editing">&nbsp;</span>
-            <small ng-if="form.editing">Click to add a section name, or leave blank</small>
+            <small><a href="javascript:;" ng-if="form.editing">Add a section name, or leave blank</a></small>
           </span>
         </h2>
 

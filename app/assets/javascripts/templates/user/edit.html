@@ -1,8 +1,8 @@
 <page-menu>
-	<li><a href="#/profile"><i class="glyphicon glyphicon-user"></i> &nbsp; Profile</a></li>
+	<li><a href="#/profile">Profile</a></li>
 </page-menu>
 <div class="paper row">
-	<form>
+	<form class="col-xs-12">
 		<fieldset ng-disabled="!user.signedIn">
 
 			<div class="form-group">
@@ -15,7 +15,7 @@
 				<input type="text" name="nickname" placeholder="Nickname" class="form-control imod" ng-model="user.nickname">
 			</div>
 
-    		<a href="javascript:;" class="btn btn-link" ng-click="updateAccount(user)">Update Account</button>
+    		<a href="javascript:;" class="btn btn-success pull-right" ng-click="updateAccount(user)">Update Account</a>
 
 		</fieldset>
 	</form>

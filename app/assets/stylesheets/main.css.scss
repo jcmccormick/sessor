@@ -235,7 +235,6 @@ blockquote {
   background-color: white;
 
   h1 {
-    white-space: pre;
     word-wrap: break-word;
   }
 
@@ -345,7 +344,6 @@ blockquote {
 .section-row {
 
   h2 {
-    position: relative;
     font-weight: 700;
     &:not(.no-highlight) {
       cursor: alias;
@@ -355,7 +353,7 @@ blockquote {
         color: rgba(0,0,0,.2) !important;
         &:before {
           position: absolute;
-          left: -35px;
+          left: -16px;
           color: black;
           font-family: "Glyphicons Halflings";
           content: "\e080";
@@ -425,6 +423,15 @@ template-field-directive {
   
   blockquote {
     word-wrap: break-word !important;
+  }
+  input[type="date"]:before{
+    color:#aaa;
+    content:attr(placeholder);
+  }
+
+  input[type="date"].full:before {
+      color:black;
+      content:""!important;
   }
 }
 

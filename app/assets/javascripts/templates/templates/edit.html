@@ -45,49 +45,53 @@
   <div ng-if="vt.template.id" ng-class="{'paper-width':vt.template.selectedOptions != undefined}" id="page_additions">
     <!-- BEGIN NEW SECTION ADD -->
     <div ng-if="vt.template.newSectionAdd==true || !vt.template.sections.length" class="paper row">
-      <button type="button" class="close" ng-if="vt.template.newSectionAdd && vt.template.sections.length" ng-click="vt.template.newSectionAdd=false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <h3>Add Section</h3>
-
-      <h4>Name <small>OPTIONAL</small></h4>
-      <input type="text" class="form-control page_addition" ng-model="vt.template.newSectionName" value="{{section_name}}">
-
-      <h4>Columns <small>REQUIRED</small></h4>
-      <ul class="btn-group btn-group-justified list-unstyled">
-        <li class="btn btn-default" ng-repeat="column in [1,2,3]" ng-click="vt.template.addSection(vt.template.newSectionName, column, vt.tempForm, vt.template);vt.template.newSectionAdd=false" scroll-to=".force-hover" template="vt.template">
-          {{column}}
-        </li>
-      </ul>
+      <div class="col-xs-12">
+        <button type="button" class="close" ng-if="vt.template.newSectionAdd && vt.template.sections.length" ng-click="vt.template.newSectionAdd=false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3>Add Section</h3>
+  
+        <h4>Name <small>OPTIONAL</small></h4>
+        <input type="text" class="form-control page_addition" ng-model="vt.template.newSectionName" value="{{section_name}}">
+  
+        <h4>Columns <small>REQUIRED</small></h4>
+        <ul class="btn-group btn-group-justified list-unstyled">
+          <li class="btn btn-default" ng-repeat="column in [1,2,3]" ng-click="vt.template.addSection(vt.template.newSectionName, column, vt.tempForm, vt.template);vt.template.newSectionAdd=false" scroll-to=".force-hover" template="vt.template">
+            {{column}}
+          </li>
+        </ul>
+      </div>
     </div>
     <!-- END NEW SECTION ADD -->
 
     <!-- BEGIN NEW FIELD ADD -->
     <div ng-if="vt.template.newFieldAdd" class="paper row">
-      <button type="button" class="close" ng-click="vt.template.newFieldAdd=false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <h3>Add {{vt.template.newFieldType.value}}</h3>
-      <small>ALL REQUIRED</small>
-
-      <h4>Name</h4>
-      <input type="text" class="form-control page_addition" ng-model="vt.template.newFieldName" required>
-
-      <h4>Type</h4>
-      <ul class="list-inline">
-        <li ng-repeat="type in vt.template.addFieldTypes" class="text-center" ng-click="vt.template.newFieldType=type">
-          <a href="javascript:;" class="btn" ng-class="{'btn-primary':vt.template.newFieldType == type}">
-            <i class="glyphicon {{type.glyphicon}}"></i> &nbsp; {{type.value}}
-          </a>
-        </li>
-      </ul>
-
-      <h4>Section</h4>
-      <a href="javascript:;" class="btn" ng-class="{'btn-primary':vt.template.newFieldSection==$index}" ng-repeat="section in vt.template.sections track by $index" ng-click="vt.template.newFieldSection=$index">{{section}} <span ng-if="!section">Section {{$index+1}}</span></a>
-      
-      <div ng-show="vt.template.newFieldSection + 1 > 0 && vt.template.newFieldName && vt.template.newFieldType">
-        <h4>Column</h4>
-        <ul class="btn-group btn-group-justified list-unstyled">
-          <li class="btn btn-default" ng-repeat="column_id in vt.template.countColumns(vt.template.columns[vt.template.newFieldSection]) track by $index" ng-click="vt.template.addField(vt.template, 1*vt.template.newFieldSection+1, $index+1, vt.template.newFieldType, vt.template.newFieldName, vt.tempForm);vt.template.newFieldAdd=false" scroll-to=".force-hover" template="vt.template">
-            Column {{$index+1}}
+      <div class="col-xs-12">
+        <button type="button" class="close" ng-click="vt.template.newFieldAdd=false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3>Add {{vt.template.newFieldType.value}}</h3>
+        <small>ALL REQUIRED</small>
+  
+        <h4>Name</h4>
+        <input type="text" class="form-control page_addition" ng-model="vt.template.newFieldName" required>
+  
+        <h4>Type</h4>
+        <ul class="list-inline">
+          <li ng-repeat="type in vt.template.addFieldTypes" class="text-center" ng-click="vt.template.newFieldType=type">
+            <a href="javascript:;" class="btn" ng-class="{'btn-primary':vt.template.newFieldType == type}">
+              <i class="glyphicon {{type.glyphicon}}"></i> &nbsp; {{type.value}}
+            </a>
           </li>
         </ul>
+  
+        <h4>Section</h4>
+        <a href="javascript:;" class="btn" ng-class="{'btn-primary':vt.template.newFieldSection==$index}" ng-repeat="section in vt.template.sections track by $index" ng-click="vt.template.newFieldSection=$index">{{section}} <span ng-if="!section">Section {{$index+1}}</span></a>
+        
+        <div ng-show="vt.template.newFieldSection + 1 > 0 && vt.template.newFieldName && vt.template.newFieldType">
+          <h4>Column</h4>
+          <ul class="btn-group btn-group-justified list-unstyled">
+            <li class="btn btn-default" ng-repeat="column_id in vt.template.countColumns(vt.template.columns[vt.template.newFieldSection]) track by $index" ng-click="vt.template.addField(vt.template, 1*vt.template.newFieldSection+1, $index+1, vt.template.newFieldType, vt.template.newFieldName, vt.tempForm);vt.template.newFieldAdd=false" scroll-to=".force-hover" template="vt.template">
+              Column {{$index+1}}
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
     <!-- END NEW FIELD ADD -->
