@@ -22,9 +22,9 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 
     # Create a format for field input box layout
     fwstart = '<div class="form-group">'
-    fwmid = '<h2 for="{{field.name}}" ng-if="field.name">{{field.name}}
+    fwmid = '<h3 for="{{field.name}}" ng-if="field.name">{{field.name}}
                <span class="required-error" ng-if="field.required && !field.value.input">*</span>
-             </h2>'
+             </h3>'
 
     fwend = '<div class="field-overlay" ng-class="{\'force-hover\':template.selectedOptions.id == field.id}" ng-if="template.editing"></div>
            </div>'
@@ -43,7 +43,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     standard = clas+' '+ngmodel+' '+inputend
 
     # Define the particulars of each supported field
-    labelntext = '<h2 for="{{field.name}}">{{field.name}}</h2>
+    labelntext = '<h3 for="{{field.name}}">{{field.name}}</h3>
     <p class="labelntext">{{field.value.input}}{{field.default_value}}</p>
     <p><a ng-if="!field.value.input && !field.default_value">Click to add text.</a></p>'
 

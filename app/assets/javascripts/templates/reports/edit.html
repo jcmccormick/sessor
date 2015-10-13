@@ -1,25 +1,25 @@
 <div ng-form="vr.myForm" class="form">
 	<page-menu>
 		<li class="dropdown">
-			<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-inbox"></i> &nbsp; Reports <b class="caret"></b></a>
+			<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Reports <b class="caret"></b></a>
 			<ul class="dropdown-menu" role="menu">
-				<li ng-if="vr.report.id"><a href="javascript:;" ng-click="vr.report.saveReport(false, vr.myForm, vr.report)"><i class="glyphicon glyphicon-save"></i> &nbsp; Save/View</a></li>
+				<li ng-if="vr.report.id"><a href="javascript:;" ng-click="vr.report.saveReport(false, vr.myForm, vr.report)">Save/View</a></li>
 				<li><a href="#/reports/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
 				<li><a href="#/reports"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
 				<li ng-if="vr.report.id" class="divider"></li>
 				<li ng-if="vr.report.id"><a href="javascript:;" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this report?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vr.report.deleteReport(vr.report)"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
 			</ul>
 		</li>
-		<li><a href="javascript:;" ng-click="vr.report.saveReport(true, vr.myForm, vr.report)"><span ng-class="{'text-warning':vr.myForm.$dirty}"><i class="glyphicon glyphicon-floppy-disk"></i> &nbsp; Save</span></a></li>
-		<li><a href="javascript:;" ng-click="vr.report.newPageAdd=true"><i class="glyphicon glyphicon-plus"></i> &nbsp; Page</a></li>
+		<li><a href="javascript:;" ng-click="vr.report.saveReport(true, vr.myForm, vr.report)"><span ng-class="{'save-now':vr.myForm.$dirty}">Save</span></a></li>
 		<li class="dropdown">
-			<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> &nbsp; Options <b class="caret"></b></a>
-			<ul class="dropdown-menu" role="menu">
+			<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
+			<ul class="dropdown-menu bump-left" role="menu">
 				<li><span>Page</span></li>
 				<li><span><label><input ng-model="vr.report.allow_title" type="checkbox"> Add Title</label></span></li>
 				<li ng-if="vr.report.allow_title"><span><label><input ng-model="vr.report.hideTitle" type="checkbox"> Hide Title</label></span></li>
 			</ul>
 		</li>
+		<li><a href="javascript:;" ng-click="vr.report.newPageAdd=true">Add Page</a></li>
 
 	</page-menu>
 

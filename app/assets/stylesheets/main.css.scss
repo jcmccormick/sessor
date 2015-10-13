@@ -51,7 +51,7 @@ body {
   display: none !important;
 }
 .disabled {
-    pointer-events: none;
+  pointer-events: none;
 }
 .navbar-header {
   float: none !important;
@@ -65,6 +65,14 @@ input::-ms-clear {
 }
 blockquote {
   white-space: pre-wrap;
+}
+.save-now {
+  color: red;
+  font-weight: 700;
+
+  :after {
+    content: " Now"
+  }
 }
 .required-error {
   color:red;
@@ -223,7 +231,7 @@ blockquote {
 
 .paper {
   margin: 0 0 20px 0 !important;
-  padding: 15px 20px;
+  padding: 15px 0;
   background-color: white;
 
   h1 {
@@ -336,18 +344,22 @@ blockquote {
 
 .section-row {
 
-  h3 {
-
-    hr {
-      margin-top: 0;
-    }
-
+  h2 {
+    position: relative;
+    font-weight: 700;
     &:not(.no-highlight) {
       cursor: alias;
 
       &:hover,
       &.force-hover {
-        box-shadow: 0 -5px 0 #aaa;
+        color: rgba(0,0,0,.2) !important;
+        &:before {
+          position: absolute;
+          left: -35px;
+          color: black;
+          font-family: "Glyphicons Halflings";
+          content: "\e080";
+        }
       }
     }
   }
@@ -394,8 +406,14 @@ template-form-directive {
 
       &:hover,
       &.force-hover {
-        background-color: rgba(255,255,255,.7);
-        #box-shadow: 0 -5px 0 #aaa;
+        background-color: rgba(255,255,255,.5);
+        &:before {
+          position: absolute;
+          top: 20px;
+          left: -20px;
+          font-family: "Glyphicons Halflings";
+          content: "\e080";
+        }
       }
     }
   }

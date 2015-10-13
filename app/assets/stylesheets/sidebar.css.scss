@@ -19,6 +19,7 @@
 #page-menu {
     border-radius: 0;
     position: fixed;
+    width: 75%;
     top:0;
     left:0;
     z-index: 1031;
@@ -37,7 +38,6 @@
 
 @media(min-width:768px) {
     .view-frame {
-        padding: 20px;
         left: 225px;
     }
     .logdout {
@@ -59,7 +59,7 @@
 
     .side-nav {
         position: fixed;
-        top: 25px;
+        top: 46px;
         left: 0;
         bottom: 0;
         width: 225px;
@@ -149,11 +149,16 @@ nav input[type='text'] {
 
 .dropdown-menu {
 
+    position: absolute;
     margin-top: 1px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
     box-shadow: 0 6px 12px rgba(0,0,0,.175);
+
+    &.bump-left {
+        left: -50px !important;
+    }
 
     li>span {
         display: block;
@@ -175,7 +180,6 @@ nav input[type='text'] {
  */
 loading {
     display: inline-block;
-    color: white;
 
     i { 
         -moz-animation:.6s rotateRight infinite linear; 
