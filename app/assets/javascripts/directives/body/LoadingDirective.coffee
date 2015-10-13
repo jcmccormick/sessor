@@ -1,7 +1,8 @@
 directives = angular.module('directives')
 directives.directive('loading', [()->
   {
-    template: '<i ng-show="lv.loading" class="glyphicon glyphicon-refresh"></i>'
+    template: '<div ng-show="lv.loading">&nbsp;&nbsp;<i class="glyphicon glyphicon-refresh"></i></div>'
+    scope: false
     controllerAs: 'lv'
     controller: ['$rootScope', ($rootScope)->
 

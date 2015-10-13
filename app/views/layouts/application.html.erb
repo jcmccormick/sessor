@@ -34,12 +34,49 @@
             </span>
           </div>
           <div rel="popover" data-container="body" data-placement="bottom" data-html="true" data-title="Under Development" data-content="<p>Registrations are currently limited right now while we develop the site. For now, you can sign up to our newsletter below.</p>">
-            <a disabled="disabled" href="#/forgot_password" class="btn">Forgot password?</a>
-            <a disabled="disabled" href="#/sign_up" class="btn pull-right">Register</a>
+            <a href="javascript:;" class="btn" ng-click="landing.reg=false;landing.forg=!landing.forg">Forgot password?</a>
+            <a href="javascript:;" class="btn pull-right" ng-click="landing.forg=false;landing.reg=!landing.reg">Register</a>
           </div>
         </div>
       </form>
 
+      <clerkr-registration class="row" ng-if="landing.forg || landing.reg">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+          <form name="forgotForm" ng-if="landing.forg">
+            <input type="email" name="email" placeholder="Email" class="form-control imod" ng-model="forgForm.email" required="required">
+              
+            <a href="javascript:;" class="close pull-left h1" ng-click="landing.forg=false">Close </a>
+            <a href="javascript:;" class="btn btn-primary pull-right h1" ng-click="subForg()" ng-disabled="!forgotForm.$valid">Submit<loading></loading></a>
+          </form>
+
+          <form name="registerForm" ng-if="landing.reg">
+            <div class="form-group">
+              <input type="email" class="form-control imod" name="email" placeholder="Email" ng-model="regForm.email" required="required">
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="form-control imod" placeholder="Nickname" ng-model="regForm.nickname" required="required">
+            </div>
+
+            <div class="form-group">
+              <input type="password" class="form-control imod" name="password" placeholder="Password" ng-model="regForm.password" required="required">
+              <ul class="h4">
+                <li>must be at least 8 characters</li>
+                <li>must contain 1 letter</li>
+                <li>must contain 1 number</li>
+                <li>may contain: !@#$%^&amp;*()_+</li>
+              </ul>
+            </div>
+
+            <div class="form-group">
+              <input type="password" class="form-control imod" name="password_confirmation" placeholder="Confirm Password" ng-model="regForm.password_confirmation" required="required">
+            </div>
+
+            <a href="javascript:;" class="close pull-left h1" ng-click="landing.reg=false">Close</a>
+            <a href="javascript:;" class="btn btn-primary pull-right" ng-click="subReg()" ng-disabled="!registerForm.$valid">Register</a>
+          </form>
+        </div>
+      </clerkr-registration>
 
       <div class="approach">
         <h1>Connect your data. Easy. Are you a
@@ -83,7 +120,7 @@
       </div>
 
       <newsletter id="newsletter" class="newsletter container-fluid text-center">
-        <h1>Get the news</h1>
+        <h1>Get the news, only when we've got it</h1>
         <div class="input-group">
           <input type="email" name="email" class="form-control imod" placeholder="Email" ng-model="nv.email">
           <span class="input-group-btn">

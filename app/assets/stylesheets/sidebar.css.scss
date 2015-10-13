@@ -174,10 +174,8 @@ nav input[type='text'] {
  * Loading Rotate
  */
 loading {
-    display: block;
+    display: inline-block;
     color: white;
-    font-size: 20px;
-    padding: 8px 10px 0;
 
     i { 
         -moz-animation:.6s rotateRight infinite linear; 

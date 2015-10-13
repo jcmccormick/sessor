@@ -1,20 +1,7 @@
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 750)
 
-angular.module("sessor").run (['$rootScope', '$location', '$cacheFactory', '$http', '$window', 'Flash',
-($rootScope, $location, $cacheFactory, $http, $window, Flash) ->
-
-  $rootScope.$on('$routeChangeSuccess', ->
-    $window.ga('send', 'pageview', { page: $location.url() })
-    if !$rootScope.user.id && $location.url() == '/'
-      $('.landing-page').removeClass('landing-hide')
-  )
-
-
-  $('input[rel="txtTooltip"]').tooltip()
-
-  $(document).on 'click.nav li', '.navbar-collapse.in', (e) ->
-    if $(e.target).is('a')
-      $(this).removeClass('in').addClass 'collapse'
+angular.module("sessor").run (['$rootScope', '$location', '$cacheFactory', '$window', 'Flash',
+($rootScope, $location, $cacheFactory, $window, Flash) ->
 
   $httpDefaultCache = $cacheFactory.get('$http')
 
@@ -22,9 +9,13 @@ angular.module("sessor").run (['$rootScope', '$location', '$cacheFactory', '$htt
     $rootScope.$on value, (event) ->
       $httpDefaultCache.removeAll()
 
-  $rootScope.handleSignOut = ->
-    $location.path('/sign_out')
-    $rootScope.signOut()
+  $rootScope.$on('$locationChangeStart', (evt, absNewUrl, absOldUrl)->
+    ~absOldUrl.indexOf('reset_password=true') && $location.path('/pass_reset')
+  )
+  
+  $rootScope.$on('$routeChangeSuccess', ->
+    $window.ga('send', 'pageview', { page: $location.url() })
+  )
 
   $rootScope.$on('auth:login-success', ->
     Flash.create('success', 'Successfully logged in.', 'customAlert')
@@ -33,7 +24,7 @@ angular.module("sessor").run (['$rootScope', '$location', '$cacheFactory', '$htt
   )
 
   $rootScope.$on('auth:logout-success', ->
-    Flash.create('success', 'You\'ve been logged out.', 'customAlert')
+    Flash.create('success', 'You have logged out.', 'customAlert')
     $location.path('/')
     $httpDefaultCache.removeAll()
   )
@@ -47,5 +38,13 @@ angular.module("sessor").run (['$rootScope', '$location', '$cacheFactory', '$htt
   $rootScope.$on('auth:account-update-success', ->
     Flash.create('success', 'Account updated successfully.', 'customAlert')
   )
+
+  $rootScope.handleSignOut = ->
+    $location.path('/sign_out')
+    $rootScope.signOut()
+
+  $(document).on 'click.nav li', '.navbar-collapse.in', (e) ->
+    if $(e.target).is('a')
+      $(this).removeClass('in').addClass 'collapse'
 
 ])

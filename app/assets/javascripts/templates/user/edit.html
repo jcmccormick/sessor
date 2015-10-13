@@ -1,0 +1,22 @@
+<page-menu>
+	<li><a href="#/profile"><i class="glyphicon glyphicon-user"></i> &nbsp; Profile</a></li>
+</page-menu>
+<div class="paper row">
+	<form>
+		<fieldset ng-disabled="!user.signedIn">
+
+			<div class="form-group">
+				<input type="email" name="email" placeholder="Email" class="form-control imod" ng-model="user.email" ng-disabled="true">
+			</div>
+			<div class="form-group">
+				<input type="text" name="name" placeholder="Name" class="form-control imod" ng-model="user.name">
+			</div>
+			<div class="form-group">
+				<input type="text" name="nickname" placeholder="Nickname" class="form-control imod" ng-model="user.nickname">
+			</div>
+
+    		<a href="javascript:;" class="btn btn-link" ng-click="updateAccount(user)">Update Account</button>
+
+		</fieldset>
+	</form>
+</div>
