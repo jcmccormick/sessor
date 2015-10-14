@@ -1,6 +1,6 @@
 /* Sessor Main CSS File
  * Authors: Joe McCormick
- * Last Updated: 7-25-15
+ * Last Updated: 10-13-15
  */
 
 @import url(//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
@@ -69,10 +69,6 @@ blockquote {
 .save-now {
   color: red;
   font-weight: 700;
-
-  :after {
-    content: " Now"
-  }
 }
 .required-error {
   color:red;
@@ -86,7 +82,6 @@ blockquote {
   -webkit-box-shadow: none!important;
   box-shadow: none!important;
 }
-
 .table {
   th:not(:first-child),
   td:not(:first-child) {
@@ -205,7 +200,6 @@ blockquote {
   padding: 0 20px 20px !important;
   font-size: 16px;
   text-transform: capitalize;
-  display: block;
 
   h3 {
     color: #aaa;
@@ -256,10 +250,10 @@ blockquote {
   }
 }
 
-
 /*
  * Reports
  */
+
 .add-template-list {
 
   .add-template-list-section {
@@ -278,6 +272,7 @@ blockquote {
 /*
  * Page Design
  */
+
 .template-options {
   color: #aaa;
   background-color: #f5f5f5;
@@ -285,7 +280,7 @@ blockquote {
   top: 50px;
   bottom: 0;
   right: 0;
-  width: 70%;
+  width: 62.5%;
   padding: 0;
   overflow-y: auto;
   z-index: 6;
@@ -336,7 +331,6 @@ blockquote {
   }
 }
 
-
 /* 
  * Template and Field Display
  */
@@ -362,6 +356,7 @@ blockquote {
     }
   }
 }
+
 template-form-directive {
 
   .form-group {
@@ -417,8 +412,6 @@ template-form-directive {
   }
 }
   
-
-
 template-field-directive {
   
   blockquote {
@@ -432,6 +425,12 @@ template-field-directive {
   input[type="date"].full:before {
       color:black;
       content:""!important;
+  }
+
+  h3 {
+    margin-left: 10px;
+    display: inline-block;
+    padding-bottom: 20px;
   }
 }
 
@@ -453,6 +452,7 @@ template-field-directive {
 /*
  * Landing
  */
+
 .landing-page {
   background-color: white;
 
@@ -570,10 +570,16 @@ template-field-directive {
   }
 }
 
+/* Login */
+
+span.landing-page {
+    position: absolute;
+}
 
 /*
  * Input Modern
  */
+
 select.imod,
 textarea.imod,
 input.imod {
@@ -589,6 +595,8 @@ input.imod {
   }
 
   &[type=checkbox] {
-    position: absolute;
+    width: 15%;
+    display: inline-block;
+    float: left;
   }
 }

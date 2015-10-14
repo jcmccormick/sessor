@@ -28,7 +28,7 @@
 		<div class="paper row">
 			<div class="col-xs-12">
 				<button type="button" class="close" ng-if="vr.report.newPageAdd && vr.report.templates.length" ng-click="vr.report.newPageAdd=false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h3>Page Selection</h3>
+				<h3>Add Page</h3>
 
 				<ul class="list-inline">
 					<li ng-repeat-start="template in vr.report.add_templates | orderBy:'id'" ng-click="vr.report.addTemplate(template, vr.myForm, vr.report);vr.report.newPageAdd=false">

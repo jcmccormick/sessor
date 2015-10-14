@@ -1,9 +1,3 @@
-/*!
- * Start Bootstrap - SB Admin Bootstrap Admin Template (http://startbootstrap.com)
- * Code licensed under the Apache License v2.0.
- * For details, see http://www.apache.org/licenses/LICENSE-2.0.
- */
-
 /* Global Styles */
 
 .view-frame {
@@ -17,17 +11,22 @@
     display: none;
 }
 
+.nav>li {
+    padding: 5px;
+    float: left;
+}
+
 #page-menu {
     border-radius: 0;
     position: fixed;
-    width: 75%;
+    max-width:65%;
     top:0;
     left:0;
     z-index: 1031;
     font-size: 10px;
 
     >div>ul>li>a {
-        padding: 10px 5px;
+        padding: 10px 0;
     }
 }
 
@@ -49,11 +48,16 @@
     #page-menu {
         font-size: 14px;
         left: 225px;
+        
+        >div>ul>li>a {
+            padding: 10px;
+        }
     }
     .navbar-fixed-top {
         padding: 0 70px;
     }
 }
+
 /* Side Navigation */
 
 @media(min-width:768px) {
@@ -102,27 +106,21 @@
             background-color: #333;
         }
     }
+
+    loading {
+        padding-top: 10px;
+    }
 }
 
-.nav>li {
-    padding: 5px;
+/* Brand Bar/Page Menu */
+.user-menu {
+    padding: 10px 0 !important;
 }
-
-nav input[type='text'] {
-    margin: 2px;
-}
-
-.top-nav>li {
-    display: inline-block;
-    float: left;
-}
-
 .top-nav>li>a {
     padding-top: 15px;
     padding-bottom: 15px;
     line-height: 20px;
 }
-
 .top-nav>li:hover {
     ul {
         display: block;
@@ -131,6 +129,8 @@ nav input[type='text'] {
         border-top-right-radius: 0;
     }
 }
+
+/* Dropdown */
 
 .top-nav>.open>a,
 .top-nav>li>a:focus,
@@ -146,8 +146,6 @@ nav input[type='text'] {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
-
-
 .dropdown-menu {
 
     position: absolute;
@@ -259,9 +257,4 @@ loading {
     30% { opacity: 0; -ms-transform: translateY(0px); }
     80% { opacity: 0; }
     100% { opacity: 0; }
-}
-
-/* Login */
-span.landing-page {
-    position: absolute;
 }

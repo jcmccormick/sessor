@@ -55,7 +55,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     date = inputstart+' type="date" '+standard
     time = inputstart+' type="time" '+standard
 
-    checkbox = inputstart+' type="checkbox" id="{{field.name}}" class="imod pull-left" '+checkboxmodel+inputend+' '
+    checkbox = inputstart+' type="checkbox" id="{{field.name}}" class="form-control imod" '+checkboxmodel+inputend+' '
     radio = '<div ng-repeat="option in field.options track by $index">
               <label>'+inputstart+' type="radio" ng-value="field.options[$index]" '+ngmodel+inputend+' {{option}}</label>
             </div>

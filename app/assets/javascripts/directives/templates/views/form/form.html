@@ -60,118 +60,91 @@
 
   <!-- RIGHT SIDEBAR -->
   <div id="right-sidebar" ng-show="(form.selectedOptions != undefined && form.editing) || report.templates" class="template-options" ng-class="{'report-pages':report}">
+    <div class="col-xs-12">
 
-    <!-- REPORT PAGES DESKTOP -->
-    <nav ng-if="report.templates">
-      <ul class="nav">
-        <li class="navbar-text">
-          <h3>Pages</h3>
-          <ul class="list-unstyled">
-            <li class="navbar-text"><p ng-repeat="template in report.templates"><a href="javascript:;" ng-class="{'selected':template==form}" ng-click="setBreadcrumb(template)">{{template.name}}</a></p></li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
+      <!-- REPORT PAGES DESKTOP -->
+      <div ng-if="report.templates">
+        <h3>Pages</h3>
+        <ul class="list-unstyled">
+          <li class="navbar-text"><p ng-repeat="template in report.templates"><a href="javascript:;" ng-class="{'selected':template==form}" ng-click="setBreadcrumb(template)">{{template.name}}</a></p></li>
+        </ul>
+      </div>
 
-    <!-- SECTION OPTIONS -->
-    <nav ng-if="!report && !form.selectedOptions.fieldtype">
-      <ul class="nav">
-        <li class="navbar-text">
-          <h3>SECTION</h3>
-          <p class="clearfix">
-            <a href="javascript:;" class="btn btn-success" ng-click="form.setSelectedOptions(undefined, form)"><i class="glyphicon glyphicon-ok"></i> &nbsp; Done</a>
+      <!-- SECTION OPTIONS -->
+      <div ng-if="!report && !form.selectedOptions.fieldtype">
+        <h3>SECTION</h3>
+        <p class="clearfix">
+          <a href="javascript:;" class="btn btn-success" ng-click="form.setSelectedOptions(undefined, form)"><i class="glyphicon glyphicon-ok"></i> &nbsp; Done</a>
+        </p>
+
+        <label>Name</label>
+        <p>
+          <input type="text" class="form-control" ng-model="form.sections[form.selectedOptions]">
+        </p>
+
+        <label>Columns</label>
+        <p class="btn-group btn-group-justified">
+          <a href="javascript:;" class="btn btn-primary" ng-disabled="form.columns[form.selectedOptions] <= 1" ng-click="form.deleteSectionColumn(form, form.selectedOptions, myForm.$$parentForm)"><i class="glyphicon glyphicon-minus"></i></a>
+          <a href="javascript:;" class="btn btn-default" ng-disabled="true">{{form.columns[form.selectedOptions]}}</a>
+          <a href="javascript:;" class="btn btn-primary" ng-disabled="form.columns[form.selectedOptions] >= 3" ng-click="form.addSectionColumn(form, form.selectedOptions, myForm.$$parentForm)"><i class="glyphicon glyphicon-plus"></i></a>
+        </p>
+
+        <label>Order</label>
+        <p class="btn-group btn-group-justified">
+          <a href="javascript:;" class="btn btn-default" ng-click="form.moveSection(form, form.selectedOptions, 'up');myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-arrow-up"></i></a>
+          <a href="javascript:;" class="btn btn-default" ng-click="form.moveSection(form, form.selectedOptions, 'down');myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-arrow-down"></i></a>
+        </p>
+
+        <div class="btn-group btn-group-justified">
+          <a href="javascript:;" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(form, form.selectedOptions, myForm.$$parentForm)">Delete Section</a>
+        </div>
+      </div>
+
+      <!-- FIELD OPTIONS -->
+      <div ng-if="!report && form.selectedOptions.fieldtype">
+        <h3>{{form.selectedOptions.fieldtype | uppercase}}</h3>
+        <a href="javascript:;" class="btn btn-success" ng-click="form.setSelectedOptions(undefined, form)"><i class="glyphicon glyphicon-ok"></i> &nbsp; Done</a>
+
+        <h4>Name</h4>
+        <input type="text" class="form-control" ng-model="form.selectedOptions.name">
+
+        <h4>Default Value</h4>
+        <p>
+          <input ng-if="form.selectedOptions.fieldtype == 'integer'" type="number" class="form-control" ng-model="form.selectedOptions.default_value">
+          <input ng-if="form.selectedOptions.fieldtype == 'date'" type="date" class="form-control" ng-model="form.selectedOptions.default_value">
+          <input ng-if="form.selectedOptions.fieldtype == 'time'" type="time" class="form-control" ng-model="form.selectedOptions.default_value">
+          <input ng-show="['checkbox','labelntext','textarea','date','time','integer'].indexOf(form.selectedOptions.fieldtype) == -1" type="text" class="form-control" ng-model="form.selectedOptions.default_value">
+          <input ng-show="form.selectedOptions.fieldtype == 'checkbox'" type="checkbox" class="form-control" ng-model="form.selectedOptions.default_value">
+          <textarea ng-show="['labelntext','textarea'].indexOf(form.selectedOptions.fieldtype) != -1" class="form-control" ng-model="form.selectedOptions.default_value"></textarea>
+        </p>
+
+        <h4>Column</h4>
+        <p class="btn-group btn-group-justified">
+          <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':$index+1==form.selectedOptions.column_id}" ng-click="form.changeFieldColumn(form, form.selectedOptions, $index+1);myForm.$$parentForm.$dirty=true" ng-repeat="column in columnsArray(form.columns[form.selectedOptions.section_id-1]) track by $index">{{$index+1}}</a>
+        </p>
+
+        <h4>Order</h4>
+        <p class="btn-group btn-group-justified">
+          <a href="javascript:;" class="btn btn-default" ng-click="form.moveField(form, form.selectedOptions, 'up');myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-arrow-up"></i></a>
+          <a href="javascript:;" class="btn btn-default" ng-click="form.moveField(form, form.selectedOptions, 'down');myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-arrow-down"></i></a>
+        </p>
+
+        <div class="h4" ng-show="form.selectedOptions.fieldtype != 'labelntext'">
+          <h4>Required</h4>
+          <p class="btn-group btn-group-justified" ng-click="form.selectedOptions.required = !form.selectedOptions.required;myForm.$$parentForm.$dirty=true">
+            <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':form.selectedOptions.required}">Yes</a>
+            <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!form.selectedOptions.required}">No</a>
           </p>
 
-          <label>Name</label>
-          <p>
-            <input type="text" class="form-control" ng-model="form.sections[form.selectedOptions]">
+          <h4>Disabled</h4>
+          <p class="btn-group btn-group-justified" ng-click="form.selectedOptions.disabled = !form.selectedOptions.disabled;myForm.$$parentForm.$dirty=true">
+            <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':form.selectedOptions.disabled}">Yes</a>
+            <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!form.selectedOptions.disabled}">No</a>
           </p>
+        </div>
 
-          <label>Columns</label>
-          <p class="btn-group btn-group-justified">
-            <a href="javascript:;" class="btn btn-primary" ng-disabled="form.columns[form.selectedOptions] <= 1" ng-click="form.deleteSectionColumn(form, form.selectedOptions, myForm.$$parentForm)"><i class="glyphicon glyphicon-minus"></i></a>
-            <a href="javascript:;" class="btn btn-default" ng-disabled="true">{{form.columns[form.selectedOptions]}}</a>
-            <a href="javascript:;" class="btn btn-primary" ng-disabled="form.columns[form.selectedOptions] >= 3" ng-click="form.addSectionColumn(form, form.selectedOptions, myForm.$$parentForm)"><i class="glyphicon glyphicon-plus"></i></a>
-          </p>
-
-          <label>Order</label>
-          <p class="btn-group btn-group-justified">
-            <a href="javascript:;" class="btn btn-default" ng-click="form.moveSection(form, form.selectedOptions, 'up');myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-arrow-up"></i></a>
-            <a href="javascript:;" class="btn btn-default" ng-click="form.moveSection(form, form.selectedOptions, 'down');myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-arrow-down"></i></a>
-          </p>
-        </li>
-      </ul>
-
-      <ul class="nav">
-        <li class="navbar-text">
-          &nbsp;
-          <p class="btn-group btn-group-justified">
-            <a href="javascript:;" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(form, form.selectedOptions, myForm.$$parentForm)">Delete Section</a>
-          </p>
-        </li>
-      </ul>
-
-    </nav>
-
-    <!-- FIELD OPTIONS -->
-    <nav ng-if="!report && form.selectedOptions.fieldtype">
-
-      <ul class="nav">
-        <li class="navbar-text">
-          <h3>{{form.selectedOptions.fieldtype | uppercase}}</h3>
-          <p class="clearfix">
-            <a href="javascript:;" class="btn btn-success" ng-click="form.setSelectedOptions(undefined, form)"><i class="glyphicon glyphicon-ok"></i> &nbsp; Done</a>
-          </p>
-
-          <label>Name</label>
-          <p>
-            <input type="text" class="form-control" ng-model="form.selectedOptions.name">
-          </p>
-
-          <label>Default Value</label>
-          <p>
-            <input ng-if="form.selectedOptions.fieldtype == 'integer'" type="number" class="form-control" ng-model="form.selectedOptions.default_value">
-            <input ng-if="form.selectedOptions.fieldtype == 'date'" type="date" class="form-control" ng-model="form.selectedOptions.default_value">
-            <input ng-if="form.selectedOptions.fieldtype == 'time'" type="time" class="form-control" ng-model="form.selectedOptions.default_value">
-            <input ng-show="['checkbox','labelntext','textarea','date','time','integer'].indexOf(form.selectedOptions.fieldtype) == -1" type="text" class="form-control" ng-model="form.selectedOptions.default_value">
-            <input ng-show="form.selectedOptions.fieldtype == 'checkbox'" type="checkbox" class="form-control" ng-model="form.selectedOptions.default_value">
-            <textarea ng-show="['labelntext','textarea'].indexOf(form.selectedOptions.fieldtype) != -1" class="form-control" ng-model="form.selectedOptions.default_value"></textarea>
-          </p>
-
-          <label>Column</label>
-          <p class="btn-group btn-group-justified">
-            <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':$index+1==form.selectedOptions.column_id}" ng-click="form.changeFieldColumn(form, form.selectedOptions, $index+1);myForm.$$parentForm.$dirty=true" ng-repeat="column in columnsArray(form.columns[form.selectedOptions.section_id-1]) track by $index">{{$index+1}}</a>
-          </p>
-
-          <label>Order</label>
-          <p class="btn-group btn-group-justified">
-            <a href="javascript:;" class="btn btn-default" ng-click="form.moveField(form, form.selectedOptions, 'up');myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-arrow-up"></i></a>
-            <a href="javascript:;" class="btn btn-default" ng-click="form.moveField(form, form.selectedOptions, 'down');myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-arrow-down"></i></a>
-          </p>
-
-          <div ng-show="form.selectedOptions.fieldtype != 'labelntext'">
-            <label>Required</label>
-            <p class="btn-group btn-group-justified" ng-click="form.selectedOptions.required = !form.selectedOptions.required;myForm.$$parentForm.$dirty=true">
-              <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':form.selectedOptions.required}">Yes</a>
-              <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!form.selectedOptions.required}">No</a>
-            </p>
-
-            <label>Disabled</label>
-            <p class="btn-group btn-group-justified" ng-click="form.selectedOptions.disabled = !form.selectedOptions.disabled;myForm.$$parentForm.$dirty=true">
-              <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':form.selectedOptions.disabled}">Yes</a>
-              <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!form.selectedOptions.disabled}">No</a>
-            </p>
-          </div>
-
-        </li>
-      </ul>
-
-      <ul class="nav" ng-if="form.selectedOptions.fieldtype == 'dropdown' || form.selectedOptions.fieldtype == 'radio'">
-        <li class="navbar-text">
-          <h4>
-            <p>Options</p>
-            <small><p class="clearfix"><a href="javascript:;" class="btn btn-default" ng-click="form.addOption(form.selectedOptions);myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-plus"></i> &nbsp; Add</a></p></small>
-          </h4>
+        <div ng-if="form.selectedOptions.fieldtype == 'dropdown' || form.selectedOptions.fieldtype == 'radio'">
+          <h4>Options <small><a href="javascript:;" ng-click="form.addOption(form.selectedOptions);myForm.$$parentForm.$dirty=true">Add New</a></small></h4>
           <div class="input-group" ng-repeat="option in form.selectedOptions.options track by $index">
             <input type="text" class="form-control" ng-model="form.selectedOptions.options[$index]">
             <span class="input-group-btn">
@@ -180,19 +153,12 @@
               </a>
             </span>
           </div>
-        </li>
-      </ul>
+        </div>
+        <h4>&nbsp;</h4>
+        <a href="javascript:;" class="btn btn-danger pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this field?<br><br>It will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="form.deleteField(form, form.selectedOptions, myForm.$$parentForm)">Delete Field</a>
+      </div>
 
-      <ul class="nav">
-        <li class="navbar-text">
-          &nbsp;
-          <p class="btn-group btn-group-justified">
-            <a href="javascript:;" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this field?<br><br>It will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="form.deleteField(form, form.selectedOptions, myForm.$$parentForm)">Delete Field</a>
-          </p>
-        </li>
-      </ul>
-    
-    </nav>
+    </div>
   </div>
 
 </div>

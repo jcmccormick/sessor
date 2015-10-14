@@ -9,6 +9,7 @@
 * ControllerAs
 * Template tags for public searching
 * Field Other ng-show/hide
+* Different Imod (input/page designer) styles selectable by user
 
 == BUGS
 * Unnamed sections

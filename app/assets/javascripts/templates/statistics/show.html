@@ -10,38 +10,33 @@
 </div>
 
 <div ng-if="sv.showOptions" class="template-options">
-	<nav>
-		<ul class="nav">
-			<li class="navbar-text">
-				<h4>Graph Options<small>
-					<p><a href="javascript:;" class="btn btn-link" ng-click="sv.showOptions=false"><i class="glyphicon glyphicon-ok"></i> &nbsp; Done</a></p>
-				</small></h4>
+	<div class="col-xs-12">
+		<h3>Graph Options</h3>
+		<p class="clearfix"><a href="javascript:;" class="btn btn-success" ng-click="sv.showOptions=false"><i class="glyphicon glyphicon-ok"></i> &nbsp; Done</a></p>
 
-				<label>Page</label>
-				<p><select class="form-control" ng-model="sv.search.selectedTemplate" ng-options="template as template.name for template in sv.templates" ng-change="sv.listFields(sv.search.selectedTemplate, sv)"></select></p>
-				
-				<div ng-if="sv.search.selectedTemplate">
-					<label>Field</label>
-					<p ng-if="sv.search.selectedTemplate"><select class="form-control" ng-model="sv.search.selectedField" ng-options="field as field.name for field in sv.fields"></select></p>
+		<label>Page</label>
+		<p><select class="form-control" ng-model="sv.search.selectedTemplate" ng-options="template as template.name for template in sv.templates" ng-change="sv.listFields(sv.search.selectedTemplate, sv)"></select></p>
+		
+		<div ng-if="sv.search.selectedTemplate">
+			<label>Field</label>
+			<p ng-if="sv.search.selectedTemplate"><select class="form-control" ng-model="sv.search.selectedField" ng-options="field as field.name for field in sv.fields"></select></p>
 
-					<label>Start Date <small>OPTIONAL</small></label>
-					<p><input type="date" class="form-control" ng-model="sv.search.startDate"></p>
+			<label>Start Date</label>
+			<p><input type="date" class="form-control" ng-model="sv.search.startDate"></p>
 
-					<label>End Date <small>OPTIONAL</small></label>
-					<p><input type="date" class="form-control" ng-model="sv.search.endDate"></p>
+			<label>End Date</label>
+			<p><input type="date" class="form-control" ng-model="sv.search.endDate"></p>
 
-					<div ng-if="sv.search.selectedField">
-						<label>Graph Type</label>
-						<p><select class="form-control" ng-model="sv.type" ng-options="type for type in sv.graphTypes"></select></p>
+			<div ng-if="sv.search.selectedField">
+				<label>Graph Type</label>
+				<p><select class="form-control" ng-model="sv.type" ng-options="type for type in sv.graphTypes"></select></p>
 
-						&nbsp;
-						<p class="btn-group btn-group-justified">
-							<a href="javascript:;" class="btn btn-primary" ng-click="sv.showData(sv.search.selectedField, sv)">Graph</a>
-							<a href="javascript:;" class="btn btn-info" ng-click="sv.data.rows=undefined;sv.search=undefined">Reset</a>
-						</p>
-					</div>
-				</div>
-			</li>
-		</ul>
-	</nav>
+				&nbsp;
+				<p class="btn-group btn-group-justified">
+					<a href="javascript:;" class="btn btn-primary" ng-click="sv.showData(sv.search.selectedField, sv)">Graph</a>
+					<a href="javascript:;" class="btn btn-info" ng-click="sv.data.rows=undefined;sv.search=undefined">Reset</a>
+				</p>
+			</div>
+		</div>
+	</div>
 </div>
