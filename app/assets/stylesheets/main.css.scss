@@ -417,6 +417,7 @@ template-field-directive {
   blockquote {
     word-wrap: break-word !important;
   }
+
   input[type="date"]:before{
     color:#aaa;
     content:attr(placeholder);
@@ -428,9 +429,14 @@ template-field-directive {
   }
 
   h3 {
-    margin-left: 10px;
-    display: inline-block;
-    padding-bottom: 20px;
+    font-size: 32px;
+    margin: 12px 0 0;
+  }
+
+  h5 {
+    font-size: 32px;
+    padding: 1px;
+    text-indent: 10px;
   }
 }
 
@@ -594,9 +600,10 @@ input.imod {
     transition: background-color 5000s ease-in-out 0s;
   }
 
+  &[type=radio],
   &[type=checkbox] {
-    width: 15%;
-    display: inline-block;
+    height: 32px;
+    width: 32px;
     float: left;
   }
 }

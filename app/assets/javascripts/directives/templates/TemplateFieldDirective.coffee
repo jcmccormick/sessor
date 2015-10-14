@@ -22,9 +22,9 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 
     # Create a format for field input box layout
     fwstart = '<div class="form-group">'
-    fwmid = '<h3 for="{{field.name}}" ng-if="field.name">{{field.name}}
+    fwmid = '<h5 for="{{field.name}}" ng-if="field.name">{{field.name}}
                <span class="required-error" ng-if="field.required && !field.value.input">*</span>
-             </h3>'
+             </h5>'
 
     fwend = '<div class="field-overlay" ng-class="{\'force-hover\':template.selectedOptions.id == field.id}" ng-if="template.editing"></div>
            </div>'
@@ -55,11 +55,11 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     date = inputstart+' type="date" '+standard
     time = inputstart+' type="time" '+standard
 
-    checkbox = inputstart+' type="checkbox" id="{{field.name}}" class="form-control imod" '+checkboxmodel+inputend+' '
-    radio = '<div ng-repeat="option in field.options track by $index">
-              <label>'+inputstart+' type="radio" ng-value="field.options[$index]" '+ngmodel+inputend+' {{option}}</label>
+    checkbox = inputstart+' type="checkbox" class="form-control imod" '+checkboxmodel+inputend+' '
+    radio = '<h5>{{field.name}}</h5><div ng-repeat="option in field.options track by $index">
+              '+inputstart+' type="radio" class="form-control imod" ng-value="field.options[$index]" '+ngmodel+inputend+'<h5>{{option}}</h5>
             </div>
-            <p><a ng-if="!field.options.length">Click to add options.</a></p>'
+            <p ng-if="field.options && !field.options.length"><a>Click to add options.</a></p>'
     dropdown = '<select ng-options="option for option in field.options" '+standard+'
         <option value="">{{field.name}}</option>
       </select>'
