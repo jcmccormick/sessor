@@ -106,10 +106,6 @@
             background-color: #333;
         }
     }
-
-    loading {
-        padding-top: 10px;
-    }
 }
 
 /* Brand Bar/Page Menu */
@@ -178,11 +174,28 @@
  * Loading Rotate
  */
 loading {
-    display: inline-block;
 
-    i { 
-        -moz-animation:.6s rotateRight infinite linear; 
-        -webkit-animation:.6s rotateRight infinite linear; 
+    div {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+
+        div {
+            height: 100%;
+            background-color: rgba(0,0,0,.3);
+            z-index: 1050;
+
+            i {
+                top: 50% !important;
+                left: 50%;
+                font-size: 44px;
+                color: white;
+                -moz-animation:.6s rotateRight infinite linear; 
+                -webkit-animation:.6s rotateRight infinite linear; 
+            }
+        }
     }
 }
 @-moz-keyframes rotateRight{

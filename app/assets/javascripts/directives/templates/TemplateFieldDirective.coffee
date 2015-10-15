@@ -44,7 +44,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 
     # Define the particulars of each supported field
     labelntext = '<h3 for="{{field.name}}">{{field.name}}</h3>
-    <p class="labelntext">{{field.value.input}}{{field.default_value}}</p>
+    <span class="labelntext">{{field.value.input}}{{field.default_value}}</span>
     <p><a ng-if="!field.value.input && !field.default_value">Click to add text.</a></p>'
 
     textfield = inputstart+' type="text" '+standard

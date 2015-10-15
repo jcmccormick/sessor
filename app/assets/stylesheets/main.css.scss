@@ -388,6 +388,9 @@ template-form-directive {
       background-color: #f2dede;
     }
 
+    &.checkbox {
+      margin: 0;
+    }
 
     .field-overlay {
       position: absolute;
