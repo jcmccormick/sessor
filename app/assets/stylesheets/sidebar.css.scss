@@ -38,7 +38,7 @@
 
 @media(min-width:768px) {
     .view-frame {
-        left: 225px;
+        left: 48px;
     }
     .logdout {
         left: 0;
@@ -47,7 +47,7 @@
     }
     #page-menu {
         font-size: 14px;
-        left: 225px;
+        left: 48px;
         
         >div>ul>li>a {
             padding: 10px;
@@ -64,10 +64,10 @@
 
     .side-nav {
         position: fixed;
-        top: 46px;
+        top: 50px;
         left: 0;
         bottom: 0;
-        width: 225px;
+        width: 48px;
         border: none;
         border-radius: 0;
         overflow-y: auto;

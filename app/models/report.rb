@@ -20,7 +20,6 @@
 class Report < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_and_belongs_to_many :templates
-  has_many :fields, through: :templates
   has_many :values, dependent: :destroy
   serialize :template_order, Array
   accepts_nested_attributes_for :values

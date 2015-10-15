@@ -47,4 +47,5 @@ angular.module("sessor").run (['$rootScope', '$location', '$cacheFactory', '$win
     if $(e.target).is('a')
       $(this).removeClass('in').addClass 'collapse'
 
+  
 ])

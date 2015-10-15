@@ -21,7 +21,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
   linker = (scope, element, attrs)->
 
     # Create a format for field input box layout
-    fwstart = '<div class="form-group">'
+    fwstart = '<div class="form-group clearfix">'
     fwmid = '<h5 for="{{field.name}}" ng-if="field.name">{{field.name}}
                <span class="required-error" ng-if="field.required && !field.value.input">*</span>
              </h5>'
@@ -52,17 +52,20 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     email = inputstart+' type="email" '+standard
 
     integer = inputstart+' type="number" '+standard
-    date = inputstart+' type="date" '+standard
+    date = inputstart+' type="date" ng-class="{\'full\': field.defalut_value || field.value.input}" '+standard
     time = inputstart+' type="time" '+standard
 
     checkbox = inputstart+' type="checkbox" class="form-control imod" '+checkboxmodel+inputend+' '
-    radio = '<h5>{{field.name}}</h5><div ng-repeat="option in field.options track by $index">
-              '+inputstart+' type="radio" class="form-control imod" ng-value="field.options[$index]" '+ngmodel+inputend+'<h5>{{option}}</h5>
-            </div>
-            <p ng-if="field.options && !field.options.length"><a>Click to add options.</a></p>'
+    radio = '   <div class="clearfix" ng-repeat="option in field.options track by $index">
+                  '+inputstart+' type="radio" class="form-control imod" ng-value="field.options[$index]" '+ngmodel+inputend+'
+                  <h5>{{option}}</h5>
+                </div>
+                <p ng-if="field.options && !field.options.length">
+                  <a>Click to add options.</a>
+                </p>'
     dropdown = '<select ng-options="option for option in field.options" '+standard+'
-        <option value="">{{field.name}}</option>
-      </select>'
+                  <option value="">{{field.name}}</option>
+                </select>'
 
     # masked = inputstart+' type="password" '+standard
 
@@ -98,7 +101,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
         when "time" then element.html fw+time+fwend
 
         when "checkbox" then element.html fwstart+checkbox+fwmid+fwend
-        when "radio" then element.html fw+radio+fwend
+        when "radio" then element.html fw+fwmid+radio+fwend
         when "dropdown" then element.html fw+dropdown+fwend
 
         # when "masked" then element.html fw+masked+fwend

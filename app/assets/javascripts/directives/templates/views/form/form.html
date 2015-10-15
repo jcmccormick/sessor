@@ -23,9 +23,9 @@
         <a href="javascript:;" ng-if="report.editing" class="text-danger close pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="report.removeTemplate(form, report)"><i class="glyphicon glyphicon-remove"></i></a>
       </div>
 
-      <h1>
-        <center>{{form.name}}</center>
-      </h1>
+      <div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
+        <h1><center>{{form.name}}</center></h1>
+      </div>
 
       <div class="col-xs-12 section-row" ng-repeat="(section_id, section_name) in form.sections track by $index">
 
@@ -77,27 +77,24 @@
           <a href="javascript:;" class="btn btn-success" ng-click="form.setSelectedOptions(undefined, form)"><i class="glyphicon glyphicon-ok"></i> &nbsp; Done</a>
         </p>
 
-        <label>Name</label>
-        <p>
-          <input type="text" class="form-control" ng-model="form.sections[form.selectedOptions]">
-        </p>
+        <h4>Name</h4>
+        <input type="text" class="form-control" ng-model="form.sections[form.selectedOptions]">
 
-        <label>Columns</label>
+        <h4>Columns</h4>
         <p class="btn-group btn-group-justified">
           <a href="javascript:;" class="btn btn-primary" ng-disabled="form.columns[form.selectedOptions] <= 1" ng-click="form.deleteSectionColumn(form, form.selectedOptions, myForm.$$parentForm)"><i class="glyphicon glyphicon-minus"></i></a>
           <a href="javascript:;" class="btn btn-default" ng-disabled="true">{{form.columns[form.selectedOptions]}}</a>
           <a href="javascript:;" class="btn btn-primary" ng-disabled="form.columns[form.selectedOptions] >= 3" ng-click="form.addSectionColumn(form, form.selectedOptions, myForm.$$parentForm)"><i class="glyphicon glyphicon-plus"></i></a>
         </p>
 
-        <label>Order</label>
+        <h4>Order</h4>
         <p class="btn-group btn-group-justified">
           <a href="javascript:;" class="btn btn-default" ng-click="form.moveSection(form, form.selectedOptions, 'up');myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-arrow-up"></i></a>
           <a href="javascript:;" class="btn btn-default" ng-click="form.moveSection(form, form.selectedOptions, 'down');myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-arrow-down"></i></a>
         </p>
 
-        <div class="btn-group btn-group-justified">
-          <a href="javascript:;" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(form, form.selectedOptions, myForm.$$parentForm)">Delete Section</a>
-        </div>
+        <h4>&nbsp;</h4>
+        <a href="javascript:;" class="save-now pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(form, form.selectedOptions, myForm.$$parentForm)">Delete Section</a>
       </div>
 
       <!-- FIELD OPTIONS -->
@@ -109,12 +106,12 @@
         <input type="text" class="form-control" ng-model="form.selectedOptions.name">
 
         <h4>Default Value</h4>
-        <p>
+        <p class="clearfix">
           <input ng-if="form.selectedOptions.fieldtype == 'integer'" type="number" class="form-control" ng-model="form.selectedOptions.default_value">
           <input ng-if="form.selectedOptions.fieldtype == 'date'" type="date" class="form-control" ng-model="form.selectedOptions.default_value">
           <input ng-if="form.selectedOptions.fieldtype == 'time'" type="time" class="form-control" ng-model="form.selectedOptions.default_value">
           <input ng-show="['checkbox','labelntext','textarea','date','time','integer'].indexOf(form.selectedOptions.fieldtype) == -1" type="text" class="form-control" ng-model="form.selectedOptions.default_value">
-          <input ng-show="form.selectedOptions.fieldtype == 'checkbox'" type="checkbox" class="form-control" ng-model="form.selectedOptions.default_value">
+          <input ng-show="form.selectedOptions.fieldtype == 'checkbox'" type="checkbox" class="imod" ng-model="form.selectedOptions.default_value">
           <textarea ng-show="['labelntext','textarea'].indexOf(form.selectedOptions.fieldtype) != -1" class="form-control" ng-model="form.selectedOptions.default_value"></textarea>
         </p>
 
@@ -155,7 +152,7 @@
           </div>
         </div>
         <h4>&nbsp;</h4>
-        <a href="javascript:;" class="btn btn-danger pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this field?<br><br>It will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="form.deleteField(form, form.selectedOptions, myForm.$$parentForm)">Delete Field</a>
+        <a href="javascript:;" class="save-now pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this field?<br><br>It will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="form.deleteField(form, form.selectedOptions, myForm.$$parentForm)">Delete Field</a>
       </div>
 
     </div>
