@@ -2,74 +2,74 @@
   <li><a href="#/desktop">Desktop</a></li>
 </page-menu>
 
-  <div class="paper row" desktop>
-    <div class="col-md-6">
-      <h1>Pages <small>{{dv.temp_count}}</small></h1>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Updated</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tr ng-repeat="template in dv.templates">
-          <td>{{template.id}}</td>
-          <td>{{template.name}} <small ng-if="template.draft">DRAFT</small></td>
-          <td>{{template.updated_at | date : 'short'}}</td>
-          <td>
-            <a href="#/templates/{{template.id}}" class="btn btn-link">View</a>
-            <a href="#/templates/{{template.id}}/edit" class="btn btn-link">Edit</a>
-          </td>
-        </tr>
+<div class="paper row" desktop>
+  <div class="col-md-6">
+    <h1>Pages <small>{{dv.temp_count}}</small></h1>
+    <table class="table table-striped">
+      <thead>
         <tr>
-          <td colspan="4">
-            <a href="#/templates/new" class="btn">New</a>
-            <a href="#/templates" class="btn">View All</a>
-          </td>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Updated</th>
+          <th>Actions</th>
         </tr>
-      </table>
-    </div>
-
-    <div class="col-md-6">
-      <h1>Reports <small>{{dv.repo_count}}</small></h1>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Pages</th>
-            <th>Updated</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tr ng-repeat="report in dv.reports">
-          <td>{{report.id}}</td>
-          <td><span ng-repeat="template in report.templates">{{template.name}}<span ng-show="!$last">, </span></span></td>
-          <td>{{report.updated_at | date : 'short'}}</td>
-          <td>
-            <a href="#/reports/{{report.id}}" class="btn btn-link">View</a>
-            <a href="#/reports/{{report.id}}/edit" class="btn btn-link">Edit</a>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="4">
-            <a href="#/reports/new" class="btn">New</a>
-            <a href="#/reports" class="btn">View All</a>
-          </td>
-        </tr>
-      </table>
-    </div>
-
-
-    <div class="col-md-6">
-      <h1>Stats</h1>
-      <a href="#/statistics" class="btn">View</a>
-    </div>
-
-
-    <div class="col-md-6">
-      <h1>Group</h1>
-    </div>
-
+      </thead>
+      <tr ng-repeat="template in dv.templates">
+        <td>{{template.id}}</td>
+        <td>{{template.name}} <small ng-if="template.draft">DRAFT</small></td>
+        <td>{{template.updated_at | date : 'short'}}</td>
+        <td>
+          <a href="#/templates/{{template.id}}" class="btn btn-link">View</a>
+          <a href="#/templates/{{template.id}}/edit" class="btn btn-link">Edit</a>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <a href="#/templates/new" class="btn">New</a>
+          <a href="#/templates" class="btn">View All</a>
+        </td>
+      </tr>
+    </table>
   </div>
+
+  <div class="col-md-6">
+    <h1>Reports <small>{{dv.repo_count}}</small></h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Pages</th>
+          <th>Updated</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tr ng-repeat="report in dv.reports">
+        <td>{{report.id}}</td>
+        <td><span ng-repeat="template in report.templates">{{template.name}}<span ng-show="!$last">, </span></span></td>
+        <td>{{report.updated_at | date : 'short'}}</td>
+        <td>
+          <a href="#/reports/{{report.id}}" class="btn btn-link">View</a>
+          <a href="#/reports/{{report.id}}/edit" class="btn btn-link">Edit</a>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <a href="#/reports/new" class="btn">New</a>
+          <a href="#/reports" class="btn">View All</a>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+  <div class="col-md-6">
+    <h1>Stats</h1>
+    <a href="#/statistics" class="btn">View</a>
+  </div>
+
+
+  <div class="col-md-6">
+    <h1>Group</h1>
+  </div>
+
+</div>

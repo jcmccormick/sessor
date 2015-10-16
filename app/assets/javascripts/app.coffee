@@ -48,13 +48,13 @@ sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
     templateUrl: "user/pass.html"
     resolve: authResolver
   )
+  .when('/desktop',
+    templateUrl: "main/desktop.html"
+    resolve: authResolver
+  )
   .when('/profile',
     templateUrl: "user/edit.html"
     controller: 'UserRegistrationsController'
-    resolve: authResolver
-  )
-  .when('/desktop',
-    templateUrl: "main/desktop.html"
     resolve: authResolver
   ) # REPORTS ROUTES #
   .when('/reports',
@@ -110,7 +110,7 @@ sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
     controllerAs: 'sv'
     resolve: authResolver
   )
-  .otherwise('/desktop')
+  .otherwise('/')
 ])
 
 controllers = angular.module('controllers',[])

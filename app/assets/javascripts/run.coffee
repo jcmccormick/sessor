@@ -1,13 +1,20 @@
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 750)
 
-angular.module("sessor").run (['$rootScope', '$location', '$cacheFactory', '$window', 'Flash',
-($rootScope, $location, $cacheFactory, $window, Flash) ->
+angular.module("sessor").run (['$auth', '$rootScope', '$location', '$cacheFactory', '$window', 'Flash',
+($auth, $rootScope, $location, $cacheFactory, $window, Flash) ->
 
   $httpDefaultCache = $cacheFactory.get('$http')
 
   angular.forEach ['cleartemplates','clearreports'], (value) ->
     $rootScope.$on value, (event) ->
       $httpDefaultCache.removeAll()
+
+  $rootScope.$on('$routeChangeStart', (evt, next, current)->
+    if !$auth.user.id && next.$$route.originalPath == '/'
+      $auth.validateUser().then((res)->
+        res.id && $location.path('/desktop')
+      )
+  )
 
   $rootScope.$on('$locationChangeStart', (evt, absNewUrl, absOldUrl)->
     ~absOldUrl.indexOf('reset_password=true') && $location.path('/pass_reset')
