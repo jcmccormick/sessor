@@ -84,6 +84,7 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 			ClassFactory.get({class: 'reports', id: id}, (res)->
 
 				$.extend report, res
+				report.form = res.templates[0]
 				sortTemplates(report).then((rep)->
 					if $location.path().indexOf('edit') != -1
 						rep.getTemplates(rep).then((rez)->

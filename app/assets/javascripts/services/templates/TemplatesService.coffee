@@ -216,6 +216,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 				Flash.create('success', '<p>'+field.name+' successfully added to '+template.name+': '+template.sections[section_id-1]+'.</p>', 'customAlert')
 				template.selectedOptions = res
 			)
+			$rootScope.$broadcast('cleartemplates')
 			template.newFieldName = undefined
 			template.newFieldAdd = undefined
 			return

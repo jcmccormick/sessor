@@ -20,11 +20,11 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 
   linker = (scope, element, attrs)->
 
-    # Create a format for field input box layout
-    fwstart = '<div class="form-group clearfix">'
-    fwmid = '<h5 for="{{field.name}}" ng-if="field.name">{{field.name}}
-               <span class="required-error" ng-if="field.required && !field.value.input">*</span>
-             </h5>'
+    # Create a container (form-group) for field input box layout
+    fwstart = '<div class="form-group">
+               <span class="required-error" ng-if="field.required && !field.value.input && !field.default_value">*</span>'
+    
+    fwmid = '<h3 for="{{field.name}}" ng-if="field.name">{{field.name}}</h3>'
 
     fwend = '<div class="field-overlay" ng-class="{\'force-hover\':template.selectedOptions.id == field.id}" ng-if="template.editing"></div>
            </div>'
@@ -33,7 +33,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 
     # Break apart an <input> tag into common denominators
     inputstart = '<input'
-    clas = 'class="form-control imod"'
+    clas = 'class="form-control imod" ng-class="{\'notfull\': !field.default_value && !field.value.input}" '
 
     ngmodel = if scope.report then 'ng-model="field.value.input"' else 'ng-model="field.default_value"'
     checkboxmodel = if scope.report then 'ng-model="$parent.field.value.input"' else 'ng-model="$parent.field.default_value"'
@@ -43,16 +43,16 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     standard = clas+' '+ngmodel+' '+inputend
 
     # Define the particulars of each supported field
-    labelntext = '<h3 for="{{field.name}}">{{field.name}}</h3>
-    <span class="labelntext">{{field.value.input}}{{field.default_value}}</span>
-    <p><a ng-if="!field.value.input && !field.default_value">Click to add text.</a></p>'
+    labelntext = '<h3>{{field.name}}</h3>
+    <blockquote ng-if="field.value.input || field.default_value">{{field.value.input}}{{field.default_value}}</blockquote>
+    <p ng-if="!field.value.input && !field.default_value"><a href="javascript:;">Click to add text.</a></p>'
 
     textfield = inputstart+' type="text" '+standard
     textarea = '<textarea type="text" '+standard+'</textarea>'
     email = inputstart+' type="email" '+standard
 
     integer = inputstart+' type="number" '+standard
-    date = inputstart+' type="date" ng-class="{\'full\': field.defalut_value || field.value.input}" '+standard
+    date = inputstart+' type="date" '+standard
     time = inputstart+' type="time" '+standard
 
     checkbox = inputstart+' type="checkbox" class="form-control imod" '+checkboxmodel+inputend+' '
@@ -66,6 +66,9 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     dropdown = '<select ng-options="option for option in field.options" '+standard+'
                   <option value="">{{field.name}}</option>
                 </select>'
+
+
+
 
     # masked = inputstart+' type="password" '+standard
 
@@ -109,19 +112,19 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
       # Else we're viewing a report, so only show 
       # input text and not an actual <input> field
 
-      if cur_field == "date" && scope.field.value.input != '' && scope.field.value.input?
-        scope.field.value.input = new Date(scope.field.value.input).format("DDDD, MMMM DS, YYYY")
-      else if cur_field == "time" && scope.field.value.input != '' && scope.field.value.input?
-        console.log scope.field.value.input
-        scope.field.value.input = new Date(scope.field.value.input).format("hh:mm TT")
-      else if cur_field == "number"
-        scope.field.value.input = parseInt(scope.field.value.input, 10)
-      else if cur_field == "checkbox"
-        scope.field.value.input = if scope.field.value.input == true then 'True' else 'False'
-      else if (!scope.field.value.input? || scope.field.value.input == '')
-        scope.field.value.input = 'No Data'
+      switch cur_field
+        when "date"
+          scope.field.value.input? && scope.field.value.input = new Date(scope.field.value.input).format("DDDD, MMMM DS, YYYY")
+        when "time"
+          scope.field.value.input? && scope.field.value.input = new Date(scope.field.value.input).format("hh:mm TT")
+        when "number"
+          scope.field.value.input = parseInt(scope.field.value.input, 10)
+        when "checkbox"
+          scope.field.value.input = if scope.field.value.input == true then 'True' else 'False'
+      (!scope.field.value.input? || scope.field.value.input == '') && scope.field.value.input = 'No Data'
 
-      element.html '<h4><strong>'+scope.field.name+'</strong></h4><blockquote>'+scope.field.value.input+'</blockquote>'
+      element.html '<h3>'+scope.field.name+'</h3>
+                    <blockquote>'+scope.field.value.input+'</blockquote>'
 
     $compile(element.contents()) scope
     return

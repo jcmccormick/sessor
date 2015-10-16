@@ -47,6 +47,12 @@ body {
   font-family: 'Open Sans', sans-serif !important;
   background-color: #f5f5f5 !important;
 }
+input::-ms-clear {
+  display: none;
+}
+blockquote {
+  white-space: pre-wrap;
+}
 .ng-hide {
   display: none !important;
 }
@@ -60,11 +66,10 @@ body {
   font-size: 30px;
   margin-right: 3px;
 }
-input::-ms-clear {
-  display: none;
-}
-blockquote {
-  white-space: pre-wrap;
+.selected {
+  color: white;
+  font-weight: 700;
+  font-style: italic;
 }
 .save-now {
   color: red;
@@ -286,22 +291,8 @@ blockquote {
   z-index: 6;
 
 
-  &.report-pages {
-    display: none;
-
-    .navbar-text {
-      float: none;
-    }
-  }
-
   @include respond(tablet){
     width: 225px;
-  }
-
-  @include respond(desktop){
-    &.report-pages {
-      display: block;
-    }
   }
 
   textarea {
@@ -357,8 +348,21 @@ blockquote {
   }
 }
 
-template-form-directive {
+  
+template-field-directive {
 
+  word-wrap: break-word !important;
+
+  h3 {
+    font-size: 30px;
+    margin: 0;
+    padding-top: 8px;
+  }
+
+  h5 {
+    font-size: 24px;
+  }
+  
   .form-group {
     position: relative;
     margin: 30px 0;
@@ -368,28 +372,46 @@ template-form-directive {
       resize: vertical;
     }
 
-    label {
-      font-size: 18px;
-      word-wrap: break-word;
-    }
-
     p {
-      word-wrap: break-word;
-      white-space: pre-wrap;
       font-size: 18px;
       line-height: 1.7em;
     }
 
-    .form-field-label {
-      display: inline;
+    blockquote {
+      margin: 10px 0 0;
+      font-size: 20px;
     }
 
-    .ng-invalid-required.ng-touched {
-      background-color: #f2dede;
+    /* Replace mmddyyy/hhmmampm with placeholder until focused or data */
+    input[type="date"],
+    input[type="time"] {
+      &.notfull:not(:focus):not(:hover) {
+        &:before {
+          color:#999;
+          content:attr(placeholder);
+
+          &.ng-valid {
+            content: none;
+          }
+        }
+        &::-webkit-datetime-edit-year-field:not([aria-valuenow]),
+        &::-webkit-datetime-edit-month-field:not([aria-valuenow]),
+        &::-webkit-datetime-edit-day-field:not([aria-valuenow]),
+        &::-webkit-datetime-edit-minute-field:not([aria-valuenow]),
+        &::-webkit-datetime-edit-hour-field:not([aria-valuenow]),
+        &::-webkit-datetime-edit-ampm-field:not([aria-valuenow]),
+        &::-webkit-datetime-edit-text:not([aria-valuenow]) {
+            display: none;
+        }
+      }
     }
 
-    &.checkbox {
-      margin: 0;
+    .required-error {
+      position: absolute;
+      top: 6px;
+      left: -20px;
+      color: red;
+      font-size: x-large;
     }
 
     .field-overlay {
@@ -398,64 +420,24 @@ template-form-directive {
       width: 100%;
       height: 100%;
       cursor: alias;
+      background-color: rgba(255,255,255,.5);
+
+      &:before {
+        position: absolute;
+        top: -5px;
+        left: -20px;
+        font-family: "Glyphicons Halflings";
+        content: "\e019";
+        color: #ddd;
+      }
 
       &:hover,
       &.force-hover {
-        background-color: rgba(255,255,255,.5);
+        background-color: transparent;
         &:before {
-          position: absolute;
-          top: 20px;
-          left: -20px;
-          font-family: "Glyphicons Halflings";
-          content: "\e080";
+          color: #337ab7;
         }
       }
-    }
-  }
-}
-  
-template-field-directive {
-  
-  blockquote {
-    word-wrap: break-word !important;
-  }
-
-  input[type="date"]:before{
-    color:#aaa;
-    content:attr(placeholder);
-
-    &.full {
-      content: '';
-      height: 200px;
-    }
-  }
-
-  input[type="date"].full:before {
-      color:black;
-      content:""!important;
-  }
-
-  h3 {
-    font-size: 32px;
-    margin: 12px 0 0;
-  }
-
-  h5 {
-    font-size: 32px;
-  }
-}
-
-.report-pages,
-.edit-report-crumbs {
-  a {
-    color: #aaa !important;
-    text-decoration: none !important;
-    word-wrap: break-word !important;
-
-    &.selected {
-      color: white;
-      font-weight: 700;
-      font-style: italic;
     }
   }
 }
@@ -467,22 +449,30 @@ template-field-directive {
 select.imod,
 textarea.imod,
 input.imod {
+  height: 50px;
+  font-size: 24px;
+  padding: 7px;
   border: none;
-  border-radius: 0;
-  box-shadow: none !important;
   border-bottom: 2px solid #ddd;
-  height: 60px;
-  font-size: 32px;
-  padding: 7px 0;
+  border-left: 2px solid #ddd;
+  border-radius: 10px;
+  box-shadow: none;
 
   &:-webkit-autofill {
     transition: background-color 5000s ease-in-out 0s;
   }
 
-  &[type=radio],
   &[type=checkbox] {
-    margin: 0 10px 0 0;
-    width: 32px;
+    margin: 12px 10px 0 0;
+    height: 25px;
+    width: 25px;
+    float: left;
+  }
+
+  &[type=radio] {
+    margin: 11px 10px 0 0;
+    height: 25px;
+    width: 25px;
     float: left;
   }
 }

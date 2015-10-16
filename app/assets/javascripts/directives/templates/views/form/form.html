@@ -1,8 +1,8 @@
 <div ng-form="myForm" class="form">
   
-  <div ng-class="{'paper-width':(form.selectedOptions != undefined && form.editing) || report.templates, 'paper-height':report.templates}">
+  <div ng-class="{'paper-width':form.selectedOptions != undefined && form.editing}">
 
-    <div ng-if="form.hideName==false" class="paper row">
+    <div ng-if="form.hideName==false && !report" class="paper row">
       <div class="col-xs-12">
         <input type="text" class="form-control imod" placeholder="Enter Name then Save" ng-model="form.name">
       </div>
@@ -10,18 +10,18 @@
 
     <div ng-if="report.hideTitle==false && report.allow_title==true" class="paper row">
       <div class="col-xs-12">
-        <input ng-if="report.editing" type="text" class="form-control imod" placeholder="Title" ng-model="report.title">
+        <input ng-if="!report.viewing" type="text" class="form-control imod" placeholder="Title" ng-model="report.title">
         <h1 ng-if="report.viewing" class="text-center">{{report.title}}</h1>
       </div>
     </div>
 
     <div ng-show="form.sections" class="paper row">
-      <div class="col-xs-12">
-        <small ng-if="form.editing" class="pull-left">Click items to edit</small>
-        <small ng-if="form.draft" class="pull-right">Draft</small>
-  
-        <a href="javascript:;" ng-if="report.editing" class="text-danger close pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="report.removeTemplate(form, report)"><i class="glyphicon glyphicon-remove"></i></a>
-      </div>
+      <h4 class="col-xs-12">
+        <small ng-show="form.editing" class="pull-left">Click items to edit</small>
+        <small ng-show="form.draft" class="pull-right">Draft</small>
+        &nbsp;
+        <a href="javascript:;" ng-show="report.editing" class="text-danger close pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="report.removeTemplate(form, report)">&times;</a>
+      </h4>
 
       <div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
         <h1><center>{{form.name}}</center></h1>
@@ -59,16 +59,8 @@
   </div>
 
   <!-- RIGHT SIDEBAR -->
-  <div id="right-sidebar" ng-show="(form.selectedOptions != undefined && form.editing) || report.templates" class="template-options" ng-class="{'report-pages':report}">
+  <div id="right-sidebar" ng-if="form.selectedOptions != undefined && form.editing" class="template-options">
     <div class="col-xs-12">
-
-      <!-- REPORT PAGES DESKTOP -->
-      <div ng-if="report.templates">
-        <h3>Pages</h3>
-        <ul class="list-unstyled">
-          <li class="navbar-text"><p ng-repeat="template in report.templates"><a href="javascript:;" ng-class="{'selected':template==form}" ng-click="setBreadcrumb(template)">{{template.name}}</a></p></li>
-        </ul>
-      </div>
 
       <!-- SECTION OPTIONS -->
       <div ng-if="!report && !form.selectedOptions.fieldtype">

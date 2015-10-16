@@ -30,6 +30,8 @@ module Api::V1 #:nodoc:
       else
         current_user.reports.find(params[:id])
       end
+      @report.populate_values
+      @report
     end
 
     def create
