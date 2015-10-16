@@ -148,17 +148,6 @@
           <textarea ng-show="['labelntext','textarea'].indexOf(vt.template.selectedOptions.fieldtype) != -1" class="form-control" ng-model="vt.template.selectedOptions.default_value"></textarea>
         </p>
 
-        <h4>Column</h4>
-        <p class="btn-group btn-group-justified">
-          <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':$index+1==vt.template.selectedOptions.column_id}" ng-click="vt.template.changeFieldColumn(vt.template, vt.template.selectedOptions, $index+1);vt.tempForm.$dirty=true" ng-repeat="column in columnsArray(vt.template.columns[vt.template.selectedOptions.section_id-1]) track by $index">{{$index+1}}</a>
-        </p>
-
-        <h4>Order</h4>
-        <p class="btn-group btn-group-justified">
-          <a href="javascript:;" class="btn btn-default" ng-click="vt.template.moveField(vt.template, vt.template.selectedOptions, 'up');vt.tempForm.$dirty=true"><i class="glyphicon glyphicon-arrow-up"></i></a>
-          <a href="javascript:;" class="btn btn-default" ng-click="vt.template.moveField(vt.template, vt.template.selectedOptions, 'down');vt.tempForm.$dirty=true"><i class="glyphicon glyphicon-arrow-down"></i></a>
-        </p>
-
         <div class="h4" ng-show="vt.template.selectedOptions.fieldtype != 'labelntext'">
           <h4>Required</h4>
           <p class="btn-group btn-group-justified" ng-click="vt.template.selectedOptions.required = !vt.template.selectedOptions.required;vt.tempForm.$dirty=true">
@@ -172,6 +161,20 @@
             <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!vt.template.selectedOptions.disabled}">No</a>
           </p>
         </div>
+
+        <h4>Section</h4>
+        <select class="form-control" ng-options="section_id*1+1 as section_name for (section_id, section_name) in vt.template.sections" ng-model="vt.template.selectedOptions.section_id"></select>
+
+        <h4>Column</h4>
+        <p class="btn-group btn-group-justified">
+          <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':$index+1==vt.template.selectedOptions.column_id}" ng-click="vt.template.changeFieldColumn(vt.template, vt.template.selectedOptions, $index+1);vt.tempForm.$dirty=true" ng-repeat="column in vt.template.countColumns(vt.template.columns[vt.template.selectedOptions.section_id-1]) track by $index" scroll-to=".force-hover" template="vt.template">{{$index+1}}</a>
+        </p>
+
+        <h4>Order</h4>
+        <p class="btn-group btn-group-justified">
+          <a href="javascript:;" class="btn btn-default" ng-click="vt.template.moveField(vt.template, vt.template.selectedOptions, 'up');vt.tempForm.$dirty=true" scroll-to=".force-hover" template="vt.template"><i class="glyphicon glyphicon-arrow-up"></i></a>
+          <a href="javascript:;" class="btn btn-default" ng-click="vt.template.moveField(vt.template, vt.template.selectedOptions, 'down');vt.tempForm.$dirty=true" scroll-to=".force-hover" template="vt.template"><i class="glyphicon glyphicon-arrow-down"></i></a>
+        </p>
 
         <div ng-if="vt.template.selectedOptions.fieldtype == 'dropdown' || vt.template.selectedOptions.fieldtype == 'radio'">
           <h4>Options <small><a href="javascript:;" ng-click="vt.template.addOption(vt.template.selectedOptions);vt.tempForm.$dirty=true">Add New</a></small></h4>
