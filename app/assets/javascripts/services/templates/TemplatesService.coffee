@@ -65,6 +65,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			template.addField = this.addField
 			template.deleteField = this.deleteField
 			template.moveField = this.moveField
+			template.changeFieldSection = this.changeFieldSection
 			template.changeFieldColumn = this.changeFieldColumn
 			template.addOption = this.addOption
 			template.deleteOption = this.deleteOption
@@ -236,19 +237,22 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			)
 			return
 
+		# change a field's section_id
+		changeFieldSection: (template, field)->
+			field.column_id = 1
+			field.column_order = 1
+			for tempField in template.fields
+				tempField.id != field.id && tempField.section_id == field.section_id && tempField.column_id == field.column_id && tempField.column_order++
+
+			return
+
 		# change a field's column_id
 		changeFieldColumn: (template, field, column_id)->
-			if field.column_id != column_id
-				for tempField in template.fields
-					if tempField.section_id == field.section_id
-						if tempField.column_id == field.column_id && tempField.column_order > field.column_order
-							tempField.column_order--
-						else if tempField.column_id == column_id
-							tempField.column_order++
-
-				field.column_id = column_id
-				field.column_order = 1
-
+			field.column_id != column_id && for tempField in template.fields
+				tempField.section_id == field.section_id && tempField.column_id == field.column_id && tempField.column_order > field.column_order && tempField.column_order--
+				tempField.column_id == column_id && tempField.column_order++
+			field.column_id = column_id
+			field.column_order = 1
 			return
 
 		# reorder field up or down in a column

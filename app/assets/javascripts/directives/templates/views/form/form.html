@@ -17,8 +17,7 @@
 
     <div ng-show="form.sections" class="paper row">
       <h4 class="col-xs-12">
-        <small ng-show="form.editing" class="pull-left">Click items to edit</small>
-        <small ng-show="form.draft" class="pull-right">Draft</small>
+        <small ng-show="form.draft"><b>Draft</b></small>
         &nbsp;
         <a href="javascript:;" ng-show="report.editing" class="text-danger close pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="report.removeTemplate(form, report)">&times;</a>
       </h4>

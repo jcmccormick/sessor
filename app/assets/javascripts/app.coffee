@@ -34,9 +34,11 @@ sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
   )
   .when('/support',
     templateUrl: "main/support.html"
+    resolve: authResolver
   )
   .when('/contact',
     templateUrl: "main/contact.html"
+    resolve: authResolver
   )
   .when('/sign_out',
     templateUrl: "user/destroy.html"
@@ -108,7 +110,7 @@ sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
     controllerAs: 'sv'
     resolve: authResolver
   )
-  .otherwise('/')
+  .otherwise('/desktop')
 ])
 
 controllers = angular.module('controllers',[])
