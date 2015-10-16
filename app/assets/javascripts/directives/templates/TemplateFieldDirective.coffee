@@ -72,10 +72,11 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 
     # masked = inputstart+' type="password" '+standard
 
-    # GET template content from path
+    # Verify field type
     cur_field = getTemplate(scope.field)
-    cur_value = if scope.report then scope.field.value.input else scope.field.default_value
 
+    # Pre-parse the value
+    cur_value = if scope.report then scope.field.value.input else scope.field.default_value
     if cur_value?
       if cur_field == 'integer'
         cur_value = parseInt(cur_value, 10)
@@ -84,10 +85,9 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
       else if cur_field == 'checkbox'
         cur_value = cur_value == 't' ? 1 : 0
 
-    if scope.field.default_value != undefined
-      scope.field.default_value = cur_value
-    else
-      scope.field.value.input = cur_value
+    # Reattach parsed value
+    !scope.report && scope.field.default_value = cur_value
+    scope.report && scope.field.value.input = cur_value
 
     # Compile the field display after doublechecking that values are appropriate for their fieldtype
     # If editing/viewing a template or editing a report, show <input> fields
@@ -113,14 +113,15 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
       # input text and not an actual <input> field
 
       switch cur_field
+        when "integer"
+          scope.field.value.input = parseInt(scope.field.value.input, 10)
         when "date"
           scope.field.value.input? && scope.field.value.input = new Date(scope.field.value.input).format("DDDD, MMMM DS, YYYY")
         when "time"
           scope.field.value.input? && scope.field.value.input = new Date(scope.field.value.input).format("hh:mm TT")
-        when "number"
-          scope.field.value.input = parseInt(scope.field.value.input, 10)
         when "checkbox"
           scope.field.value.input = if scope.field.value.input == true then 'True' else 'False'
+
       (!scope.field.value.input? || scope.field.value.input == '') && scope.field.value.input = 'No Data'
 
       element.html '<h3>'+scope.field.name+'</h3>

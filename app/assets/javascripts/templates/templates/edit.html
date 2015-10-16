@@ -163,7 +163,7 @@
         </div>
 
         <h4>Section</h4>
-        <select class="form-control" data-ng-options="section_id*1+1 as section_name for (section_id, section_name) in vt.template.sections" ng-model="vt.template.selectedOptions.section_id" ng-change="vt.template.changeFieldSection(vt.template, vt.template.selectedOptions)"></select>
+        <select class="form-control" ng-options="section_id*1+1 as section_name for (section_id, section_name) in vt.template.sections" ng-model="vt.template.selectedOptions.section_id" ng-change="vt.template.changeFieldSection(vt.template, vt.template.selectedOptions, '{{vt.template.selectedOptions.section_id}}')"></select>
 
         <p>{{vt.template.selectedOptions.section_id}}</p>
 

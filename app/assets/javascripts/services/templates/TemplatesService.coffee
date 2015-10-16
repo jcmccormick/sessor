@@ -238,10 +238,13 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			return
 
 		# change a field's section_id
-		changeFieldSection: (template, field)->
+		changeFieldSection: (template, field, prev_section)->
+			prev_column = field.column_id
+			prev_column_order = field.column_order
 			field.column_id = 1
 			field.column_order = 1
 			for tempField in template.fields
+				tempField.section_id == prev_section*1 && tempField.column_id == prev_column && tempField.column_order >= prev_column_order && tempField.column_order--
 				tempField.id != field.id && tempField.section_id == field.section_id && tempField.column_id == field.column_id && tempField.column_order++
 
 			return
