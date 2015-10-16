@@ -16,7 +16,7 @@
     </style>
   </head>
   <body>
-    <span class="landing-page" ng-init="landing={}" ng-if="!user.id">
+    <span class="landing-page" ng-init="landing={}" ng-if="false || !user.id">
       <form role="form" class="brand-bar" ng-init="loginForm = {}">
         <h1 class="col-xs-4 col-md-2 col-md-offset-1">Clerkr</h1>
         <div class="h1 col-xs-12 col-md-4">
@@ -34,8 +34,8 @@
             </span>
           </div>
           <div rel="popover" data-container="body" data-placement="bottom" data-html="true" data-title="Under Development" data-content="<p>Registrations are currently limited right now while we develop the site. For now, you can sign up to our newsletter below.</p>">
-            <a href="javascript:;" disabled="disabled" class="btn" ng-click="landing.reg=false;landing.forg=!landing.forg">Forgot password?</a>
-            <a href="javascript:;" disabled="disabled" class="btn pull-right" ng-click="landing.forg=false;landing.reg=!landing.reg">Register</a>
+            <a href="javascript:;" class="btn" ng-click="landing.reg=false;landing.forg=!landing.forg">Forgot password?</a>
+            <a href="javascript:;" class="btn pull-right" ng-click="landing.forg=false;landing.reg=!landing.reg">Register</a>
           </div>
         </div>
       </form>

@@ -40,10 +40,15 @@ class Report < ActiveRecord::Base
   def populate_values
     template_order.each do |template_id|
       template = Template.find(template_id)
-      unless templates.include?(template)
-        templates << template
-        template.fields.each do |field|
-          values.new(report: self, field_id: field.id, input: field.default_value)
+      templates << template unless templates.include?(template)
+      template.fields.each do |field|
+        Value.where(report_id: self.id, field_id: field.id).first_or_create do |value|
+          value.input = field.default_value
+        end
+        if field.fieldtype == 'labelntext'
+          value = Value.where(report_id: self.id, field_id: field.id).first 
+          value.input = field.default_value 
+          value.save
         end
       end
     end

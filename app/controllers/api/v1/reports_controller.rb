@@ -31,12 +31,13 @@ module Api::V1 #:nodoc:
         current_user.reports.find(params[:id])
       end
       @report.populate_values
+      puts 'RELOADING'
+      @report.reload
       @report
     end
 
     def create
       @report = current_user.reports.new(allowed_params)
-      @report.populate_values
       @report.save
       current_user.reports << @report
       render 'show', status: 201

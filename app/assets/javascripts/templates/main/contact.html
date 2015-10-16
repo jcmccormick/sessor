@@ -3,10 +3,8 @@
 </page-menu>
 <div class="paper row">
 	<contact class="col-xs-12">
-		<input type="email" class="form-control imod" placeholder="Email" ng-model="cv.email">
-		<br /><br />
 		<textarea type="text" rows="8" class="form-control imod" placeholder="Message" ng-model="cv.message"></textarea>
-		<a href="javascript:;" class="btn btn-success pull-right h1" ng-click="cv.newContact(cv.email, cv.message)">Submit</a>
+		<a href="javascript:;" class="btn btn-success pull-right h1" ng-click="cv.newContact(user.email, cv.message)">Submit</a>
 		<div class="clearfix"></div>
 	</contact>
 </div>

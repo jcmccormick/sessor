@@ -98,4 +98,97 @@
   </div>
 
   <template-form-directive form="vt.template"></template-form-directive>
+
+  <!-- RIGHT SIDEBAR -->
+  <div id="right-sidebar" ng-if="vt.template.selectedOptions != undefined && vt.template.editing" class="template-options">
+    <div class="col-xs-12">
+
+      <!-- SECTION OPTIONS -->
+      <div ng-if="!report && !vt.template.selectedOptions.fieldtype">
+        <h3>SECTION</h3>
+        <p class="clearfix">
+          <a href="javascript:;" class="btn btn-success" ng-click="vt.template.setSelectedOptions(undefined, vt.template)"><i class="glyphicon glyphicon-ok"></i> &nbsp; Done</a>
+        </p>
+
+        <h4>Name</h4>
+        <input type="text" class="form-control" ng-model="vt.template.sections[vt.template.selectedOptions]">
+
+        <h4>Columns</h4>
+        <p class="btn-group btn-group-justified">
+          <a href="javascript:;" class="btn btn-primary" ng-disabled="vt.template.columns[vt.template.selectedOptions] <= 1" ng-click="vt.template.deleteSectionColumn(vt.template, vt.template.selectedOptions, vt.tempForm)"><i class="glyphicon glyphicon-minus"></i></a>
+          <a href="javascript:;" class="btn btn-default" ng-disabled="true">{{vt.template.columns[vt.template.selectedOptions]}}</a>
+          <a href="javascript:;" class="btn btn-primary" ng-disabled="vt.template.columns[vt.template.selectedOptions] >= 3" ng-click="vt.template.addSectionColumn(vt.template, vt.template.selectedOptions, vt.tempForm)"><i class="glyphicon glyphicon-plus"></i></a>
+        </p>
+
+        <h4>Order</h4>
+        <p class="btn-group btn-group-justified">
+          <a href="javascript:;" class="btn btn-default" ng-click="vt.template.moveSection(vt.template, vt.template.selectedOptions, 'up');vt.tempForm.$dirty=true"><i class="glyphicon glyphicon-arrow-up"></i></a>
+          <a href="javascript:;" class="btn btn-default" ng-click="vt.template.moveSection(vt.template, vt.template.selectedOptions, 'down');vt.tempForm.$dirty=true"><i class="glyphicon glyphicon-arrow-down"></i></a>
+        </p>
+
+        <h4>&nbsp;</h4>
+        <a href="javascript:;" class="save-now pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="vt.template.deleteSection(vt.template, vt.template.selectedOptions, vt.tempForm)">Delete Section</a>
+      </div>
+
+      <!-- FIELD OPTIONS -->
+      <div ng-if="!report && vt.template.selectedOptions.fieldtype">
+        <h3>{{vt.template.selectedOptions.fieldtype | uppercase}}</h3>
+        <a href="javascript:;" class="btn btn-success" ng-click="vt.template.setSelectedOptions(undefined, vt.template)"><i class="glyphicon glyphicon-ok"></i> &nbsp; Done</a>
+
+        <h4>Name</h4>
+        <input type="text" class="form-control" ng-model="vt.template.selectedOptions.name">
+
+        <h4>Default Value</h4>
+        <p class="clearfix">
+          <input ng-if="vt.template.selectedOptions.fieldtype == 'integer'" type="number" class="form-control" ng-model="vt.template.selectedOptions.default_value">
+          <input ng-if="vt.template.selectedOptions.fieldtype == 'date'" type="date" class="form-control" ng-model="vt.template.selectedOptions.default_value">
+          <input ng-if="vt.template.selectedOptions.fieldtype == 'time'" type="time" class="form-control" ng-model="vt.template.selectedOptions.default_value">
+          <input ng-show="['checkbox','labelntext','textarea','date','time','integer'].indexOf(vt.template.selectedOptions.fieldtype) == -1" type="text" class="form-control" ng-model="vt.template.selectedOptions.default_value">
+          <input ng-show="vt.template.selectedOptions.fieldtype == 'checkbox'" type="checkbox" class="imod" ng-model="vt.template.selectedOptions.default_value">
+          <textarea ng-show="['labelntext','textarea'].indexOf(vt.template.selectedOptions.fieldtype) != -1" class="form-control" ng-model="vt.template.selectedOptions.default_value"></textarea>
+        </p>
+
+        <h4>Column</h4>
+        <p class="btn-group btn-group-justified">
+          <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':$index+1==vt.template.selectedOptions.column_id}" ng-click="vt.template.changeFieldColumn(vt.template, vt.template.selectedOptions, $index+1);vt.tempForm.$dirty=true" ng-repeat="column in columnsArray(vt.template.columns[vt.template.selectedOptions.section_id-1]) track by $index">{{$index+1}}</a>
+        </p>
+
+        <h4>Order</h4>
+        <p class="btn-group btn-group-justified">
+          <a href="javascript:;" class="btn btn-default" ng-click="vt.template.moveField(vt.template, vt.template.selectedOptions, 'up');vt.tempForm.$dirty=true"><i class="glyphicon glyphicon-arrow-up"></i></a>
+          <a href="javascript:;" class="btn btn-default" ng-click="vt.template.moveField(vt.template, vt.template.selectedOptions, 'down');vt.tempForm.$dirty=true"><i class="glyphicon glyphicon-arrow-down"></i></a>
+        </p>
+
+        <div class="h4" ng-show="vt.template.selectedOptions.fieldtype != 'labelntext'">
+          <h4>Required</h4>
+          <p class="btn-group btn-group-justified" ng-click="vt.template.selectedOptions.required = !vt.template.selectedOptions.required;vt.tempForm.$dirty=true">
+            <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':vt.template.selectedOptions.required}">Yes</a>
+            <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!vt.template.selectedOptions.required}">No</a>
+          </p>
+
+          <h4>Disabled</h4>
+          <p class="btn-group btn-group-justified" ng-click="vt.template.selectedOptions.disabled = !vt.template.selectedOptions.disabled;vt.tempForm.$dirty=true">
+            <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':vt.template.selectedOptions.disabled}">Yes</a>
+            <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!vt.template.selectedOptions.disabled}">No</a>
+          </p>
+        </div>
+
+        <div ng-if="vt.template.selectedOptions.fieldtype == 'dropdown' || vt.template.selectedOptions.fieldtype == 'radio'">
+          <h4>Options <small><a href="javascript:;" ng-click="vt.template.addOption(vt.template.selectedOptions);vt.tempForm.$dirty=true">Add New</a></small></h4>
+          <div class="input-group" ng-repeat="option in vt.template.selectedOptions.options track by $index">
+            <input type="text" class="form-control" ng-model="vt.template.selectedOptions.options[$index]">
+            <span class="input-group-btn">
+              <a href="javascript:;" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this option?<br><br>It will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vt.template.deleteOption(vt.template.selectedOptions, option, vt.template, vt.tempForm)">
+                <i class="glyphicon glyphicon-remove"></i>
+              </a>
+            </span>
+          </div>
+        </div>
+        <h4>&nbsp;</h4>
+        <a href="javascript:;" class="save-now pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this field?<br><br>It will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vt.template.deleteField(vt.template, vt.template.selectedOptions, vt.tempForm)">Delete Field</a>
+      </div>
+
+    </div>
+  </div>
+
 </div>
