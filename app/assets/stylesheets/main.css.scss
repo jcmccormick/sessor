@@ -256,30 +256,10 @@ blockquote {
 }
 
 /*
- * Reports
- */
-
-.add-template-list {
-
-  .add-template-list-section {
-    display: none;
-    z-index: 20;
-    position: fixed;
-  }
-
-  &:hover {
-    .add-template-list-section {
-      display: block;
-    }
-  }
-}
-
-/*
- * Page Design
+ * Page Editing Options Style
  */
 
 .template-options {
-  color: #aaa;
   background-color: #f5f5f5;
   position: fixed;
   top: 50px;
@@ -296,29 +276,41 @@ blockquote {
   }
 
   textarea {
-    margin: 2px;
     resize: vertical;
   }
 
-  .nav {
-    padding: 15px;
+  .options-header {
+    cursor: pointer;
 
-    input,
-    textarea {
-      margin: 0;
+    i {
+      -webkit-transition-duration: .3s;
+      -moz-transition-duration: .3s;
+      -o-transition-duration: .3s;
+      transition-duration: .3s;
+
+      -webkit-transition-property: -webkit-transform;
+      -moz-transition-property: -moz-transform;
+      -o-transition-property: -o-transform;
+      transition-property: transform;
     }
 
-    @include respond(tablet) {
-      padding: 0;
+    &.active {
+      i {
+        -webkit-transform:rotate(-90deg);
+        -moz-transform:rotate(-90deg);
+        -o-transform:rotate(-90deg);
+        transform:rotate(-90deg);
+      }
+    }
+
+    .close {
+      font-size: 18px;
+      margin-top: 5px;
     }
   }
 
   .input-group {
-    padding: 5px 0;
-
-    a.btn {
-      margin: 0;
-    }
+    padding: 0 0 5px 0;
   }
 }
 
@@ -352,9 +344,7 @@ blockquote {
   }
 }
 
-  
 template-field-directive {
-
   word-wrap: break-word !important;
 
   h3 {
@@ -493,6 +483,7 @@ input.imod {
  */
 
 .landing-page {
+  position: absolute;
   background-color: white;
 
   .brand-bar {
@@ -607,10 +598,4 @@ input.imod {
       }
     }
   }
-}
-
-/* Login */
-
-span.landing-page {
-    position: absolute;
 }

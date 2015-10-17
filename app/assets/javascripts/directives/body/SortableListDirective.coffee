@@ -42,6 +42,6 @@ directives.directive( 'sortableList', [->
         )
         return
       axis: 'y'
-      handle: '.panel-title'
+      handle: '.form-group'
     return
 ])
