@@ -1,5 +1,4 @@
 <div ng-form="myForm" class="form">
-  
   <div ng-class="{'paper-width':form.selectedOptions != undefined && form.editing}">
 
     <div ng-if="form.hideName==false && !report" class="paper row">
@@ -27,7 +26,6 @@
       </div>
 
       <div class="col-xs-12 section-row" ng-repeat="(section_id, section_name) in form.sections track by $index">
-
         <h2 ng-class="{'no-highlight':!form.editing,'force-hover':form.selectedOptions == section_id}" ng-click="form.selectedOptions=section_id" scroll-to=".force-hover" template="form">
           {{section_name}}
           <span ng-if="!section_name">
@@ -50,11 +48,8 @@
             Add field to {{section_name}}<span ng-if="!section_name">this section</span>
           </a>
         </p>
-
       </div>
-
     </div>
 
   </div>
-
 </div>

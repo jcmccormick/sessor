@@ -6,11 +6,12 @@ directives.directive('newsletter', [()->
       
       nv = this
 
-      nv.newSubscribe = (email)->
-      	$http.post('/newsletters', {email: email}).then((res)->
-      		Flash.create('success', '<p>Thanks for signing up! We\'ll keep you up-to-date on all our developments.</p>', 'customAlert')
-      		nv.email = undefined
-      	)
+      nv.newSubscribe = (email, form)->
+        $http.post('/newsletters', {email: email}).then((res)->
+          Flash.create('success', '<p>Thanks for signing up! We\'ll keep you up-to-date on all our developments.</p>', 'customAlert')
+          nv.email = undefined
+          form.$setUntouched()
+        )
 
       return nv
 

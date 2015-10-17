@@ -120,12 +120,14 @@
       </div>
 
       <newsletter id="newsletter" class="newsletter container-fluid text-center">
-        <h1>Get the news, only when we've got it</h1>
-        <div class="input-group">
-          <input type="email" name="email" class="form-control imod" placeholder="Email" ng-model="nv.email">
-          <span class="input-group-btn">
-            <a href="javascript:;" class="btn" ng-click="nv.newSubscribe(nv.email)">Submit</a>
-          </span>
+        <div ng-form="newsForm">
+          <h1>Get the news, only when we've got it</h1>
+          <div class="input-group">
+            <input type="email" name="email" class="form-control imod" placeholder="Email" ng-model="nv.email" required="required">
+            <span class="input-group-btn">
+              <a href="javascript:;" class="btn" ng-click="nv.newSubscribe(nv.email, newsForm)" ng-disabled="!newsForm.$valid">Submit</a>
+            </span>
+          </div>
         </div>
       </newsletter>
 
@@ -151,10 +153,12 @@
                     <h3>Get combined and individual stats for the members in your group.</h3></blockquote>
           </div>
           <contact ng-show="landing.extra=='contact'" id="contact">
-            <input type="email" name="email" class="form-control imod" placeholder="Email" ng-model="cv.email">
+            <form name="contForm">
+            <input type="email" name="email" class="form-control imod" placeholder="Email" ng-model="cv.email" required="required">
             <br /><br />
-            <textarea type="text" rows="6" class="form-control imod" placeholder="Message" ng-model="cv.message"></textarea>
-            <a href="javascript:;" class="btn btn-success pull-right h1" ng-click="cv.newContact(cv.email, cv.message)">Submit</a>
+            <textarea type="text" rows="6" class="form-control imod" placeholder="Message" ng-model="cv.message" required="required"></textarea>
+            <a href="javascript:;" class="btn btn-success pull-right h1" ng-click="cv.newContact(cv.email, cv.message)" ng-disabled="!contForm.$valid">Submit</a>
+          </form>
           </contact>
           <div ng-show="landing.extra=='development'" id="development">
             <h3>We're currently under development and looking to begin open individual-use testing in Spring 2016.</h3>
