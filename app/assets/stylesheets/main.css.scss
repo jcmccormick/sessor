@@ -473,7 +473,8 @@ input.imod {
     box-shadow: none;
   }
 
-  &.ng-invalid-required.ng-touched {
+  &.ng-invalid-email:not(:focus),
+  &.ng-invalid-required.ng-touched:not(:focus) {
     border-color: #FF9D9D;
   }
 }
@@ -519,7 +520,8 @@ input.imod {
     padding: 120px 20px;
 
     h1 {
-      font-size: 24px;
+      font-size: 28px;
+      margin-right: 25px;
     }
 
     @include respond(mobile) {

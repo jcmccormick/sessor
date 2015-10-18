@@ -53,6 +53,5 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$cacheFactor
   $(document).on 'click.nav li', '.navbar-collapse.in', (e) ->
     if $(e.target).is('a')
       $(this).removeClass('in').addClass 'collapse'
-
   
 ])

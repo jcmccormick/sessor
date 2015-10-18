@@ -2,6 +2,7 @@ controllers = angular.module('controllers')
 controllers.controller('EditTemplateController', ['$routeParams',  'TemplatesService',
 ($routeParams, TemplatesService)->
 
+
 	vt = this
 
 	if $routeParams.templateId
@@ -10,7 +11,7 @@ controllers.controller('EditTemplateController', ['$routeParams',  'TemplatesSer
 		)
 	else
 		vt.template = TemplatesService.newTemplate()
-
+	
 	return vt
 
 ])

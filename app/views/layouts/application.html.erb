@@ -46,7 +46,7 @@
             <input type="email" name="email" placeholder="Email" class="form-control imod" ng-model="forgForm.email" required="required">
               
             <a href="javascript:;" class="close pull-left h1" ng-click="landing.forg=false">Close </a>
-            <a href="javascript:;" class="btn btn-primary pull-right h1" ng-click="subForg()" ng-disabled="!forgotForm.$valid">Submit<loading></loading></a>
+            <a href="javascript:;" class="btn btn-primary pull-right h1" ng-click="subForg()" ng-disabled="!forgotForm.$valid">Submit</a>
           </form>
 
           <form name="registerForm" ng-if="landing.reg">
@@ -55,17 +55,12 @@
             </div>
 
             <div class="form-group">
-              <input type="text" class="form-control imod" placeholder="Nickname" ng-model="regForm.nickname" required="required">
+              <input type="text" class="form-control imod" name="nickname" placeholder="Nickname" ng-model="regForm.nickname" required="required">
             </div>
 
             <div class="form-group">
               <input type="password" class="form-control imod" name="password" placeholder="Password" ng-model="regForm.password" required="required">
-              <ul class="h4">
-                <li>must be at least 8 characters</li>
-                <li>must contain 1 letter</li>
-                <li>must contain 1 number</li>
-                <li>may contain: !@#$%^&amp;*()_+</li>
-              </ul>
+              <h4>8 characters, 1 letter, 1 number, A-Z 0-9 !@#$%^&amp;*()_+ are allowed</h4>
             </div>
 
             <div class="form-group">
@@ -142,22 +137,26 @@
             <h3>Clerkr offers services for individuals and more for businesses.</h3>
             <br />
             <h1>For individuals...</h1>
-            <blockquote><h3>Keep track of hobbies, sports, exercise, research, anything you can think of.</h3>
-                    <h3>Use your pages for surveys.</h3>
-                    <h3>Create interactive and visually-appealing graphs; print, save, and export your data views.</h3></blockquote>
-            <br />
+            <blockquote>
+              <h3>Keep track of hobbies, sports, exercise, research, anything you can think of.</h3>
+              <h3>Use your pages for surveys.</h3>
+              <h3>Create interactive and visually-appealing graphs; print, save, and export your data views.</h3>
+            </blockquote>
+            <hr />
             <h1>For businesses...</h1>
-            <blockquote><h3>Schedule employees and keep track of their time online.</h3>
-                    <h3>Use pages on your site and for online or kiosk-based customer submissions.</h3>
-                    <h3>Interact with customers in online appointments.</h3>
-                    <h3>Get combined and individual stats for the members in your group.</h3></blockquote>
+            <blockquote>
+              <h3>Schedule employees and keep track of their time online.</h3>
+              <h3>Use pages on your site and for online or kiosk-based customer submissions.</h3>
+              <h3>Interact with customers in online appointments.</h3>
+              <h3>Get combined and individual stats for the members in your group.</h3>
+            </blockquote>
           </div>
           <contact ng-show="landing.extra=='contact'" id="contact">
             <form name="contForm">
             <input type="email" name="email" class="form-control imod" placeholder="Email" ng-model="cv.email" required="required">
             <br /><br />
             <textarea type="text" rows="6" class="form-control imod" placeholder="Message" ng-model="cv.message" required="required"></textarea>
-            <a href="javascript:;" class="btn btn-success pull-right h1" ng-click="cv.newContact(cv.email, cv.message)" ng-disabled="!contForm.$valid">Submit</a>
+            <a href="javascript:;" class="btn btn-success pull-right h1" ng-click="cv.newContact(cv.email, cv.message, contForm)" ng-disabled="!contForm.$valid">Submit</a>
           </form>
           </contact>
           <div ng-show="landing.extra=='development'" id="development">
@@ -170,6 +169,7 @@
       <h4 id="copyright" class="text-center col-xs-12">&copy; Clerkr 2015</h4>
     </span>
     <%= yield %>
+    <loading></loading>
     <div flash-message="7500"></div>
   </body>
 

@@ -42,7 +42,7 @@
     </li>
   </page-menu>
 
-  <div ng-if="vt.template.id" ng-class="{'paper-width':vt.template.selectedOptions != undefined}" id="page_additions">
+  <div ng-show="vt.template.id" ng-class="{'paper-width':vt.template.selectedOptions != undefined}" id="page_additions">
     <!-- BEGIN NEW SECTION ADD -->
     <div ng-if="vt.template.newSectionAdd==true || !vt.template.sections.length" class="paper row">
       <div class="col-xs-12">
@@ -63,7 +63,7 @@
     <!-- END NEW SECTION ADD -->
 
     <!-- BEGIN NEW FIELD ADD -->
-    <div ng-if="vt.template.newFieldAdd" class="paper row">
+    <div ng-show="vt.template.newFieldAdd" class="paper row">
       <div class="col-xs-12">
         <button type="button" class="close" ng-click="vt.template.newFieldAdd=false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h3>Add {{vt.template.newFieldType.value}}</h3>
@@ -175,7 +175,7 @@
         <!-- FIELD LAYOUT -->
         <div ng-if="vt.template.selectedOptions.fieldtype">
           <h4>Section</h4>
-          <select class="form-control" ng-options="section_id*1+1 as section_name for (section_id, section_name) in vt.template.sections" ng-model="vt.template.selectedOptions.section_id" ng-change="vt.template.changeFieldSection(vt.template, vt.template.selectedOptions, '{{vt.template.selectedOptions.section_id}}')"></select>
+          <select class="form-control" ng-options="section_id*1+1 as section_name for (section_id, section_name) in vt.template.sections" ng-model="vt.template.selectedOptions.section_id" ng-change="vt.template.changeFieldSection(vt.template, vt.template.selectedOptions, '{{vt.template.selectedOptions.section_id}}')" scroll-to=".force-hover" template="vt.template"></select>
 
           <h4>Column</h4>
           <p class="btn-group btn-group-justified">

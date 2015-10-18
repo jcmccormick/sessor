@@ -12,10 +12,9 @@ directives.directive('scrollTo', [ ->
             element.on 'click', ()->
                 setTimeout (()->
                     $('html, body').animate({scrollTop: $(scope.scrollTo).offset().top-length }, "slow", ()->
-                        if !scope.bypass
-                            $('.page_addition').focus()
+                        !scope.bypass && $('.page_addition').focus()
                     )
-                ), 250
+                ), 25
 
   }
 ])

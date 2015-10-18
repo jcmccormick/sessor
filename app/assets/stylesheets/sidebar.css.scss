@@ -54,7 +54,7 @@
         }
     }
     .navbar-fixed-top {
-        padding: 0 70px;
+        padding: 0 85px;
     }
 }
 
@@ -152,7 +152,7 @@
     box-shadow: 0 6px 12px rgba(0,0,0,.175);
 
     &.bump-left {
-        left: -50px !important;
+        left: -40px !important;
     }
 
     li>span {
@@ -178,22 +178,23 @@ loading {
     div {
         position: fixed;
         top: 0;
-        left: 0;
         bottom: 0;
+        left: 0;
         right: 0;
+        z-index: 1050;
+        padding: 25px;
+        font-size: 24px;
+        text-align: center;
 
-        div {
-            height: 100%;
-            background-color: rgba(0,0,0,.3);
-            z-index: 1050;
+        span {
+            padding: 5px;
+            background-color: #FAEBCC;
+            border: 1px solid #8A6D3B;
 
             i {
-                top: 50% !important;
-                left: 50%;
-                font-size: 44px;
-                color: white;
                 -moz-animation:.6s rotateRight infinite linear; 
                 -webkit-animation:.6s rotateRight infinite linear; 
+
             }
         }
     }

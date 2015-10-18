@@ -1,7 +1,7 @@
 directives = angular.module('directives')
 directives.directive('loading', [()->
   {
-    template: '<div ng-if="lv.loading"><div><i class="glyphicon glyphicon-refresh"></i></div></div>'
+    template: '<div ng-if="lv.loading"><span>Processing... <i class="glyphicon glyphicon-refresh"></i></span></div>'
     scope: false
     controllerAs: 'lv'
     controller: ['$rootScope', ($rootScope)->
