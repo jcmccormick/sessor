@@ -142,8 +142,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 		# delete section column
 		deleteSectionColumn: (template, section_id, tempForm)->
 			for field in template.fields
-				if field.section_id == section_id+1 && field.column_id == template.columns[section_id]
-					prevent = true
+				field.section_id == section_id+1 && field.column_id == template.columns[section_id] && prevent = true
 
 			if prevent
 				Flash.create('danger', '<p>Please move any fields out of the last column.</p>', 'customAlert')

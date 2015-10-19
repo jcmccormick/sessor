@@ -100,7 +100,7 @@
   <template-form-directive form="vt.template"></template-form-directive>
 
   <!-- RIGHT SIDEBAR -->
-  <div id="right-sidebar" ng-if="vt.template.selectedOptions != undefined && vt.template.editing" ng-init="vt.template.optionsDropOut={}" class="template-options">
+  <div id="right-sidebar" class="template-options" ng-if="vt.template.selectedOptions != undefined && vt.template.editing" ng-init="vt.template.optionsDropOut={}">
 
     <div class="col-xs-12" ng-init="vt.template.optionsDropOut.general=true">
       <div class="options-set" ng-class="{'active':vt.template.optionsDropOut.general}">
@@ -136,9 +136,9 @@
               <input ng-if="vt.template.selectedOptions.fieldtype == 'integer'" type="number" class="form-control" ng-model="vt.template.selectedOptions.default_value">
               <input ng-if="vt.template.selectedOptions.fieldtype == 'date'" type="date" class="form-control" ng-model="vt.template.selectedOptions.default_value">
               <input ng-if="vt.template.selectedOptions.fieldtype == 'time'" type="time" class="form-control" ng-model="vt.template.selectedOptions.default_value">
-              <input ng-show="['checkbox','labelntext','textarea','date','time','integer'].indexOf(vt.template.selectedOptions.fieldtype) == -1" type="text" class="form-control" ng-model="vt.template.selectedOptions.default_value">
-              <input ng-show="vt.template.selectedOptions.fieldtype == 'checkbox'" type="checkbox" class="imod" ng-model="vt.template.selectedOptions.default_value">
-              <textarea ng-show="['labelntext','textarea'].indexOf(vt.template.selectedOptions.fieldtype) != -1" class="form-control" ng-model="vt.template.selectedOptions.default_value"></textarea>
+              <input ng-if="['checkbox','labelntext','textarea','date','time','integer'].indexOf(vt.template.selectedOptions.fieldtype) == -1" type="text" class="form-control" ng-model="vt.template.selectedOptions.default_value">
+              <input ng-if="vt.template.selectedOptions.fieldtype == 'checkbox'" type="checkbox" class="imod" ng-model="vt.template.selectedOptions.default_value">
+              <textarea ng-if="['labelntext','textarea'].indexOf(vt.template.selectedOptions.fieldtype) != -1" class="form-control" ng-model="vt.template.selectedOptions.default_value"></textarea>
             </p>
 
             <div ng-show="vt.template.selectedOptions.fieldtype != 'labelntext'">
@@ -155,7 +155,6 @@
               </div>
             </div>
           </div>
-          <hr />
         </div>
       </div>
       <div class="options-set" ng-class="{'active':vt.template.optionsDropOut.layout}">
@@ -196,7 +195,6 @@
               <a href="javascript:;" class="btn btn-default" ng-click="vt.template.moveField(vt.template, vt.template.selectedOptions, 'down');vt.tempForm.$dirty=true" scroll-to=".force-hover" template="vt.template"><i class="glyphicon glyphicon-arrow-down"></i></a>
             </p>
           </div>
-          <hr />
         </div>
       </div>
 
@@ -215,7 +213,6 @@
               </a>
             </span>
           </div>
-          <hr />
         </div>
       </div>
       <h4>&nbsp;</h4>

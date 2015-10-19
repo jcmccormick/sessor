@@ -325,6 +325,13 @@ blockquote {
     }
   }
 
+  input,
+  textarea {
+    &.ng-leave {
+      display: none;
+    }
+  }
+
   .input-group {
     padding: 0 0 5px 0;
   }
@@ -506,27 +513,22 @@ input.imod {
   .brand-bar {
     display: inline-block;
 
-    .h1 {
-      margin-top: 0;
-    }
-
-    h1 {
-      margin-top: 20px;
-    }
-
-    .h4 {
-      margin: 0;
-    }
-
-    @include respond(desktop) {
-      .h1,
-      h1 {
-        margin-top: 25px !important;
+    .clerkr-c {
+      img {
+        width: 50px;
+        margin-top: -10px;
       }
-      .h4 {
-        margin-top: 18px;
-        margin-bottom: 0;
+      span {
+        font-size: 24px;
+
+        @include respond(tablet) {
+          font-size: 32px;
+        }
       }
+    }
+    
+    .col-xs-8 {
+      padding: 0;
     }
   }
 

@@ -80,7 +80,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
       else if cur_field == 'date' || cur_field == 'time'
         cur_value = if cur_value != '1970-01-01T00:00:00.000Z' then new Date(cur_value) else ''
       else if cur_field == 'checkbox'
-        cur_value = cur_value == 't' ? 1 : 0
+        cur_value = if cur_value == 't' then 1 else 0 
 
     # Reattach parsed value
     !scope.report && scope.field.default_value = cur_value
