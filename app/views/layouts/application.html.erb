@@ -18,11 +18,11 @@
   <body>
     <span class="landing-page" ng-init="landing={}" ng-if="false || !user.id">
       <form role="form" class="brand-bar" ng-init="loginForm = {}">
-        <h1 class="col-xs-4 col-md-2 col-md-offset-1 clerkr-c"><img src="<%= image_url('2.png') %>" /><span>lerkr</span></h1>
-        <div class="h1 col-xs-8 col-md-4">
+        <h1 class="col-xs-5 col-md-2 col-md-offset-1 clerkr-c"><img src="<%= image_url('2.png') %>" /><span>lerkr</span></h1>
+        <div class="h1 col-xs-7 col-md-4">
           <a href="javascript:;" class="btn" ng-click="landing.extra='about'" scroll-to="#about" bypass="true">About</a>
-          <a href="javascript:;" class="btn" ng-click="landing.extra='development'" scroll-to="#development" bypass="true">Development</a>
           <a href="javascript:;" class="btn" ng-click="landing.extra='contact'" scroll-to="#contact" bypass="true">Contact</a>
+          <a href="javascript:;" class="btn" ng-click="landing.extra='development'" scroll-to="#development" bypass="true">Development</a>
         </div>
         <div class="h4 col-xs-12 col-md-4" bs-popover>
           <div class="input-group">
@@ -55,16 +55,16 @@
             </div>
 
             <div class="form-group">
-              <input type="text" class="form-control imod" name="nickname" placeholder="Nickname" ng-model="regForm.nickname" required="required">
+              <input type="text" class="form-control imod" placeholder="Nickname" ng-model="regForm.nickname" required="required">
             </div>
 
             <div class="form-group">
-              <input type="password" class="form-control imod" name="password" placeholder="Password" ng-model="regForm.password" required="required">
-              <h4>8 characters, 1 letter, 1 number, A-Z 0-9 !@#$%^&amp;*()_+ are allowed</h4>
+              <input type="password" class="form-control imod" placeholder="Password" ng-model="regForm.password" required="required">
+              <h4>&nbsp; minimum <b>8 characters</b>, at least <b>1 letter</b>, at least <b>1 number</b>, may contain <b>!@#$%^&amp;*()_+</b></h4>
             </div>
 
             <div class="form-group">
-              <input type="password" class="form-control imod" name="password_confirmation" placeholder="Confirm Password" ng-model="regForm.password_confirmation" required="required">
+              <input type="password" class="form-control imod" placeholder="Confirm Password" ng-model="regForm.password_confirmation" required="required">
             </div>
 
             <a href="javascript:;" class="close pull-left h1" ng-click="landing.reg=false">Close</a>
@@ -129,8 +129,8 @@
       <div class="officials">
         <div class="text-center">
           <a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='about'}" ng-click="landing.extra='about'" scroll-to="#about" bypass="true">About</a>
-          <a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='development'}" ng-click="landing.extra='development'" scroll-to="#development" bypass="true">Development</a>
           <a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='contact'}" ng-click="landing.extra='contact'" scroll-to="#contact" bypass="true">Contact</a>
+          <a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='development'}" ng-click="landing.extra='development'" scroll-to="#development" bypass="true">Development</a>
         </div>
         <div ng-show="landing.extra" class="extras col-xs-12 col-md-6 col-md-offset-3">
           <div ng-show="landing.extra=='about'" id="about" class="h3">
@@ -142,7 +142,6 @@
               <h3>Use your pages for surveys.</h3>
               <h3>Create interactive and visually-appealing graphs; print, save, and export your data views.</h3>
             </blockquote>
-            <hr />
             <h1>For businesses...</h1>
             <blockquote>
               <h3>Schedule employees and keep track of their time online.</h3>
