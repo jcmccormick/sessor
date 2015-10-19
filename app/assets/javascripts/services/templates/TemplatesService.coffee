@@ -20,6 +20,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 		count = $.grep template.fields, (i)->
 			if section_id == i.section_id
 				column_id == i.column_id
+		console.log count
 		return count.length+1
 
 	{
@@ -203,15 +204,18 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 		# add field
 		addField: (template, section_id, column_id, type, name, tempForm)->
 			field = new ClassFactory()
+			template.fields.push field
 			field.name = name
 			field.template_id = template.id
-			field.section_id = section_id
+			field.column_order = newFieldOrdering(template, section_id, column_id)
 			field.column_id = column_id
+			field.section_id = section_id
 			field.fieldtype = type.name
 			field.glyphicon = type.glyphicon
-			field.column_order = newFieldOrdering(template, section_id, column_id)
+			field.default_value = ''
 			field.$save({class: 'fields'}, (res)->
-				template.fields.push res
+				console.log res
+				#$.extend field, res
 				tempForm.$setPristine()
 				Flash.create('success', '<p>'+field.name+' successfully added to '+template.name+': '+template.sections[section_id-1]+'.</p>', 'customAlert')
 				template.selectedOptions = res

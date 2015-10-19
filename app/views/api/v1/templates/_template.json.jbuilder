@@ -8,6 +8,7 @@ json.fields template.fields do |field|
 	json.column_id field.column_id
 	json.column_order field.column_order
 	json.fieldtype field.fieldtype
+	json.glyphicon field.glyphicon
 	json.required field.required
 	json.disabled field.disabled
 	json.default_value field.default_value

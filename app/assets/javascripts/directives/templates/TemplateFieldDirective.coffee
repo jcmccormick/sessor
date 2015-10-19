@@ -26,7 +26,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     
     fwmid = '<h3 for="{{field.name}}" ng-if="field.name">{{field.name}}</h3>'
 
-    fwend = '<div class="field-overlay" ng-class="{\'force-hover\':template.selectedOptions.id == field.id}" ng-if="template.editing"></div>
+    fwend = '<div class="field-overlay" ng-class="{\'force-hover\':template.selectedOptions.id == field.id}" ng-if="template.editing"><i class="glyphicon {{field.glyphicon}}"></i></div>
            </div>'
 
     fw = fwstart
