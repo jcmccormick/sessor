@@ -18,9 +18,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 
 	newFieldOrdering = (template, section_id, column_id)->
 		count = $.grep template.fields, (i)->
-			if section_id == i.section_id
-				column_id == i.column_id
-		console.log count
+			section_id == i.section_id && column_id == i.column_id
 		return count.length+1
 
 	{
@@ -214,8 +212,6 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			field.glyphicon = type.glyphicon
 			field.default_value = ''
 			field.$save({class: 'fields'}, (res)->
-				console.log res
-				#$.extend field, res
 				tempForm.$setPristine()
 				Flash.create('success', '<p>'+field.name+' successfully added to '+template.name+': '+template.sections[section_id-1]+'.</p>', 'customAlert')
 				template.selectedOptions = res
@@ -311,61 +307,16 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 		]
 
 		addFieldTypes: [
-			{
-				name: 'labelntext'
-				value: 'Label and Text'
-				glyphicon: 'glyphicon-text-size'
-			}
-			{
-				name: 'textfield'
-				value: 'Text Line'
-				glyphicon: 'glyphicon-font'
-			}
-			{
-				name: 'textarea'
-				value: 'Text Area'
-				glyphicon: 'glyphicon-comment'
-			}
-			{
-				name: 'email'
-				value: 'E-mail'
-				glyphicon: 'glyphicon-envelope'
-			}
-			{
-				name: 'integer'
-				value: 'Integer'
-				glyphicon: 'glyphicon-th'
-			}
-			{
-				name: 'date'
-				value: 'Date'
-				glyphicon: 'glyphicon-calendar'
-			}
-			{
-				name: 'time'
-				value: 'Time'
-				glyphicon: 'glyphicon-time'
-			}
-			{
-				name: 'checkbox'
-				value: 'Checkbox'
-				glyphicon: 'glyphicon-check'
-			}
-			{
-				name: 'radio'
-				value: 'Radio'
-				glyphicon: 'glyphicon-record'
-			}
-			{
-				name: 'dropdown'
-				value: 'Dropdown'
-				glyphicon: 'glyphicon-list'
-			}
-			# {
-			#   name: 'masked'
-			#   value: 'Masked'
-			#   glyphicon: 'glyphicon-lock'
-			# }
+			{name:'labelntext',value:'Label and Text',glyphicon:'glyphicon-text-size'}
+			{name:'textfield',value:'Text Line',glyphicon:'glyphicon-font'}
+			{name:'textarea',value:'Text Area',glyphicon:'glyphicon-comment'}
+			{name:'email',value:'E-mail',glyphicon:'glyphicon-envelope'}
+			{name:'integer',value:'Integer',glyphicon:'glyphicon-th'}
+			{name:'date',value:'Date',glyphicon:'glyphicon-calendar'}
+			{name:'time',value:'Time',glyphicon:'glyphicon-time'}
+			{name:'checkbox',value:'Checkbox',glyphicon:'glyphicon-check'}
+			{name:'radio',value:'Radio',glyphicon:'glyphicon-record'}
+			{name:'dropdown',value:'Dropdown',glyphicon:'glyphicon-list'}
 		]
 	}
 ])
