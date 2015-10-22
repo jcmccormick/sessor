@@ -121,7 +121,11 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 		deleteSectionColumn: (template, section_id, tempForm)->
 			for field in template.fields
 				field.section_id == section_id+1 && field.column_id == template.columns[section_id] && prevent = true
-			(prevent && Flash.create('danger', '<p>Please move any fields out of the last column.</p>', 'customAlert')) || template.columns[section_id]--
+			if prevent 
+				Flash.create('danger', '<p>Please move any fields out of the last column.</p>', 'customAlert')
+			else
+				template.columns[section_id]--
+				tempForm.$dirty = true
 			return
 
 		# delete section
@@ -170,6 +174,8 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 						else if field.section_id == index+2
 							field.section_id--
 				template.selectedOptions = directed_index
+			else
+				template.selectedOptions = index
 			return
 
 		# add field

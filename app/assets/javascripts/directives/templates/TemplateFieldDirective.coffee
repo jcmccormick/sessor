@@ -49,7 +49,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 
     # Define the particulars of each supported field
     labelntext = '<p>
-                   <span>{{(!field.value.input && !field.default_value && template.editing && "Add text, or leave blank...") || (!field.value.input && !field.default_value && !template.editing && "&nbsp;") || ""}}</span>
+                   <span>{{(!field.value.input && !field.default_value && template.editing && "Add text, or leave blank...") || null}}</span>
                    <blockquote ng-if="field.value.input || field.default_value">{{field.value.input || field.default_value}}</blockquote>
                   </p>'
 
