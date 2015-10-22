@@ -1,5 +1,5 @@
 == TODO
-* Contact/Support
+* Support
 * Groups
 * Timekeeping
 * Scheduling
@@ -11,6 +11,7 @@
 * Field Other ng-show/hide
 * Different Imod (input/page designer) styles selectable by user
 * Test mode! First fill-out is testing key, checks subsequent entries and scores.
+* Fields or their data sets can be shared with groups or individuals.
 
 == BUGS
 * Unnamed sections

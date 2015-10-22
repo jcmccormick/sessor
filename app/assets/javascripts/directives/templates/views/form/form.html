@@ -1,5 +1,5 @@
 <div ng-form="myForm" class="form">
-  <div ng-class="{'paper-width':form.selectedOptions != undefined && form.editing}">
+  <div>
 
     <div ng-if="form.hideName==false && !report" class="paper row">
       <div class="col-xs-12">
@@ -16,6 +16,7 @@
 
     <div ng-show="form.sections" class="paper row">
       <h4 class="col-xs-12">
+
         <small ng-show="form.draft"><b>Draft</b></small>
         &nbsp;
         <a href="javascript:;" ng-show="report.editing" class="text-danger close pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="report.removeTemplate(form, report)">&times;</a>
@@ -28,49 +29,109 @@
 
       <div class="col-xs-12">
         <h4 ng-if="form.editing">
-          <a href="javascript:;" ng-click="form.addSection(form)" scroll-to=".force-hover" template="form">
+          <a href="javascript:;" class="btn" ng-click="form.addSection(form, form.newSectionName, myForm.$$parentForm)" scroll-to=".force-hover" template="form">
             <i class="glyphicon glyphicon-plus-sign"></i> Add Section
           </a>
+          <input type="text" class="form-control" placeholder="Name" ng-model="form.newSectionName">
         </h4>
         <h4 ng-if="!form.editing">&nbsp;</h4>
       </div>
 
-      <div class="col-xs-12 section-row" ng-repeat="(section_id, section_name) in form.sections track by $index" ng-class="{'stay-open':!form.fields.length || form.selectedOptions.section_id == section_id+1 || form.selectedOptions == section_id}">
+      <div class="section-row col-xs-12" ng-repeat="(section_id, section_name) in form.sections track by $index" ng-class="{'no-highlight':!form.editing, 'stay-open':!form.fields.length || form.selectedOptions.section_id == section_id+1}">
         <div class="col-xs-12">
-          <h2 ng-class="{'no-highlight':!form.editing,'force-hover':form.selectedOptions == section_id}" ng-click="form.selectedOptions=section_id" scroll-to=".force-hover" template="form">
-            {{section_name}}
+          <h2 ng-if="form.selectedOptions != section_id">
+            {{(!form.editing && section_name) || null}}
+            <span ng-if="form.editing" ng-click="form.selectedOptions=section_id">{{section_name}}</span>
             <span ng-if="!section_name">
               <span ng-if="!form.editing">&nbsp;</span>
-              <small><a href="javascript:;" ng-if="form.editing">Add a section name, or leave blank</a></small>
+              <small ng-if="form.editing"><a href="javascript:;">Add a section name, or leave blank</a></small>
             </span>
           </h2>
+          <div class="input-group push-out" ng-if="form.editing && form.selectedOptions==section_id">
+            <span class="input-group-btn">
+              <a href="javascript:;" class="btn btn-default" ng-click="form.selectedOptions=undefined">Done</a>
+            </span>
+            <input type="text" id="form-name" class="form-control imod" ng-model="form.sections[section_id]" />
+          </div>
         </div>
         <div class="col-xs-12">
-          <div class="col-xs-12 section-layout" ng-if="form.editing">
-              <a href="javascript:;" class="btn btn-primary" ng-disabled="form.columns[section_id] <= 1" ng-click="form.deleteSectionColumn(form, section_id, myForm.$$parentForm)"><i class="glyphicon glyphicon-minus"></i></a>
-              <a href="javascript:;" disabled="true">Columns</a>
-              <a href="javascript:;" class="btn btn-primary" ng-disabled="form.columns[section_id] >= 3" ng-click="form.addSectionColumn(form, section_id, myForm.$$parentForm)"><i class="glyphicon glyphicon-plus"></i></a>
-              <a href="javascript:;" class="btn btn-default" ng-click="form.moveSection(form, section_id, 'up');myForm.$$parentForm.$dirty=true" scroll-to=".force-hover" template="form"><i class="glyphicon glyphicon-arrow-up"></i></a>
-              <a href="javascript:;" disabled="true">Order</a>
-              <a href="javascript:;" class="btn btn-default" ng-click="form.moveSection(form, section_id, 'down');myForm.$$parentForm.$dirty=true" scroll-to=".force-hover" template="form"><i class="glyphicon glyphicon-arrow-down"></i></a>
+          <div class="section-layout" ng-if="form.editing">
+            <span class="col-xs-12">
+              <strong>Reorder</strong>
+              <a href="javascript:;" class="btn btn-primary" ng-if="!$first" ng-click="form.moveSection(form, section_id, 'up');myForm.$$parentForm.$dirty=true" scroll-to=".force-hover" template="form"><i class="glyphicon glyphicon-arrow-up"></i></a>
+              <a href="javascript:;" class="btn btn-primary" ng-if="!$last" ng-click="form.moveSection(form, section_id, 'down');myForm.$$parentForm.$dirty=true" scroll-to=".force-hover" template="form"><i class="glyphicon glyphicon-arrow-down"></i></a>
+
+              
+
+              <div class="pull-right">
+                <a href="javascript:;" class="btn btn-primary" ng-if="form.columns[section_id] > 1" ng-click="form.deleteSectionColumn(form, section_id, myForm.$$parentForm)"><i class="glyphicon glyphicon-minus"></i></a>
+                <a href="javascript:;" class="btn btn-primary" ng-if="form.columns[section_id] < 3" ng-click="form.addSectionColumn(form, section_id, myForm.$$parentForm)"><i class="glyphicon glyphicon-plus"></i></a>
+                <strong>Column</strong>
+                <i class="glyphicon glyphicon-chevron-down"></i>
+              </div>
+            </span>
           </div>
         </div>  
         <div class="col-xs-12 column" ng-class="{'col-md-6':form.columns[section_id] == 2, 'col-md-4':form.columns[section_id] == 3}" ng-repeat="column in columnsArray(form.columns[section_id]) track by $index">
 
-          <div ng-click="form.setSelectedOptions(field, form)" ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section_id+1} | orderBy:'column_order'">
-            <template-field-directive myForm="myForm" field="field" template="form" report="report"></template-field-directive>
+          <div ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section_id+1} | orderBy:'column_order'">
+            <template-field-directive ng-click="form.selectedOptions=field" myForm="myForm" field="field" template="form" report="report"></template-field-directive>
+
+            <div class="field-options" ng-if="form.editing" ng-class="{'slide':form.selectedOptions==field,'bump-up':['labelntext','checkbox','radio'].indexOf(field.fieldtype) == -1}">
+              <div class="col-xs-12">
+                <h3 class="col-xs-6 h4"><strong>{{field.fieldtype|uppercase}} OPTIONS</strong></h3>
+                <div class="col-xs-6">
+                  <h4 class="btn-group pull-right">
+                    <a href="javascript:;" class="btn btn-primary" ng-if="field.column_id > 1" ng-click="form.changeFieldColumn(form, field, field.column_id-1);myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-arrow-left"></i></a>
+                    <a href="javascript:;" class="btn btn-primary" ng-if="!$first" ng-click="form.moveField(form, form.selectedOptions, 'up');myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                    <a href="javascript:;" class="btn btn-primary" ng-if="!$last" ng-click="form.moveField(form, form.selectedOptions, 'down');myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                    <a href="javascript:;" class="btn btn-primary" ng-if="field.column_id < form.columns[section_id]" ng-click="form.changeFieldColumn(form, field, field.column_id+1);myForm.$$parentForm.$dirty=true"><i class="glyphicon glyphicon-arrow-right"></i></a>
+                  </h4>
+                </div>
+                <div class="col-xs-12 col-md-3" ng-class="{'col-md-6':form.columns[section_id] == 2, 'col-md-12':form.columns[section_id] == 3}">
+                  <input type="text" class="form-control" placeholder="{{(field.fieldtype == 'labelntext' && 'Label') || 'Name'}}" ng-model="field.name">
+                  <input type="text" class="form-control" placeholder="{{(field.fieldtype == 'labelntext' && 'Text') || 'Default Value'}}" ng-model="field.default_value">
+                </div>
+                <div class="col-xs-12 col-md-3" ng-class="{'col-md-6':form.columns[section_id] == 2, 'col-md-12':form.columns[section_id] == 3}">
+                  <input type="text" class="form-control" placeholder="Placeholder" ng-model="field.placeholder">
+                  <input type="text" class="form-control" placeholder="Tooltip" ng-model="field.tooltip">
+                </div>
+                <div class="col-xs-12 col-md-3" ng-class="{'col-md-6':form.columns[section_id] == 2, 'col-md-12':form.columns[section_id] == 3}">
+                  <div class="btn-group btn-group-justified" ng-click="field.required = !field.required;myForm.$$parentForm.$dirty=true">
+                    <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':field.required}">Required</a>
+                    <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!field.required}">Unrequired</a>
+                  </div>
+                  <div class="btn-group btn-group-justified" ng-click="field.disabled = !field.disabled;myForm.$$parentForm.$dirty=true">
+                    <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':field.disabled}">Disabled</a>
+                    <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!field.disabled}">Enabled</a>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-3" ng-class="{'col-md-6':form.columns[section_id] == 2, 'col-md-12':form.columns[section_id] == 3}">
+                  <select class="form-control" ng-options="section_id*1+1 as section_name for (section_id, section_name) in form.sections" ng-model="field.section_id" ng-change="form.changeFieldSection(form, field, '{{field.section_id}}')"></select>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix" ng-if="form.selectedOptions.id == field.id">
+              <a href="javascript:;" class="close h4" ng-click="form.selectedOptions = undefined">Close</a>
+            </div>
           </div>
 
-          <div class="add-field-slide" ng-if="form.editing">
-            <h4 class="col-xs-12"><strong>New Field</strong> {{section_name || 'Section '+(section_id*1+1)}}, Column {{$index+1}} <small class="pull-right"><i class="glyphicon glyphicon-chevron-up"></i></small></h4>
-            <div class="col-xs-4 text-center h6">
+          <div class="add-field-slide col-xs-12" ng-if="form.editing">
+            <h4 class="col-xs-12">
+              <i class="glyphicon glyphicon-chevron-up"></i> 
+              <strong>New Field</strong> {{section_name || 'Section '+(section_id*1+1)}}, Column {{$index+1}} 
+            </h4>
+            <div class="col-xs-12 col-md-4">
+              <small>OPTIONAL</small>
               <input type="text" class="form-control" placeholder="Name" ng-model="form.newFieldName">
-              <h4>or</h4>
               <input type="text" class="form-control" placeholder="Placeholder" ng-model="form.newFieldPlaceholder">
             </div>
-            <a href="javascript:;" class="btn" ng-repeat="type in form.addFieldTypes" ng-click="form.addField(form, 1*section_id+1, $parent.$index+1, type, form.newFieldName, form.newFieldPlaceholder, myForm.$$parentForm);form.newFieldAdd=false" scroll-to=".force-hover" template="form">
-              <i class="glyphicon {{type.glyphicon}}"></i> {{type.value}}
-            </a>
+            <div class="col-xs-12 col-md-8">
+              <small>TYPE</small>
+              <p><a href="javascript:;" class="btn" ng-repeat="type in form.addFieldTypes" ng-click="form.addField(form, 1*section_id+1, $parent.$index+1, type, form.newFieldName, form.newFieldPlaceholder, myForm.$$parentForm);form.newFieldAdd=false" scroll-to=".force-hover" template="form">
+                              <i class="glyphicon {{type.glyphicon}}"></i> {{type.value}}
+                            </a></p>
+            </div>
           </div>
         </div>
       </div>

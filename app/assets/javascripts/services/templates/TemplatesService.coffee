@@ -32,7 +32,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			return
 
 		# select a field's settings on template editing
-		setSelectedOptions: (optionSet, template)->
+		setSelectedOptions: (template, optionSet)->
 			template.editing && template.selectedOptions = optionSet
 
 		# add create new template object
@@ -104,16 +104,20 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			return
 
 		# add section
-		addSection: (template)->
+		addSection: (template, name, tempForm)->
+
 			id = template.sections.length+1
-			secName = 'Section ' + id
-			template.sections.push(secName)
+			!name && name = 'Section ' + id
+			template.sections.push name
 			template.columns.push 1
-			template.selectedOptions = template.sections.indexOf(secName)
+			template.selectedOptions = template.sections.indexOf(name)
+			tempForm.$dirty = true
+			template.newSectionName = undefined
 			return
 
 		# add section column
-		addSectionColumn: (template, section_id)->
+		addSectionColumn: (template, section_id, tempForm)->
+			tempForm.$dirty = true
 			template.columns[section_id]++
 			return
 

@@ -21,11 +21,13 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
   linker = (scope, element, attrs)->
 
     # Create a container (form-group) for field input box layout
-    fwstart = '<div class="form-group">
-              <span class="required-error" ng-if="field.required && !field.value.input && !field.default_value">*</span>
-              <span class="field-tooltip" ng-if="field.tooltip" bs-popover>
-                <i class="glyphicon glyphicon-question-sign" rel="popover" data-container="body" data-placement="bottom" data-html="false" data-content="{{field.tooltip}}"></i>
-              </span>'
+    fwstart = '<div class="form-group" ng-class="{\'clear-align\':field.fieldtype==\'checkbox\' || field.fieldtype==\'radio\' || field.fieldtype==\'labelntext\'}" scroll-to=".force-hover" template="template">
+                <div class="glyphs">
+                  <span ng-if="field.tooltip" bs-popover>
+                    <i class="glyphicon glyphicon-question-sign" rel="popover" data-container="body" data-placement="bottom" data-html="false" data-content="{{field.tooltip}}"></i>
+                  </span>
+                  <i class="glyphicon glyphicon-asterisk field-required" ng-if="field.required && !field.value.input && !field.default_value"></i>
+                </div>'
     
     fwmid = '<h3>{{field.name}}</h3>'
 
@@ -48,10 +50,12 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 
 
     # Define the particulars of each supported field
-    labelntext = '<p>
-                   <span>{{(!field.value.input && !field.default_value && template.editing && "Add text, or leave blank...") || null}}</span>
-                   <blockquote ng-if="field.value.input || field.default_value">{{field.value.input || field.default_value}}</blockquote>
-                  </p>'
+    labelntext = '<p ng-if="!field.value.input && !field.default_value && template.editing">
+                    Add text here. Use just the label, or text, or both...
+                  </p>
+                  <blockquote ng-if="field.value.input || field.default_value">
+                    {{field.value.input || field.default_value}}
+                  </blockquote>'
 
     textfield = inputstart+' type="text" '+standard
     textarea = '<textarea type="text" '+standard+'</textarea>'
@@ -61,14 +65,17 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     date = inputstart+' type="date" '+standard
     time = inputstart+' type="time" '+standard
 
-    checkbox = inputstart+' type="checkbox" class="form-control imod" '+checkboxmodel+inputend+' '
-    radio = '   <div class="clearfix" ng-repeat="option in field.options track by $index">
+    checkbox = '<div class="clearfix">
+                  '+inputstart+' type="checkbox" class="form-control imod" '+checkboxmodel+inputend+'
+                  <h5>{{field.name}}</h5>
+                </div>'
+    radio = '   <span ng-if="field.options && !field.options.length">
+                  Click to add options...
+                </span>
+                <div class="clearfix" ng-repeat="option in field.options track by $index">
                   '+inputstart+' type="radio" class="form-control imod" ng-value="field.options[$index]" '+ngmodel+inputend+'
                   <h5>{{option}}</h5>
-                </div>
-                <p ng-if="field.options && !field.options.length">
-                  <a>Click to add options...</a>
-                </p>'
+                </div>'
     dropdown = '<select ng-options="option for option in field.options" '+standard+'
                   <option value="">{{field.placeholder || "Select an item..."}}</option>
                 </select>'
@@ -106,7 +113,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
         when "date" then element.html fw+date+fwend
         when "time" then element.html fw+time+fwend
 
-        when "checkbox" then element.html fwstart+checkbox+fwmid+fwend
+        when "checkbox" then element.html fwstart+checkbox+fwend
         when "radio" then element.html fw+radio+fwend
         when "dropdown" then element.html fw+dropdown+fwend
 
