@@ -388,6 +388,10 @@ blockquote {
   .field-options {
     max-height: 0;
 
+    .fieldtype-header {
+      padding: 10px 20px;
+    }
+
     &.slide {
       max-height: 500px;
       padding: 4px 0 12px;
@@ -502,7 +506,6 @@ template-field-directive {
       }
 
     }
-
 
     .field-overlay {
       position: absolute;
