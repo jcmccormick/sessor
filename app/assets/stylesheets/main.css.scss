@@ -271,6 +271,7 @@ blockquote {
 
   textarea {
     resize: vertical;
+    max-height: 300px;
   }
 
   hr {
@@ -365,14 +366,57 @@ blockquote {
       }
     }
   }
+
+  .section-layout {
+    border-radius: 5px 5px 0 0;
+    border-bottom: 5px solid #aaa;
+  }
+
+  .add-field-slide {
+    border-radius: 0 0 5px 5px;
+    border-top: 5px solid #aaa;
+  }
+
+  .section-layout,
+  .add-field-slide {
+    background-color: #ddd;
+    padding: 5px;
+    overflow: hidden;
+    max-height: 500;
+    -webkit-transition: max-height .5s ease;
+    -moz-transition: max-height .5s ease;
+    transition: max-height .5s ease;
+
+  }
+
+  @include respond(desktop) {
+    .section-layout,
+    .add-field-slide {
+      max-height: 0;
+    }
+
+    &:hover {
+      .section-layout,
+      .add-field-slide {
+        max-height: 500px;
+      }
+    }
+  }
+  &.stay-open {
+    .section-layout,
+    .add-field-slide {
+      max-height: 500px;
+    }
+  }
 }
 
 template-field-directive {
   word-wrap: break-word !important;
 
   h3 {
-    font-size: 30px;
+    font-size: 24px;
     margin: 0;
+    margin-bottom: 10px;
     padding-top: 8px;
   }
 
@@ -382,7 +426,8 @@ template-field-directive {
   
   .form-group {
     position: relative;
-    margin: 30px 0;
+    padding-left: 10px;
+    margin: 20px 0;
 
     textarea {
       height: 113px;
@@ -425,10 +470,17 @@ template-field-directive {
 
     .required-error {
       position: absolute;
-      top: 6px;
-      left: -20px;
+      top: -5px;
+      left: -15px;
       color: red;
       font-size: x-large;
+    }
+
+    .field-tooltip {
+      position: absolute;
+      top: 15px;
+      left: -15px;
+      color: grey;
     }
 
     .field-overlay {
@@ -440,11 +492,16 @@ template-field-directive {
 
       i {
         position: absolute;
-        top: -5px;
-        left: -20px;
+        top: 10px;
+        right: 30px;
         font-family: "Glyphicons Halflings";
+        font-size: x-large;
         content: "\e019";
         color: #ddd;
+
+        &.bump-down {
+          top: 30px;
+        }
       }
 
       &:hover,
@@ -478,18 +535,16 @@ input.imod {
     transition: background-color 5000s ease-in-out 0s;
   }
 
-  &[type=checkbox] {
-    margin: 12px 10px 0 0;
-    height: 25px;
-    width: 25px;
+  &[type=checkbox],
+  &[type=radio] {
+    margin: 11px 10px 0 0;
+    height: 26px;
+    width: 26px;
     float: left;
   }
 
-  &[type=radio] {
-    margin: 11px 10px 0 0;
-    height: 25px;
-    width: 25px;
-    float: left;
+  &[type=checkbox] {
+    margin-top: 9px;
   }
 
   &:focus {

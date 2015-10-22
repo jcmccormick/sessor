@@ -3,7 +3,7 @@ module Api::V1 #:nodoc:
 
     def index
       if params.has_key?(:stats)
-        values = current_user.values.where(:field_id => params[:field_id]).as_json(only: [:input, :created_at])
+        values = current_user.values.where(:field_id => params[:field_id]).order(created_at: :desc).as_json(only: [:input, :created_at])
         render json: values
       end
     end

@@ -32,6 +32,7 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 			sv.search = []
 			sv.type = 'PieChart'
 			sv.data = {}
+			sv.options = {is3D:true}
 
 			sv.data.cols = [
 				{id: 't', label: 'Name', type: 'string'}
@@ -47,6 +48,7 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 			return deferred.promise
 
 		listFields: (template, sv)->
+			sv.options.title = template.name+': '
 			sv.template = template
 			deferred = $q.defer()
 			ClassFactory.query({class: 'fields', template_id: template.id, stats: true}, (res)->
@@ -62,8 +64,11 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 			sv.values = []
 
 			ClassFactory.query({class: 'values', field_id: field.id, stats: true}, (res)->
-				stDate = sv.search.startDate || '1988-03-24'
-				enDate = sv.search.endDate || '2030-12-31'
+				console.log res
+				stDate = sv.search.startDate || res[res.length-1].created_at
+				enDate = sv.search.endDate || res[0].created_at
+
+				console.log stDate
 
 				for value in res
 					if value.input? && (new Date(value.created_at) >= new Date(stDate) && new Date(value.created_at) <= new Date(enDate))
@@ -75,16 +80,13 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 				i = 0
 				while i < sv.all_data[0].length
 					sv.data.rows.push {c: [
-						{v:sv.all_data[0][i]+' ('+sv.all_data[1][i]+')'}
+						{v:sv.all_data[0][i]}
 						{v:sv.all_data[1][i]}
 					]}
 					n += sv.all_data[1][i]
 					i++
 
-				sv.options = {
-					title: field.name + ' (n=' + n + ')'
-					is3D: true
-				}
+				sv.options.title += field.name+' (n='+n+')'
 
 				deferred.resolve(sv)
 			)

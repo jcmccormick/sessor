@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
   # Before saving set UID to a Universial Unique ID, and skip e-mail confirmation.
   before_save -> do
     self.uid = SecureRandom.uuid
-    # skip_confirmation!
+    skip_confirmation!
   end
   
   # Include default devise modules.

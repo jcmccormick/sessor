@@ -10,6 +10,7 @@
 * Template tags for public searching
 * Field Other ng-show/hide
 * Different Imod (input/page designer) styles selectable by user
+* Test mode! First fill-out is testing key, checks subsequent entries and scores.
 
 == BUGS
 * Unnamed sections

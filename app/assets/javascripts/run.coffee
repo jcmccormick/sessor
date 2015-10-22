@@ -11,7 +11,7 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$cacheFactor
 
   $rootScope.$on('$routeChangeStart', (evt, next, current)->
     if !$auth.user.id && next.$$route.originalPath == '/'
-      $auth.validateUser().then((res)->
+      !current && $auth.validateUser().then((res)->
         res.id && $location.path('/desktop')
       )
   )

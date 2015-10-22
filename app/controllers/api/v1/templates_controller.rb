@@ -71,7 +71,7 @@ module Api::V1#:nodoc:
           {:sections => []},
           {:columns => []},
           {:fields_attributes => [
-            :id, :name, :fieldtype, :required, :disabled, :glyphicon, :section_id, :column_id, :column_order, :default_value, {:options => []}
+            :id, :name, :placeholder, :tooltip, :fieldtype, :required, :disabled, :glyphicon, :section_id, :column_id, :column_order, :default_value, {:options => []}
           ]}
         )
       end

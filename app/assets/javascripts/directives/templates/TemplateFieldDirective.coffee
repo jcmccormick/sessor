@@ -22,14 +22,17 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 
     # Create a container (form-group) for field input box layout
     fwstart = '<div class="form-group">
-               <span class="required-error" ng-if="field.required && !field.value.input && !field.default_value">*</span>'
+              <span class="required-error" ng-if="field.required && !field.value.input && !field.default_value">*</span>
+              <span class="field-tooltip" ng-if="field.tooltip" bs-popover>
+                <i class="glyphicon glyphicon-question-sign" rel="popover" data-container="body" data-placement="bottom" data-html="false" data-content="{{field.tooltip}}"></i>
+              </span>'
     
-    fwmid = '<h3 for="{{field.name}}" ng-if="field.name">{{field.name}}</h3>'
+    fwmid = '<h3>{{field.name}}</h3>'
 
-    fwend = '<div class="field-overlay" ng-class="{\'force-hover\':template.selectedOptions.id == field.id}" ng-if="template.editing"><i class="glyphicon {{field.glyphicon}}"></i></div>
+    fwend = '<div class="field-overlay" ng-class="{\'force-hover\':template.selectedOptions.id == field.id}" ng-if="template.editing"><i class="glyphicon {{field.glyphicon}}" ng-class="{\'bump-down\':field.fieldtype != \'checkbox\' && !field.name}"></i></div>
            </div>'
 
-    fw = fwstart
+    fw = fwstart+fwmid
 
     # Break apart an <input> tag into common denominators
     inputstart = '<input'
@@ -38,14 +41,17 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     ngmodel = if scope.report then 'ng-model="field.value.input"' else 'ng-model="field.default_value"'
     checkboxmodel = if scope.report then 'ng-model="$parent.field.value.input"' else 'ng-model="$parent.field.default_value"'
 
-    inputend = ' placeholder="{{field.name}}" name="{{field.name}}" ng-required="field.required" ng-disabled="field.disabled">'
+    inputend = ' placeholder="{{field.placeholder}}" name="{{field.name}}" ng-required="field.required" ng-disabled="field.disabled">'
     
     standard = clas+' '+ngmodel+' '+inputend
 
+
+
     # Define the particulars of each supported field
-    labelntext = '<h3>{{field.name}}</h3>
-    <blockquote ng-if="field.value.input || field.default_value">{{field.value.input}}{{field.default_value}}</blockquote>
-    <p ng-if="!field.value.input && !field.default_value"><a href="javascript:;">Click to add text.</a></p>'
+    labelntext = '<p>
+                   <span>{{(!field.value.input && !field.default_value && template.editing && "Add text, or leave blank...") || (!field.value.input && !field.default_value && !template.editing && "&nbsp;") || ""}}</span>
+                   <blockquote ng-if="field.value.input || field.default_value">{{field.value.input || field.default_value}}</blockquote>
+                  </p>'
 
     textfield = inputstart+' type="text" '+standard
     textarea = '<textarea type="text" '+standard+'</textarea>'
@@ -61,10 +67,10 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
                   <h5>{{option}}</h5>
                 </div>
                 <p ng-if="field.options && !field.options.length">
-                  <a>Click to add options.</a>
+                  <a>Click to add options...</a>
                 </p>'
     dropdown = '<select ng-options="option for option in field.options" '+standard+'
-                  <option value="">{{field.name}}</option>
+                  <option value="">{{field.placeholder || "Select an item..."}}</option>
                 </select>'
 
     # masked = inputstart+' type="password" '+standard
@@ -101,7 +107,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
         when "time" then element.html fw+time+fwend
 
         when "checkbox" then element.html fwstart+checkbox+fwmid+fwend
-        when "radio" then element.html fw+fwmid+radio+fwend
+        when "radio" then element.html fw+radio+fwend
         when "dropdown" then element.html fw+dropdown+fwend
 
         # when "masked" then element.html fw+masked+fwend

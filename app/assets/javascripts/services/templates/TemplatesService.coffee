@@ -33,8 +33,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 
 		# select a field's settings on template editing
 		setSelectedOptions: (optionSet, template)->
-			if template.editing
-				template.selectedOptions = optionSet
+			template.editing && template.selectedOptions = optionSet
 
 		# add create new template object
 		newTemplate: ->
@@ -47,29 +46,10 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 		getTemplate: (id)->
 			deferred = $q.defer()
 			template = new ClassFactory()
+			$.extend template, this
 			template.hideName = true
 			template.editing = true
-			template.addFieldTypes = this.addFieldTypes
 			template.newFieldSection = 0
-			template.countColumns = this.countColumns
-			template.setFieldType = this.setFieldType
-			template.setSelectedOptions = this.setSelectedOptions
-			template.saveTemplate = this.saveTemplate
-			template.deleteTemplate = this.deleteTemplate
-			template.addSection = this.addSection
-			template.addSectionColumn = this.addSectionColumn
-			template.deleteSectionColumn = this.deleteSectionColumn
-			template.deleteSection = this.deleteSection
-			template.moveSection = this.moveSection
-			template.addField = this.addField
-			template.deleteField = this.deleteField
-			template.moveField = this.moveField
-			template.changeFieldSection = this.changeFieldSection
-			template.changeFieldColumn = this.changeFieldColumn
-			template.addOption = this.addOption
-			template.deleteOption = this.deleteOption
-			template.moveSectionUp = this.moveSectionUp
-			template.moveSectionDown = this.moveSectionDown
 			ClassFactory.get({class: 'templates', id: id}, (res)->
 				$.extend template, res
 				deferred.resolve(template)
@@ -89,6 +69,8 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 				$.extend tempCopy, template
 
 				if !tempCopy.id
+					tempCopy.sections = ['Section 1']
+					tempCopy.columns = [1]
 					tempCopy.$save({class: 'templates'}, (res)->
 						$location.path("/templates/#{res.id}/edit")
 						Flash.create('success', '<p>Page saved!</p>', 'customAlert')
@@ -122,33 +104,24 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			return
 
 		# add section
-		addSection: (name='', columns, tempForm, template)->
-			tempForm.$dirty = true
-			template.sections.push name
-			template.columns.push columns
-			template.saveTemplate(true, tempForm, template)
-			template.newSectionName = ''
-			template.selectedOptions = template.sections.indexOf(name)
+		addSection: (template)->
+			id = template.sections.length+1
+			secName = 'Section ' + id
+			template.sections.push(secName)
+			template.columns.push 1
+			template.selectedOptions = template.sections.indexOf(secName)
 			return
 
 		# add section column
-		addSectionColumn: (template, section_id, tempForm)->
-			tempForm.$dirty = true
+		addSectionColumn: (template, section_id)->
 			template.columns[section_id]++
-			template.saveTemplate(true, tempForm, template)
 			return
 
 		# delete section column
 		deleteSectionColumn: (template, section_id, tempForm)->
 			for field in template.fields
 				field.section_id == section_id+1 && field.column_id == template.columns[section_id] && prevent = true
-
-			if prevent
-				Flash.create('danger', '<p>Please move any fields out of the last column.</p>', 'customAlert')
-			else
-				tempForm.$dirty = true
-				template.columns[section_id]--
-				template.saveTemplate(true, tempForm, template)
+			(prevent && Flash.create('danger', '<p>Please move any fields out of the last column.</p>', 'customAlert')) || template.columns[section_id]--
 			return
 
 		# delete section
@@ -200,36 +173,37 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			return
 
 		# add field
-		addField: (template, section_id, column_id, type, name, tempForm)->
+		addField: (template, section_id, column_id, type, name, placeholder, tempForm)->
 			field = new ClassFactory()
 			template.fields.push field
+			template.selectedOptions = field
 			field.name = name
+			field.placeholder = placeholder
+			!name && !placeholder && field.name = 'Untitled '+type.value
 			field.template_id = template.id
 			field.column_order = newFieldOrdering(template, section_id, column_id)
 			field.column_id = column_id
 			field.section_id = section_id
 			field.fieldtype = type.name
 			field.glyphicon = type.glyphicon
-			field.default_value = ''
 			field.$save({class: 'fields'}, (res)->
 				tempForm.$setPristine()
 				Flash.create('success', '<p>'+field.name+' successfully added to '+template.name+': '+template.sections[section_id-1]+'.</p>', 'customAlert')
-				template.selectedOptions = res
 			)
 			$rootScope.$broadcast('cleartemplates')
 			template.newFieldName = undefined
+			template.newFieldPlaceholder = undefined
 			template.newFieldAdd = undefined
 			return
 
 		# delete field
 		deleteField: (template, field, tempForm)->
 			tempForm.$dirty = true
-			if template.selectedOptions.id == field.id then template.selectedOptions = undefined
+			template.selectedOptions.id == field.id && template.selectedOptions = undefined
 			index = template.fields.indexOf(field)
 			template.fields.splice index, 1
-			for fie in template.fields
-				if field.section_id == fie.section_id && field.column_id == fie.column_id && field.column_order < fie.column_order
-					fie.column_order--
+			for tempField in template.fields
+				tempField.section_id == field.section_id && tempField.column_id == field.column_id && tempField.column_order > field.column_order && tempField.column_order--
 			$.extend field, new ClassFactory()
 			field.$delete({class: 'fields', id: field.id}, (res)->
 				template.saveTemplate(true, tempForm, template)
@@ -251,8 +225,9 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 		# change a field's column_id
 		changeFieldColumn: (template, field, column_id)->
 			field.column_id != column_id && for tempField in template.fields
-				tempField.section_id == field.section_id && tempField.column_id == field.column_id && tempField.column_order > field.column_order && tempField.column_order--
-				tempField.column_id == column_id && tempField.column_order++
+				if tempField.section_id == field.section_id
+					tempField.column_id == field.column_id && tempField.column_order > field.column_order && tempField.column_order--
+					tempField.column_id == column_id && tempField.column_order++
 			field.column_id = column_id
 			field.column_order = 1
 			return

@@ -4,6 +4,8 @@ json.fields template.fields do |field|
 	
 	json.id field.id
 	json.name field.name
+	json.placeholder field.placeholder
+	json.tooltip field.tooltip
 	json.section_id field.section_id
 	json.column_id field.column_id
 	json.column_order field.column_order
