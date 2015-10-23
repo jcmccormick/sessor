@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
-ruby '2.1.6'
+ruby '2.2.3'
 
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.4'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
@@ -25,7 +25,7 @@ group :production, :staging do
   gem 'heroku-deflater'
 end
 group :development, :test do
-  gem 'mysql2'
+  gem 'mysql2', '~> 0.3.18'
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   gem "rspec-rails", "3.2.1"

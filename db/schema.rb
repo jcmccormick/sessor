@@ -39,8 +39,8 @@ ActiveRecord::Schema.define(version: 20151022012219) do
   create_table "fields", force: :cascade do |t|
     t.string   "name",          limit: 255
     t.string   "fieldtype",     limit: 255
-    t.boolean  "required",      limit: 1
-    t.boolean  "disabled",      limit: 1
+    t.boolean  "required"
+    t.boolean  "disabled"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.integer  "column_id",     limit: 4
@@ -76,11 +76,11 @@ ActiveRecord::Schema.define(version: 20151022012219) do
     t.string   "title",          limit: 255
     t.text     "submission",     limit: 65535
     t.text     "response",       limit: 65535
-    t.boolean  "active",         limit: 1
+    t.boolean  "active"
     t.string   "location",       limit: 255
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.boolean  "allow_title",    limit: 1
+    t.boolean  "allow_title"
     t.text     "template_order", limit: 65535
   end
 
@@ -102,14 +102,14 @@ ActiveRecord::Schema.define(version: 20151022012219) do
 
   create_table "templates", force: :cascade do |t|
     t.string   "name",          limit: 255
-    t.boolean  "private_world", limit: 1
-    t.boolean  "private_group", limit: 1
+    t.boolean  "private_world"
+    t.boolean  "private_group"
     t.integer  "group_id",      limit: 4
-    t.boolean  "group_edit",    limit: 1
+    t.boolean  "group_edit"
     t.text     "group_editors", limit: 65535
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.boolean  "draft",         limit: 1
+    t.boolean  "draft"
     t.text     "sections",      limit: 65535
     t.text     "columns",       limit: 65535
   end
