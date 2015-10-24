@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-csp ng-app="sessor">
+<html ng-csp>
   <head>
     <title>Clerkr</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -15,7 +15,7 @@
       .col-xs-12 {width: 100%;}
     </style>
   </head>
-  <body>
+  <body ng-app="sessor">
     <span class="landing-page" ng-init="landing={}" ng-if="false || !user.id">
       <form role="form" class="brand-bar" ng-init="loginForm = {}">
         <h1 class="col-xs-5 col-md-2 col-md-offset-1 clerkr-c"><img src="<%= image_url('2.png') %>" /><span>lerkr</span></h1>

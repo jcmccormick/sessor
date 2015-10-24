@@ -35,6 +35,9 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			this.selectedOptions = undefined
 			$.extend this, draft
 
+		setFieldDepth: (column)->
+			return this.columns.indexOf(column)==3 || this.columns.indexOf(column)==2 || this.columns.indexOf(column)==1
+
 		# add create new template object
 		newTemplate: ->
 			template = new ClassFactory()
@@ -48,18 +51,18 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			$.extend template, this
 			template.editing = true
 			template.drafts = []
-			template.newFieldSection = 0
 			ClassFactory.get({class: 'templates', id: id}, (res)->
 				$.extend template, res
 				form && collectDrafts = $interval (->
 					tempCopy = angular.copy template
 					template.drafts.length > 5 && template.drafts.pop()
 					form.$dirty && template.drafts.unshift({
+						time: new Date()
 						sections: tempCopy.sections
 						columns: tempCopy.columns
 						fields: tempCopy.fields
 					})
-				), 60000
+				), 10000
 
 				form && innerSave = window.setInterval (->
 					form.$dirty && template.saveTemplate(true, form) && console.log 'saving template #'+template.id

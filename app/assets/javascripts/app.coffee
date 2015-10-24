@@ -10,6 +10,7 @@ sessor = angular.module('sessor', [
   'ngAnimate',
   'ng-token-auth',
   'ngBootbox',
+  'angularMoment',
   'ipCookie',
   'ui.sortable',
   'googlechart',

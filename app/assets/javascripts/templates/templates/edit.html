@@ -30,17 +30,19 @@
     <li class="dropdown" ng-if="vt.template.drafts">
       <a href class="dropdown-toggle" data-toggle="dropdown">Drafts <b class="caret"></b></a>
       <ul class="dropdown-menu">
-        <li ng-repeat="draft in vt.template.drafts track by $index">
+        <li ng-repeat="draft in vt.template.drafts | orderBy:'-time'">
           <span>
-            <a href="javascript:;" ng-click="vt.template.assimilate(draft)">{{$index+1}} <ng-pluralize count="$index+1" when="{'0':'minutes','one': 'minute','other':'minutes'}"></ng-pluralize> ago</a>
+            <a href="javascript:;" ng-click="vt.template.assimilate(draft)"><time am-time-ago="draft.time"></time></a>
           </span>
         </li>
       </ul>
     </li>
   </page-menu>
 
+
   <template-form-directive form="vt.template"></template-form-directive>
 
+  <pre>{{vt.template | json}}</pre>
   <!-- RIGHT SIDEBAR -->
   <div id="right-sidebar" class="template-options" ng-if="vt.template.selectedsssOptions != undefined && vt.template.editing" ng-init="vt.template.optionsDropOut={}">
 

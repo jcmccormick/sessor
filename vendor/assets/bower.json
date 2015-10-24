@@ -11,15 +11,11 @@
     "angular-ui-sortable": "latest",
     "angular-local-storage": "latest",
     "angular-google-chart": "latest",
-    "angular-chart.js": "latest",
-    "Chart.js": "1.0.1",
+    "angular-moment": "latest",
     "ng-token-auth": "latest",
     "bootstrap-sass-official": "latest",
     "bootbox": "latest",
     "ngBootbox": "latest",
     "ngInfiniteScroll": "latest"
-  },
-  "resolutions": {
-    "angular": "1.4.0"
   }
 }
