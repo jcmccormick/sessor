@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require bootstrap-sass-official/assets/javascripts/bootstrap.min.js
+//= require moment/src/moment
+//= require angular-moment/angular-moment
 //= require angular/angular
 //= require angular-route/angular-route
 //= require angular-resource/angular-resource
@@ -27,8 +29,6 @@
 //= require ng-token-auth
 //= require bootbox
 //= require ngBootbox
-//= require moment/min/moment.min.js
-//= require angular-moment/angular-moment.min.js
 //= require_tree ./xscripts
 //= require_tree ./templates
 //= require_tree .
