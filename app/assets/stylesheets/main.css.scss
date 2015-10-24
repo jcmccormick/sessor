@@ -4,6 +4,7 @@
  */
 
 @import url(//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+@import url(//fonts.googleapis.com/css?family=Poiret+One);
 
 /* 
  * Mixin Settings
@@ -52,6 +53,9 @@ input::-ms-clear {
 }
 blockquote {
   white-space: pre-wrap;
+}
+.clerkr-c span {
+  font-family: 'Poiret One', sans-serif !important;
 }
 .ng-hide {
   display: none !important;
@@ -342,11 +346,22 @@ blockquote {
  * Template and Field Display
  */
 
+.form-header {
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+
+  &.affix {
+    top: 50px;
+    z-index: 1;
+  }
+}
+
 .section-row {
 
   h2 {
-    cursor: pointer;
     &:not(.no-highlight) {
+      cursor: pointer;
 
       &:before {
         font-family: "Glyphicons Halflings";
@@ -380,6 +395,7 @@ blockquote {
   }
   .section-layout {
     padding: 8px 0;
+    margin-top: -10px;
     border-bottom: 5px solid #ddd;
   }
   .add-field-slide {
@@ -387,10 +403,6 @@ blockquote {
   }
   .field-options {
     max-height: 0;
-
-    .fieldtype-header {
-      padding: 10px 20px;
-    }
 
     &.slide {
       max-height: 500px;
@@ -516,7 +528,8 @@ template-field-directive {
 
       i {
         position: absolute;
-        top: 4px;
+        top: initial !important;
+        bottom: 12px;
         right: 30px;
         font-family: "Glyphicons Halflings";
         font-size: x-large;

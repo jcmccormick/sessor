@@ -38,7 +38,6 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 		# add create new template object
 		newTemplate: ->
 			template = new ClassFactory()
-			template.hideName = false
 			template.saveTemplate = this.saveTemplate
 			return template
 
@@ -105,12 +104,9 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 
 		# add section
 		addSection: (template, name, tempForm)->
-
-			id = template.sections.length+1
-			!name && name = 'Section ' + id
-			template.sections.push name
+			newSec = template.sections.push(name) - 1
 			template.columns.push 1
-			template.selectedOptions = template.sections.indexOf(name)
+			template.selectedOptions = template.sections.indexOf(newSec)
 			tempForm.$dirty = true
 			template.newSectionName = undefined
 			return

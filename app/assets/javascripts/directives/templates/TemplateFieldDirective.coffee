@@ -53,9 +53,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     labelntext = '<p ng-if="!field.value.input && !field.default_value && template.editing">
                     Add text here. Use just the label, or text, or both...
                   </p>
-                  <blockquote ng-if="field.value.input || field.default_value">
-                    {{field.value.input || field.default_value}}
-                  </blockquote>'
+                  <blockquote ng-if="field.value.input || field.default_value">{{field.value.input || field.default_value}}</blockquote>'
 
     textfield = inputstart+' type="text" '+standard
     textarea = '<textarea type="text" '+standard+'</textarea>'
