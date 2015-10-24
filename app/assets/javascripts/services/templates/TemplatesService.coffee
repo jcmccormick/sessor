@@ -1,12 +1,13 @@
 services = angular.module('services')
-services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFactory', 'Flash',
-($location, $q, $rootScope, ClassFactory, Flash)->
+services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScope', 'ClassFactory', 'Flash',
+($interval, $location, $q, $rootScope, ClassFactory, Flash)->
 	
 	validateTemplate = (template)->
 		deferred = $q.defer()
+		template.errors = ''
 		template.fields_attributes = template.fields
 		!template.name && template.name = 'Untitled'
-		!/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test(template.name) && template.errors = '<p>Template names must begin with a letter and only contain letters and numbers.</p>'
+		!/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test(template.name) && template.errors += '<p>Template names must begin with a letter and only contain letters and numbers.</p>'
 
 		deferred.resolve(template)
 		return deferred.promise
@@ -30,6 +31,10 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 		setSelectedOptions: (template, optionSet)->
 			template.editing && template.selectedOptions = optionSet
 
+		assimilate: (draft)->
+			this.selectedOptions = undefined
+			$.extend this, draft
+
 		# add create new template object
 		newTemplate: ->
 			template = new ClassFactory()
@@ -41,28 +46,36 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			deferred = $q.defer()
 			template = new ClassFactory()
 			$.extend template, this
-			template.hideName = true
 			template.editing = true
+			template.drafts = []
 			template.newFieldSection = 0
 			ClassFactory.get({class: 'templates', id: id}, (res)->
 				$.extend template, res
-				deferred.resolve(template)
+				form && collectDrafts = $interval (->
+					tempCopy = angular.copy template
+					template.drafts.length > 5 && template.drafts.pop()
+					form.$dirty && template.drafts.unshift({
+						sections: tempCopy.sections
+						columns: tempCopy.columns
+						fields: tempCopy.fields
+					})
+				), 60000
 
 				form && innerSave = window.setInterval (->
 					form.$dirty && template.saveTemplate(true, form) && console.log 'saving template #'+template.id
 					$location.path().search(template.id+'/edit') == -1 && clearInterval(innerSave)
-				), 5000
+				), 30000
+
+				deferred.resolve(template)
 			)
 
 			return deferred.promise
 
 		# save/update template
 		saveTemplate: (temp, tempForm)->
-			console.log this
 			deferred = $q.defer()
 			validateTemplate(this).then((res)->
 				tempCopy = angular.copy res
-				console.log tempCopy
 				if !!tempCopy.errors 
 					Flash.create('danger', tempCopy.errors, 'customAlert')
 					deferred.resolve(tempCopy)
