@@ -16,6 +16,7 @@
     "bootstrap-sass-official": "latest",
     "bootbox": "latest",
     "ngBootbox": "latest",
-    "ngInfiniteScroll": "latest"
+    "ngInfiniteScroll": "latest",
+    "moment": "latest"
   }
 }

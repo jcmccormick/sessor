@@ -50,18 +50,20 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			template = new ClassFactory()
 			$.extend template, this
 			template.editing = true
-			template.drafts = []
 			ClassFactory.get({class: 'templates', id: id}, (res)->
 				$.extend template, res
 				form && collectDrafts = $interval (->
-					tempCopy = angular.copy template
-					template.drafts.length > 5 && template.drafts.pop()
-					form.$dirty && template.drafts.unshift({
-						time: new Date()
-						sections: tempCopy.sections
-						columns: tempCopy.columns
-						fields: tempCopy.fields
-					})
+					if form.$dirty
+						!template.drafts && template.drafts = []
+						tempCopy = angular.copy template
+						template.drafts.length > 5 && template.drafts.pop()
+						template.drafts.unshift({
+							time: new Date()
+							sections: tempCopy.sections
+							columns: tempCopy.columns
+							fields: tempCopy.fields
+						})
+						console.log template.drafts
 				), 10000
 
 				form && innerSave = window.setInterval (->

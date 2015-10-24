@@ -32,7 +32,7 @@
       <ul class="dropdown-menu">
         <li ng-repeat="draft in vt.template.drafts | orderBy:'-time'">
           <span>
-            <a href="javascript:;" ng-click="vt.template.assimilate(draft)"><time am-time-ago="draft.time"></time></a>
+            <a href="javascript:;" ng-click="vt.template.assimilate(draft)"><span am-time-ago="draft.time"></span></a>
           </span>
         </li>
       </ul>
