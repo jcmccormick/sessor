@@ -4,16 +4,11 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 	
 	validateTemplate = (template)->
 		deferred = $q.defer()
-		errors = ''
-
 		template.fields_attributes = template.fields
+		!template.name && template.name = 'Untitled'
+		!/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test(template.name) && template.errors = '<p>Template names must begin with a letter and only contain letters and numbers.</p>'
 
-		if !/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test template.name
-			errors += '<p>Template names must begin with a letter and only contain letters and numbers.</p>'
-		else if !template.name
-			template.name = 'Untitled'
-
-		deferred.resolve(errors)
+		deferred.resolve(template)
 		return deferred.promise
 
 	newFieldOrdering = (template, section_id, column_id)->
@@ -41,8 +36,8 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			template.saveTemplate = this.saveTemplate
 			return template
 
-		# retrieve template and grant services
-		getTemplate: (id)->
+		# retrieve template and extend services
+		getTemplate: (id, form)->
 			deferred = $q.defer()
 			template = new ClassFactory()
 			$.extend template, this
@@ -52,45 +47,40 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			ClassFactory.get({class: 'templates', id: id}, (res)->
 				$.extend template, res
 				deferred.resolve(template)
+
+				form && innerSave = window.setInterval (->
+					form.$dirty && template.saveTemplate(true, form) && console.log 'saving template #'+template.id
+					$location.path().search(template.id+'/edit') == -1 && clearInterval(innerSave)
+				), 5000
 			)
+
 			return deferred.promise
 
 		# save/update template
-		saveTemplate: (temp, tempForm, template)->
+		saveTemplate: (temp, tempForm)->
+			console.log this
 			deferred = $q.defer()
-			validateTemplate(template).then((errors)->
-				if !!errors 
-					Flash.create('danger', errors, 'customAlert')
-					deferred.resolve(errors)
+			validateTemplate(this).then((res)->
+				tempCopy = angular.copy res
+				console.log tempCopy
+				if !!tempCopy.errors 
+					Flash.create('danger', tempCopy.errors, 'customAlert')
+					deferred.resolve(tempCopy)
 					return
-
-				tempCopy = new ClassFactory()
-				$.extend tempCopy, template
 
 				if !tempCopy.id
 					tempCopy.sections = ['Section 1']
 					tempCopy.columns = [1]
 					tempCopy.$save({class: 'templates'}, (res)->
 						$location.path("/templates/#{res.id}/edit")
-						Flash.create('success', '<p>Page saved!</p>', 'customAlert')
-					)
-				else if tempForm.$dirty || typeof tempForm == 'string'
-					tempCopy.$update({class: 'templates', id: tempCopy.id}, (res)->
-						$rootScope.$broadcast('cleartemplates')
-						Flash.create('success', '<p>Page updated!</p>', 'customAlert')
-						if typeof tempForm == 'string'
-							tempForm.$dirty = false
-						else
-							tempForm.$setPristine()
-						if !temp then $location.path("/templates/#{res.id}")
-						deferred.resolve('updated')
 					)
 				else
-					Flash.create('info', '<p>Page unchanged.</p>', 'customAlert')
-					if !temp
-						deferred.resolve($location.path("/templates/#{template.id}"))
-					else
-						deferred.resolve()
+					tempCopy.$update({class: 'templates', id: tempCopy.id}, (res)->
+						$rootScope.$broadcast('cleartemplates')
+						tempForm.$setPristine()
+						!temp && $location.path("/templates/#{res.id}") && Flash.create('success', '<p>Page updated!</p>', 'customAlert')
+						deferred.resolve(res)
+					)
 			)
 			return deferred.promise
 
@@ -107,14 +97,14 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			newSec = template.sections.push(name) - 1
 			template.columns.push 1
 			template.selectedOptions = template.sections.indexOf(newSec)
-			tempForm.$dirty = true
 			template.newSectionName = undefined
+			tempForm.$dirty = true
 			return
 
 		# add section column
 		addSectionColumn: (template, section_id, tempForm)->
-			tempForm.$dirty = true
 			template.columns[section_id]++
+			tempForm.$dirty = true
 			return
 
 		# delete section column
@@ -131,7 +121,6 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 		# delete section
 		deleteSection: (template, index, tempForm)->
 			if template.selectedOptions && !template.selectedOptions.fieldtype then template.selectedOptions = undefined
-			tempForm.$dirty = true
 			template.dfids = []
 
 			for field in template.fields
@@ -144,7 +133,8 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			template.columns.splice index, 1
 			template.sections.splice index, 1
 
-			template.saveTemplate(true, tempForm, template).then((res)-> 
+			tempForm.$dirty = true
+			template.saveTemplate(true, tempForm).then((res)-> 
 				template.dfids = undefined
 			)
 			return
@@ -153,7 +143,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 		moveSection: (template, index, direction)->
 			directed_index = if direction == 'up' then index-1 else index+1
 
-			if template.sections[directed_index] != undefined
+			if template.sections[directed_index]?
 				target = template.sections[directed_index]
 				template.sections[directed_index] = template.sections[index]
 				template.sections[index] = target
@@ -194,9 +184,8 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			field.glyphicon = type.glyphicon
 			field.$save({class: 'fields'}, (res)->
 				tempForm.$setPristine()
-				Flash.create('success', '<p>'+field.name+' successfully added to '+template.name+': '+template.sections[section_id-1]+'.</p>', 'customAlert')
+				$rootScope.$broadcast('cleartemplates')
 			)
-			$rootScope.$broadcast('cleartemplates')
 			template.newFieldName = undefined
 			template.newFieldPlaceholder = undefined
 			template.newFieldAdd = undefined
@@ -212,7 +201,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 				tempField.section_id == field.section_id && tempField.column_id == field.column_id && tempField.column_order > field.column_order && tempField.column_order--
 			$.extend field, new ClassFactory()
 			field.$delete({class: 'fields', id: field.id}, (res)->
-				template.saveTemplate(true, tempForm, template)
+				template.saveTemplate(true, tempForm)
 			)
 			return
 
@@ -270,7 +259,7 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			tempForm.$dirty = true
 			index = field.options.indexOf(option)
 			field.options.splice index, 1
-			template.saveTemplate(true, tempForm, template)
+			template.saveTemplate(true, tempForm)
 			return
 
 		supportedFields: [
@@ -299,5 +288,6 @@ services.service('TemplatesService', ['$location', '$q', '$rootScope', 'ClassFac
 			{name:'radio',value:'Radio',glyphicon:'glyphicon-record'}
 			{name:'dropdown',value:'Dropdown',glyphicon:'glyphicon-list'}
 		]
+
 	}
 ])
