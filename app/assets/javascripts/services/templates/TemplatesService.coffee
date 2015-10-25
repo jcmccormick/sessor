@@ -58,12 +58,11 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 						tempCopy = angular.copy template
 						template.drafts.length > 5 && template.drafts.pop()
 						template.drafts.unshift({
-							time: new Date()
+							time: moment().fromNow()
 							sections: tempCopy.sections
 							columns: tempCopy.columns
 							fields: tempCopy.fields
 						})
-						console.log template.drafts
 				), 10000
 
 				form && innerSave = window.setInterval (->
