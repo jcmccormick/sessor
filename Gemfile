@@ -14,9 +14,11 @@ gem 'bower-rails'
 gem 'angular-rails-templates'
 gem "foreman"
 gem 'devise_token_auth'
+gem 'bcrypt', '~> 3.1.10'
 gem 'omniauth'
 gem 'kaminari'
 gem 'figaro'
+gem 'momentjs-rails'
 group :production, :staging do
   gem 'pg'
   gem "rails_12factor"
