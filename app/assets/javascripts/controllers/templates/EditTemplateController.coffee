@@ -12,6 +12,7 @@ controllers.controller('EditTemplateController', ['$routeParams', '$scope',  'Te
 				)
 			else
 				vt.template = TemplatesService.newTemplate()
+
 			unbindFormWatch()
 	)
 	

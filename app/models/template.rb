@@ -27,6 +27,9 @@ class Template < ActiveRecord::Base
 	# Link up Template defaults method on creation.
 	before_create :set_defaults
 
+	# Check for deleted fields
+	before_update :check_fields
+
 	# Prevent destroy if attached to any reports
 	before_destroy :allow_destroy
 
@@ -35,9 +38,20 @@ class Template < ActiveRecord::Base
 		eager_load(:fields).as_json(only: [:id, :name, :sections, :draft])
 	end
 
-	# Upon Template creation, set Draft to true.
+	# Upon Template creation, set basic stuff
 	def set_defaults
 		self.draft = true
+		self.sections = ['']
+		self.columns = [1]
+	end
+
+	# Search for fields that have no section id and delete them
+	def check_fields
+		self.fields.each do |field|
+			if field.section_id == nil
+				field.destroy
+			end
+		end
 	end
 
 	# Check for existing report associations
