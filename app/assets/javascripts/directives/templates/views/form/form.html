@@ -42,9 +42,9 @@
     </div>
 
     <div class="col-xs-12" ng-class="{
-    'col-md-4 col-md-offset-4':form.columns.indexOf(1) == 0 && form.columns.indexOf(2) < 0 && form.columns.indexOf(3) < 0, 
-    'col-md-8 col-md-offset-2':form.columns.indexOf(2) == 0 && form.columns.indexOf(3) < 0, 
-    'col-md-12':form.columns.indexOf(3) == 0}">
+    'col-md-4 col-md-offset-4':form.columns.indexOf(2) < 0 && form.columns.indexOf(3) < 0, 
+    'col-md-8 col-md-offset-2':form.columns.indexOf(2) >= 0 && form.columns.indexOf(3) < 0, 
+    'col-md-12':form.columns.indexOf(3) >= 0}">
 
       <div class="section-row col-xs-12" ng-repeat="(section_id, section_name) in form.sections track by $index" ng-class="{'stay-open':!form.fields.length || form.selectedOptions.section_id == section_id+1 || form.selectedOptions == section_id}">
 
