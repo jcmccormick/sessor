@@ -56,7 +56,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 					!template.drafts && template.drafts = []
 					if form.$dirty
 						tempCopy = angular.copy template
-						template.drafts.length > 5 && template.drafts.pop()
+						template.drafts.length > 4 && template.drafts.pop()
 						template.drafts.unshift({
 							time: moment()
 							recent: moment(this.time).fromNow()
@@ -66,7 +66,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 						})
 					for draft in template.drafts
 						draft.recent = moment(draft.time).fromNow()
-				), 5000
+				), 60000
 
 				form && innerSave = window.setInterval (->
 					form.$dirty && template.saveTemplate(true, form) && console.log 'saving template #'+template.id

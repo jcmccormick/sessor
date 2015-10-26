@@ -35,8 +35,8 @@
     </div>
   </div>
 
-  <div class="col-xs-12 paper" ng-show="form.sections">
-
+  <div class="col-xs-12 paper" ng-class="{'gridline-workspace':form.editing}" ng-show="form.sections">
+    <small class="col-xs-12" ng-if="form.draft && !form.editing"><strong>Draft</strong></small>
     <div ng-if="!form.editing" class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
       <h1><center>{{form.name}}</center></h1>
     </div>
