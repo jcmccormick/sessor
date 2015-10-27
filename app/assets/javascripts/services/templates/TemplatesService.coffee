@@ -86,7 +86,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 					tempCopy.$update({class: 'templates', id: tempCopy.id}, (res)->
 						$rootScope.$broadcast('cleartemplates')
 						res.del_fields && res.del_fields = undefined
-						form.$setPristine()
+						form && form.$setPristine()
 						!temporary && $location.path("/templates/#{res.id}")
 					)
 			)
