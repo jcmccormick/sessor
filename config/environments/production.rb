@@ -35,7 +35,7 @@ Rails.application.configure do
   # yet still be able to expire them through the digest params.
   config.assets.digest = true
 
-  confit.serve_static_assets = true
+  config.serve_static_assets = true
 
   # MEMCACHED RACK - CACHE
 
