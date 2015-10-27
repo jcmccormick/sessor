@@ -13,6 +13,8 @@ module Sessor
 
     config.assets.precompile << %r(.*.(?:eot|svg|ttf|woff|woff2)$)
 
+    config.cache_store = :dalli_store
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
