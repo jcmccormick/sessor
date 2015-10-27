@@ -31,7 +31,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     
     fwmid = '<h3>{{field.name}}</h3>'
 
-    fwend = '<div class="field-overlay" ng-class="{\'force-hover\':template.selectedOptions.id == field.id}" ng-if="template.editing"><i class="glyphicon {{field.glyphicon}}" ng-class="{\'bump-down\':field.fieldtype != \'checkbox\' && !field.name}"></i></div>
+    fwend = '<div class="field-overlay" ng-class="{\'force-hover\':template.sO.id == field.id}" ng-if="template.e"><i class="glyphicon {{field.glyphicon}}" ng-class="{\'bump-down\':field.fieldtype != \'checkbox\' && !field.name}"></i></div>
            </div>'
 
     fw = fwstart+fwmid
@@ -50,7 +50,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 
 
     # Define the particulars of each supported field
-    labelntext = '<p ng-if="!field.value.input && !field.default_value && template.editing">
+    labelntext = '<p ng-if="!field.value.input && !field.default_value && template.e">
                     Add text here. Use just the label, or text, or both...
                   </p>
                   <blockquote ng-if="field.value.input || field.default_value">{{field.value.input || field.default_value}}</blockquote>'

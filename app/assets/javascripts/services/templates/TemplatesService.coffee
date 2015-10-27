@@ -18,27 +18,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		return count.length+1
 
 	{
-		# return an array for column repeating
-		countColumns: (columns)->
-			return new Array columns
-
-		# set the field type used when adding a field
-		setFieldType: (type, template)->
-			template.newFieldType = type
-			return
-
-		# select a field's settings on template editing
-		setSelectedOptions: (template, optionSet)->
-			template.editing && template.selectedOptions = optionSet
-
-		assimilate: (draft)->
-			this.selectedOptions = undefined
-			$.extend this, {sections: draft.sections,columns: draft.columns,fields: draft.fields}
-
-		setFieldDepth: (column)->
-			return this.columns.indexOf(column)==3 || this.columns.indexOf(column)==2 || this.columns.indexOf(column)==1
-
-		# add create new template object
+		# limit template options on new
 		newTemplate: ->
 			template = new ClassFactory()
 			template.saveTemplate = this.saveTemplate
@@ -47,48 +27,54 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		# retrieve template and extend services
 		getTemplate: (id, form)->
 			deferred = $q.defer()
-			this.form = form
-			this.editing = true
-			this.drafts = []
 
 			template = new ClassFactory()
 			$.extend template, this
 
-			ClassFactory.get({class: 'templates', id: id}, (res)->
+			id && ClassFactory.get({class: 'templates', id: id}, (res)->
 				$.extend template, res
 
-				#collect drafts
-				form && collectDrafts = $interval (->
-					if form.$dirty
-						tempCopy = angular.copy template
-						template.drafts.length > 4 && template.drafts.pop()
-						template.drafts.unshift({
-							time: moment()
-							recent: moment(this.time).fromNow()
-							sections: tempCopy.sections
-							columns: tempCopy.columns
-							fields: tempCopy.fields
-						})
-					for draft in template.drafts
-						draft.recent = moment(draft.time).fromNow()
-				), 30000
+				# editing
+				form && template.e = true
+
+				# collect drafts
+				# form && collectDrafts = $interval (->
+				# 	!template.drafts && template.drafts = []
+				# 	if !form.$pristine
+				# 		tempCopy = angular.copy template
+				# 		console.log 'creating draft'
+				# 		console.log tempCopy.time
+				# 		!tempCopy.time && template.drafts.push({
+				# 			time: moment()
+				# 			sections: tempCopy.sections
+				# 			columns: tempCopy.columns
+				# 			fields: tempCopy.fields
+				# 		})
+				# 		template.drafts.length > 5 && template.drafts.pop()
+				# 	for draft in template.drafts
+				# 		draft.recent = moment(draft.time).fromNow()
+				# 	$location.path().search(template.id+'/edit') == -1 && clearInterval(collectDrafts)
+				# ), 10000
 
 				# Auto-save
-				form && innerSave = window.setInterval (->
-					form.$dirty && template.saveTemplate(true) && console.log 'saving template #'+template.id
-					$location.path().search(template.id+'/edit') == -1 && clearInterval(innerSave)
-				), 60000
+				form && timedSave = window.setInterval (->
+					!form.$pristine && template.saveTemplate(true, form)
+					$location.path().search(template.id+'/edit') == -1 && clearInterval(timedSave)
+				), 30000
 
 				deferred.resolve(template)
 			)
 
+			!id && deferred.resolve(template)
+
 			return deferred.promise
 
 		# save/update template
-		saveTemplate: (temporary)->
-			this.form.$dirty && validateTemplate(this).then((res)->
+		saveTemplate: (temporary, form)->
+			console.log 'saving'
+			validateTemplate(this).then((res)->
 				tempCopy = angular.copy res
-				if !!tempCopy.errors 
+				if !!tempCopy.errors
 					Flash.create('danger', tempCopy.errors, 'customAlert')
 					return
 
@@ -99,11 +85,11 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 				else
 					tempCopy.$update({class: 'templates', id: tempCopy.id}, (res)->
 						$rootScope.$broadcast('cleartemplates')
-						res.form.$setPristine()
-						!temporary && $location.path("/templates/#{this.id}")
+						res.del_fields && res.del_fields = undefined
+						form.$setPristine()
+						!temporary && $location.path("/templates/#{res.id}")
 					)
 			)
-			!this.form.$dirty && !temporary && $location.path("/templates/#{this.id}")
 
 		# delete template
 		deleteTemplate: (template)->
@@ -115,77 +101,73 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 		# add section
 		addSection: ()->
-			this.sections.push(this.newSectionName || '')
-			this.columns.push 1
+			this.sections.push({
+				i:this.sections.length+1
+				n:(this.newSectionName || '')
+				c:1
+			})
+			this.sO = this.sections[this.sections.length-1]
 			this.newSectionName = undefined
-			this.form.$dirty = true
+			
 			return
 
 		# add section column
-		addSectionColumn: (section_id)->
-			this.columns[section_id]++
-			this.form.$dirty = true
+		addSectionColumn: (section)->
+			section.c++
+			
 			return
 
 		# delete section column
-		deleteSectionColumn: (section_id)->
+		deleteSectionColumn: (section)->
 			for field in this.fields
-				field.section_id == section_id+1 && field.column_id == this.columns[section_id] && prevent = true
+				field.section_id == section.i && field.column_id == section.c && prevent = true
 			if prevent 
 				Flash.create('danger', '<p>Please move any fields out of the last column.</p>', 'customAlert')
 			else
-				this.columns[section_id]--
-				this.form.$dirty = true
+				section.c--
+				
 			return
 
 		# delete section
-		deleteSection: (index)->
-			this.selectedOptions = undefined
+		deleteSection: (section_id)->
+			this.del_fields = $.grep this.fields, (field)->
+				field.section_id == section_id
+			sub_fields = $.grep this.fields, (field)->
+				field.section_id > section_id
 
-			for field in this.fields
-				field.section_id == index+1 && field.section_id = ""
-				field.section_id > index+1 && field.section_id--
-			this.columns.splice index, 1
-			this.sections.splice index, 1
+			for field in this.del_fields
+				field.section_id = ''
+			
+			for field in sub_fields
+				field.section_id--			
 
-			this.form.$dirty = true
+			this.sections.splice section_id-1, 1
+			for section in this.sections
+				section.i > section_id && section.i--
+
+			this.sO = undefined
+			
+			this.saveTemplate(true)
 			return
 
 		# reorder section up or down
-		moveSection: (index, direction)->
-			directed_index = if direction == 'up' then index-1 else index+1
+		moveSection: (index, new_index)->
 
-			if directed_index < this.sections.length && directed_index >= 0
-				target = this.sections[directed_index]
-				this.sections[directed_index] = this.sections[index]
+			if this.sections[new_index]
+				target = this.sections[new_index]
+				this.sections[new_index] = this.sections[index]
 				this.sections[index] = target
+				this.sO = this.sections[new_index]
 
-				target = this.columns[directed_index]
-				this.columns[directed_index] = this.columns[index]
-				this.columns[index] = target
-
-				for field in this.fields
-					if direction == 'up'
-						if field.section_id == index+1
-							field.section_id--
-						else if field.section_id == index
-							field.section_id++
-					if direction == 'down'
-						if field.section_id == index+1
-							field.section_id++
-						else if field.section_id == index+2
-							field.section_id--
-				this.selectedOptions = directed_index
-			else
-				this.selectedOptions = index
-			this.form.$dirty = true
+				
 			return
+
 
 		# add field
 		addField: (section_id, column_id, type)->
 			field = new ClassFactory()
 			this.fields.push field
-			this.selectedOptions = field
+			this.sO = field
 			field.name = this.newFieldName
 			field.placeholder = this.newFieldPlaceholder
 			!this.newFieldName && !this.newFieldPlaceholder && field.name = 'Untitled '+type.value
@@ -204,14 +186,14 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 		# delete field
 		deleteField: (field)->
-			this.selectedOptions = undefined
+			this.sO = undefined
 			index = this.fields.indexOf(field)
 			this.fields.splice index, 1
 			$.extend field, new ClassFactory()
 			field.$delete({class: 'fields', id: field.id})
 			for tempField in this.fields
 				tempField.section_id == field.section_id && tempField.column_id == field.column_id && tempField.column_order > field.column_order && tempField.column_order--
-			this.form.$dirty = true
+			
 			return
 
 		# change a field's section_id
@@ -223,19 +205,23 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			for tempField in this.fields
 				tempField.section_id == prev_section*1 && tempField.column_id == prev_column && tempField.column_order >= prev_column_order && tempField.column_order--
 				tempField.id != field.id && tempField.section_id == field.section_id && tempField.column_id == field.column_id && tempField.column_order++
-			this.form.$dirty = true
+			
 			return
 
 		# change a field's column_id
 		changeFieldColumn: (field, column_id)->
-			if column_id > 0 && column_id <= this.columns[field.section_id-1]
+			sect = $.grep this.sections, (section)->
+				section.i == field.section_id
+			index = this.sections.indexOf(sect[0])
+
+			if column_id > 0 && column_id <= this.sections[index].c
 				field.column_id != column_id && for tempField in this.fields
 					if tempField.section_id == field.section_id
 						tempField.column_id == field.column_id && tempField.column_order > field.column_order && tempField.column_order--
 						tempField.column_id == column_id && tempField.column_order++
 				field.column_id = column_id
 				field.column_order = 1
-			this.form.$dirty = true
+				
 			return
 
 		# reorder field up or down in a column
@@ -256,21 +242,48 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			field_switch.column_order = field.column_order
 			field.column_order = target
 
-			this.form.$dirty = true
+			
 			return
 
 		# add field option
 		addOption: (field) ->
 			field.options.push 'Option '+(field.options.length + 1)
-			this.form.$dirty = true
+			
 			return
 
 		# delete field option
 		deleteOption: (field, option)->
 			index = field.options.indexOf(option)
 			field.options.splice index, 1
-			this.form.$dirty = true
+			
 			return
+
+		# Helper functions
+
+		# return an array for column repeating
+		countColumns: (columns)->
+			return new Array columns
+
+		activeFields: ->
+			counter = $.grep this.fields, (field)->
+				field.section_id != ''
+			counter.length
+
+		# set the field type used when adding a field
+		setFieldType: (type, template)->
+			template.newFieldType = type
+			return
+
+		# select a field's settings on template editing
+		setSelectedOptions: (template, optionSet)->
+			template.editing && template.sO = optionSet
+
+		assimilate: (draft)->
+			this.sO = undefined
+			$.extend this, draft
+
+		setFieldDepth: (column)->
+			return this.columns.indexOf(column)==3 || this.columns.indexOf(column)==2 || this.columns.indexOf(column)==1
 
 		supportedFields: [
 			'labelntext'

@@ -6,16 +6,23 @@ controllers.controller('EditTemplateController', ['$routeParams', '$scope',  'Te
 
 	unbindFormWatch = $scope.$watch((()-> vt.tempForm), ()->
 		if vt.tempForm
-			if $routeParams.templateId
-				TemplatesService.getTemplate($routeParams.templateId, vt.tempForm).then((res)->
-					vt.template = res
-				)
-			else
-				vt.template = TemplatesService.newTemplate()
+			
+			TemplatesService.getTemplate($routeParams.templateId, vt.tempForm).then((res)->
+				vt.template = res
+
+				$scope.$watch('vt.template', ((newVal, oldVal)->
+					if newVal.sections != oldVal.sections || newVal.fields != oldVal.fields
+						console.log 'section or field changed'
+						vt.tempForm.$pristine = false
+					else
+						return
+				), true)
+			)
 
 			unbindFormWatch()
 	)
-	
+
+
 	return vt
 
 ])

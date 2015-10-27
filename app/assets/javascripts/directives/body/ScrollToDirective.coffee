@@ -7,7 +7,7 @@ directives.directive('scrollTo', [ ->
         template: '='
         bypass: '@'
     link: (scope, element, attrs)->
-        if (scope.template && scope.template.editing) || scope.bypass
+        if (scope.template && scope.template.e) || scope.bypass
             length = if scope.bypass then 70 else 400
             element.on 'click', ()->
                 setTimeout (()->

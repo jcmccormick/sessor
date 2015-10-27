@@ -41,8 +41,7 @@ class Template < ActiveRecord::Base
 	# Upon Template creation, set basic stuff
 	def set_defaults
 		self.draft = true
-		self.sections = ['']
-		self.columns = [1]
+		self.sections = [{i:1,n:'',c:1}]
 	end
 
 	# Search for fields that have no section id and delete them
