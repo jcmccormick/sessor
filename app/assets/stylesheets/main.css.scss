@@ -411,6 +411,7 @@ blockquote {
   }
   .field-options {
     max-height: 0;
+    margin-bottom: 20px;
 
     &.slide {
       max-height: 1000px;
@@ -419,6 +420,53 @@ blockquote {
     &.bump-up {
       margin: -15px 0 0;
     }
+
+    &.ui-draggable {
+      position: fixed !important;
+      top: 50px;
+      left: 50px;
+      padding: 0;
+      z-index: 1060;
+      width: 20%;
+      -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    }
+    &:not(.ui-draggable) {
+      position: static !important;
+    }
+
+    .selected-field-options {
+      background-color: #eee;
+
+      .drag-bar {
+        display: block;
+        position: relative;
+        height: 25px;
+        content: '';
+        background: repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
+      }
+
+      h4 {
+        .glyphicon-new-window {
+          cursor: pointer;
+          -webkit-transform: rotate(-90deg);
+          -moz-transform: rotate(-90deg);
+          -ms-transform: rotate(-90deg);
+          -o-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+
+          &.rotate {
+            -webkit-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            -o-transform: rotate(90deg);
+            transform: rotate(90deg);
+          }
+        }
+      }
+
+    }
+
   }
 
   .column {
@@ -558,15 +606,6 @@ template-field-directive {
         background-color: rgba(255,255,255,.5);
         i {
           color: #337ab7;
-        }
-
-        &:after {
-          display: block;
-          position: relative;
-          bottom: -100%;
-          height: 15px;
-          content: '';
-          background: repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
         }
       }
     }

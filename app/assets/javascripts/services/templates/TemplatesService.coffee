@@ -36,6 +36,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 				# editing
 				form && template.e = true
+				form && template.poppedOut = true
 
 				# collect drafts
 				# form && collectDrafts = $interval (->
@@ -267,7 +268,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		activeFields: ->
 			counter = $.grep this.fields, (field)->
 				field.section_id != ''
-			counter.length
+			counter.length || 0
 
 		# set the field type used when adding a field
 		setFieldType: (type, template)->
