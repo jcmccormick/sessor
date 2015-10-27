@@ -19,6 +19,8 @@ gem 'omniauth'
 gem 'kaminari'
 gem 'figaro'
 gem 'momentjs-rails'
+gem 'rack-cache'
+gem 'dalli'
 group :production, :staging do
   gem 'pg'
   gem "rails_12factor"

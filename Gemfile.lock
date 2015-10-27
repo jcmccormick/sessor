@@ -63,6 +63,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1.1)
+    dalli (2.7.4)
     database_cleaner (1.5.1)
     debug_inspector (0.0.2)
     devise (3.5.2)
@@ -130,6 +131,8 @@ GEM
     pg (0.18.3-x64-mingw32)
     phantomjs (1.9.8.0)
     rack (1.6.4)
+    rack-cache (1.5.1)
+      rack (>= 0.4)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.4)
@@ -248,6 +251,7 @@ DEPENDENCIES
   byebug
   capybara
   coffee-rails (~> 4.1.0)
+  dalli
   database_cleaner
   devise_token_auth
   factory_girl_rails (~> 4.0)
@@ -264,6 +268,7 @@ DEPENDENCIES
   omniauth
   pg
   phantomjs
+  rack-cache
   rails (= 4.2.4)
   rails-erd
   rails_12factor
