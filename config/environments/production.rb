@@ -35,8 +35,6 @@ Rails.application.configure do
   # yet still be able to expire them through the digest params.
   config.assets.digest = true
 
-  config.serve_static_assets = true
-
   # MEMCACHED RACK - CACHE
 
   client = Dalli::Client.new((ENV["MEMCACHIER_SERVERS"] || "").split(","),
