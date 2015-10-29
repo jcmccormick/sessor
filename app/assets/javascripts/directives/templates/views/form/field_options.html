@@ -1,0 +1,74 @@
+<div class="selected-field-options">
+  <div class="drag-bar"></div>
+  <h4 class="col-xs-12">
+    <strong><i ng-click="form.poppedOut=!form.poppedOut" class="glyphicon glyphicon-new-window" ng-class="{'rotate':form.poppedOut}"></i> {{field.fieldtype|uppercase}} </strong><small>SETTINGS</small>
+    <p class="pull-right" scroll-to=".force-hover" template="form">
+      <a href="javascript:;" class="btn-sm" ng-click="form.changeFieldColumn(field, field.column_id-1)">
+        <i class="glyphicon glyphicon-arrow-left"></i>
+      </a>
+      <a href="javascript:;" class="btn-sm" ng-click="form.moveField(field, 'up')">
+        <i class="glyphicon glyphicon-arrow-up"></i>
+      </a>
+      <a href="javascript:;" class="btn-sm" ng-click="form.moveField(field, 'down')">
+        <i class="glyphicon glyphicon-arrow-down"></i>
+      </a>
+      <a href="javascript:;" class="btn-sm" ng-click="form.changeFieldColumn(field, field.column_id+1)">
+        <i class="glyphicon glyphicon-arrow-right"></i>
+      </a>
+    </p>
+  </h4>
+
+  <div class="col-xs-6">
+    <input type="text" class="form-control" placeholder="{{(field.fieldtype == 'labelntext' && 'Label') || 'Name'}}" ng-model="field.name">
+  </div>
+  <div class="col-xs-6">
+    <select class="form-control" ng-options="field_section.i as (field_section.n || 'Section '+field_section.i) for field_section in form.sections" ng-model="field.section_id" ng-change="form.changeFieldSection(field, '{{field.section_id}}')" scroll-to=".force-hover" template="form"><option value="">Change section...</option></select>
+  </div>
+  <div class="col-xs-6">
+    <input ng-if="['checkbox','date','time','integer'].indexOf(field.fieldtype) == -1" type="text" class="form-control" placeholder="{{(field.fieldtype == 'labelntext' && 'Text') || 'Default Value'}}" ng-model="field.default_value">
+    <input ng-if="field.fieldtype == 'integer'" type="number" class="form-control" ng-model="field.default_value">
+    <input ng-if="field.fieldtype == 'date'" type="date" class="form-control" ng-model="field.default_value">
+    <input ng-if="field.fieldtype == 'time'" type="time" class="form-control" ng-model="field.default_value">
+    <input ng-if="field.fieldtype == 'checkbox'" type="checkbox" class="form-control" ng-model="field.default_value">
+  </div>
+  <div ng-if="field.fieldtype !='labelntext'">
+    <div class="col-xs-6">
+      <input type="text" class="form-control" placeholder="Placeholder" ng-model="field.placeholder">
+    </div>
+    <div class="col-xs-6 pull-right">
+      <input type="text" class="form-control" placeholder="Tooltip" ng-model="field.tooltip">
+    </div>
+    <div class="col-xs-6">
+      <div class="btn-group btn-group-justified" ng-click="field.disabled = !field.disabled">
+        <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':field.disabled}">Disabled</a>
+        <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!field.disabled}">OFF</a>
+      </div>
+    </div>
+    <div class="col-xs-6 pull-left">
+      <div class="btn-group btn-group-justified" ng-click="field.required = !field.required">
+        <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':field.required}">Required</a>
+        <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!field.required}">OFF</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12" ng-if="field.fieldtype == 'dropdown' || field.fieldtype == 'radio'">
+    <h4>Options</h4>
+    <a href="javascript:;" class="btn" ng-click="form.addOption(field)">Add New</a>
+    <div class="input-group" ng-repeat="option in field.options track by $index">
+      <input type="text" class="form-control" ng-model="field.options[$index]">
+      <span class="input-group-btn">
+        <a href="javascript:;" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this option?<br><br>It will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="form.deleteOption(field, option)">
+          <i class="glyphicon glyphicon-remove"></i>
+        </a>
+      </span>
+    </div>
+  </div>
+  <div class="col-xs-12">
+    <a href="javascript:;" class="btn close pull-left" ng-click="form.sO=undefined">Close</a>
+    <a href="javascript:;" class="btn save-now pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this field?<br><br>It will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="form.deleteField(field)">
+      <i class="glyphicon glyphicon-remove"></i>
+    </a>
+  </div>
+  <p class="clearfix"></p>
+  <div class="drag-bar"></div>
+</div>

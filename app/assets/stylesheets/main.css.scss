@@ -391,14 +391,9 @@ blockquote {
     margin: 25px 0;
   }
   .section-layout,
-  .add-field-slide,
-  .field-options {
+  .add-field-slide {
     background-color: #eee;
     overflow: hidden;
-    max-height: 500px;
-    -webkit-transition: max-height .5s ease;
-    -moz-transition: max-height .5s ease;
-    transition: max-height .5s ease;
   }
   .section-layout {
     padding: 8px 0;
@@ -408,67 +403,18 @@ blockquote {
   .add-field-slide {
     border-top: 5px solid #ddd;
     margin: 0 -15px;
-  }
-  .field-options {
-    max-height: 0;
-    margin-bottom: 20px;
 
-    &.slide {
-      max-height: 1000px;
-      padding: 4px 0 12px;
-    }
-    &.bump-up {
-      margin: -15px 0 0;
-    }
+    .field-types {
+      display: flex;
+      flex-wrap: wrap;
 
-    &.ui-draggable {
-      position: fixed !important;
-      top: 50px;
-      left: 50px;
-      padding: 0;
-      z-index: 1060;
-      width: 20%;
-      -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    }
-    &:not(.ui-draggable) {
-      position: static !important;
-    }
-
-    .selected-field-options {
-      background-color: #eee;
-
-      .drag-bar {
-        display: block;
-        position: relative;
-        height: 25px;
-        content: '';
-        background: repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
+      a {
+        text-align: left;
+        min-width: 120px;
+        padding-left: 0;
       }
-
-      h4 {
-        .glyphicon-new-window {
-          cursor: pointer;
-          -webkit-transform: rotate(-90deg);
-          -moz-transform: rotate(-90deg);
-          -ms-transform: rotate(-90deg);
-          -o-transform: rotate(-90deg);
-          transform: rotate(-90deg);
-
-          &.rotate {
-            -webkit-transform: rotate(90deg);
-            -moz-transform: rotate(90deg);
-            -ms-transform: rotate(90deg);
-            -o-transform: rotate(90deg);
-            transform: rotate(90deg);
-          }
-        }
-      }
-
     }
-
   }
-
   .column {
     background-color: white;
     background-size: -10px auto;
@@ -482,17 +428,6 @@ blockquote {
     .add-field-slide {
       border-top: 0;
     }
-    &:hover {
-      .section-layout {
-        max-height: 50px;
-      }
-      .add-field-slide {
-        max-height: 320px;
-        padding: 4px 0 12px;
-        border-top: 5px solid #ddd;
-      }
-    }
-
   }
 
   &.stay-open {
@@ -503,6 +438,55 @@ blockquote {
     .add-field-slide {
       padding: 4px 0 12px;
       border-top: 5px solid #ddd;
+    }
+  }
+}
+
+.field-options {
+  margin-bottom: 20px;
+  overflow: hidden;
+  min-height: 0;
+
+  @include respond(desktop) {
+    &.ui-draggable {
+      position: fixed !important;
+      padding: 0;
+      z-index: 1060;
+      width: 20%;
+      -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    }
+    &:not(.ui-draggable) {
+      position: static !important;
+    }
+  }
+
+  .selected-field-options {
+    background-color: #eee;
+
+    .drag-bar {
+      display: block;
+      position: relative;
+      height: 25px;
+      content: '';
+      background: repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
+    }
+    .glyphicon-new-window {
+      color: forestgreen;
+      cursor: pointer;
+      -webkit-transform: rotate(-90deg);
+      -moz-transform: rotate(-90deg);
+      -ms-transform: rotate(-90deg);
+      -o-transform: rotate(-90deg);
+      transform: rotate(-90deg);
+
+      &.rotate {
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        transform: rotate(90deg);
+      }
     }
   }
 }
@@ -604,6 +588,13 @@ template-field-directive {
       &:hover,
       &.force-hover {
         background-color: rgba(255,255,255,.5);
+        outline: 2px solid blue;
+        width: inherit;
+        height: inherit;
+        top: -5px;
+        left: -5px;
+        right: -5px;
+        bottom: -5px;
         i {
           color: #337ab7;
         }

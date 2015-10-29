@@ -301,13 +301,13 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		]
 
 		addFieldTypes: [
-			{name:'labelntext',value:'Label and Text',glyphicon:'glyphicon-text-size'}
+			{name:'labelntext',value:'Label & Text',glyphicon:'glyphicon-text-size'}
 			{name:'textfield',value:'Text Line',glyphicon:'glyphicon-font'}
 			{name:'textarea',value:'Text Area',glyphicon:'glyphicon-comment'}
 			{name:'email',value:'E-mail',glyphicon:'glyphicon-envelope'}
-			{name:'integer',value:'Integer',glyphicon:'glyphicon-th'}
 			{name:'date',value:'Date',glyphicon:'glyphicon-calendar'}
 			{name:'time',value:'Time',glyphicon:'glyphicon-time'}
+			{name:'integer',value:'Integer',glyphicon:'glyphicon-th'}
 			{name:'checkbox',value:'Checkbox',glyphicon:'glyphicon-check'}
 			{name:'radio',value:'Radio',glyphicon:'glyphicon-record'}
 			{name:'dropdown',value:'Dropdown',glyphicon:'glyphicon-list'}
