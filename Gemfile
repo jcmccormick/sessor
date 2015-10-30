@@ -15,7 +15,6 @@ gem 'angular-rails-templates'
 gem "foreman"
 gem 'devise_token_auth'
 gem 'bcrypt', '~> 3.1.10'
-gem 'omniauth'
 gem 'kaminari'
 gem 'figaro'
 gem 'momentjs-rails'

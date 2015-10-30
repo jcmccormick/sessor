@@ -19,7 +19,7 @@
   </h4>
 
   <div class="col-xs-6">
-    <input type="text" class="form-control" placeholder="{{(field.fieldtype == 'labelntext' && 'Label') || 'Name'}}" ng-model="field.name">
+    <input type="text" class="form-control" id="field_name_{{field.section_id}}{{field.column_id}}{{field.id}}" placeholder="{{(field.fieldtype == 'labelntext' && 'Label') || 'Name'}}" ng-model="field.name">
   </div>
   <div class="col-xs-6">
     <select class="form-control" ng-options="field_section.i as (field_section.n || 'Section '+field_section.i) for field_section in form.sections" ng-model="field.section_id" ng-change="form.changeFieldSection(field, '{{field.section_id}}')" scroll-to=".force-hover" template="form"><option value="">Change section...</option></select>

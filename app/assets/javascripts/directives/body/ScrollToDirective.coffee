@@ -12,9 +12,9 @@ directives.directive('scrollTo', [ ->
             element.on 'click', ()->
                 setTimeout (()->
                     $('html, body').stop(true, true).animate({scrollTop: $(scope.scrollTo).offset().top-length }, "slow", ()->
-                        !scope.bypass && $('.page_addition').focus()
+                        scope.template.sO.fieldtype && $('#field_name_'+scope.template.sO.section_id+scope.template.sO.column_id+scope.template.sO.id).focus().select()
                     )
-                ), 25
+                ), 250
 
   }
 ])

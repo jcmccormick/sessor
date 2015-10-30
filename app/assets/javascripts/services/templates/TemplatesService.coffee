@@ -36,7 +36,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 				# editing
 				form && template.e = true
-				form && template.poppedOut = true
+				form && template.poppedOut = false
 
 				# collect drafts
 				# form && collectDrafts = $interval (->
@@ -211,17 +211,23 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 		# change a field's column_id
 		changeFieldColumn: (field, column_id)->
+			orig_col = field.column_id
+			orig_col_ord = field.column_order
+			field.column_id = column_id
+			field.column_order = 1
+
 			sect = $.grep this.sections, (section)->
 				section.i == field.section_id
 			index = this.sections.indexOf(sect[0])
 
 			if column_id > 0 && column_id <= this.sections[index].c
-				field.column_id != column_id && for tempField in this.fields
+				orig_col != column_id && for tempField in this.fields
 					if tempField.section_id == field.section_id
-						tempField.column_id == field.column_id && tempField.column_order > field.column_order && tempField.column_order--
-						tempField.column_id == column_id && tempField.column_order++
-				field.column_id = column_id
-				field.column_order = 1
+						tempField.column_id == orig_col && tempField.column_order > orig_col_ord && tempField.column_order--
+						tempField.column_id == column_id && tempField.id != field.id && tempField.column_order++
+			else
+				field.column_id = orig_col
+				field.column_order = orig_col_ord
 				
 			return
 

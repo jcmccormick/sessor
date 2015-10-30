@@ -21,7 +21,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
   linker = (scope, element, attrs)->
 
     # Create a container (form-group) for field input box layout
-    fwstart = '<div class="form-group" ng-class="{\'clear-align\':field.fieldtype==\'checkbox\' || field.fieldtype==\'radio\' || field.fieldtype==\'labelntext\'}" scroll-to=".force-hover" template="template">
+    fwstart = '<div class="form-group" ng-class="{\'clear-align\':field.fieldtype==\'checkbox\' || field.fieldtype==\'radio\' || field.fieldtype==\'labelntext\',\'space\':field.fieldtype==\'checkbox\' && field.column_order == 1}" scroll-to=".force-hover" template="template">
                 <div class="glyphs">
                   <span ng-if="field.tooltip" bs-popover>
                     <i class="glyphicon glyphicon-question-sign" rel="popover" data-container="body" data-placement="bottom" data-html="false" data-content="{{field.tooltip}}"></i>
@@ -43,11 +43,12 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     ngmodel = if scope.report then 'ng-model="field.value.input"' else 'ng-model="field.default_value"'
     checkboxmodel = if scope.report then 'ng-model="$parent.field.value.input"' else 'ng-model="$parent.field.default_value"'
 
-    inputend = ' placeholder="{{field.placeholder}}" name="{{field.name}}" ng-required="field.required" ng-disabled="field.disabled">'
+    fid = ' id="{{field.section_id}}{{field.column_id}}{{field.id}}"'
+    pho = ' placeholder="{{field.placeholder}}"'
+
+    inputend = ' name="{{field.section_id}}{{field.column_id}}{{field.id}}" ng-required="field.required" ng-disabled="field.disabled">'
     
-    standard = clas+' '+ngmodel+' '+inputend
-
-
+    standard = clas+' '+fid+' '+pho+' '+ngmodel+' '+inputend
 
     # Define the particulars of each supported field
     labelntext = '<p ng-if="!field.value.input && !field.default_value && template.e">
@@ -63,17 +64,17 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     date = inputstart+' type="date" '+standard
     time = inputstart+' type="time" '+standard
 
-    checkbox = '<div class="clearfix">
-                  '+inputstart+' type="checkbox" class="form-control imod" '+checkboxmodel+inputend+'
+    checkbox = '<label for="{{field.section_id}}{{field.column_id}}{{field.id}}" class="clearfix">
+                  '+inputstart+' type="checkbox" class="form-control imod" '+fid+checkboxmodel+inputend+'
                   <h5>{{field.name}}</h5>
-                </div>'
+                </label>'
     radio = '   <span ng-if="field.options && !field.options.length">
                   Click to add options...
                 </span>
-                <div class="clearfix" ng-repeat="option in field.options track by $index">
-                  '+inputstart+' type="radio" class="form-control imod" ng-value="field.options[$index]" '+ngmodel+inputend+'
+                <label for="{{field.section_id}}{{field.column_id}}{{field.id}}{{$index}}" class="clearfix" ng-repeat="option in field.options track by $index">
+                  '+inputstart+' type="radio" class="form-control imod" id="{{field.section_id}}{{field.column_id}}{{field.id}}{{$index}}" ng-value="field.options[$index]" '+ngmodel+inputend+'
                   <h5>{{option}}</h5>
-                </div>'
+                </label>'
     dropdown = '<select ng-options="option for option in field.options" '+standard+'
                   <option value="">{{field.placeholder || "Select an item..."}}</option>
                 </select>'
@@ -86,12 +87,9 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
     # Pre-parse the value
     cur_value = if scope.report then scope.field.value.input else scope.field.default_value
     if cur_value?
-      if cur_field == 'integer'
-        cur_value = parseInt(cur_value, 10)
-      else if cur_field == 'date' || cur_field == 'time'
-        cur_value = if cur_value != '1970-01-01T00:00:00.000Z' then new Date(cur_value) else ''
-      else if cur_field == 'checkbox'
-        cur_value = if cur_value == 't' then 1 else 0 
+      cur_field == 'checkbox' && cur_value = if cur_value == 't' then true else false 
+      cur_field == 'integer' && cur_value = parseInt(cur_value, 10)
+      (cur_field == 'date' || cur_field == 'time') && cur_value = if cur_value != '1970-01-01T00:00:00.000Z' then new Date(cur_value) else ''
 
     # Reattach parsed value
     !scope.report && scope.field.default_value = cur_value
@@ -121,14 +119,10 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
       # input text and not an actual <input> field
 
       switch cur_field
-        when "integer"
-          scope.field.value.input = parseInt(scope.field.value.input, 10)
-        when "date"
-          scope.field.value.input? && scope.field.value.input = new Date(scope.field.value.input).format("DDDD, MMMM DS, YYYY")
-        when "time"
-          scope.field.value.input? && scope.field.value.input = new Date(scope.field.value.input).format("hh:mm TT")
-        when "checkbox"
-          scope.field.value.input = if scope.field.value.input == true then 'True' else 'False'
+        when "integer" then scope.field.value.input = parseInt(scope.field.value.input, 10)
+        when "date" then scope.field.value.input? && scope.field.value.input = new Date(scope.field.value.input).format("DDDD, MMMM DS, YYYY")
+        when "time" then scope.field.value.input? && scope.field.value.input = new Date(scope.field.value.input).format("hh:mm TT")
+        when "checkbox" then scope.field.value.input = if scope.field.value.input == true then 'True' else 'False'
 
       (!scope.field.value.input? || scope.field.value.input == '') && scope.field.value.input = 'No Data'
 

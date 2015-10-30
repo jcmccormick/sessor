@@ -60,11 +60,11 @@
       <div class="section-layout" ng-if="form.e">
         <span class="col-xs-12">
           Reorder
-          <a href="javascript:;" class="btn btn-primary" ng-click="form.moveSection($index, $index-1)" scroll-to=".force-hover" template="form"><i class="glyphicon glyphicon-arrow-up"></i></a>
-          <a href="javascript:;" class="btn btn-primary" ng-click="form.moveSection($index, $index+1)" scroll-to=".force-hover" template="form"><i class="glyphicon glyphicon-arrow-down"></i></a>
+          <a href="javascript:;" class="btn" ng-click="form.moveSection($index, $index-1)" scroll-to=".force-hover" template="form"><i class="glyphicon glyphicon-arrow-up"></i></a>
+          <a href="javascript:;" class="btn" ng-click="form.moveSection($index, $index+1)" scroll-to=".force-hover" template="form"><i class="glyphicon glyphicon-arrow-down"></i></a>
           <div class="pull-right">
-            <a href="javascript:;" class="btn btn-primary" ng-if="section.c > 1" ng-click="form.deleteSectionColumn(section)"><i class="glyphicon glyphicon-minus"></i></a>
-            <a href="javascript:;" class="btn btn-primary" ng-if="section.c < 3" ng-click="form.addSectionColumn(section)"><i class="glyphicon glyphicon-plus"></i></a>
+            <a href="javascript:;" class="btn" ng-if="section.c > 1" ng-click="form.deleteSectionColumn(section)"><i class="glyphicon glyphicon-minus"></i></a>
+            <a href="javascript:;" class="btn" ng-if="section.c < 3" ng-click="form.addSectionColumn(section)"><i class="glyphicon glyphicon-plus"></i></a>
             Column
             <i class="glyphicon glyphicon-chevron-down"></i>
             <a href="javascript:;" class="save-now" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(section.i)">
@@ -81,7 +81,7 @@
         <div ng-repeat="field in form.fields | filter:{column_id: $index+1, section_id: section.i} | orderBy:'column_order'">
           <template-field-directive ng-click="form.sO=field" myForm="myForm" field="field" template="form" report="report"></template-field-directive>
 
-          <draggable-options field="field" form="form" class="field-options" ng-show="form.sO==field" ng-if="form.e && !form.poppedOut" ng-class="{'slide':form.sO==field}"></draggable-options>
+          <draggable-options field="field" form="form" class="field-options" ng-if="form.e && !form.poppedOut && form.sO==field" ng-class="{'slide':form.sO==field}"></draggable-options>
           
         </div>
 
@@ -91,12 +91,11 @@
             <strong>New Field</strong> <small>{{section.n || 'Section '+(section.i)}}, Column {{$index+1}}</small>
           </h4>
           <div class="col-xs-12 col-md-4">
-            <small>OPTIONAL</small>
             <input type="text" class="form-control" placeholder="Name" ng-model="form.newFieldName">
             <input type="text" class="form-control" placeholder="Placeholder" ng-model="form.newFieldPlaceholder">
+            <small>&nbsp; At least 1 required</small>
           </div>
           <div class="col-xs-12 col-md-8">
-            <small>TYPE</small>
             <div class="field-types">
               <a href="javascript:;" class="btn" ng-repeat="type in form.addFieldTypes" ng-click="form.addField(section.i, $parent.$index+1, type)" scroll-to=".force-hover" template="form">
                 <i class="glyphicon {{type.glyphicon}}"></i> {{type.value}}

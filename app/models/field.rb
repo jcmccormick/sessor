@@ -6,5 +6,5 @@ class Field < ActiveRecord::Base
 	belongs_to :template, inverse_of: :fields, :touch => true
 
 	serialize :options, Array
-	
+
 end

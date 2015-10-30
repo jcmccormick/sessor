@@ -32,6 +32,9 @@ sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
   $routeProvider.when('/',
     templateUrl: "main/index.html"
   )
+  .when('/ncptw2015',
+    templateUrl: "main/ncptw2015.html"
+  )
   .when('/support',
     templateUrl: "main/support.html"
     resolve: authResolver

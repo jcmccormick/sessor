@@ -231,6 +231,10 @@ blockquote {
   padding: 15px 0;
   background-color: white;
 
+  @include respond(tablet) {
+    padding: 45px;
+  }
+
   h1 {
     word-wrap: break-word;
   }
@@ -239,112 +243,6 @@ blockquote {
     background-color: transparent;
     background-image: linear-gradient(0deg, transparent 24%, rgba(0, 0, 0, .05) 25%, rgba(0, 0, 0, .05) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, .05) 75%, rgba(0, 0, 0, .05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 0, 0, .05) 25%, rgba(0, 0, 0, .05) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, .05) 75%, rgba(0, 0, 0, .05) 76%, transparent 77%, transparent);
     background-size: 50px 50px;
-  }
-
-  @include respond(tablet) {
-    padding: 45px;
-  }
-}
-.paper-width {
-  @include respond(desktop) {
-    width: 100% !important;
-    padding-right: 225px !important;
-  }
-}
-.paper-height {
-  margin-bottom: 110px;
-
-  @include respond(desktop) {
-    margin-bottom: 0;
-  }
-}
-
-/*
- * Page Editing Options Style
- */
-
-.template-options {
-  background-color: #f5f5f5;
-  position: fixed;
-  top: 50px;
-  bottom: 0;
-  right: 0;
-  width: 62.5%;
-  padding: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  z-index: 6;
-
-  @include respond(tablet){
-    width: 225px;
-  }
-
-  textarea {
-    resize: vertical;
-    max-height: 300px;
-  }
-
-  hr {
-    margin: 0;
-    border: 1px solid #aaa;
-  }
-
-  [type=checkbox] {
-    margin: 0 !important;
-    width: 34px !important;
-    height: 34px !important;
-  }
-
-  .options-set {
-    .options-header {
-      cursor: pointer;
-
-      i {
-        -webkit-transition: -webkit-transform .5s ease;
-        -moz-transition: -moz-transform .5s ease;
-        -o-transition: -o-transform .5s ease;
-        transition: transform .5s ease;
-      }
-
-      .close {
-        font-size: 18px;
-        margin-top: 5px;
-      }
-    }
-
-    .options-slide-out {
-      overflow: hidden;
-      max-height: 0;
-
-      -webkit-transition: max-height .5s ease;
-      -moz-transition: max-height .5s ease;
-      transition: max-height .5s ease;
-    }
-
-    &.active {
-      .options-header {
-        i {
-          -webkit-transform:rotate(-90deg);
-          -moz-transform:rotate(-90deg);
-          -o-transform:rotate(-90deg);
-          transform:rotate(-90deg);
-        }
-      }
-      .options-slide-out {
-        max-height: 500px;
-      }
-    }
-  }
-
-  input,
-  textarea {
-    &.ng-leave {
-      display: none;
-    }
-  }
-
-  .input-group {
-    padding: 0 0 5px 0;
   }
 }
 
@@ -387,9 +285,6 @@ blockquote {
     }
 
   }
-  .push-out {
-    margin: 25px 0;
-  }
   .section-layout,
   .add-field-slide {
     background-color: #eee;
@@ -404,20 +299,24 @@ blockquote {
     border-top: 5px solid #ddd;
     margin: 0 -15px;
 
+    a,
+    input {
+      margin-bottom: 5px;
+    }
+
     .field-types {
       display: flex;
       flex-wrap: wrap;
 
       a {
         text-align: left;
-        min-width: 120px;
+        min-width: 111px;
         padding-left: 0;
       }
     }
   }
   .column {
     background-color: white;
-    background-size: -10px auto;
   }
 
   @include respond(desktop) {
@@ -436,6 +335,7 @@ blockquote {
       max-height: 320px;
     }
     .add-field-slide {
+      margin-top: 15px;
       padding: 4px 0 12px;
       border-top: 5px solid #ddd;
     }
@@ -447,22 +347,29 @@ blockquote {
   overflow: hidden;
   min-height: 0;
 
-  @include respond(desktop) {
-    &.ui-draggable {
-      position: fixed !important;
-      padding: 0;
-      z-index: 1060;
-      width: 20%;
-      -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    }
-    &:not(.ui-draggable) {
-      position: static !important;
+  &.ui-draggable {
+    position: fixed !important;
+    padding: 0;
+    z-index: 1040;
+    width: 40%;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  }
+  &:not(.ui-draggable) {
+    position: static !important;
+
+    .selected-field-options {
+      margin: 15px 0;
     }
   }
 
   .selected-field-options {
     background-color: #eee;
+
+    .col-xs-6,
+    .input-group {
+      margin-bottom: 5px;
+    }
 
     .drag-bar {
       display: block;
@@ -472,6 +379,12 @@ blockquote {
       background: repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
     }
     .glyphicon-new-window {
+      display: none;
+
+      @include respond(desktop) {
+        display: inline-block;
+      }
+
       color: forestgreen;
       cursor: pointer;
       -webkit-transform: rotate(-90deg);
@@ -523,6 +436,10 @@ template-field-directive {
       font-size: 20px;
     }
 
+    label {
+      display: inline;
+    }
+
     /* Replace mmddyyy/hhmmampm with placeholder until focused or data */
     input[type="date"],
     input[type="time"] {
@@ -549,6 +466,10 @@ template-field-directive {
 
     &.clear-align {
       margin:0;
+    }
+
+    &.space {
+      margin-top: 20px !important;
     }
 
     .glyphs {
