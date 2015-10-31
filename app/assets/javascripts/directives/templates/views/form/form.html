@@ -66,10 +66,8 @@
             <a href="javascript:;" class="btn" ng-if="section.c > 1" ng-click="form.deleteSectionColumn(section)"><i class="glyphicon glyphicon-minus"></i></a>
             <a href="javascript:;" class="btn" ng-if="section.c < 3" ng-click="form.addSectionColumn(section)"><i class="glyphicon glyphicon-plus"></i></a>
             Column
-            <i class="glyphicon glyphicon-chevron-down"></i>
-            <a href="javascript:;" class="save-now" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(section.i)">
-              <i class="glyphicon glyphicon-remove"></i>
-            </a>
+            <i class="glyphicon glyphicon-chevron-down"></i> &nbsp;
+            <a href="javascript:;" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(section.i)">Delete</a>
           </div>
 
         </span>

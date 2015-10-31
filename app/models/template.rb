@@ -9,10 +9,10 @@ class Template < ActiveRecord::Base
 	has_and_belongs_to_many :reports
 
 	# Relate to Fields.
-	has_many :fields, dependent: :destroy
+	has_many :fields, inverse_of: :template, dependent: :destroy
 
 	# Saving a Template saves its associated Fields.
-	accepts_nested_attributes_for :fields
+	accepts_nested_attributes_for :fields, reject_if: :reject_field, allow_destroy: true
 
 	# Create a scope that assures the loading of all Template associations in a single DB call. Used as `Templates.minned`.
 	#default_scope { eager_load(:fields) }
@@ -27,11 +27,10 @@ class Template < ActiveRecord::Base
 	# Link up Template defaults method on creation.
 	before_create :set_defaults
 
-	# Check for deleted fields
-	before_update :check_fields
-
 	# Prevent destroy if attached to any reports
 	before_destroy :allow_destroy
+
+	private
 
 	# Use a method to get as little information as needed when viewing all templates. Usable on ActiveRecord Relationship.
 	def self.index_minned
@@ -44,13 +43,11 @@ class Template < ActiveRecord::Base
 		self.sections = [{i:1,n:'',c:1}]
 	end
 
-	# Search for fields that have no section id and delete them
-	def check_fields
-		self.fields.each do |field|
-			if field.section_id == nil
-				field.destroy
-			end
-		end
+	def reject_field(attributes)
+		exists = attributes['id'].present?
+		empty = attributes.slice(:section_id).values.all?(&:blank?)
+		attributes.merge!({:_destroy => 1}) if exists and empty
+		return (!exists and empty)
 	end
 
 	# Check for existing report associations

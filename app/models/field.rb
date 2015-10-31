@@ -2,9 +2,14 @@
 
 class Field < ActiveRecord::Base
 
-	# Relate to Columns.
-	belongs_to :template, inverse_of: :fields, :touch => true
+	validates :template, :section_id, :column_id, :column_order, presence: true
+
+	belongs_to :template
 
 	serialize :options, Array
+
+	before_save do 
+		template.touch
+	end
 
 end
