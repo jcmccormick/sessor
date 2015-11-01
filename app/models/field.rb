@@ -8,7 +8,7 @@ class Field < ActiveRecord::Base
 
 	serialize :options, Array
 
-	before_save do 
+	after_save do 
 		template.touch
 	end
 

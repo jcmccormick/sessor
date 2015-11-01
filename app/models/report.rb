@@ -27,7 +27,6 @@ class Report < ActiveRecord::Base
 
   default_scope { eager_load([{:templates => :fields}, :values])}
 
-  private
 
   # Use a method to get as little information as needed when viewing all reports. Usable on ActiveRecord Relation.
   def self.index_minned

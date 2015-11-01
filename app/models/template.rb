@@ -11,6 +11,8 @@ class Template < ActiveRecord::Base
 	# Relate to Fields.
 	has_many :fields, inverse_of: :template, dependent: :destroy
 
+	has_many :values, through: :reports
+
 	# Saving a Template saves its associated Fields.
 	accepts_nested_attributes_for :fields, reject_if: :reject_field, allow_destroy: true
 

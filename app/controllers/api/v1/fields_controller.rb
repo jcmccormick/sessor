@@ -28,10 +28,8 @@ module Api::V1 #:nodoc:
     end
 
     def destroy
-      #ActiveRecord::Base.no_touching do
       field = Field.find(params[:id])
       field.destroy
-      #end
       head :no_content
     end
 

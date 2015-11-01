@@ -1,0 +1,65 @@
+<page-menu>
+	<li class="dropdown">
+		<a href="#/statistics">Statistics <b class="caret"></b></a>
+		<ul class="dropdown-menu">
+			<li><a href="javascript:;" ng-click="sv.type=undefined;sv.field=undefined">Reset</a></li>
+		</ul>
+	</li>
+</page-menu>
+
+<div class="clearfix form-header">
+	<div class="col-xs-12" ng-if="!sv.field">
+		<div class="col-xs-6 col-md-1">
+			<label for="graph-days">Past...days</label>
+			<select id="graph-days" class="form-control" ng-options="day for day in [5, 10, 30, 60, 90]" ng-model="sv.days"></select>
+		</div>
+		<div class="col-xs-6 col-md-2" ng-if="sv.days">
+			<label for="template-select">Page</label>
+			<select id="template-select" class="form-control" ng-options="template as template.name for template in sv.templates" ng-model="sv.template"></select>
+		</div>
+		<div class="col-xs-6 col-md-2" ng-if="sv.template.fields">
+			<label for="field-select">Field</label>
+			<select id="field-select" class="form-control" ng-options="field as field.name for field in sv.template.fields" ng-model="sv.field" ng-change="sv.getFieldData()"></select>
+		</div>
+	</div>
+	<div class="col-xs-12 col-md-4" ng-if="sv.field">
+		<label class="col-xs-12">Graph Type</label>
+		<a href="javascript:;" class="btn" ng-repeat="graph in sv.graphs" ng-click="sv.showData(graph)">{{graph.name}}</a>
+	</div>
+	<div class="col-xs-12" ng-if="sv.type">
+		<div class="col-xs-6 col-md-2">
+			<label for="graph-title">Title</label>
+			<input id="graph-title" type="text" class="form-control" ng-model="sv.options.title" />
+		</div>
+		<div class="col-xs-6 col-md-2">
+			<label for="graph-x-title">X-Axis</label>
+			<input id="graph-x-title" type="text" class="form-control" ng-model="sv.options.hAxis.title" />
+		</div>
+		<div class="col-xs-6 col-md-2">
+			<label for="graph-y-title">Y-Axis</label>
+			<input id="graph-y-title" type="text" class="form-control" ng-model="sv.options.vAxis.title" />
+		</div>
+		<div class="col-xs-6 col-md-1">
+			<label for="graph-stack">
+				Stack 
+				<input id="graph-stack" type="checkbox" class="form-control imod" ng-model="sv.options.isStacked" />
+			</label>
+		</div>
+		<div class="col-xs-6 col-md-1">
+			<label for="graph-fill">Fill <small>(if applicable)</small></label>
+			<input id="graph-fill" type="range" min="0" max="50" class="form-control" ng-model="sv.options.fill" />
+		</div>
+		<div class="col-xs-6 col-md-1">
+			<label for="graph-exact">
+				Exact Values
+				<input id="graph-exact" type="checkbox" class="form-control imod" ng-model="sv.options.displayExactValues" />
+			</label>
+		</div>
+	</div>
+</div>
+
+
+<div class="paper row">
+	<h3 class="text-center" ng-show="!sv.field">Select a page, then a field and graph type...</h3>
+	<div ng-if="sv.type" google-chart chart="sv" style="height: 500px"></div>
+</div>

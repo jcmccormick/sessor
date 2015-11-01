@@ -4,8 +4,8 @@ controllers.controller("StatisticsController",  ['StatisticsService',
 
 	sv = this
 
-	StatisticsService.init(sv).then((res)->
-		sv = res
+	StatisticsService.init().then((res)->
+		$.extend sv, res
 	)
 
 	return sv
