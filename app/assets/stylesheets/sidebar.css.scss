@@ -24,17 +24,7 @@
     top:0;
     left:0;
     z-index: 1031;
-    font-size: 10px;
-
-    >div>ul>li>a {
-        padding: 10px 0;
-    }
-}
-
-@media(min-width:375px) {
-    #page-menu {
-        font-size: 12px;
-    }
+    font-size: 12px;
 }
 
 @media(min-width:768px) {
@@ -61,7 +51,6 @@
 @media(min-width:768px) {
 
     .side-nav {
-
         background-color: #eee;
         position: fixed;
         top: 50px;
@@ -117,8 +106,6 @@
                 color: #333 !important;
             }
         }
-
-
     }
 }
 

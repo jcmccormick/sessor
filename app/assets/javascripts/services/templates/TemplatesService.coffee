@@ -108,6 +108,8 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 				if !!res.errors
 					Flash.create('danger', res.errors, 'customAlert')
 					return
+					
+				$rootScope.$broadcast('cleartemplates')
 
 				if !res.id
 					res.$save({class: 'templates'}, (res)->
@@ -118,7 +120,6 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 						form && form.$setPristine()
 						!temporary && $location.path("/templates/#{res.id}")
 					)
-				$rootScope.$broadcast('cleartemplates')
 			)
 			return
 
