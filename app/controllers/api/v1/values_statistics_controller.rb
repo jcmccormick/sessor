@@ -13,7 +13,7 @@ module Api::V1 #:nodoc:
 			field = current_user.fields.find(params[:field_id])
 
 			field_data = (0..days-1).to_a.inject([]) do |memo, i|
-				date = i.days.ago.to_date
+				date = i.days.ago.to_time
 				from, to = date.beginning_of_day, date.end_of_day
 				all = current_user.values.where(field_id: field['id'], created_at: from .. to)
 				total_count = all.count

@@ -46,7 +46,7 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 
 			# Examine first row of returned data (this.field_data) to extract
 			# and create table columns based on unique value inputs 
-			n = 1
+			n = 0
 			while n < this.field_data[0].values.length
 				this.data.cols.push { id: this.field_data[0].values[n].input+'-id', label: this.field_data[0].values[n].input, type: 'number' }
 				n++
@@ -57,7 +57,7 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 			n = 0
 			while n < this.field_data.length
 				# add Date data for each row
-				this.data.rows[n] = {c: [ {v: new Date(this.field_data[n].date).format('DD-MM-YY')} ] }
+				this.data.rows[n] = {c: [ {v: new Date(this.field_data[n].date).format('MM/DD/YY')} ] }
 				i = 0
 				while i < this.field_data[n].values.length
 					# add frequency count for each value.input column
