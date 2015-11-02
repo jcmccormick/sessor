@@ -62,7 +62,6 @@ module Api::V1#:nodoc:
         params.require(:template).permit(
           :name, :draft, :private_group, :private_world, :group_id, :group_edit, :group_editors,
           {:sections => []},
-          {:columns => []},
           {:fields_attributes => [
             :id, :name, :placeholder, :tooltip, :fieldtype, :required, :disabled, :glyphicon, :section_id, :column_id, :column_order, :default_value, {:options => []}
           ]}

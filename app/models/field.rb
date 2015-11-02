@@ -8,8 +8,8 @@ class Field < ActiveRecord::Base
 
 	serialize :options, Array
 
-	after_save do 
-		template.touch
-	end
+	before_save { name.present? || placeholder.present? || default_value.present? || section_id == ''}
+
+	after_save { template.touch }
 
 end

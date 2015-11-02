@@ -11,38 +11,34 @@
 			</ul>
 		</li>
 		<li><a href="javascript:;" ng-click="vr.report.saveReport(true, vr.myForm, vr.report)"><span ng-class="{'save-now':vr.myForm.$dirty}">Save</span></a></li>
-		<li class="dropdown">
-			<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Pages <b class="caret"></b></a>
-			<ul class="dropdown-menu bump-left report-pages" role="menu">
-				<li><span><a href="javascript:;" class="h4" ng-click="vr.report.newPageAdd=true">Add Page</a></span></li>
-				<li ng-repeat="template in vr.report.templates"><a href="javascript:;" ng-class="{'selected':template==vr.report.form}" ng-click="vr.report.form = template">{{template.name}}</a></li>
-			</ul>
-		</li>
-		<li class="dropdown">
-			<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
-			<ul class="dropdown-menu bump-left" role="menu">
-				<li><span>Report</span></li>
-				<li><span><label><input ng-model="vr.report.allow_title" type="checkbox"> Title</label></span></li>
-				<li ng-if="vr.report.allow_title"><span><label><input ng-model="vr.report.hideTitle" type="checkbox"> Hide Title</label></span></li>
-			</ul>
-		</li>
 	</page-menu>
 
-	<div ng-if="!vr.report.templates || vr.report.newPageAdd">
-		<!-- BEGIN PAGE ADD -->
-		<div class="paper row">
-			<div class="col-xs-12">
-				<button type="button" class="close" ng-if="vr.report.newPageAdd && vr.report.templates.length" ng-click="vr.report.newPageAdd=false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h3>Add Page</h3>
-				<a href="javascript:;" class="btn" ng-repeat="template in vr.report.add_templates | orderBy:'id'" ng-click="vr.report.addTemplate(template, vr.myForm, vr.report);vr.report.newPageAdd=false">{{template.name}}</a>
-				<div ng-if="!vr.report.add_templates.length">
-					<h3>Nothing here?</h3>
-					<p>Make sure the Page you want to add is not marked as Draft. Uncheck "Draft" under the Options menu when editing a Page, then save it.</p>
-					<p>Pages may only be added to a report once.</p>
-				</div>
+	<div class="form-header col-xs-12" ng-if="!vr.report.id || vr.report.editing">
+		<div class="col-xs-12" ng-if="!vr.report.add_templates.length && !vr.report.templates">
+			<p>It looks like you don't have any pages yet. Make sure the Page you want to add is not marked as Draft. Uncheck "Draft" under the Options menu when editing a Page, then save it.</p>
+			<p>Pages may only be added to a report once.</p>
+		</div>
+		<div class="col-xs-6 col-md-3">
+			<label for="report-name">Report Name</label>
+			<input type="text" id="report-name" class="form-control" placeholder="Optional" ng-model="vr.report.title" ng-keypress="($event.keyCode==13) && vr.report.saveReport(true, vr.myForm, vr.report)" />
+		</div>
+		<div class="col-xs-6 col-md-3" ng-if="vr.report.add_templates.length">
+			<label for="add-pages">Add Page</label>
+			<div class="input-group">
+				<select id="add-pages" class="form-control" ng-options="template.name for template in vr.report.add_templates" ng-model="vr.template"></select>
+				<span class="input-group-btn">
+					<a href="javascript:;" class="btn btn-primary" ng-click="vr.report.addTemplate(vr.template, vr.myForm, vr.report);vr.report.newPageAdd=false">Add</a>
+				</span>
 			</div>
 		</div>
-		<!-- END PAGE ADD -->
+		<div class="col-xs-6 col-md-3">
+			<label for="current-page">Current Page</label>
+			<select id="current-page" class="form-control" ng-options="template.name for template in vr.report.templates" ng-model="vr.report.form"></select>
+		</div>
+		<div class="col-xs-6 col-md-3">
+			<label class="col-xs-12">&nbsp;</label>
+			<a href="javascript:;" class="btn" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="vr.report.removeTemplate(vr.report.form, vr.report)">Remove this page</a>
+		</div>
 	</div>
 
 	<template-form-directive report="vr.report" form="vr.report.form"></template-form-directive>

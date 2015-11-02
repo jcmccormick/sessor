@@ -16,31 +16,42 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			private_world: template.private_world
 			group_edit: template.group_edit
 			group_editors: template.group_editors
-			sections: template.sections
-			fields_attributes: template.fields
+			sections: (template.sections.length && template.sections) || undefined
+			fields_attributes: (template.fields.length && template.fields) || undefined
 			errors: ''
 		}, tempCopy
 
-		# fields without a section ID are removed, as they will
-		# be saved in the above tempCopy; the following makes sure
-		# any deleted fields will be removed from the client model
-		i = template.fields.length
-		while i--
-			template.fields[i].section_id == '' && template.fields.splice(i, 1)
-			
-		# not mandatory, but this removes any null options to prevent
-		# an annoying rails db insertion error for null arrays;
-		# any template array could be added here
-		for field in tempCopy.fields_attributes
-			field.options && !field.options.length && field.options = undefined
-		!tempCopy.sections.length && tempCopy.sections = undefined
-		!tempCopy.fields_attributes.length && tempCopy.fields_attributes = undefined
+		console.log tempCopy.fields_attributes
+		console.log tempCopy.sections
 
+		if tempCopy.fields_attributes
+			# fields without a section ID are removed, as they will
+			# be saved in the above tempCopy; the following makes sure
+			# any deleted fields will be removed from the client's 
+			# template model
+			i = template.fields.length
+			while i--
+				template.fields[i].section_id == '' && template.fields.splice(i, 1)
+			console.log template.fields
+
+		if template.id && template.fields.length && !template.deletingSection
+
+			# not mandatory, but this removes any null options to prevent
+			# an annoying rails db insertion error for null arrays;
+			# any template array that may be empty could be added here
+			for field in tempCopy.fields_attributes
+				field.options && !field.options.length && field.options = undefined
+			
+			# validate field name or placeholder presence
+			$.grep(tempCopy.fields_attributes, (field)->
+				!field.name && !field.placeholder && !field.default_value
+			).length && tempCopy.errors += '<p>All fields must have either a name, placeholder, or default value, and all label and text elements must have either have a label or text.</p>'
 
 		# validate name
-		!tempCopy.name && tempCopy.name = 'Untitled'
+		!tempCopy.name && template.name = 'Untitled'
 		!/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test(tempCopy.name) && tempCopy.errors += '<p>Template names must begin with a letter and only contain letters and numbers.</p>'
 
+		template.deletingSection = false
 		deferred.resolve(tempCopy)
 		return deferred.promise
 
@@ -80,7 +91,6 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 				# 		!tempCopy.time && template.drafts.push({
 				# 			time: moment()
 				# 			sections: tempCopy.sections
-				# 			columns: tempCopy.columns
 				# 			fields: tempCopy.fields
 				# 		})
 				# 		template.drafts.length > 5 && template.drafts.pop()
@@ -104,11 +114,11 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 		# save/update template
 		saveTemplate: (temporary, form)->
-			validateTemplate(this).then((res)->
+			(!this.id || (form && !form.$pristine)) && validateTemplate(this).then((res)->
 				if !!res.errors
 					Flash.create('danger', res.errors, 'customAlert')
 					return
-					
+
 				$rootScope.$broadcast('cleartemplates')
 
 				if !res.id
@@ -117,10 +127,10 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 					)
 				else
 					res.$update({class: 'templates', id: res.id}, (res)->
-						form && form.$setPristine()
 						!temporary && $location.path("/templates/#{res.id}")
 					)
 			)
+			form && form.$setPristine()
 			return
 
 		# delete template
@@ -168,7 +178,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			this.sections.splice section_id-1, 1
 			for section in this.sections
 				section.i > section_id && section.i--
-
+			this.deletingSection = true
 			this.saveTemplate(true)
 			return
 
@@ -189,7 +199,8 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			this.sO = field
 			field.name = this.newFieldName
 			field.placeholder = this.newFieldPlaceholder
-			!this.newFieldName && !this.newFieldPlaceholder && field.name = 'Untitled '+type.value
+			field.default_value = this.newFieldDefaultValue
+			!this.newFieldName && !this.newFieldPlaceholder && !this.newFieldDefaultValue && field.name = 'Untitled '+type.value
 			field.template_id = this.id
 			field.column_order = newFieldOrdering(this, section_id, column_id)
 			field.column_id = column_id
@@ -201,6 +212,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			)
 			this.newFieldName = undefined
 			this.newFieldPlaceholder = undefined
+			this.newFieldDefaultValue = undefined
 			return
 
 		# delete field

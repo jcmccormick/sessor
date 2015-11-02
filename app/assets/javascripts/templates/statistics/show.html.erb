@@ -4,7 +4,7 @@
 	<li><a href="javascript:;" ng-if="sv.type && sv.type != 'Table'" ng-click="sv.data.rows.reverse()">Reverse</a></li>
 </page-menu>
 
-<div class="clearfix form-header">
+<div class="form-header col-xs-12">
 	<div ng-if="!sv.field">
 		<div class="col-xs-12">
 			<p>Select a time range, then a page and field.</h3>
@@ -39,6 +39,10 @@
 		<div class="col-xs-3 col-md-1">
 			<label for="graph-height">Height</label>
 			<input id="graph-height" type="number" class="form-control" ng-model="sv.options.height">
+		</div>
+		<div class="col-xs-3 col-md-1" >
+			<label for="graph-totals">Totals</label>
+			<input id="graph-totals" type="checkbox" class="form-control" ng-model="sv.showTotals" ng-change="sv.setOptions()" />
 		</div>
 		<div class="col-xs-12 col-md-2" ng-if="sv.type != 'Table'">
 			<label for="graph-title">Title</label>
@@ -80,6 +84,7 @@
 		</div>
 	</div>
 </div>
-<div class="paper row" ng-if="sv.type">
+
+<div class="paper col-xs-12" ng-if="sv.type">
 	<div google-chart chart="sv"></div>
 </div>

@@ -1,53 +1,17 @@
 <draggable-options field="form.sO" form="form" class="field-options" ng-if="form.e && form.poppedOut && form.sO.fieldtype"></draggable-options>
 <div ng-form="myForm">
 
-  <div class="form-header" ng-if="!form.id || form.e">
-
-    <a href="javascript:;" ng-show="report.editing" class="text-danger close pull-right" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="report.removeTemplate(form, report)">&times;</a>
-
-    <div class="col-xs-12 col-md-3">
-      <label for="form-name">Page Name</label>
-      <input type="text" id="form-name" class="form-control" placeholder="Required" ng-model="form.name" ng-keypress="($event.keyCode==13) && form.saveTemplate(true)" />
-      <div ng-if="!form.id">Add a name, then press Enter</div>
-    </div>
-    <div ng-if="form.e">
-      <div class="col-xs-6 col-md-3">
-        <label for="new-section-name">New Section Name</label>
-        <div class="input-group">
-          <input type="text" id="new-section-name" class="form-control" placeholder="Optional" ng-model="form.newSectionName" />
-          <span class="input-group-btn">
-            <a href="javascript:;" class="btn btn-primary" ng-click="form.addSection(form.newSectionName)" scroll-to=".force-hover" template="form">Add</a>
-          </span>
-        </div>
-      </div>
-      <div class="col-xs-4 col-md-2">
-        <label>Draft</label>
-        <span class="btn-group btn-group-justified" ng-click="form.draft = !form.draft">
-          <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':form.draft}">On</a>
-          <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!form.draft}">Off</a>
-        </span>
-      </div>
-      <div class="col-xs-2 col-md-1">
-        <div class="input-group">
-          <label>Fields</label>
-          <p>{{form.activeFields()}} / 20</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div ng-if="report.hideTitle==false && report.allow_title==true" class="">
-    <div class="col-xs-12">
-      <input ng-if="!report.viewing" type="text" class="form-control imod" placeholder="Title" ng-model="report.title">
-      <h1 ng-if="report.viewing" class="text-center">{{report.title}}</h1>
-    </div>
-  </div>
-
   <div class="col-xs-12 paper" ng-class="{'gridline-workspace':form.e}" ng-show="form.sections">
-    <small class="col-xs-12" ng-if="form.draft && !form.e"><strong>Draft</strong></small>
+    <small class="col-xs-12">
+      <span ng-if="report.viewing">{{report.title}}</span>
+      <span ng-if="form.draft && !form.e">Draft</span>
+    </small>
+
+
     <div ng-if="!form.e" class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
       <h1><center>{{form.name}}</center></h1>
     </div>
+
 
     <div class="section-row stay-open clearfix" ng-class="{'col-md-4 col-md-offset-4':section.c==1,'col-md-8 col-md-offset-2':section.c==2,'col-md-12':section.c==3}" ng-repeat="section in form.sections track by $index">
     <!-- ng-class="{'stay-open':!form.fields.length || form.sO.section_id == section_id+1 || form.sO == section_id}" -->
@@ -91,6 +55,7 @@
           <div class="col-xs-12 col-md-4">
             <input type="text" class="form-control" placeholder="Name" ng-model="form.newFieldName">
             <input type="text" class="form-control" placeholder="Placeholder" ng-model="form.newFieldPlaceholder">
+            <input type="text" class="form-control" placeholder="Default Value" ng-model="form.newFieldDefaultValue">
             <small>&nbsp; At least 1 required</small>
           </div>
           <div class="col-xs-12 col-md-8">

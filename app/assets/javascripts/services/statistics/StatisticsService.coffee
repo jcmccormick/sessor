@@ -2,20 +2,74 @@ services = angular.module('services')
 services.service('StatisticsService', ['$q', 'ClassFactory',
 ($q, ClassFactory)->
 
+	countData = (chart)->
+		# Examine first row of returned data (chart.data_days) to extract
+		# and create table columns based on unique value inputs 
+		n = 0
+		while n < chart.data_days.length
+			for value in chart.data_days[n].values
+				!$.grep(chart.data.cols, (col)->
+					col.label == value.input
+				).length && chart.data.cols.push { id: value.input+'-id', label: value.input, type: 'number' }
+			n++
 
+		# append Date column to the beginning of table
+		chart.data.cols.unshift {id: 'day', label: 'Date', type: 'string'}
+		
+		n = 0
+		while n < chart.data_days.length
+			# add Date data for each row
+			chart.data.rows[n] = {c: [ {v: new Date(chart.data_days[n].date).format('MM/DD/YY')} ] }
+			i = 0
+			while i < chart.data.cols.length-1
+				# add frequency count for each value.input column
+				(chart.data_days[n].values[i]? && chart.data.rows[n].c.push { v: chart.data_days[n].values[i].count }) || chart.data.rows[n].c.push { v: 0 }
+				i++
+
+			# Next 2 operations add a Total column to the end of the chart which
+			# totals the number of counts per day
+			chart.data.rows[n].c.push {v: chart.data_days[n].total}
+			n++
+		chart.data.cols.push {id: 's', label: 'Total', type: 'number'}
+
+
+		chart.colsLen = []
+		n = 0
+		while n < chart.data.cols.length
+			chart.colsLen.push n
+			n++
+		chart.noTotals = angular.copy chart.colsLen
+		chart.noTotals.pop()
+
+		console.log chart.options.colsLen
+		console.log chart.options.noTotals
+
+		return
 
 	{
 
 		init: ->
 			deferred = $q.defer()
+			this.setDefaults()
 			sv = this
-
 			ClassFactory.query({class: 'values_statistics'}, (res)->
 				sv.templates = res
 				deferred.resolve(sv)
 			)
 
 			return deferred.promise
+
+		setDefaults: ->
+			this.data = {}
+			this.data.rows = []
+			this.data.cols = []
+			this.view = {}
+			this.options = {}
+			this.options.width = Math.round($(document).width()*.99)
+			this.options.height = Math.round($(document).height()*.65)
+			this.options.pieHole = 0
+			this.options.legend = 'bottom'
+			this.showTotals = true
 
 		graphs: [
 			{name:'Pie',type:'PieChart'}
@@ -30,51 +84,27 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 			deferred = $q.defer()
 			sv = this
 			ClassFactory.query({class: 'values_statistics', id: 'counts', field_id: sv.field.id, days: sv.days}, (res)->
-				console.log res
-				sv.field_data = res
+				sv.data_days = res
 				deferred.resolve(sv)
 			)
 			return deferred.promise
 
 		showDataCounts: (graph)->
-			this.data = {}
-			this.data.rows = []
-			this.data.cols = []
-			this.options = {}
-			this.options.pieHole = 0
+			this.setDefaults()
 			this.options.title = this.template.name+': '+this.field.name
+			countData(this)
 
-			# Examine first row of returned data (this.field_data) to extract
-			# and create table columns based on unique value inputs 
-			n = 0
-			while n < this.field_data[0].values.length
-				this.data.cols.push { id: this.field_data[0].values[n].input+'-id', label: this.field_data[0].values[n].input, type: 'number' }
-				n++
-
-			# append Date column to the beginning of table
-			this.data.cols.unshift {id: 'day', label: 'Date', type: 'string'}
-			
-			n = 0
-			while n < this.field_data.length
-				# add Date data for each row
-				this.data.rows[n] = {c: [ {v: new Date(this.field_data[n].date).format('MM/DD/YY')} ] }
-				i = 0
-				while i < this.field_data[n].values.length
-					# add frequency count for each value.input column
-					this.field_data[n].values[i] && this.field_data[n].values[i].input? && this.data.rows[n].c.push { v: this.field_data[n].values[i].count }
-					i++
-				# Next 2 operations add a Total column to the end of the chart which
-				# totals the number of counts per day
-				graph.type == 'Table' && this.data.rows[n].c.push {v: this.field_data[n].total}
-				n++
-			graph.type == 'Table' && this.data.cols.push {id: 's', label: 'Total', type: 'number'}
+			this.type = graph.type
 
 			# remove any days that have absolutely no data
 			#this.data.rows = $.grep this.data.rows, (row)->
 			#	row.c.length > 1
 
-			this.type = graph.type
 			return
+
+		setOptions: ->
+			console.log this.options.showTotals
+			this.view.columns = if !this.showTotals then this.noTotals else this.colsLen
 
 	}
 ])

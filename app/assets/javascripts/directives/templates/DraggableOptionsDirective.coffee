@@ -14,9 +14,9 @@ directives.directive( 'draggableOptions', [->
 
     $(element).draggable('disable')
 
-    scope.$watch 'form.poppedOut', (newVal)->
-      newVal && $(element).draggable("enable").addClass('ui-draggable').css({left:'50px',top:'50px'})
-      !newVal && $(element).draggable("disable").removeClass('ui-draggable')
+    scope.$watch 'form.poppedOut', (active)->
+      active && $(element).draggable("enable").addClass('ui-draggable').css({left:'50px',top:'50px'})
+      !active && $(element).draggable("disable").removeClass('ui-draggable')
 
 
 ])

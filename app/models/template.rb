@@ -22,9 +22,8 @@ class Template < ActiveRecord::Base
 	# Titles must start with a letter and only contain letters and numbers. 
 	validates :name, format: { with: /\A[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
 
-	# Serialize sections and columns.
+	# Serialize sections.
 	serialize :sections, Array
-	serialize :columns, Array
 
 	# Link up Template defaults method on creation.
 	before_create :set_defaults
