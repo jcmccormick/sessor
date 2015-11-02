@@ -189,40 +189,6 @@ blockquote {
 }
 
 /*
- * Breadcrumbz
- */
-
-.edit-report-crumbs {
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  z-index: 10;
-  background-color: #555 !important;
-  border-radius: 0 !important;
-  margin: 0 !important;
-  padding: 0 20px 20px !important;
-  font-size: 16px;
-  text-transform: capitalize;
-
-  h3 {
-    color: #aaa;
-  }
-
-  @include respond(tablet) {
-    left: 225px;
-  }
-
-  @include respond(desktop) {
-    display: none;
-  }
-
-  &:hover {
-    background-color: #222 !important;
-    cursor: pointer;
-  }
-}
-
-/*
  * Paper
  */
 
@@ -349,11 +315,18 @@ blockquote {
 
   &.ui-draggable {
     position: fixed !important;
+    opacity: .2;
     padding: 0;
     z-index: 1040;
     width: 40%;
     -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    -moz-transition: opacity 1s ease;
+    transition: opacity 1s ease;
+
+    &:hover {
+      opacity: 1;
+    }
   }
   &:not(.ui-draggable) {
     position: static !important;

@@ -29,6 +29,9 @@ json.templates @report.templates do |template|
 					json.input value.input
 				end
 			end
+			if field.fieldtype == 'labelntext'
+				json.input field.default_value
+			end
 		end
 
 	end

@@ -43,13 +43,8 @@ class Report < ActiveRecord::Base
       template = Template.find(template_id)
       templates << template unless templates.include?(template)
       template.fields.each do |field|
-        Value.where(report_id: self.id, field_id: field.id).first_or_create do |value|
+        field.fieldtype != 'labelntext' && Value.where(report_id: self.id, field_id: field.id).first_or_create do |value|
           value.input = field.default_value
-        end
-        if field.fieldtype == 'labelntext'
-          value = Value.where(report_id: self.id, field_id: field.id).first 
-          value.input = field.default_value 
-          value.save
         end
       end
     end

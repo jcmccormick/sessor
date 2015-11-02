@@ -114,11 +114,11 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 						$location.path("/templates/#{res.id}/edit")
 					)
 				else
-					res.$update({class: 'templates', id: res.id}, (rep)->
-						$rootScope.$broadcast('cleartemplates')
+					res.$update({class: 'templates', id: res.id}, (res)->
 						form && form.$setPristine()
 						!temporary && $location.path("/templates/#{res.id}")
 					)
+				$rootScope.$broadcast('cleartemplates')
 			)
 			return
 

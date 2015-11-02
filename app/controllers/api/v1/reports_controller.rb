@@ -25,14 +25,9 @@ module Api::V1 #:nodoc:
     end
 
     def show
-      @report = if @report
-        @report
-      else
-        current_user.reports.find(params[:id])
-      end
+      @report = current_user.reports.find(params[:id])
       @report.populate_values
-      puts 'RELOADING'
-      @report.reload
+      @report.reload unless !@report.changed
       @report
     end
 
