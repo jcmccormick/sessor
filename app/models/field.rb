@@ -2,13 +2,13 @@
 
 class Field < ActiveRecord::Base
 
-	validates :template, :section_id, :column_id, :column_order, presence: true
+	validates :template, :fieldtype, :o, presence: true
 
 	belongs_to :template
 
-	serialize :options, Array
+	serialize :o, JSON
 
-	before_save { name.present? || placeholder.present? || default_value.present? || section_id == ''}
+	before_save { o['name'].present? || o['placeholder'].present? || o['default_value'].present? || o == ''}
 
 	after_save { template.touch }
 

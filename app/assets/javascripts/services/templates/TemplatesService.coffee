@@ -16,13 +16,10 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			private_world: template.private_world
 			group_edit: template.group_edit
 			group_editors: template.group_editors
-			sections: (template.sections.length && template.sections) || undefined
-			fields_attributes: (template.fields.length && template.fields) || undefined
+			sections: (template.sections && template.sections.length && template.sections) || undefined
+			fields_attributes: (template.fields && template.fields.length && template.fields) || undefined
 			errors: ''
 		}, tempCopy
-
-		console.log tempCopy.fields_attributes
-		console.log tempCopy.sections
 
 		if tempCopy.fields_attributes
 			# fields without a section ID are removed, as they will
@@ -31,21 +28,18 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			# template model
 			i = template.fields.length
 			while i--
-				template.fields[i].section_id == '' && template.fields.splice(i, 1)
-			console.log template.fields
+				template.fields[i].o == '' && template.fields.splice(i, 1)
 
-		if template.id && template.fields.length && !template.deletingSection
+			if !template.deletingSection
+				# validate field name or placeholder presence
+				$.grep(tempCopy.fields_attributes, (field)->
+					!field.o.name && !field.o.placeholder && !field.o.default_value
+				).length && tempCopy.errors += '<p>All fields must have either a name, placeholder, or default value, and all label and text elements must have either have a label or text.</p>'
 
-			# not mandatory, but this removes any null options to prevent
-			# an annoying rails db insertion error for null arrays;
-			# any template array that may be empty could be added here
-			for field in tempCopy.fields_attributes
-				field.options && !field.options.length && field.options = undefined
-			
-			# validate field name or placeholder presence
-			$.grep(tempCopy.fields_attributes, (field)->
-				!field.name && !field.placeholder && !field.default_value
-			).length && tempCopy.errors += '<p>All fields must have either a name, placeholder, or default value, and all label and text elements must have either have a label or text.</p>'
+				for field in tempCopy.fields_attributes
+					console.log field.o.section_id
+					for option in field.o
+						console.log option
 
 		# validate name
 		!tempCopy.name && template.name = 'Untitled'
@@ -56,8 +50,8 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		return deferred.promise
 
 	newFieldOrdering = (template, section_id, column_id)->
-		count = $.grep template.fields, (i)->
-			section_id == i.section_id && column_id == i.column_id
+		count = $.grep template.fields, (tempField)->
+			section_id == tempField.o.section_id && column_id == tempField.o.column_id
 		return count.length+1
 
 	{
@@ -160,7 +154,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		# delete section column
 		deleteSectionColumn: (section)->
 			for field in this.fields
-				field.section_id == section.i && field.column_id == section.c && prevent = true
+				field.o.section_id == section.i && field.o.column_id == section.c && prevent = true
 			if prevent 
 				Flash.create('danger', '<p>Please move any fields out of the last column.</p>', 'customAlert')
 			else
@@ -172,8 +166,8 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			this.sO = undefined
 
 			for field in this.fields
-				field.section_id == section_id && field.section_id = ''
-				field.section_id > section_id && field.section_id--	
+				field.o.section_id == section_id && field.o = ''
+				field.o.section_id > section_id && field.o.section_id--	
 
 			this.sections.splice section_id-1, 1
 			for section in this.sections
@@ -195,18 +189,19 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		# add field
 		addField: (section_id, column_id, type)->
 			field = new ClassFactory()
-			this.fields.push field
-			this.sO = field
-			field.name = this.newFieldName
-			field.placeholder = this.newFieldPlaceholder
-			field.default_value = this.newFieldDefaultValue
-			!this.newFieldName && !this.newFieldPlaceholder && !this.newFieldDefaultValue && field.name = 'Untitled '+type.value
-			field.template_id = this.id
-			field.column_order = newFieldOrdering(this, section_id, column_id)
-			field.column_id = column_id
-			field.section_id = section_id
 			field.fieldtype = type.name
-			field.glyphicon = type.glyphicon
+			field.o = {}
+			field.o.column_order = newFieldOrdering(this, section_id, column_id)
+			field.o.section_id = section_id
+			field.o.column_id = column_id
+			this.sO = field
+			this.fields.push field
+			field.o.name = this.newFieldName
+			field.o.placeholder = this.newFieldPlaceholder
+			field.o.default_value = this.newFieldDefaultValue
+			!this.newFieldName && !this.newFieldPlaceholder && !this.newFieldDefaultValue && field.o.name = 'Untitled '+type.value
+			field.o.glyphicon = type.glyphicon
+			field.template_id = this.id
 			field.$save({class: 'fields'}, (res)->
 				$rootScope.$broadcast('cleartemplates')
 			)
@@ -217,104 +212,95 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 		# delete field
 		deleteField: (field)->
+			console.log field
 			this.sO = undefined
 			index = this.fields.indexOf(field)
 			this.fields.splice index, 1
+			console.log this.fields
 			$.extend field, new ClassFactory()
 			field.$delete({class: 'fields', id: field.id})
 			for tempField in this.fields
-				tempField.section_id == field.section_id && tempField.column_id == field.column_id && tempField.column_order > field.column_order && tempField.column_order--
+				tempField.o.section_id == field.o.section_id && tempField.o.column_id == field.o.column_id && tempField.o.column_order > field.o.column_order && tempField.o.column_order--
 			return
 
 		# change a field's section_id
 		changeFieldSection: (field, prev_section)->
-			prev_column = field.column_id
-			prev_column_order = field.column_order
-			field.column_id = 1
-			field.column_order = 1
+			prev_column = field.o.column_id
+			prev_column_order = field.o.column_order
+			field.o.column_id = 1
+			field.o.column_order = 1
 			for tempField in this.fields
-				tempField.section_id == prev_section*1 && tempField.column_id == prev_column && tempField.column_order >= prev_column_order && tempField.column_order--
-				tempField.id != field.id && tempField.section_id == field.section_id && tempField.column_id == field.column_id && tempField.column_order++
+				tempField.o.section_id == prev_section*1 && tempField.o.column_id == prev_column && tempField.o.column_order >= prev_column_order && tempField.o.column_order--
+				tempField.id != field.id && tempField.o.section_id == field.o.section_id && tempField.o.column_id == field.o.column_id && tempField.o.column_order++
 			return
 
 		# change a field's column_id
 		changeFieldColumn: (field, column_id)->
-			orig_col = field.column_id
-			orig_col_ord = field.column_order
-			field.column_id = column_id
-			field.column_order = 1
+			orig_col = field.o.column_id
+			orig_col_ord = field.o.column_order
+			field.o.column_id = column_id
+			field.o.column_order = 1
 
 			sect = $.grep this.sections, (section)->
-				section.i == field.section_id
+				section.i == field.o.section_id
 			index = this.sections.indexOf(sect[0])
 
+			sect_fields = $.grep this.fields, (tempField)->
+				tempField.o.section_id == field.o.section_id
+
 			if column_id > 0 && column_id <= this.sections[index].c
-				orig_col != column_id && for tempField in this.fields
-					if tempField.section_id == field.section_id
-						tempField.column_id == orig_col && tempField.column_order > orig_col_ord && tempField.column_order--
-						tempField.column_id == column_id && tempField.id != field.id && tempField.column_order++
+				orig_col != column_id && for tempField in sect_fields
+					tempField.o.column_id == orig_col && tempField.o.column_order > orig_col_ord && tempField.o.column_order--
+					tempField.o.column_id == column_id && tempField.id != field.id && tempField.o.column_order++
 			else
-				field.column_id = orig_col
-				field.column_order = orig_col_ord
+				field.o.column_id = orig_col
+				field.o.column_order = orig_col_ord
 			return
 
 		# reorder field up or down in a column
 		moveField: (field, direction)->
 
-			field_switch = $.grep this.fields, (i)->
-				if field.column_id == i.column_id && field.section_id == i.section_id
+			field_switch = $.grep this.fields, (tempField)->
+				if field.o.column_id == tempField.o.column_id && field.o.section_id == tempField.o.section_id
 					if direction == 'up'
-						field.column_order-1 == i.column_order
+						field.o.column_order-1 == tempField.o.column_order
 					else
-						field.column_order+1 == i.column_order
+						field.o.column_order+1 == tempField.o.column_order
 
 			field_switch = field_switch[0]
 			
 			if !field_switch then return
 
-			target = field_switch.column_order
-			field_switch.column_order = field.column_order
-			field.column_order = target
+			target = field_switch.o.column_order
+			field_switch.o.column_order = field.o.column_order
+			field.o.column_order = target
 			return
 
 		# add field option
 		addOption: (field) ->
-			!field.options && field.options = []
-			field.options.push 'Option '+(field.options.length + 1)
+			!field.o.options && field.o.options = []
+			field.o.options.push 'Option '+(field.o.options.length + 1)
 			return
 
 		# delete field option
 		deleteOption: (field, option)->
-			index = field.options.indexOf(option)
-			field.options.splice index, 1
+			index = field.o.options.indexOf(option)
+			field.o.options.splice index, 1
 			return
 
 		# Helper functions
 
-		# return an array for column repeating
-		countColumns: (columns)->
-			return new Array columns
-
+		# limit fields to a maximum value
 		activeFields: ->
 			counter = $.grep this.fields, (field)->
-				field.section_id != ''
-			counter.length || 0
+				field.o != ''
+			return counter.length || 0
 
-		# set the field type used when adding a field
-		setFieldType: (type, template)->
-			template.newFieldType = type
-			return
-
-		# select a field's settings on template editing
-		setSelectedOptions: (template, optionSet)->
-			template.editing && template.sO = optionSet
-
+		# set draft
 		assimilate: (draft)->
 			this.sO = undefined
 			$.extend this, draft
-
-		setFieldDepth: (column)->
-			return this.columns.indexOf(column)==3 || this.columns.indexOf(column)==2 || this.columns.indexOf(column)==1
+			return
 
 		supportedFields: [
 			'labelntext'

@@ -45,8 +45,9 @@ class Template < ActiveRecord::Base
 	end
 
 	def reject_field(attributes)
+		puts attributes
 		exists = attributes['id'].present?
-		empty = attributes.slice(:section_id).values.all?(&:blank?)
+		empty = attributes.slice(:o).values.all?(&:blank?)
 		attributes.merge!({:_destroy => 1}) if exists and empty
 		return (!exists and empty)
 	end

@@ -63,7 +63,9 @@ module Api::V1#:nodoc:
           :name, :draft, :private_group, :private_world, :group_id, :group_edit, :group_editors,
           {:sections => []},
           {:fields_attributes => [
-            :id, :name, :placeholder, :tooltip, :fieldtype, :required, :disabled, :glyphicon, :section_id, :column_id, :column_order, :default_value, {:options => []}
+            :id, :fieldtype, {:o => [
+              :section_id, :column_id, :column_order, :name, :placeholder, :tooltip, :required, :disabled, :glyphicon, :default_value, {:options => []}
+            ]}
           ]}
         )
       end

@@ -3,6 +3,8 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 ($q, ClassFactory)->
 
 	countData = (chart)->
+		chart.data.rows = []
+		chart.data.cols = []
 		# Examine first row of returned data (chart.data_days) to extract
 		# and create table columns based on unique value inputs 
 		n = 0
@@ -41,9 +43,6 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 		chart.noTotals = angular.copy chart.colsLen
 		chart.noTotals.pop()
 
-		console.log chart.options.colsLen
-		console.log chart.options.noTotals
-
 		return
 
 	{
@@ -61,14 +60,13 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 
 		setDefaults: ->
 			this.data = {}
-			this.data.rows = []
-			this.data.cols = []
 			this.view = {}
 			this.options = {}
-			this.options.width = Math.round($(document).width()*.99)
-			this.options.height = Math.round($(document).height()*.65)
 			this.options.pieHole = 0
-			this.options.legend = 'bottom'
+			this.options.pieHole = 0
+			this.options.legend = {}
+			this.options.legend.position = 'bottom'
+			this.options.legend.alignment = 'start'
 			this.showTotals = true
 
 		graphs: [
@@ -82,17 +80,18 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 
 		getFieldData: ->
 			deferred = $q.defer()
+			this.options.title = this.template.name+': '+this.field.name
 			sv = this
 			ClassFactory.query({class: 'values_statistics', id: 'counts', field_id: sv.field.id, days: sv.days}, (res)->
 				sv.data_days = res
+				countData(sv)
 				deferred.resolve(sv)
 			)
 			return deferred.promise
 
 		showDataCounts: (graph)->
-			this.setDefaults()
-			this.options.title = this.template.name+': '+this.field.name
-			countData(this)
+			this.options.width = Math.round($(document).width()*.98)
+			this.options.height = Math.round($(document).height()*.65)
 
 			this.type = graph.type
 
@@ -103,7 +102,6 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 			return
 
 		setOptions: ->
-			console.log this.options.showTotals
 			this.view.columns = if !this.showTotals then this.noTotals else this.colsLen
 
 	}

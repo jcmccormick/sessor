@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151022012219) do
+ActiveRecord::Schema.define(version: 20151103064323) do
 
   create_table "admins_reports", id: false, force: :cascade do |t|
     t.integer "admin_id",  limit: 4
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20151022012219) do
     t.text     "default_value", limit: 65535
     t.string   "placeholder",   limit: 255
     t.string   "tooltip",       limit: 255
+    t.text     "o",             limit: 65535
   end
 
   add_index "fields", ["column_id"], name: "index_fields_on_column_id", using: :btree
