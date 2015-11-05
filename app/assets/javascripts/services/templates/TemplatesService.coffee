@@ -95,8 +95,8 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 				# Auto-save
 				form && timedSave = $interval (->
-					!form.$pristine && template.saveTemplate(true, form)
 					$location.path().search(template.id+'/edit') == -1 && clearInterval(timedSave)
+					!form.$pristine && template.saveTemplate(true, form)
 				), 30000
 
 				deferred.resolve(template)

@@ -126,7 +126,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 
       (!scope.field.value.input? || scope.field.value.input == '') && scope.field.value.input = 'No Data'
 
-      element.html '<h3>'+scope.field.name+'</h3>
+      element.html '<h3>'+scope.field.o.name+'</h3>
                     <blockquote>'+scope.field.value.input+'</blockquote>'
 
     $compile(element.contents()) scope

@@ -65,6 +65,7 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 			this.options.pieHole = 0
 			this.options.pieHole = 0
 			this.options.legend = {}
+			this.options.interpolateNulls = true
 			this.options.legend.position = 'bottom'
 			this.options.legend.alignment = 'start'
 			this.showTotals = true

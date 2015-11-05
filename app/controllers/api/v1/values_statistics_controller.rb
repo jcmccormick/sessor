@@ -7,22 +7,36 @@ module Api::V1 #:nodoc:
 		end
 
 		def counts
-			days = (params[:days] || 30).to_i
-			#fields = current_user.templates.find(params[:template_id]).fields.as_json(only: [:id, :name])
-			
-			field = current_user.fields.find(params[:field_id])
 
-			field_data = (0..days-1).to_a.inject([]) do |memo, i|
-				date = i.days.ago.to_time
-				from, to = date.beginning_of_day, date.end_of_day
-				all = current_user.values.where(field_id: field['id'], created_at: from .. to).where.not(input: nil)
-				total_count = all.count
-				values = all.group(:input).uniq.count.map { |k,v| {input:k,count:v} }
-				memo <<  {'date': date, 'total': total_count, 'values': values}
+			from = params[:from] || params[:days].to_i.days.ago.to_time.beginning_of_day
+			to = params[:to] || 0.days.ago.to_time.end_of_day
+
+
+			all_data = current_user.values.all
+						.where(field_id: params[:field_id], created_at: from .. to)
+						.where.not(input: nil)
+						.order(input: :desc)
+						.group_by { |value| value['created_at'].to_date}
+						.map {|k,v| [k,v]}
+
+			grouped = (0..params[:days].to_i-1).to_a.inject([]) do |memo, i|
+				if all_data[i].present?
+					date = all_data[i][0].to_time
+					values = all_data[i][1].group_by { |value| value.input }.map { |k, v| {input:k, count:v.length} }.sort! { |x,y| x['input'] <=> y['input']}
+					total = 0
+					values.each do |value|
+						total = total + value[:count]
+					end
+				else
+					date = ((i-params[:days].to_i+1)*-(1)).days.ago.beginning_of_day
+				end
+				memo << {'date': date, 'total': total || 0, 'values': values || []}
 				memo
 			end
 
-			render json: field_data
+			grouped = grouped.sort_by { |day| day[:date] }
+
+			render json: grouped
 		end
 
 	end

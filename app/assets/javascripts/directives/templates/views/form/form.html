@@ -37,13 +37,11 @@
         </span>
       </div>
 
-
       <div class="col-xs-12 column" ng-class="{'col-md-6':section.c == 2, 'col-md-4':section.c == 3}" ng-repeat="column in columnsArray(section.c) track by $index">
         <div ng-repeat="field in form.fields | filter:{o:{column_id: $index+1, section_id: section.i}} | orderBy:'o.column_order'">
           <template-field-directive ng-click="form.sO=field" myForm="myForm" field="field" template="form" report="report"></template-field-directive>
 
           <draggable-options field="field" form="form" class="field-options" ng-if="form.e && !form.poppedOut && form.sO==field"></draggable-options>
-          <pre>{{field | json}}</pre>
         </div>
 
         <div class="add-field-slide" ng-if="form.e && form.activeFields() < 20">
