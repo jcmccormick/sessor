@@ -2,39 +2,7 @@ services = angular.module('services')
 services.service('StatisticsService', ['$q', 'ClassFactory',
 ($q, ClassFactory)->
 
-	countData = (chart)->
-		chart.data.rows = []
-		chart.data.cols = []
-		# Examine first row of returned data (chart.data_days) to extract
-		# and create table columns based on unique value inputs 
-		n = 0
-		while n < chart.data_days.length
-			for value in chart.data_days[n].values
-				!$.grep(chart.data.cols, (col)->
-					col.label == value.input
-				).length && chart.data.cols.push { id: value.input+'-id', label: value.input, type: 'number' }
-			n++
-
-		# append Date column to the beginning of table
-		chart.data.cols.unshift {id: 'day', label: 'Date', type: 'string'}
-		
-		n = 0
-		while n < chart.data_days.length
-			# add Date data for each row
-			chart.data.rows[n] = {c: [ {v: new Date(chart.data_days[n].date).format('MM/DD/YY')} ] }
-			i = 0
-			while i < chart.data.cols.length-1
-				# add frequency count for each value.input column
-				(chart.data_days[n].values[i]? && chart.data.rows[n].c.push { v: chart.data_days[n].values[i].count }) || chart.data.rows[n].c.push { v: 0 }
-				i++
-
-			# Next 2 operations add a Total column to the end of the chart which
-			# totals the number of counts per day
-			chart.data.rows[n].c.push {v: chart.data_days[n].total}
-			n++
-		chart.data.cols.push {id: 's', label: 'Total', type: 'number'}
-
-
+	countCols = (chart)->
 		chart.colsLen = []
 		n = 0
 		while n < chart.data.cols.length
@@ -42,7 +10,6 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 			n++
 		chart.noTotals = angular.copy chart.colsLen
 		chart.noTotals.pop()
-
 		return
 
 	{
@@ -65,7 +32,6 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 			this.options.pieHole = 0
 			this.options.pieHole = 0
 			this.options.legend = {}
-			this.options.interpolateNulls = true
 			this.options.legend.position = 'bottom'
 			this.options.legend.alignment = 'start'
 			this.showTotals = true
@@ -83,9 +49,10 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 			deferred = $q.defer()
 			this.options.title = this.template.name+': '+this.field.name
 			sv = this
-			ClassFactory.query({class: 'values_statistics', id: 'counts', field_id: sv.field.id, days: sv.days}, (res)->
-				sv.data_days = res
-				countData(sv)
+			ClassFactory.get({class: 'values_statistics', id: 'counts', field_id: sv.field.id, days: sv.days}, (res)->
+				sv.data.cols = res.cols
+				sv.data.rows = res.rows
+				countCols(sv)
 				deferred.resolve(sv)
 			)
 			return deferred.promise
@@ -93,13 +60,7 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 		showDataCounts: (graph)->
 			this.options.width = Math.round($(document).width()*.98)
 			this.options.height = Math.round($(document).height()*.65)
-
 			this.type = graph.type
-
-			# remove any days that have absolutely no data
-			#this.data.rows = $.grep this.data.rows, (row)->
-			#	row.c.length > 1
-
 			return
 
 		setOptions: ->
