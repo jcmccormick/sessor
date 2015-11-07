@@ -8,7 +8,7 @@ class Field < ActiveRecord::Base
 
 	serialize :o, JSON
 
-	before_save { o['name'].present? || o['placeholder'].present? || o['default_value'].present? || o == ''}
+	before_save { o['name'].present? || o['placeholder'].present? || o['default_value'].present? }
 
 	after_save { template.touch }
 

@@ -47,7 +47,7 @@ class Template < ActiveRecord::Base
 	def reject_field(attributes)
 		exists = attributes['o'].present?
 		attributes.merge!({:_destroy => 1}) if !exists
-		return !exists
+		exists
 	end
 
 	# Check for existing report associations

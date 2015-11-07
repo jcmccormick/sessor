@@ -87,8 +87,8 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			if parseInt(id, 10) != parseInt(this.id, 10)
 				template = this
 				ClassFactory.get({class: 'templates', id: id}, (res)->
+					templates.push res
 					$.extend template, res
-					templates.push template
 					deferred.resolve(template)
 				)
 

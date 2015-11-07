@@ -13,18 +13,20 @@ controllers.controller('TemplateController', ['$routeParams', '$scope',  'Templa
 		if vt.tempForm
 			unbindSectionsWatch = $scope.$watch (()-> vt.template.sections), ((newVal, oldVal)-> newVal != oldVal && vt.tempForm.$pristine = false), true
 			unbindFieldsWatch = $scope.$watch (()-> vt.template.fields), ((newVal, oldVal)-> newVal != oldVal && vt.tempForm.$pristine = false), true
+			unbindDraftWatch = $scope.$watch (()-> vt.template.draft), ((newVal, oldVal)-> newVal != oldVal && vt.tempForm.$pristine = false)
 
 			$scope.$on('$destroy', ()->
 				unbindSectionsWatch()
 				unbindFieldsWatch()
+				unbindDraftWatch()
 			)
 
 	)
 
-	unbindTempWatch = $scope.$watch (()-> vt.tempForm), ((newVal, oldVal)->
+	unbindFormWatch = $scope.$watch (()-> vt.tempForm), ((newVal, oldVal)->
 		if vt.tempForm
 			vt.save = (temporary)-> TemplatesService.saveTemplate(temporary, vt.tempForm, vt.template)
-			unbindTempWatch()
+			unbindFormWatch()
 	)
 
 
