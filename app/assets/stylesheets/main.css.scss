@@ -63,7 +63,9 @@ blockquote {
   display: none !important;
 }
 .disabled {
+  cursor: not-allowed;
   pointer-events: none;
+  color: grey;
 }
 .navbar-header {
   float: none !important;

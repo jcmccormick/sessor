@@ -21,7 +21,7 @@ module Api::V1 #:nodoc:
 			# the object which will hold the data to be returned
 			grouped = {:cols => [], :rows => [] }
 
-			# Populate columns
+			# Populate columns with a determined set of values for inputs
 			diffvals = Array.new
 			all_data.each { |day| diffvals.push day[:input] }
 			diffvals = diffvals.uniq
@@ -38,7 +38,7 @@ module Api::V1 #:nodoc:
 				end
 			end
 
-			# Group the data by date after merging the actual data into the premade set of dates
+			# Group the data by date after mapping the actual data into the premade set of dates
 			data_by_date = zeros.map do |first_hash| 
 				all_data.each do |second_hash|
 					if first_hash[:date] == second_hash[:date] && first_hash[:input] == second_hash[:input]
@@ -52,10 +52,10 @@ module Api::V1 #:nodoc:
 			# Populate rows of data
 			data_by_date.each_with_index do |(date, values), day|
 				grouped[:rows][day] = {c: [{ v: date }] }
-				(0..grouped[:cols].length-2).each { |value|	grouped[:rows][day][:c].push({v: values[value][:count] }) }
+				(0..diffvals.length-1).each { |value| grouped[:rows][day][:c].push({v: values[value][:count] }) }
 				grouped[:rows][day][:c].push({v: values.map {|v| v[:count]}.reduce(0, :+) })
+			end 
 
-			end
 			grouped[:cols].push({'id': "s", 'label': "Total", 'type': 'number'}) 
 
 			grouped[:rows].reverse!

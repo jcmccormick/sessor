@@ -1,79 +1,6 @@
 services = angular.module('services')
 services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScope', 'ClassFactory', 'Flash',
 ($interval, $location, $q, $rootScope, ClassFactory, Flash)->
-	
-	validateTemplate = (template)->
-		deferred = $q.defer()
-
-		# prepare a copy of the template for sending to the DB
-		# sending on the necessary data back
-		tempCopy = new ClassFactory()
-		angular.copy {
-			id: template.id
-			name: template.name
-			draft: template.draft
-			private_group: template.private_group
-			private_world: template.private_world
-			group_edit: template.group_edit
-			group_editors: template.group_editors
-			sections: (template.sections && template.sections.length && template.sections) || undefined
-			fields_attributes: (template.fields && template.fields.length && template.fields) || undefined
-			errors: ''
-		}, tempCopy
-
-		if tempCopy.fields_attributes
-			# fields without a section ID are removed, as they will
-			# be saved in the above tempCopy; the following makes sure
-			# any deleted fields will be removed from the client's 
-			# template model
-			i = template.fields.length
-			while i--
-				template.fields[i].o == '' && template.fields.splice(i, 1)
-
-			if !template.deletingSection
-				# validate field name or placeholder presence
-				$.grep(tempCopy.fields_attributes, (field)->
-					!field.o.name && !field.o.placeholder && !field.o.default_value
-				).length && tempCopy.errors += '<p>All fields must have either a name, placeholder, or default value, and all label and text elements must have either have a label or text.</p>'
-
-				for field in tempCopy.fields_attributes
-					console.log field.o.section_id
-					for option in field.o
-						console.log option
-
-		# validate name
-		!tempCopy.name && template.name = 'Untitled'
-		!/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test(tempCopy.name) && tempCopy.errors += '<p>Template names must begin with a letter and only contain letters and numbers.</p>'
-
-		template.deletingSection = false
-		deferred.resolve(tempCopy)
-		return deferred.promise
-
-	newFieldOrdering = (template, section_id, column_id)->
-		count = $.grep template.fields, (tempField)->
-			section_id == tempField.o.section_id && column_id == tempField.o.column_id
-		return count.length+1
-
-	{
-		# limit template options on new
-		newTemplate: ->
-			template = new ClassFactory()
-			template.saveTemplate = this.saveTemplate
-			return template
-
-		# retrieve template and extend services
-		getTemplate: (id, form)->
-			deferred = $q.defer()
-
-			template = new ClassFactory()
-			$.extend template, this
-
-			id && ClassFactory.get({class: 'templates', id: id}, (res)->
-				$.extend template, res
-
-				# editing
-				form && template.e = true
-				form && template.poppedOut = false
 
 				# collect drafts
 				# form && collectDrafts = $interval (->
@@ -93,42 +20,116 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 				# 	$location.path().search(template.id+'/edit') == -1 && clearInterval(collectDrafts)
 				# ), 10000
 
-				# Auto-save
-				form && timedSave = $interval (->
-					$location.path().search(template.id+'/edit') == -1 && clearInterval(timedSave)
-					!form.$pristine && template.saveTemplate(true, form)
-				), 30000
 
-				deferred.resolve(template)
-			)
+	templates = []
+	
+	validateTemplate = (template)->
+		deferred = $q.defer()
 
-			!id && deferred.resolve(template)
+		# prepare a copy of the template for sending to the DB
+		# sending only the necessary data back
+		tempCopy = new ClassFactory()
+		angular.copy {
+			id: template.id
+			name: template.name
+			draft: template.draft
+			private_group: template.private_group
+			private_world: template.private_world
+			group_edit: template.group_edit
+			group_editors: template.group_editors
+			sections: (template.sections && template.sections.length && template.sections) || undefined
+			fields_attributes: (template.fields && template.fields.length && template.fields) || undefined
+			errors: ''
+		}, tempCopy
+
+		if tempCopy.fields_attributes
+			# fields without a section ID are removed, as they will
+			# be removed when saving tempCopy; the following makes sure
+			# any deleted fields will be removed from the client's 
+			# template model
+			i = template.fields.length
+			while i--
+				template.fields[i].o == undefined && template.fields.splice(i, 1)
+
+			if !template.deletingSection
+				# validate field name or placeholder presence
+				$.grep(tempCopy.fields_attributes, (field)->
+					!field.o.name && !field.o.placeholder && !field.o.default_value
+				).length && tempCopy.errors += '<p>Fields must have a name, placeholder, or default value.</p><p>Label and text elements must have a label or text.</p>'
+
+		# validate name
+		!tempCopy.name && template.name = 'Untitled'
+		!/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test(tempCopy.name) && tempCopy.errors += '<p>Template names must begin with a letter and only contain letters and numbers.</p>'
+
+		template.deletingSection = false
+		deferred.resolve(tempCopy)
+		return deferred.promise
+
+	newFieldOrdering = (template, section_id, column_id)->
+		count = $.grep template.fields, (tempField)->
+			section_id == tempField.o.section_id && column_id == tempField.o.column_id
+		return count.length+1
+
+	{
+		editing: ->
+			return if $location.path().search('/edit') == -1 then false else true
+
+		returnTemplates: ->
+			templates
+
+		returnTemplate: (id)->
+			deferred = $q.defer()
+			for temp in templates
+				if parseInt(temp.id, 10) == parseInt(id, 10)
+					$.extend this, temp
+					deferred.resolve(this)
+
+			if parseInt(id, 10) != parseInt(this.id, 10)
+				template = this
+				ClassFactory.get({class: 'templates', id: id}, (res)->
+					$.extend template, res
+					templates.push template
+					deferred.resolve(template)
+				)
 
 			return deferred.promise
 
 		# save/update template
-		saveTemplate: (temporary, form)->
-			(!this.id || (form && !form.$pristine)) && validateTemplate(this).then((res)->
+		saveTemplate: (temporary, form, template)->
+			# Auto-save
+			!timedSave && timedSave = $interval (->
+				template.id && !form.$pristine && template.saveTemplate(true, form, template)
+			), 30000
+
+
+			!dereg && dereg = $rootScope.$on('$locationChangeSuccess', ()->
+				$interval.cancel(timedSave)
+				dereg()
+			)
+
+			# Validate and save
+			validateTemplate(template).then((res)->
 				if !!res.errors
 					Flash.create('danger', res.errors, 'customAlert')
 					return
+				
+				!res.id && res.$save({class: 'templates'}, (res)->
+					templates.push res
+					$location.path("/templates/#{res.id}/edit")
+				)
 
+				if res.id
+					!form.$pristine && res.$update({class: 'templates', id: res.id})
+					!temporary && $location.path("/templates/#{res.id}")
+				
 				$rootScope.$broadcast('cleartemplates')
-
-				if !res.id
-					res.$save({class: 'templates'}, (res)->
-						$location.path("/templates/#{res.id}/edit")
-					)
-				else
-					res.$update({class: 'templates', id: res.id}, (res)->
-						!temporary && $location.path("/templates/#{res.id}")
-					)
+				form && form.$setPristine()
 			)
-			form && form.$setPristine()
 			return
 
 		# delete template
 		deleteTemplate: (template)->
+			templates.splice(template, 1)
 			template.$delete({class: 'templates', id: template.id}, (res)->
 				$rootScope.$broadcast('cleartemplates')
 				$location.path("/templates")
@@ -138,9 +139,9 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		# add section
 		addSection: ()->
 			this.sections.push({
-				i:this.sections.length+1
-				n:(this.newSectionName || '')
-				c:1
+				i: this.sections.length+1
+				n: (this.newSectionName || '')
+				c: 1
 			})
 			this.sO = this.sections[this.sections.length-1]
 			this.newSectionName = undefined
@@ -162,18 +163,18 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			return
 
 		# delete section
-		deleteSection: (section_id)->
+		deleteSection: (section_id, form)->
 			this.sO = undefined
-
-			for field in this.fields
-				field.o.section_id == section_id && field.o = ''
-				field.o.section_id > section_id && field.o.section_id--	
 
 			this.sections.splice section_id-1, 1
 			for section in this.sections
 				section.i > section_id && section.i--
+
+			for field in this.fields
+				(field.o.section_id > section_id && field.o.section_id--) || field.o.section_id == section_id && field.o = undefined
+
 			this.deletingSection = true
-			this.saveTemplate(true)
+			this.saveTemplate(true, form, this)
 			return
 
 		# reorder section up or down
@@ -212,11 +213,8 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 		# delete field
 		deleteField: (field)->
-			console.log field
 			this.sO = undefined
-			index = this.fields.indexOf(field)
-			this.fields.splice index, 1
-			console.log this.fields
+			this.fields.splice field, 1
 			$.extend field, new ClassFactory()
 			field.$delete({class: 'fields', id: field.id})
 			for tempField in this.fields
@@ -284,8 +282,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 		# delete field option
 		deleteOption: (field, option)->
-			index = field.o.options.indexOf(option)
-			field.o.options.splice index, 1
+			field.o.options.splice option, 1
 			return
 
 		# Helper functions
@@ -293,7 +290,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		# limit fields to a maximum value
 		activeFields: ->
 			counter = $.grep this.fields, (field)->
-				field.o != ''
+				field.o
 			return counter.length || 0
 
 		# set draft

@@ -32,9 +32,6 @@ sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
   $routeProvider.when('/',
     templateUrl: "main/index.html"
   )
-  .when('/ncptw2015',
-    templateUrl: "main/ncptw2015.html"
-  )
   .when('/support',
     templateUrl: "main/support.html"
     resolve: authResolver
@@ -91,19 +88,19 @@ sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
   )
   .when('/templates/new',
     templateUrl: "templates/edit.html"
-    controller: 'EditTemplateController'
+    controller: 'TemplateController'
     controllerAs: 'vt'
     resolve: authResolver
   )
   .when('/templates/:templateId',
     templateUrl: "templates/view.html"
-    controller: 'ViewTemplateController'
+    controller: 'TemplateController'
     controllerAs: 'vt'
     resolve: authResolver
   )
   .when('/templates/:templateId/edit'
     templateUrl: "templates/edit.html"
-    controller: 'EditTemplateController'
+    controller: 'TemplateController'
     controllerAs: 'vt'
     resolve: authResolver
   ) # STATISTICS ROUTES #

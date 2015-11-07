@@ -1,8 +1,5 @@
 services = angular.module('services')
 services.service('DesktopService', ['ClassFactory', (ClassFactory)->
-	
-	#validateReport = (report)->
-	#	deferred = $q.defer()
 
 	{
 

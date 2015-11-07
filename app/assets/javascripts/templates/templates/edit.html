@@ -3,13 +3,14 @@
     <li class="dropdown">
       <a href class="dropdown-toggle" data-toggle="dropdown">Pages <b class="caret"></b></a>
       <ul class="dropdown-menu">
-        <li><a href ng-click="vt.template.saveTemplate(false, vt.tempForm)" ng-if="vt.template.id"><i class="glyphicon glyphicon-save"></i> &nbsp; Save/View</a></li>
+        <li><a href ng-click="vt.save()" ng-if="vt.template.id"><i class="glyphicon glyphicon-save"></i> &nbsp; Save/View</a></li>
         <li><a href="#/templates/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
         <li><a href="#/templates"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
         <li ng-if="vt.template.id" class="divider"></li>
         <li><a href ng-if="vt.template.id" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this page?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vt.template.deleteTemplate(vt.template)"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
       </ul>
     </li>
+    <li ng-if="vt.template.id"><a href="javascript:;" ng-click="vt.save(true)"><span ng-class="{'save-now':!vt.tempForm.$pristine}">Save</span></a></li>
     <li class="dropdown" ng-if="vt.template.id">
       <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
       <ul class="dropdown-menu bump-left">
@@ -43,7 +44,7 @@
     <div class="col-xs-12" ng-if="!vt.template.id">Add a name, then press Enter</div>
     <div class="col-xs-12 col-md-3">
       <label for="form-name">Page Name</label>
-      <input type="text" id="form-name" class="form-control" placeholder="Required" ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.template.saveTemplate(true)" />
+      <input type="text" id="form-name" class="form-control" placeholder="Required" ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save()" />
     </div>
     <div ng-if="vt.template.e">
       <div class="col-xs-6 col-md-3">
