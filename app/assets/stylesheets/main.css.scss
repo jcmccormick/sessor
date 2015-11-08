@@ -13,7 +13,7 @@
 $mini: 20em;
 $mobile: 30em;
 $tablet: 48em;
-$desktop: 60em;
+$desktop: 62em;
 
 @mixin respond($media) {
  @if $media == mini {
@@ -216,10 +216,10 @@ blockquote {
   }
   &.gridline-workspace,
   &.reporting {
-    padding-top: 150px;
+    padding-top: 175px;
     
-    @include respond(tablet) {
-      padding-top:100px;
+    @include respond(desktop) {
+      padding-top:120px;
     }
   }
 }
