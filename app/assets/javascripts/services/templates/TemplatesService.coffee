@@ -22,8 +22,13 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 	templates = []
 	
-	newCopy = (template)->
-		{
+	validateTemplate = (template)->
+		deferred = $q.defer()
+
+		# prepare a copy of the template for sending to the DB
+		# sending only the necessary data back
+		tempCopy = new ClassFactory()
+		angular.copy {
 			id: template.id
 			name: template.name
 			draft: template.draft
@@ -34,15 +39,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			sections: (template.sections && template.sections.length && template.sections) || undefined
 			fields_attributes: (template.fields && template.fields.length && template.fields) || undefined
 			errors: ''
-		}
-
-	validateTemplate = (template)->
-		deferred = $q.defer()
-
-		# prepare a copy of the template for sending to the DB
-		# sending only the necessary data back
-		tempCopy = new ClassFactory()
-		angular.copy newCopy(template), tempCopy
+		}, tempCopy
 
 		if tempCopy.fields_attributes
 			# fields without a section ID are removed, as they will
@@ -51,7 +48,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			# template model
 			i = template.fields.length
 			while i--
-				template.fields[i].o == undefined && template.fields.splice(i, 1)
+				template.fields[i].o == "destroy" && template.fields.splice(i, 1)
 
 			if !template.deletingSection
 				# validate field name or placeholder presence
@@ -86,6 +83,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 				delete this.name
 				delete this.fields
 				delete this.sections
+				delete this.e
 			template = ($.grep templates, (temp)-> temp.id == id)[0]
 			template = $.extend this, template
 			return template
@@ -102,13 +100,15 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		saveTemplate: (temporary, form)->
 			# Auto-save
 			!timedSave && timedSave = $interval (->
-				this.id && !form.$pristine && template.saveTemplate(true, form)
+				this.id && !form.$pristine && this.saveTemplate(true, form)
 			), 30000
 
 			!dereg && dereg = $rootScope.$on('$locationChangeSuccess', ()->
 				$interval.cancel(timedSave)
 				dereg()
 			)
+
+			this.deletingSection && form.$pristine = false
 
 			# Validate and save
 			validateTemplate(this).then((res)->
@@ -121,16 +121,19 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 					$location.path("/templates/#{res.id}/edit")
 				)
 
+				console.log res
+
 				if res.id
 					!form.$pristine && res.$update({class: 'templates', id: res.id}, (rep)->
 						for templ in templates
 							templ.id == rep.id && $.extend templ, rep
 						!temporary && $location.path("/templates/#{rep.id}")
+						form.$setPristine()
 					)
 					form.$pristine && !temporary && $location.path("/templates/#{res.id}")
 				
 				$rootScope.$broadcast('cleartemplates')
-				form && form.$setPristine()
+				
 			)
 			return
 
@@ -173,15 +176,15 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		deleteSection: (section_id, form)->
 			this.sO = undefined
 
+			for field in this.fields
+				(field.o.section_id > section_id && field.o.section_id--) || field.o.section_id == section_id && field.o = 'destroy'
+
 			this.sections.splice section_id-1, 1
 			for section in this.sections
 				section.i > section_id && section.i--
 
-			for field in this.fields
-				(field.o.section_id > section_id && field.o.section_id--) || field.o.section_id == section_id && field.o = undefined
-
 			this.deletingSection = true
-			this.saveTemplate(true, form, template)
+			this.saveTemplate(true, form)
 			return
 
 		# reorder section up or down

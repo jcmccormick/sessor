@@ -2,13 +2,13 @@
 
 class Field < ActiveRecord::Base
 
-	validates :template, :fieldtype, :o, presence: true
+	validates :template, :fieldtype, presence: true
 
 	belongs_to :template
 
 	serialize :o, JSON
 
-	before_save { o['name'].present? || o['placeholder'].present? || o['default_value'].present? }
+	before_save { o == 'destroy' || o['name'].present? || o['placeholder'].present? || o['default_value'].present? }
 
 	after_save { template.touch }
 
