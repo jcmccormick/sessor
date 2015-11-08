@@ -53,8 +53,11 @@ module Api::V1#:nodoc:
 
     def destroy
       template = current_user.templates.find(params[:id])
-      template.destroy
-      head :no_content
+      if template.destroy
+        head :no_content
+      else
+        render json: { errors: 'A page may not be deleted while a report is using it.' }, status: 422
+      end
     end
 
     private

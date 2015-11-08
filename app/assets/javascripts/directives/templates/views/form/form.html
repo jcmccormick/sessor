@@ -1,7 +1,7 @@
 <draggable-options field="form.sO" form="form" class="field-options" ng-if="form.e && form.poppedOut && form.sO.o"></draggable-options>
 <div ng-form="myForm">
 
-  <div class="col-xs-12 paper" ng-class="{'gridline-workspace':form.e}" ng-show="form.sections">
+  <div class="col-xs-12 paper" ng-class="{'gridline-workspace':form.e, 'reporting':report.editing}" ng-show="form.sections">
     <small class="col-xs-12">
       <span ng-if="report.viewing">{{report.title}}</span>
       <span ng-if="form.draft && !form.e">Draft</span>

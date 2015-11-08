@@ -55,8 +55,8 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$cacheFactor
       $(this).removeClass('in').addClass 'collapse'
   
   $(document).on 'scroll', (->
-    $(this).scrollTop() > 1 && $('.form-header').addClass('affix') && $('.view-frame').css('top':'100px')
-    $(this).scrollTop() <= 1 && $('.form-header').removeClass('affix') && $('.view-frame').css('top':'50px')
+    $(this).scrollTop() > 50 && $('.form-header').addClass('slide-down')
+    $(this).scrollTop() <= 50 && $('.form-header').removeClass('slide-down')
   )
 
 ])

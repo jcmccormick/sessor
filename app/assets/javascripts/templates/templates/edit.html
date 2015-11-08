@@ -13,7 +13,7 @@
     <li ng-if="vt.template.id"><a href="javascript:;" ng-click="vt.save(true)"><span ng-class="{'save-now':!vt.tempForm.$pristine}">Save</span></a></li>
     <li class="dropdown" ng-if="vt.template.id">
       <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
-      <ul class="dropdown-menu bump-left">
+      <ul class="dropdown-menu">
         <li><span>Sharing</span></li>
         <li><span><label for="private_world"><input type="checkbox" id="private_world" name="private_world" ng-model="vt.template.private_world"> Share Public</label></span></li>
         <li><span><label for="private_group"><input type="checkbox" id="private_group" name="private_group" ng-model="vt.template.private_group"> Share Group</label></span></li>
@@ -40,7 +40,7 @@
     </li>
   </page-menu>
 
-  <div class="form-header col-xs-12" ng-if="!vt.template.id || vt.template.e">
+  <div class="form-header col-xs-12 col-md-10 col-md-offset-1" ng-if="!vt.template.id || vt.template.e">
     <div class="col-xs-12" ng-if="!vt.template.id">Add a name, then press Enter</div>
     <div class="col-xs-12 col-md-3">
       <label for="form-name">Page Name</label>

@@ -139,10 +139,12 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 		# delete template
 		deleteTemplate: ()->
-			templates.splice(template, 1)
-			this.$delete({class: 'templates', id: this.id}, (res)->
+			this.$delete({class: 'templates', id: this.id}, ((res)->
+				templates.splice(this, 1)
 				$rootScope.$broadcast('cleartemplates')
 				$location.path("/templates")
+			), (err)->
+				Flash.create('danger', '<p>'+err.data.errors+'</p>', 'customAlert')
 			)
 			return
 
