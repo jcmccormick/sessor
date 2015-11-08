@@ -10,6 +10,8 @@ controllers.controller('TemplateController', ['$routeParams', '$scope',  'Templa
 		vt.template = res
 		vt.template.e = TemplatesService.editing()
 
+		console.log vt.template
+
 		if vt.tempForm
 			unbindSectionsWatch = $scope.$watch (()-> vt.template.sections), ((newVal, oldVal)-> newVal != oldVal && vt.tempForm.$pristine = false), true
 			unbindFieldsWatch = $scope.$watch (()-> vt.template.fields), ((newVal, oldVal)-> newVal != oldVal && vt.tempForm.$pristine = false), true
