@@ -2,17 +2,10 @@ controllers = angular.module('controllers')
 controllers.controller('TemplateController', ['$routeParams', '$scope',  'TemplatesService',
 ($routeParams, $scope, TemplatesService)->
 
-	vt = this
-
-	vt.templates = TemplatesService.returnTemplates()
-
-	$routeParams.templateId && TemplatesService.returnTemplate($routeParams.templateId).then((res)->
-		vt.template = res
+	setupTemp = ->
 		vt.template.e = TemplatesService.editing()
 
-		console.log vt.template
-
-		if vt.tempForm
+		if vt.template.e
 			unbindSectionsWatch = $scope.$watch (()-> vt.template.sections), ((newVal, oldVal)-> newVal != oldVal && vt.tempForm.$pristine = false), true
 			unbindFieldsWatch = $scope.$watch (()-> vt.template.fields), ((newVal, oldVal)-> newVal != oldVal && vt.tempForm.$pristine = false), true
 			unbindDraftWatch = $scope.$watch (()-> vt.template.draft), ((newVal, oldVal)-> newVal != oldVal && vt.tempForm.$pristine = false)
@@ -23,11 +16,27 @@ controllers.controller('TemplateController', ['$routeParams', '$scope',  'Templa
 				unbindDraftWatch()
 			)
 
-	)
+	vt = this
+
+	vt.templates = TemplatesService.listTemplates()
+
+	if tempId = parseInt($routeParams.templateId, 10)
+		exists = ($.grep vt.templates, (temp)-> temp.id == tempId)[0]
+
+		!exists && TemplatesService.queryTemplate(tempId).then(->
+			vt.template = TemplatesService.getTemplate(tempId)
+			setupTemp()
+		)
+
+		exists && vt.template = TemplatesService.getTemplate(tempId)
+		
+		vt.template && setupTemp()
+	else
+		vt.template = TemplatesService.getTemplate()
 
 	unbindFormWatch = $scope.$watch (()-> vt.tempForm), ((newVal, oldVal)->
 		if vt.tempForm
-			vt.save = (temporary)-> TemplatesService.saveTemplate(temporary, vt.tempForm, vt.template)
+			vt.save = (temporary)-> TemplatesService.saveTemplate(temporary, vt.tempForm)
 			unbindFormWatch()
 	)
 

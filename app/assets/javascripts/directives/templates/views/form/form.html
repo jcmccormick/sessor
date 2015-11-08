@@ -44,7 +44,7 @@
           <draggable-options field="field" form="form" class="field-options" ng-if="form.e && !form.poppedOut && form.sO==field"></draggable-options>
         </div>
 
-        <div class="add-field-slide" ng-if="form.e && form.activeFields() < 20">
+        <div class="add-field-slide" ng-if="form.e && form.fields.length < 20">
           <h4 class="col-xs-12">
             <i class="glyphicon glyphicon-chevron-up"></i> 
             <strong>New Field</strong> <small>{{section.n || 'Section '+(section.i)}}, Column {{$index+1}}</small>
