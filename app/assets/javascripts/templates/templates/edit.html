@@ -1,7 +1,7 @@
 <form name="vt.tempForm">
-  <div ng-class="{'gridline-workspace col-xs-12':vt.template.e}">
+  <div ng-class="{'gridline-workspace':vt.template.e}">
     
-    <div class="form-header col-xs-12 col-md-2">
+    <div class="form-header col-xs-12 col-md-8 col-md-offset-2">
 
       <ul class="nav top-nav">
         <li class="dropdown">
@@ -42,20 +42,20 @@
             </li>
           </ul>
         </li>
-        <li class="pull-right" ng-if="vt.template.e" data-toggle="collapse" data-target=".form-specs">
-          <a href="javascript:;"><i class="glyphicon glyphicon-chevron-down pull-right"></i></a>
+        <li class="pull-right" ng-if="!vt.template.id || vt.template.e" data-toggle="collapse" data-target=".form-specs" aria-expanded="true">
+          <a href="javascript:;"><i class="glyphicon glyphicon-cog pull-right"></i></a>
         </li>
       </ul>
 
-      <div class="form-specs collapse">
+      <div class="form-specs collapse" ng-class="{'in':!vt.template.id}">
         <div ng-show="!vt.template.id || vt.template.e">
           <div class="col-xs-12" ng-if="!vt.template.id"><p>Add a name, then press Enter</p></div>
-          <div class="col-xs-12">
+          <div class="col-xs-6 col-md-3">
             <label for="form-name">Page Name</label>
             <input type="text" id="form-name" class="form-control" placeholder="Required" ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save()" />
           </div>
           <div ng-if="vt.template.e">
-            <div class="col-xs-12">
+            <div class="col-xs-6 col-md-3">
               <label for="new-section-name">New Section Name</label>
               <div class="input-group">
                 <input type="text" id="new-section-name" class="form-control" placeholder="Optional" ng-model="vt.template.newSectionName" />
@@ -64,14 +64,14 @@
                 </span>
               </div>
             </div>
-            <div class="col-xs-6">
+            <div class="col-xs-6 col-md-3">
               <label>Draft</label>
               <span class="btn-group btn-group-justified">
                 <a href="javascript:;" class="btn btn-warning" ng-if="vt.template.draft" ng-click="vt.template.draft = false">On</a>
                 <a href="javascript:;" class="btn btn-default" ng-if="!vt.template.draft" ng-click="vt.template.draft = true">Off</a>
               </span>
             </div>
-            <div class="col-xs-6">
+            <div class="col-xs-6 col-md-3">
               <div class="input-group">
                 <label>Fields</label>
                 <p>{{vt.template.fields.length}} / 20</p>
