@@ -14,18 +14,15 @@
 * Fields or their data sets can be shared with groups or individuals.
 
 == BUGS
-* Unnamed sections
+* Null field name in statistics, derive from name/placeholder/default value
+* No Data shown for label n texts on report viewing
+* Deleting fields
 
 == Roadmap for V1
 * FAQ/Support Pages
-* Graphs by date
-* Graphs tables showing data
-* Graphs export to various formats
-* Color scheme for inner layout, styling for paper across all pages
-* Landing fill-out newsletter/sign-up database discount
-* Desktop Stat Graphs
+& Graphs by type
+* Graphs export to various formats and image
+* Color scheme for inner layout, styling for paper across all pages, javascript modify css class?
 * Lockdown by admin
 * Z-index light-up tour
-* Attractive page designer field-overlay, input boxes more minimal
 * Resolve root -> desktop or desktop -> root
-* Secret

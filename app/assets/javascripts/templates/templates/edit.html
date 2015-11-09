@@ -44,38 +44,39 @@
         </li>
       </ul>
 
-      <div ng-if="!vt.template.id || vt.template.e" class="form-specs">
-        <div class="col-xs-12 col-md-3">
-          <label for="form-name">Page Name</label>
-          <input type="text" id="form-name" class="form-control" placeholder="Required" ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save()" />
-        </div>
-        <div ng-if="vt.template.e">
-          <div class="col-xs-6 col-md-3">
-            <label for="new-section-name">New Section Name</label>
-            <div class="input-group">
-              <input type="text" id="new-section-name" class="form-control" placeholder="Optional" ng-model="vt.template.newSectionName" />
-              <span class="input-group-btn">
-                <a href="javascript:;" class="btn btn-primary" ng-click="vt.template.addSection(vt.template.newSectionName)" scroll-to=".force-hover" template="form">Add</a>
+      <div ng-if="!vt.template.id || vt.template.e">
+        <div class="form-specs">
+          <div class="col-xs-12 col-md-3">
+            <label for="form-name">Page Name</label>
+            <input type="text" id="form-name" class="form-control" placeholder="Required" ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save()" />
+          </div>
+          <div ng-if="vt.template.e">
+            <div class="col-xs-6 col-md-3">
+              <label for="new-section-name">New Section Name</label>
+              <div class="input-group">
+                <input type="text" id="new-section-name" class="form-control" placeholder="Optional" ng-model="vt.template.newSectionName" />
+                <span class="input-group-btn">
+                  <a href="javascript:;" class="btn btn-default" ng-click="vt.template.addSection(vt.template.newSectionName)" scroll-to=".force-hover" template="form">Add</a>
+                </span>
+              </div>
+            </div>
+            <div class="col-xs-4 col-md-2">
+              <label>Draft</label>
+              <span class="btn-group btn-group-justified" ng-click="vt.template.draft = !vt.template.draft">
+                <a href="javascript:;" class="btn" ng-class="{'btn-default':vt.template.draft}">On</a>
+                <a href="javascript:;" class="btn" ng-class="{'btn-default':!vt.template.draft}">Off</a>
               </span>
             </div>
-          </div>
-          <div class="col-xs-4 col-md-2">
-            <label>Draft</label>
-            <span class="btn-group btn-group-justified" ng-click="vt.template.draft = !vt.template.draft">
-              <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':vt.template.draft}">On</a>
-              <a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!vt.template.draft}">Off</a>
-            </span>
-          </div>
-          <div class="col-xs-2 col-md-1">
-            <div class="input-group">
-              <label>Fields</label>
-              <p>{{vt.template.fields.length}} / 20</p>
+            <div class="col-xs-2 col-md-1">
+              <div class="input-group">
+                <label>Fields</label>
+                <p>{{vt.template.fields.length}} / 20</p>
+              </div>
             </div>
           </div>
+          <div class="col-xs-12" ng-if="!vt.template.id">Add a name, then press Enter</div>
         </div>
-        <div class="col-xs-12" ng-if="!vt.template.id">Add a name, then press Enter</div>
       </div>
-
     </div>
 
     <template-form-directive form="vt.template"></template-form-directive>

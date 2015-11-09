@@ -301,8 +301,8 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 		# set draft
 		assimilate: (draft)->
-			template.sO = undefined
-			$.extend template, draft
+			this.sO = undefined
+			$.extend this, draft
 			return
 
 		supportedFields: [
