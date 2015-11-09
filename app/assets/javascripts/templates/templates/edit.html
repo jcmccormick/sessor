@@ -1,7 +1,7 @@
 <form name="vt.tempForm">
   <div ng-class="{'gridline-workspace':vt.template.e}">
     
-    <div class="form-header col-xs-12 col-md-8 col-md-offset-2">
+    <div class="form-header">
 
       <ul class="nav top-nav">
         <li class="dropdown">
@@ -42,13 +42,13 @@
             </li>
           </ul>
         </li>
-        <li class="pull-right" ng-if="!vt.template.id || vt.template.e" data-toggle="collapse" data-target=".form-specs" aria-expanded="true">
+        <li class="secondary-menu-options-btn pull-right" ng-if="!vt.template.id || vt.template.e" data-toggle="collapse" data-target=".form-specs" aria-expanded="true">
           <a href="javascript:;"><i class="glyphicon glyphicon-cog pull-right"></i></a>
         </li>
       </ul>
 
       <div class="form-specs collapse" ng-class="{'in':!vt.template.id}">
-        <div ng-show="!vt.template.id || vt.template.e">
+        <div class="container-fluid" ng-show="!vt.template.id || vt.template.e">
           <div class="col-xs-12" ng-if="!vt.template.id"><p>Add a name, then press Enter</p></div>
           <div class="col-xs-6 col-md-3">
             <label for="form-name">Page Name</label>
@@ -79,7 +79,6 @@
             </div>
           </div>
         </div>
-        <p class="clearfix">&nbsp;</p>
       </div>
     </div>
 

@@ -226,33 +226,18 @@ blockquote {
   a:not(.btn-default), p {
     color: white;
   }
-  
+
+  .col-xs-12,
   .col-xs-6 {
     margin-bottom: 10px;
+    padding-left: 0;
   }
 
-  .click-down {
-    display: inline-block !important;
-    background-color: #65A1D4;
-    position: absolute;
-    width: 100%;
-    bottom: -25px;
-    left: 0;
-    padding: 5px;
-    z-index: 1;
-    font-size: 18px;
-    cursor: pointer;
+  .secondary-menu-options-btn {
+    padding-right: 20px;
 
-    .glyphicon {
-      -webkit-transform: rotate(180deg);
-      -moz-transform: rotate(180deg);
-      -ms-transform: rotate(180deg);
-      -o-transform: rotate(180deg);
-      transform: rotate(180deg);
-    }
-
-    &:hover {
-      background-color: #eee;
+    @include respond(tablet) {
+      padding-right: 40px;
     }
   }
 }
