@@ -1,21 +1,31 @@
 <page-menu>
-	<li><a href="#/profile">Profile</a></li>
+	<li class="dropdown">
+		<a href="#/profile" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Profile <b class="caret"></b></a>
+		<ul class="dropdown-menu">
+			<li><a href="javascript:;" ng-click="updateAccount(user)"><i class="glyphicon glyphicon-save"></i> &nbsp; Save</a></li>
+			<li><a href="#/pass_reset"><i class="glyphicon glyphicon-lock"></i> &nbsp; Change Password</a></li>
+		</ul>
+	</li>
 </page-menu>
 <div class="paper row">
-	<form class="col-xs-12">
+	<form class="col-xs-12 col-md-6 col-md-offset-3">
 		<fieldset ng-disabled="!user.signedIn">
 
+			<h3>E-mail</h3>
 			<div class="form-group">
-				<input type="email" name="email" placeholder="Email" class="form-control imod" ng-model="user.email" ng-disabled="true">
+				<input type="email" name="email" class="form-control imod" ng-model="user.email" ng-disabled="true">
 			</div>
+			<h3>Name</h3>
 			<div class="form-group">
-				<input type="text" name="name" placeholder="Name" class="form-control imod" ng-model="user.name">
+				<input type="text" name="name" class="form-control imod" ng-model="user.name">
 			</div>
+			<h3>Nickname</h3>
 			<div class="form-group">
-				<input type="text" name="nickname" placeholder="Nickname" class="form-control imod" ng-model="user.nickname">
+				<input type="text" name="nickname" class="form-control imod" ng-model="user.nickname">
 			</div>
 
-    		<a href="javascript:;" class="btn btn-success pull-right" ng-click="updateAccount(user)">Update Account</a>
+    		<p></p>
+    		<p></p>
 
 		</fieldset>
 	</form>

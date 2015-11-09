@@ -207,42 +207,42 @@ blockquote {
   @include respond(tablet) {
     padding: 45px;
   }
-
-  &.gridline-workspace {
-    height: 100%;
-    background-color: #f5f5f5;
-    background-image: linear-gradient(0deg, transparent 24%, rgba(0, 0, 0, .05) 25%, rgba(0, 0, 0, .05) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, .05) 75%, rgba(0, 0, 0, .05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 0, 0, .05) 25%, rgba(0, 0, 0, .05) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, .05) 75%, rgba(0, 0, 0, .05) 76%, transparent 77%, transparent);
-    background-size: 50px 50px;
-  }
-  &.gridline-workspace,
-  &.reporting {
-    padding-top: 175px;
-    
-    @include respond(desktop) {
-      padding-top:120px;
-    }
-  }
+}
+.gridline-workspace {
+  position: absolute;
+  background-color: #f5f5f5 !important;
+  background-image: linear-gradient(0deg, transparent 24%, rgba(0, 0, 0, .05) 25%, rgba(0, 0, 0, .05) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, .05) 75%, rgba(0, 0, 0, .05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 0, 0, .05) 25%, rgba(0, 0, 0, .05) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, .05) 75%, rgba(0, 0, 0, .05) 76%, transparent 77%, transparent) !important;
+  background-size: 50px 50px;
 }
 
 /* 
  * Template and Field Display
  */
-
 .form-header {
-  position: absolute !important;
-  top: 0;
-  margin: 0;
-  padding: 20px;
+  min-height: 50px;
+}
+.form-header,
+.form-specs.affix {
+  padding: 0 20px 20px;
   background-color: white;
-  border: 2px solid #ddd;
   border-top: none;
+}
+.form-specs {
+  -moz-transition: top .2s ease;
+  transition: top .2s ease;
   z-index: 20;
-  -moz-transition: top .5s ease, position .5s ease;
-  transition: top .5s ease, position .5s ease;
+  top: -150px;
 
-  &.slide-down {
-    position: fixed !important;
-    top: 50px;
+  &.affix {
+    border: 2px solid #ddd;
+    padding-top: 20px;
+    position: fixed;
+    top: 0;
+
+    @include respond(desktop) {
+      left: 8.3333%;
+      right: 8.3333%;
+    }
   }
 }
 
@@ -337,7 +337,7 @@ blockquote {
     opacity: .2;
     padding: 0;
     z-index: 1040;
-    width: 40%;
+    width: 32.3%;
     -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
     -moz-transition: opacity 1s ease;

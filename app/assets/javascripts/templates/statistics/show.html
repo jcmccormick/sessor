@@ -1,14 +1,10 @@
-<page-menu>
-	<li><a href="#/statistics">Statistics</a></li>
-	<li><a href="javascript:;" ng-if="sv.type" ng-click="sv.type=undefined;sv.field=undefined">Reset</a></li>
-	<li><a href="javascript:;" ng-if="sv.type && sv.type != 'Table'" ng-click="sv.data.rows.reverse()">Reverse</a></li>
-</page-menu>
-
 <div class="form-header col-xs-12">
+	<ul class="nav top-nav">
+		<li><a href="#/statistics">Statistics</a></li>
+		<li><a href="javascript:;" ng-if="sv.type" ng-click="sv.type=undefined;sv.field=undefined">Reset</a></li>
+		<li><a href="javascript:;" ng-if="sv.type && sv.type != 'Table'" ng-click="sv.data.rows.reverse()">Reverse</a></li>
+	</ul>
 	<div ng-if="!sv.field">
-		<div class="col-xs-12">
-			<p>Select a time range, then a page and field.</h3>
-		</div>
 		<div class="col-xs-3 col-md-1">
 			<label for="graph-days">Past...days</label>
 			<select id="graph-days" class="form-control" ng-options="day for day in [5, 10, 15, 30, 60, 90]" ng-model="sv.days"></select>
@@ -21,14 +17,17 @@
 			<label for="field-select">Field</label>
 			<select id="field-select" class="form-control" ng-options="field as field.name for field in sv.template.fields" ng-model="sv.field" ng-change="sv.getFieldData()"></select>
 		</div>
+		<div class="col-xs-12 h4">
+			<p>Select a time range, then a page and field.</p>
+		</div>
 	</div>
 	<div ng-if="sv.field">
-		<div class="col-xs-12" ng-if="!sv.type">
-			<p>Now, select a graph type.</h3>
-		</div>
 		<div class="col-xs-3 col-md-1">
 			<label for="graph-type">Graph</label>
 			<select id="graph-type" class="form-control" ng-options="graph.name for graph in sv.graphs" ng-model="graph" ng-change="sv.showDataCounts(graph)"></select>
+		</div>
+		<div class="col-xs-12 h4" ng-if="!sv.type">
+			<p>Now, select a graph type.</p>
 		</div>
 	</div>
 	<div ng-if="sv.type">
@@ -85,6 +84,6 @@
 	</div>
 </div>
 
-<div class="paper reporting col-xs-12" ng-if="sv.type">
+<div class="paper col-xs-12" ng-if="sv.type">
 	<div google-chart chart="sv"></div>
 </div>

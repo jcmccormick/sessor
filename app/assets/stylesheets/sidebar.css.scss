@@ -1,47 +1,11 @@
 /* Global Styles */
 
 .view-frame {
-    position: absolute;
-    top: 50px;
-    right: 0;
-    left: 0;
-}
 
-#page-menu {
-    border-radius: 0;
-    position: fixed;
-    max-width:65%;
-    top:0;
-    left:70px;
-    z-index: 1031;
-    font-size: 10px;
-
-    >div>ul>li>a {
-        padding-right: 0;
-    }
-}
-
-@media(min-width:375px) {
-    #page-menu {
-        font-size: 12px;
-    }
 }
 
 @media(min-width:768px) {
-    .logdout {
-        left: 0;
-        padding: 0;
-        margin: 0;
-    }
-    #page-menu {
-        font-size: 14px;
-        left: 110px;
-        
-        >div>ul>li>a {
-            padding: 10px;
-        }
-    }
-    .navbar-fixed-top {
+    .navbar-top {
         padding: 0 20px;
     }
 }
@@ -56,14 +20,16 @@
     }
 }
 
-.navbar-fixed-top {
+.navbar-top {
     background-color: white !important;
     z-index: 1031;
     border-bottom: 2px solid #ddd !important;
 
     .navbar-brand {
-        font-weight: bold;
-        text-decoration: none !important;
+        a {
+            font-weight: bold;
+            text-decoration: none !important;
+        }
     }
 
     .navbar-toggle {
@@ -71,7 +37,7 @@
         margin-right: 5px;
 
         .icon-bar {
-            background-color: #333;
+            background-color: #337ab7;
         }
     }
 
@@ -81,14 +47,6 @@
 }
 
 /* Brand Bar/Page Menu */
-.user-menu {
-    padding: 10px 0 !important;
-}
-.top-nav>li>a {
-    padding-top: 15px;
-    padding-bottom: 15px;
-    line-height: 20px;
-}
 .top-nav>li:hover {
     ul {
         display: block;

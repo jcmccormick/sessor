@@ -7,7 +7,7 @@ directives.directive( 'draggableOptions', [->
   link: (scope, element, attrs) ->
     $(element).draggable({
       addClasses: false
-      containment: '.view-frame'
+      containment: '.gridline-workspace'
       handle: '.selected-field-options'
       scroll: false
     })

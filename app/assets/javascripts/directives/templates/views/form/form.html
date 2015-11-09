@@ -1,17 +1,15 @@
 <draggable-options field="form.sO" form="form" class="field-options" ng-if="form.e && form.poppedOut && form.sO.o"></draggable-options>
 <div ng-form="myForm">
 
-  <div class="col-xs-12 paper" ng-class="{'gridline-workspace':form.e, 'reporting':report.editing}" ng-show="form.sections">
+  <div class="col-xs-12" ng-class="{'paper':!form.e}" ng-show="form.sections">
     <small class="col-xs-12">
       <span ng-if="report.viewing">{{report.title}}</span>
       <span ng-if="form.draft && !form.e">Draft</span>
     </small>
 
-
     <div ng-if="!form.e" class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
       <h1><center>{{form.name}}</center></h1>
     </div>
-
 
     <div class="section-row stay-open clearfix" ng-class="{'col-md-6 col-md-offset-3':section.c==1,'col-md-8 col-md-offset-2':section.c==2,'col-md-12':section.c==3}" ng-repeat="section in form.sections track by $index">
     <!-- ng-class="{'stay-open':!form.fields.length || form.sO.section_id == section_id+1 || form.sO == section_id}" -->
@@ -31,7 +29,7 @@
             <a href="javascript:;" class="btn" ng-if="section.c < 3" ng-click="form.addSectionColumn(section)"><i class="glyphicon glyphicon-plus"></i></a>
             Column
             <i class="glyphicon glyphicon-chevron-down"></i> &nbsp;
-            <a href="javascript:;" class="btn btn-danger" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(section.i, myForm.$$parentForm)">Delete</a>
+            <a href="javascript:;" class="btn required-error" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(section.i, myForm.$$parentForm)"><i class="glyphicon glyphicon-trash"></i></a>
           </div>
 
         </span>

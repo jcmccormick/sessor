@@ -12,7 +12,7 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$cacheFactor
   $rootScope.$on('$routeChangeStart', (evt, next, current)->
     if !$auth.user.id && next.$$route.originalPath == '/'
       !current && $auth.validateUser().then((res)->
-        res.id && $location.path('/desktop')
+        res.id && $location.path('/desktop/')
       )
   )
 
@@ -55,8 +55,8 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$cacheFactor
       $(this).removeClass('in').addClass 'collapse'
   
   $(document).on 'scroll', (->
-    $(this).scrollTop() > 50 && $('.form-header').addClass('slide-down')
-    $(this).scrollTop() <= 50 && $('.form-header').removeClass('slide-down')
+    $(this).scrollTop() > $('.form-header').height()*2 && $('.form-specs').addClass('affix')
+    $(this).scrollTop() < $('.form-header').height() && $('.form-specs').removeClass('affix')
   )
 
 ])
