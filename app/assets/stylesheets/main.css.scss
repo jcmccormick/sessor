@@ -130,7 +130,7 @@ blockquote {
 .alert {
 	max-height: 0;
 	&.customAlert {
-		display: inline-table;
+		display: table;
 		background-color: #fafafa;
 		border: 1px solid rgba(0, 0, 0, 0.12);
 		border-radius: 0;

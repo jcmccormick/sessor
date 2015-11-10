@@ -12,7 +12,7 @@
 	</section>
 </div>
 
-<section class="col-xs-12">
+<section ng-form="vt.tempForm" class="col-xs-12">
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -41,7 +41,7 @@
 				<td><i ng-show="template.draft" class="glyphicon glyphicon-ok"></i></td>
 				<td>{{template.name}}</td>
 				<td>{{template.updated_at | date: 'short'}}</td>
-				<td><a href="#/templates/{{template.id}}" class="btn btn-link">View</a> <a href="#/templates/{{template.id}}/edit" class="btn btn-link">Edit</a></td>
+				<td><a href="#/templates/{{template.id}}" class="btn btn-link">View</a> <a href="#/templates/{{template.id}}/edit" class="btn btn-link">Edit</a> <a href="javascript:;" class="btn btn-link" ng-click="vt.newReport(template, vt.tempForm)">New Report</a></td>
 			</tr>
 		</tbody>
 	</table>

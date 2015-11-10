@@ -85,14 +85,15 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 		saveReport: (temporary, form)->
 			deferred = $q.defer()
 			# Auto-save
-			!timedSave && timedSave = $interval (->
-				this.id && !form.$pristine && this.saveReport(true, form)
-			), 30000
+			if this.id
+				!timedSave && timedSave = $interval (->
+					this.id && !form.$pristine && this.saveReport(true, form)
+				), 30000
 
-			!dereg && dereg = $rootScope.$on('$locationChangeSuccess', ()->
-				$interval.cancel(timedSave)
-				dereg()
-			)
+				!dereg && dereg = $rootScope.$on('$locationChangeSuccess', ()->
+					$interval.cancel(timedSave)
+					dereg()
+				)
 
 			# validate and save
 			validateReport(this).then((report)->
@@ -106,7 +107,7 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 					$location.path("/reports/#{res.id}/edit")
 				)
 
-				if report.id
+				if report.id && form
 					!form.$pristine && report.$update({class: 'reports', id: report.id}, (res)->
 						deferred.resolve(res)
 						res.updated_at = moment().local().format()
@@ -133,9 +134,14 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 			return
 
 		addTemplate: (template, form)->
-			ts = this
-			this.template_order.push template.id
-			this.saveReport(true, form).then((res)-> ts.queryReport(res.id).then((res)-> ts.getReport(res.id) ) )
+			if template.draft
+				Flash.create('danger', '<p>Please turn off the <strong>draft</strong> setting for '+template.name+' to use it in a report.</p>', 'customAlert')
+			else
+				!this.templates && this.templates = []
+				!this.template_order && this.template_order = []
+				this.template_order.push template.id
+				ts = this
+				this.saveReport(true, form).then((res)-> ts.queryReport(res.id).then((res)-> ts.getReport(res.id) ) )
 			return
 
 		removeTemplate: (template)->
