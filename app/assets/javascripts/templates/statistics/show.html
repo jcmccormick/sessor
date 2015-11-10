@@ -12,20 +12,20 @@
 		<div class="form-specs collapse in">
 			<div class="container-fluid">
 				<div class="col-xs-3 col-md-1">
+					<label for="graph-type">Graph</label>
+					<select id="graph-type" class="form-control" ng-options="graph.name for graph in sv.graphs" ng-model="sv.graph"></select>
+				</div>
+				<div class="col-xs-3 col-md-1">
 					<label for="graph-days">Past...days</label>
 					<select id="graph-days" class="form-control" ng-model="sv.days" ng-options="day as day for day in [5, 10, 15, 30, 60, 90]"></select>
 				</div>
-				<div class="col-xs-5 col-md-2">
+				<div class="col-xs-6 col-md-2">
 					<label for="template-select">Page</label>
 					<select id="template-select" class="form-control" ng-model="sv.template" ng-options="template as template.name for template in sv.templates | filter: { draft: false, fields: '!'}"></select>
 				</div>
-				<div class="col-xs-4 col-md-2">
+				<div class="col-xs-6 col-md-2">
 					<label for="field-select">Field</label>
 					<select id="field-select" class="form-control" ng-model="sv.field" ng-options="field as (field.o.name || field.o.placeholder) for field in sv.template.fields | filter: { fieldtype: '!labelntext' }"></select>
-				</div>
-				<div class="col-xs-3 col-md-1">
-					<label for="graph-type">Graph</label>
-					<select id="graph-type" class="form-control" ng-options="graph.name for graph in sv.graphs" ng-model="sv.graph"></select>
 				</div>
 				<div ng-show="sv.type">
 					<div class="col-xs-3 col-md-1">

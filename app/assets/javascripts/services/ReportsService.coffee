@@ -20,8 +20,6 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 
 		required = ''
 
-		console.log report.templates
-
 		report.templates.length && for template in report.templates
 			template && template.fields.length && for field in template.fields
 				tempCopy.values_attributes.push field.value
@@ -66,6 +64,7 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 				delete this.name
 				delete this.templates
 				delete this.template_order
+				delete this.form
 			report = ($.grep reports, (rep)-> rep.id == id)[0]
 			report = $.extend this, report
 			report.templates && sortTemplates(report)
