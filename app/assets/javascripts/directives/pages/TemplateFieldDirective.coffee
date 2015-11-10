@@ -46,7 +46,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 		fid = ' id="{{field.o.section_id}}{{field.o.column_id}}{{field.id}}"'
 		pho = ' placeholder="{{field.o.placeholder}}"'
 
-		inputend = ' name="{{field.o.section_id}}{{field.o.column_id}}{{field.id}}" ng-required="field.o.required" ng-disabled="field.o.disabled">'
+		inputend = ' ng-focus="template.sO=field" name="{{field.o.section_id}}{{field.o.column_id}}{{field.id}}" ng-required="field.o.required" ng-disabled="field.o.disabled">'
 		
 		standard = clas+' '+fid+' '+pho+' '+ngmodel+' '+inputend
 

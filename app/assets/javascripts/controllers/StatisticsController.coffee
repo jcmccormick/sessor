@@ -8,6 +8,7 @@ controllers.controller("StatisticsController",  ['StatisticsService', 'Templates
 
 	unbindTempLoadWatch = $scope.$watch (()-> sv.templates), ((newVal, oldVal)->
 		if sv.templates.length
+			console.log sv.templates
 			StatisticsService.init().then((res)->
 				$.extend sv, res
 				sv.days = 5

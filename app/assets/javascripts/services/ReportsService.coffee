@@ -61,7 +61,7 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 		getReport: (id)->
 			if !id
 				delete this.id
-				delete this.name
+				delete this.title
 				delete this.templates
 				delete this.template_order
 				delete this.form
@@ -133,15 +133,15 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 			!this.templates && this.templates = []
 			!this.template_order && this.template_order = []
 			this.template_order.push template.id
-			if template.fields
+			if template.sections
 				this.form = template
 				this.templates.push this.form
 				this.saveReport(true, form)
 			else
 				ts = this
 				ClassFactory.get({class: 'templates', id: template.id}, (res)->
+					ts.templates.push res
 					ts.form = res
-					ts.templates.push ts.form
 					ts.saveReport(true, form)
 				)
 			return

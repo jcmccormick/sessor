@@ -20,7 +20,7 @@
 
 			<div class="form-specs collapse" ng-class="{'in':!vr.report.id || vr.report.e}">
 				<div class="container-fluid" ng-show="!vr.report.id || vr.report.e">
-					<div class="col-xs-12" ng-if="!vr.report.add_templates.length && !vr.report.templates">
+					<div class="col-xs-12" ng-if="!vr.templates.length">
 						<p>It looks like you don't have any pages yet. Make sure the Page you want to add is not marked as Draft. Uncheck "Draft" under the Options menu when editing a Page, then save it.</p>
 						<p>Pages may only be added to a report once.</p>
 					</div>
@@ -33,7 +33,7 @@
 						<div class="input-group">
 							<select id="add-pages" class="form-control" ng-options="template.name for template in vr.templates | filter: {draft: false}" ng-model="vr.template"></select>
 							<span class="input-group-btn">
-								<a href="javascript:;" class="btn btn-primary" ng-click="vr.report.addTemplate(vr.template, vr.repForm)">Add</a>
+								<a href="javascript:;" class="btn btn-default" ng-click="vr.report.addTemplate(vr.template, vr.repForm)">Add</a>
 							</span>
 						</div>
 					</div>

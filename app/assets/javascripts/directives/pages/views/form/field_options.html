@@ -33,21 +33,21 @@
 	</div>
 	<div ng-if="field.fieldtype !='labelntext'">
 		<div class="col-xs-6">
-			<input type="text" class="form-control" placeholder="Placeholder" ng-model="field.o.placeholder">
-		</div>
-		<div class="col-xs-6 pull-right">
 			<input type="text" class="form-control" placeholder="Tooltip" ng-model="field.o.tooltip">
 		</div>
+		<div class="col-xs-6" ng-if="['radio','checkbox'].indexOf(field.fieldtype) == -1">
+			<input type="text" class="form-control" placeholder="Placeholder" ng-model="field.o.placeholder">
+		</div>
 		<div class="col-xs-6">
-			<div class="btn-group btn-group-justified" ng-click="field.o.disabled = !field.o.disabled">
-				<a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':field.o.disabled}">Disabled</a>
-				<a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!field.o.disabled}">OFF</a>
+			<div class="btn-group btn-group-justified">
+				<a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':field.o.disabled}" ng-click="field.o.disabled = true">Disabled</a>
+				<a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!field.o.disabled}" ng-click="field.o.disabled = false">OFF</a>
 			</div>
 		</div>
-		<div class="col-xs-6 pull-left">
-			<div class="btn-group btn-group-justified" ng-click="field.o.required = !field.o.required">
-				<a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':field.o.required}">Required</a>
-				<a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!field.o.required}">OFF</a>
+		<div class="col-xs-6">
+			<div class="btn-group btn-group-justified">
+				<a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':field.o.required}" ng-click="field.o.required = true">Required</a>
+				<a href="javascript:;" class="btn btn-default" ng-class="{'btn-primary':!field.o.required}" ng-click="field.o.required = false">OFF</a>
 			</div>
 		</div>
 	</div>

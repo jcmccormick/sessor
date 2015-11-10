@@ -25,7 +25,7 @@
 				</div>
 				<div class="col-xs-6 col-md-2">
 					<label for="field-select">Field</label>
-					<select id="field-select" class="form-control" ng-model="sv.field" ng-options="field as (field.o.name || field.o.placeholder) for field in sv.template.fields | filter: { fieldtype: '!labelntext' }"></select>
+					<select id="field-select" class="form-control" ng-model="sv.field" ng-if="sv.template.fields.length" ng-options="field as (field.o.name || field.o.placeholder) for field in sv.template.fields | filter: { fieldtype: '!labelntext' }"></select>
 				</div>
 				<div ng-show="sv.type">
 					<div class="col-xs-3 col-md-1">
