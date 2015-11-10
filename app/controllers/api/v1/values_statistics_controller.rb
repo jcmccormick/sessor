@@ -2,10 +2,6 @@ module Api::V1 #:nodoc:
 
 	# Generates a response specifically to perform statistics on Values.
 	class ValuesStatisticsController < ApiController
-		def index
-			render json: current_user.templates.includes(:fields).where.not('fields.fieldtype' => 'labelntext').as_json(only: [:id, :name], include: {fields: {only: [:id, :name, :placeholder]}})
-		end
-
 		def counts
 
 			from = params[:from] || (params[:days].to_i-1).days.ago.to_date
@@ -18,8 +14,10 @@ module Api::V1 #:nodoc:
 						.group_by { |value| [value['created_at'].to_date, value['input']] }
 						.map { |k, v| {'date': k.first, 'input': k.last, 'count': v.length} }
 
+			pp all_data
+
 			# the object which will hold the data to be returned
-			grouped = {:cols => [], :rows => [] }
+			grouped = {:cols => [], :rows => []}
 
 			# Populate columns with a determined set of values for inputs
 			diffvals = Array.new

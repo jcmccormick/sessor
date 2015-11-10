@@ -15,9 +15,7 @@
 * Select APA/MLA/Chicago/etc format and the page automatically loads with whatever
 
 == BUGS
-* Null field name in statistics, derive from name/placeholder/default value
-* No Data shown for label n texts on report viewing
-* Deleting fields
+* Saving a page w/o a section causes loss of object reference
 
 == Roadmap for V1
 * FAQ/Support Pages
@@ -27,3 +25,4 @@
 * Lockdown by admin
 * Z-index light-up tour
 * Resolve root -> desktop or desktop -> root
+* For testing, ask users every 5, 10, 15, 20 mins, check route for page and store result in DB

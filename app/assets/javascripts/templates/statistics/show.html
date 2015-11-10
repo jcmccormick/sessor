@@ -1,87 +1,87 @@
-<div class="form-header col-xs-12">
-	<ul class="nav top-nav">
-		<li><a href="#/statistics">Statistics</a></li>
-		<li><a href="javascript:;" ng-if="sv.type" ng-click="sv.type=undefined;sv.field=undefined">Reset</a></li>
-		<li><a href="javascript:;" ng-if="sv.type && sv.type != 'Table'" ng-click="sv.data.rows.reverse()">Reverse</a></li>
-	</ul>
-	<div ng-if="!sv.field">
-		<div class="col-xs-3 col-md-1">
-			<label for="graph-days">Past...days</label>
-			<select id="graph-days" class="form-control" ng-options="day for day in [5, 10, 15, 30, 60, 90]" ng-model="sv.days"></select>
-		</div>
-		<div class="col-xs-5 col-md-2" ng-if="sv.days">
-			<label for="template-select">Page</label>
-			<select id="template-select" class="form-control" ng-options="template as template.name for template in sv.templates" ng-model="sv.template"></select>
-		</div>
-		<div class="col-xs-4 col-md-2" ng-if="sv.template.fields">
-			<label for="field-select">Field</label>
-			<select id="field-select" class="form-control" ng-options="field as field.name for field in sv.template.fields" ng-model="sv.field" ng-change="sv.getFieldData()"></select>
-		</div>
-		<div class="col-xs-12 h4">
-			<p>Select a time range, then a page and field.</p>
-		</div>
-	</div>
-	<div ng-if="sv.field">
-		<div class="col-xs-3 col-md-1">
-			<label for="graph-type">Graph</label>
-			<select id="graph-type" class="form-control" ng-options="graph.name for graph in sv.graphs" ng-model="graph" ng-change="sv.showDataCounts(graph)"></select>
-		</div>
-		<div class="col-xs-12 h4" ng-if="!sv.type">
-			<p>Now, select a graph type.</p>
-		</div>
-	</div>
-	<div ng-if="sv.type">
-		<div class="col-xs-3 col-md-1">
-			<label for="graph-width">Width</label>
-			<input id="graph-width" type="number" class="form-control" ng-model="sv.options.width">
-		</div>
-		<div class="col-xs-3 col-md-1">
-			<label for="graph-height">Height</label>
-			<input id="graph-height" type="number" class="form-control" ng-model="sv.options.height">
-		</div>
-		<div class="col-xs-3 col-md-1" >
-			<label for="graph-totals">Totals</label>
-			<input id="graph-totals" type="checkbox" class="form-control" ng-model="sv.showTotals" ng-change="sv.setOptions()" />
-		</div>
-		<div class="col-xs-12 col-md-2" ng-if="sv.type != 'Table'">
-			<label for="graph-title">Title</label>
-			<input id="graph-title" type="text" class="form-control" ng-model="sv.options.title" />
-		</div>
-		<div ng-if="['PieChart','Table'].indexOf(sv.type) == -1">
-			<div class="col-xs-6 col-md-2">
-				<label for="graph-x-title">X-Axis Title</label>
-				<input id="graph-x-title" type="text" class="form-control" ng-model="sv.options.hAxis.title" />
+<div class="form-header">
+	<section>
+		<ul class="nav top-nav">
+			<li><a href="javascript:;" ng-if="sv.graph && sv.days && sv.template && sv.field" ng-click="sv.showDataCounts(sv.graph)">Graph</a></li>
+			<li><a href="javascript:;" ng-if="sv.type" ng-click="sv.type=undefined;sv.field=undefined">Reset</a></li>
+			<li><a href="javascript:;" ng-if="sv.type && sv.type != 'Table'" ng-click="sv.data.rows.reverse()">Reverse</a></li>
+			<li class="form-specs-toggle pull-right" data-toggle="collapse" data-target=".form-specs" aria-expanded="true">
+				<a href="javascript:;"><i class="glyphicon glyphicon-cog pull-right"></i></a>
+			</li>
+		</ul>
+
+		<div class="form-specs collapse in">
+			<div class="container-fluid">
+				<div class="col-xs-3 col-md-1">
+					<label for="graph-days">Past...days</label>
+					<select id="graph-days" class="form-control" ng-model="sv.days" ng-options="day as day for day in [5, 10, 15, 30, 60, 90]"></select>
+				</div>
+				<div class="col-xs-5 col-md-2">
+					<label for="template-select">Page</label>
+					<select id="template-select" class="form-control" ng-model="sv.template" ng-options="template as template.name for template in sv.templates | filter: { draft: false, fields: '!'}"></select>
+				</div>
+				<div class="col-xs-4 col-md-2">
+					<label for="field-select">Field</label>
+					<select id="field-select" class="form-control" ng-model="sv.field" ng-options="field as (field.o.name || field.o.placeholder) for field in sv.template.fields | filter: { fieldtype: '!labelntext' }"></select>
+				</div>
+				<div class="col-xs-3 col-md-1">
+					<label for="graph-type">Graph</label>
+					<select id="graph-type" class="form-control" ng-options="graph.name for graph in sv.graphs" ng-model="sv.graph"></select>
+				</div>
+				<div ng-show="sv.type">
+					<div class="col-xs-3 col-md-1">
+						<label for="graph-width">Width</label>
+						<input id="graph-width" type="number" class="form-control" ng-model="sv.options.width">
+					</div>
+					<div class="col-xs-3 col-md-1">
+						<label for="graph-height">Height</label>
+						<input id="graph-height" type="number" class="form-control" ng-model="sv.options.height">
+					</div>
+					<div class="col-xs-3 col-md-1" >
+						<label for="graph-totals">Totals</label>
+						<input id="graph-totals" type="checkbox" class="form-control" ng-model="sv.showTotals" ng-change="sv.setOptions()" />
+					</div>
+					<div class="col-xs-12 col-md-2" ng-if="sv.type != 'Table'">
+						<label for="graph-title">Title</label>
+						<input id="graph-title" type="text" class="form-control" ng-model="sv.options.title" />
+					</div>
+					<div ng-if="['PieChart','Table'].indexOf(sv.type) == -1">
+						<div class="col-xs-6 col-md-2">
+							<label for="graph-x-title">X-Axis Title</label>
+							<input id="graph-x-title" type="text" class="form-control" ng-model="sv.options.hAxis.title" />
+						</div>
+						<div class="col-xs-6 col-md-2">
+							<label for="graph-y-title">Y-Axis Title</label>
+							<input id="graph-y-title" type="text" class="form-control" ng-model="sv.options.vAxis.title" />
+						</div>
+					</div>
+					<div class="col-xs-6 col-md-1" ng-if="sv.type=='PieChart'">
+						<label for="graph-pieHole">Donut</label>
+						<input id="graph-pieHole" type="range" min="0" max=".9" step=".1" class="form-control" ng-model="sv.options.pieHole" />
+					</div>
+					<div class="col-xs-6 col-md-1" ng-if="sv.type=='BarChart'">
+						<label for="graph-x-lines">Gridlines</label>
+						<input id="graph-x-lines" type="number" class="form-control" min="0" ng-model="sv.options.hAxis.gridlines.count" />
+					</div>
+					<div class="col-xs-6 col-md-1" ng-if="['BarChart','ColumnChart','AreaChart'].indexOf(sv.type) > -1">
+						<label for="graph-stack">Stack</label>
+						<input id="graph-stack" type="checkbox" class="form-control" ng-model="sv.options.isStacked" />
+					</div>
+					<div ng-if="dunno">
+						<div class="col-xs-6 col-md-1">
+							<label for="graph-fill">Fill</label>
+							<input id="graph-fill" type="range" min="0" max=".9" step=".1" class="form-control" ng-model="sv.options.fill" />
+						</div>
+						<div class="col-xs-6 col-md-1">
+							<label for="graph-exact">
+								Exact Values
+								<input id="graph-exact" type="checkbox" class="form-control imod" ng-model="sv.options.displayExactValues" />
+							</label>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="col-xs-6 col-md-2">
-				<label for="graph-y-title">Y-Axis Title</label>
-				<input id="graph-y-title" type="text" class="form-control" ng-model="sv.options.vAxis.title" />
-			</div>
 		</div>
-		<div class="col-xs-6 col-md-1" ng-if="sv.type=='PieChart'">
-			<label for="graph-pieHole">Donut</label>
-			<input id="graph-pieHole" type="range" min="0" max=".9" step=".1" class="form-control" ng-model="sv.options.pieHole" />
-		</div>
-		<div class="col-xs-6 col-md-1" ng-if="sv.type=='BarChart'">
-			<label for="graph-x-lines">Gridlines</label>
-			<input id="graph-x-lines" type="number" class="form-control" min="0" ng-model="sv.options.hAxis.gridlines.count" />
-		</div>
-		<div class="col-xs-6 col-md-1" ng-if="['BarChart','ColumnChart','AreaChart'].indexOf(sv.type) > -1">
-			<label for="graph-stack">Stack</label>
-			<input id="graph-stack" type="checkbox" class="form-control" ng-model="sv.options.isStacked" />
-		</div>
-		<div ng-if="dunno">
-			<div class="col-xs-6 col-md-1">
-				<label for="graph-fill">Fill</label>
-				<input id="graph-fill" type="range" min="0" max=".9" step=".1" class="form-control" ng-model="sv.options.fill" />
-			</div>
-			<div class="col-xs-6 col-md-1">
-				<label for="graph-exact">
-					Exact Values
-					<input id="graph-exact" type="checkbox" class="form-control imod" ng-model="sv.options.displayExactValues" />
-				</label>
-			</div>
-		</div>
-	</div>
+	</section>
 </div>
 
 <div class="paper col-xs-12" ng-if="sv.type">

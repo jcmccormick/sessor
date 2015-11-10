@@ -11,12 +11,9 @@
     "angular-ui-sortable": "latest",
     "angular-local-storage": "latest",
     "angular-google-chart": "latest",
-    "angular-moment": "latest",
     "ng-token-auth": "latest",
     "bootstrap-sass-official": "latest",
     "bootbox": "latest",
-    "ngBootbox": "latest",
-    "ngInfiniteScroll": "latest",
-    "moment": "latest"
+    "ngBootbox": "latest"
   }
 }

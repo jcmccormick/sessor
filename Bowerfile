@@ -12,5 +12,4 @@ asset 'ng-token-auth'
 asset 'bootstrap-sass-official'
 asset 'bootbox'
 asset 'ngBootbox'
-asset 'ngInfiniteScroll'
 # vim: ft=ruby

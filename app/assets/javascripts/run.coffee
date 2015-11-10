@@ -1,5 +1,3 @@
-angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 750)
-
 angular.module("sessor").run (['$auth', '$rootScope', '$location', '$cacheFactory', '$window', 'ClassFactory', 'Flash', 'ReportsService', 'TemplatesService',
 ($auth, $rootScope, $location, $cacheFactory, $window, ClassFactory, Flash, ReportsService, TemplatesService)->
 

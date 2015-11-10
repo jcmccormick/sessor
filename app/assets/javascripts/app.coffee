@@ -13,7 +13,6 @@ sessor = angular.module('sessor', [
 	'ipCookie',
 	'ui.sortable',
 	'googlechart',
-	'infinite-scroll',
 	'flash',
 	'controllers',
 	'directives',
@@ -55,35 +54,35 @@ sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
 	)
 	.when('/profile',
 		templateUrl: "user/edit.html"
-		controller: 'UserRegistrationsController'
+		controller: 'UsersController'
 		resolve: authResolver
 	) # REPORTS ROUTES #
 	.when('/reports',
-		templateUrl: "reports/show.html"
-		controller: 'ShowReportsController'
-		controllerAs: 'vrs'
+		templateUrl: "reports/list.html"
+		controller: 'ReportsController'
+		controllerAs: 'vr'
 		resolve: authResolver
 	)
 	.when('/reports/new/',
 		templateUrl: "reports/edit.html"
-		controller: 'EditReportController'
+		controller: 'ReportsController'
 		controllerAs: 'vr'
 		resolve: authResolver
 	)
 	.when('/reports/:reportId',
 		templateUrl: "reports/view.html"
-		controller: 'ViewReportController'
+		controller: 'ReportsController'
 		controllerAs: 'vr'
 		resolve: authResolver
 	)
 	.when('/reports/:reportId/edit'
 		templateUrl: "reports/edit.html"
-		controller: 'EditReportController'
+		controller: 'ReportsController'
 		controllerAs: 'vr'
 		resolve: authResolver
 	) # TEMPLATES ROUTES #
 	.when('/templates',
-		templateUrl: "templates/show.html"
+		templateUrl: "templates/list.html"
 		controller: 'TemplatesController'
 		controllerAs: 'vt'
 		resolve: authResolver

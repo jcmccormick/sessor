@@ -16,28 +16,28 @@ $tablet: 48em;
 $desktop: 62em;
 
 @mixin respond($media) {
- @if $media == mini {
-	@media screen and (min-width: $mini) {
-	 @content
+	@if $media == mini {
+		@media screen and (min-width: $mini) {
+			@content
+		}
 	}
- }
- @if $media == mobile {
-	@media screen and (min-width: $mobile) {
-	 @content
+	@if $media == mobile {
+		@media screen and (min-width: $mobile) {
+			@content
+		}
 	}
- }
 
- @else if $media == tablet {
-	@media screen and (min-width: $tablet) {
-	 @content
+	@else if $media == tablet {
+		@media screen and (min-width: $tablet) {
+			@content
+		}
 	}
- }
 
- @else if $media == desktop {
-	@media screen and (min-width: $desktop) {
-	 @content
+	@else if $media == desktop {
+		@media screen and (min-width: $desktop) {
+			@content
+		}
 	}
- }
 }
 
 /*
@@ -266,7 +266,8 @@ blockquote {
 		}
 
 		.col-xs-12,
-		.col-xs-6 {
+		.col-xs-6,
+		.col-xs-3 {
 			margin-bottom: 10px;
 			padding-left: 0;
 		}
