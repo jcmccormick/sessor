@@ -37,7 +37,6 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 	sortTemplates = (report)->
 		sorted = []
 		if report.templates.length
-			console.log 'what'
 			for key in report.template_order
 				found = false
 				report.templates = report.templates.filter((template)->
@@ -61,28 +60,30 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 		getReport: (id)->
 			if !id
 				delete this.id
-				delete this.title
-				delete this.templates
-				delete this.template_order
-				delete this.form
-			report = ($.grep reports, (rep)-> rep.id == id)[0]
+				this.title = 'Untitled'
+				this.templates = []
+				this.template_order = []
+				this.form = undefined
+			if report = ($.grep reports, (rep)-> rep.id == id)[0]
+				report.templates && sortTemplates(report)
+				report.form = ($.grep report.templates, (template)-> template.id == report.template_order[report.template_order.length-1])[0]
 			report = $.extend this, report
-			report.templates && sortTemplates(report)
 			return report
 
 		queryReport: (id)->
 			deferred = $q.defer()
 			ClassFactory.get({class: 'reports', id: id}, (res)->
-				if rep = ($.grep reports, (report)-> report.id == id)[0]
-					$.extend rep, res
+				if report = ($.grep reports, (rep)-> rep.id == id)[0]
+					$.extend report, res
 				else
 					reports.push(res)
-				deferred.resolve()
+				deferred.resolve(report || res)
 			)
 			return deferred.promise
 
 		# save/update report
 		saveReport: (temporary, form)->
+			deferred = $q.defer()
 			# Auto-save
 			!timedSave && timedSave = $interval (->
 				this.id && !form.$pristine && this.saveReport(true, form)
@@ -101,11 +102,13 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 
 				!report.id && report.$save({class: 'reports'}, (res)->
 					reports.push res
+					deferred.resolve(res)
 					$location.path("/reports/#{res.id}/edit")
 				)
 
 				if report.id
 					!form.$pristine && report.$update({class: 'reports', id: report.id}, (res)->
+						deferred.resolve(res)
 						res.updated_at = moment().local().format()
 						$.extend ($.grep reports, (repo)-> repo.id == res.id)[0], res
 						!temporary && $location.path("/reports/#{res.id}")
@@ -115,7 +118,7 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 
 				$rootScope.$broadcast('clearreports')				
 			)
-			return
+			return deferred.promise
 
 		deleteReport: (form)->
 			index = reports.indexOf ($.grep reports, (report)-> report.id == this.id)[0]
@@ -130,20 +133,9 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 			return
 
 		addTemplate: (template, form)->
-			!this.templates && this.templates = []
-			!this.template_order && this.template_order = []
+			ts = this
 			this.template_order.push template.id
-			if template.sections
-				this.form = template
-				this.templates.push this.form
-				this.saveReport(true, form)
-			else
-				ts = this
-				ClassFactory.get({class: 'templates', id: template.id}, (res)->
-					ts.templates.push res
-					ts.form = res
-					ts.saveReport(true, form)
-				)
+			this.saveReport(true, form).then((res)-> ts.queryReport(res.id).then((res)-> ts.getReport(res.id) ) )
 			return
 
 		removeTemplate: (template)->

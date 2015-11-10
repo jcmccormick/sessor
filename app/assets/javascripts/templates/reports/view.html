@@ -9,13 +9,7 @@
 				</ul>
 			</li>
 			<li><a href="#/reports/{{vr.report.id}}/edit">Edit</a></li>
-			<li class="dropdown">
-				<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Pages <b class="caret"></b></a>
-				<ul class="dropdown-menu report-pages" role="menu">
-					<li ng-if="vr.report.e"><span><a href="javascript:;" class="h4" ng-click="vr.report.newPageAdd=true">Add Page</a></span></li>
-					<li ng-repeat="template in vr.report.templates"><a href="javascript:;" ng-class="{'selected':template==vr.report.form}" ng-click="vr.report.form = template">{{template.name}}</a></li>
-				</ul>
-			</li>
+			<li><select class="form-control" ng-options="template.name for template in vr.report.templates" ng-model="vr.report.form"></select></li>
 		</ul>
 	</section>
 </div>

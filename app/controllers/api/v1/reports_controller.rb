@@ -34,6 +34,8 @@ module Api::V1 #:nodoc:
     def create
       @report = current_user.reports.new(allowed_params)
       @report.save
+      @report.populate_values
+      @report.reload unless !@report.changed
       current_user.reports << @report
       render 'show', status: 201
     end
