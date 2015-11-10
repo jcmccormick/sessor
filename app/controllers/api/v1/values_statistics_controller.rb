@@ -14,8 +14,6 @@ module Api::V1 #:nodoc:
 						.group_by { |value| [value['created_at'].to_date, value['input']] }
 						.map { |k, v| {'date': k.first, 'input': k.last, 'count': v.length} }
 
-			pp all_data
-
 			# the object which will hold the data to be returned
 			grouped = {:cols => [], :rows => []}
 
