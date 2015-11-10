@@ -24,7 +24,7 @@ class Report < ActiveRecord::Base
   serialize :template_order, Array
   accepts_nested_attributes_for :values
   validates :title, format: { with: /\A[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
-
+  
   default_scope { eager_load([{:templates => :fields}, :values])}
 
 

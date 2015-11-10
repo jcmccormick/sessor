@@ -6,15 +6,16 @@ factories.factory("httpInterceptor", ['$q', '$rootScope', '$log',
 
 	{
 		request: (config)->
-			if ++loadingCount == 1 then $rootScope.$broadcast('loading:progress')
+			++loadingCount == 1 && $rootScope.$broadcast('loading:progress')
 			return config || $q.when(config)
 
 		response: (response)->
-			if --loadingCount == 0 then $rootScope.$broadcast('loading:finish')
+			--loadingCount == 0 && $rootScope.$broadcast('loading:finish')
 			return response || $q.when(response)
 
 		responseError: (response)->
-			if --loadingCount == 0 then $rootScope.$broadcast('loading:finish')
+			response.statusText == 'Unauthorized' && $rootScope.$broadcast('auth:invalid')
+			--loadingCount == 0 && $rootScope.$broadcast('loading:finish')
 			return $q.reject(response)
 
 	}

@@ -41,7 +41,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			errors: ''
 		}, tempCopy
 
-		if tempCopy.fields_attributes
+		if tempCopy.fields_attributes && tempCopy.fields_attributes.length
 			# fields without a section ID are removed, as they will
 			# be removed when saving tempCopy; the following makes sure
 			# any deleted fields will be removed from the client's 
@@ -65,9 +65,8 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		return deferred.promise
 
 	newFieldOrdering = (template, section_id, column_id)->
-		count = $.grep template.fields, (tempField)->
-			section_id == tempField.o.section_id && column_id == tempField.o.column_id
-		return count.length+1
+		!template.fields && template.fields = []
+		return ($.grep template.fields, (tempField)-> section_id == tempField.o.section_id && column_id == tempField.o.column_id).length+1
 
 
 	{
@@ -91,7 +90,10 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		queryTemplate: (id)->
 			deferred = $q.defer()
 			ClassFactory.get({class: 'templates', id: id}, (res)->
-				templates.push(res)
+				if templ = ($.grep templates, (template)-> template.id == id)[0]
+					$.extend templ, res
+				else
+					templates.push(res)
 				deferred.resolve()
 			)
 			return deferred.promise
@@ -121,12 +123,10 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 					$location.path("/templates/#{res.id}/edit")
 				)
 
-				console.log res
-
 				if res.id
 					!form.$pristine && res.$update({class: 'templates', id: res.id}, (rep)->
-						for templ in templates
-							templ.id == rep.id && $.extend templ, rep
+						rep.updated_at = moment().local().format()
+						$.extend ($.grep templates, (templ)-> templ.id == rep.id)[0], rep
 						!temporary && $location.path("/templates/#{rep.id}")
 						form.$setPristine()
 					)
@@ -138,9 +138,10 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			return
 
 		# delete template
-		deleteTemplate: ()->
+		deleteTemplate: (form)->
+			templates.splice(this, 1)
 			this.$delete({class: 'templates', id: this.id}, ((res)->
-				templates.splice(this, 1)
+				form.$setPristine()
 				$rootScope.$broadcast('cleartemplates')
 				$location.path("/templates")
 			), (err)->
@@ -150,6 +151,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 		# add section
 		addSection: ()->
+			!this.sections && this.sections = []
 			this.sections.push({
 				i: this.sections.length+1
 				n: (this.newSectionName || '')
@@ -226,11 +228,13 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		# delete field
 		deleteField: (field)->
 			this.sO = undefined
-			this.fields.splice field, 1
+			f = ($.grep this.fields, (f)-> f.id == field.id)[0]
+			index = this.fields.indexOf(f)
+			this.fields.splice index, 1
 			$.extend field, new ClassFactory()
 			field.$delete({class: 'fields', id: field.id})
 			for tempField in this.fields
-				tempField.o.section_id == field.o.section_id && tempField.o.column_id == field.o.column_id && tempField.o.column_order > field.o.column_order && tempField.o.column_order--
+				tempField.o.section_id == f.o.section_id && tempField.o.column_id == f.o.column_id && tempField.o.column_order > f.o.column_order && tempField.o.column_order--
 			return
 
 		# change a field's section_id

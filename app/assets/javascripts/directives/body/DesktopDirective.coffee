@@ -2,11 +2,12 @@ directives = angular.module('directives')
 directives.directive('desktop', [()->
   {
     controllerAs: 'dv'
-    controller: ['DesktopService', (DesktopService)->
+    controller: ['ReportsService', 'TemplatesService', (ReportsService, TemplatesService)->
       
       dv = this
 
-      DesktopService.getDesktop(dv)
+      dv.reports = ReportsService.listReports()
+      dv.templates = TemplatesService.listTemplates()
 
       return dv
 

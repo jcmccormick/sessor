@@ -1,33 +1,34 @@
 <nav class="navbar-top" role="navigation">
-  <div class="navbar-header">
-    <span class="navbar-brand"><a href="#/desktop">Clerkr</a></span>
-    <button type="button" ng-if="user.uid" class="navbar-toggle" data-toggle="collapse" data-target=".side-nav">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <!-- Top Menu Items -->
-    <ul class="nav top-nav pull-right">
-      <li class="dropdown">
-        <a href="javascript:;" class="user-menu dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> &nbsp; <b class="caret"></b></a>
-        <ul class="dropdown-menu bump-left">
-          <li ng-if="user.uid"><a href="#/profile"><i class="glyphicon glyphicon-user"></i> &nbsp; Profile</a></li>
-          <li><a href="#/contact"><i class="glyphicon glyphicon-globe"></i> &nbsp; Contact</a></li>
-          <li><a href="#/support"><i class="glyphicon glyphicon-question-sign"></i> &nbsp; Support</a></li>
-          <li ng-if="user.uid" class="divider"></li>
-          <li ng-if="user.uid"><a href ng-click="handleSignOut()"><i class="glyphicon glyphicon-off"></i> &nbsp; Sign Out</a></li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-  <ul class="nav collapse side-nav" data-toggle="collapse" data-target=".side-nav">
-    <li><a href="#/desktop"><i class="glyphicon glyphicon-dashboard"></i> &nbsp; Desktop</a></li>
-    <li><a href="#/templates"><i class="glyphicon glyphicon-file"></i> &nbsp; Pages</a></li>
-    <li><a href="#/reports"><i class="glyphicon glyphicon-inbox"></i> &nbsp; Reports</a></li>
-    <li><a href="#/statistics"><i class="glyphicon glyphicon-stats"></i> &nbsp; Statistics</a></li>
-    <li><a href="#/group"><i class="glyphicon glyphicon-briefcase"></i> &nbsp; Group</a></li>
-    <li><a href="#/mastery"><i class="glyphicon glyphicon-education"></i> &nbsp; Mastery</a></li>
-  </ul>
-  <!-- /.navbar-collapse -->
+	<div class="navbar-header">
+		<span class="navbar-brand"><a href="#/desktop">Clerkr</a></span>
+		<button type="button" ng-if="user.uid" class="navbar-toggle" data-toggle="collapse" data-target=".collapse-nav">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<!-- Top Menu Items -->
+		<ul class="nav top-nav pull-right">
+			<li class="dropdown">
+				<a href="javascript:;" class="user-menu dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> &nbsp; <b class="caret"></b></a>
+				<ul class="dropdown-menu bump-left">
+					<li ng-if="user.uid"><a href="#/profile"><i class="glyphicon glyphicon-user"></i> &nbsp; Profile</a></li>
+					<li><a href="#/contact"><i class="glyphicon glyphicon-globe"></i> &nbsp; Contact</a></li>
+					<li><a href="#/support"><i class="glyphicon glyphicon-question-sign"></i> &nbsp; Support</a></li>
+					<li ng-if="user.uid" class="divider"></li>
+					<li ng-if="user.uid"><a href ng-click="handleSignOut()"><i class="glyphicon glyphicon-off"></i> &nbsp; Sign Out</a></li>
+				</ul>
+			</li>
+		</ul>
+		<ul class="nav pull-left">
+			<li><a href="#/templates">Pages</a></li>
+			<li><a href="#/reports">Reports</a></li>
+		</ul>
+		<ul class="nav collapse collapse-nav pull-left">
+			<li><a href="#/statistics">Statistics</a></li>
+			<li><a href="#/group">Group</a></li>
+			<li><a href="#/mastery">Mastery</a></li>
+		</ul>
+	</div>
+	<!-- /.navbar-collapse -->
 </nav>

@@ -1,12 +1,17 @@
 services = angular.module('services')
-services.service('DesktopService', ['ClassFactory', (ClassFactory)->
-
+services.service('DesktopService', ['$auth', 'ClassFactory', 'ReportsService', 'TemplatesService', ($auth, ClassFactory, ReportsService, TemplatesService)->
 	{
+		getDesktop: ()->
+			if !TemplatesService.listTemplates().length
+				ClassFactory.get({class: 'desktop_statistics'}, (res)->
+					$.extend ReportsService.listReports(), res.reports
+					$.extend TemplatesService.listTemplates(), res.templates
+				)
 
-		getDesktop: (dv)->
-			ClassFactory.get({class: 'desktop_statistics'}, (res)->
-				$.extend dv, res
-			)
+		getTemplates: ->
+			return TemplatesService.listTemplates()
 
+		getReports: ->
+			return ReportsService.listReports()
 	}
 ])

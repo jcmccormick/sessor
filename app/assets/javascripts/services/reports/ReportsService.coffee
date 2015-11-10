@@ -2,6 +2,8 @@ services = angular.module('services')
 services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFactory', 'Flash',
 ($location, $q, $rootScope, ClassFactory, Flash)->
 	
+	reports = []
+
 	validateReport = (report)->
 		deferred = $q.defer()
 		errors = ''
@@ -55,6 +57,8 @@ services.service('ReportsService', ['$location', '$q', '$rootScope', 'ClassFacto
 		return deferred.promise
 
 	{
+		listReports: ->
+			return reports
 
 		newReport: ->
 			report = new ClassFactory()

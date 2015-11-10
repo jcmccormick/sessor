@@ -1,35 +1,46 @@
-<div class="form-header col-xs-12">  
-  <ul class="nav top-nav">
-    <li class="dropdown">
-      <a href class="dropdown-toggle" data-toggle="dropdown">Pages <b class="caret"></b></a>
-      <ul class="dropdown-menu">
-        <li><a href="#/templates/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
-        <li><a href="#/templates"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
-      </ul>
-    </li>
-    <li class="col-xs-4"><input type="text" class="form-control" placeholder="ID or Title" ng-model="keywords"></li>
-    <li><a href="javascript:;" ng-click="search(keywords)"><i class="glyphicon glyphicon-search"></i></a></li>
-    <li><a href="javascript:;" ng-click="search();keywords=undefined"><i class="glyphicon glyphicon-remove"></i></a></li>
-  </ul>
+<div class="form-header">
+	<section>
+		<ul class="nav top-nav">
+			<li><a href="#/templates/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
+			<li><input type="text" class="form-control" placeholder="Search" ng-model="vt.keywords"></li>
+			<li><select class="form-control" ng-model="vt.pageSize" ng-options="distance as distance for distance in [10, 25, 50, 100]" ng-change="vt.currentPage = 0"><option value="10">10</option></select></li>
+			<li><h4><p>per page</p></h4></li>
+			<li><a href="javascript:;" ng-class="{'disabled':vt.currentPage==0}" ng-click="vt.currentPage = vt.currentPage-1"><i class="glyphicon glyphicon-triangle-left"></i></a></li>
+			<li><h4><p>{{vt.currentPage+1}} of {{vt.numPages()}}</p></h4></li>
+			<li><a href="javascript:;" ng-class="{'disabled':vt.currentPage>=vt.templates.length/vt.pageSize-1}" ng-click="vt.currentPage = vt.currentPage+1"><i class="glyphicon glyphicon-triangle-right"></i></a></li>
+		</ul>
+	</section>
 </div>
 
-
-<div infinite-scroll="loadNewItems()">
-  <div class="paper row" ng-repeat="template in templates">
-    <div class="col-xs-2 col-md-1">
-      <label>ID</label>
-      <h4>{{template.id}}</h4>
-    </div>
-    <div class="col-xs-7 col-md-9">
-      <label>Name</label>
-      <h4>{{template.name}} <small ng-show="template.draft"><strong>DRAFT</strong></small></h4>
-    </div>
-    <div class="col-xs-2">
-      <label>Actions</label>
-      <h4>
-        <a href="#/templates/{{template.id}}" class="btn btn-link">View</a>
-        <a href="#/templates/{{template.id}}/edit" class="btn btn-link">Edit</a>
-      </h4>
-    </div>
-  </div>
-</div>
+<section class="col-xs-12">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th><a href="javascript:;" ng-click="vt.sortType = 'id'; vt.sortReverse = !vt.sortReverse"># &nbsp; 
+					<i ng-show="vt.sortType=='id' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
+					<i ng-show="vt.sortType=='id' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+				</a></th>
+				<th><a href="javascript:;" ng-click="vt.sortType = 'draft'; vt.sortReverse = !vt.sortReverse">Draft &nbsp; 
+					<i ng-show="vt.sortType=='draft' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
+					<i ng-show="vt.sortType=='draft' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+				</a></th>
+				<th><a href="javascript:;" ng-click="vt.sortType = 'name'; vt.sortReverse = !vt.sortReverse">Name &nbsp; 
+					<i ng-show="vt.sortType=='name' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
+					<i ng-show="vt.sortType=='name' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i></a></th>
+				<th><a href="javascript:;" ng-click="vt.sortType = 'updated_at'; vt.sortReverse = !vt.sortReverse">Updated At &nbsp; 
+					<i ng-show="vt.sortType=='updated_at' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
+					<i ng-show="vt.sortType=='updated_at' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i></a></th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="template in vt.templates | filter:vt.keywords | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo:vt.pageSize">
+				<td>{{template.id}}</td>
+				<td>{{(template.draft && 'Yes') || 'No'}}</td>
+				<td>{{template.name}}</td>
+				<td>{{template.updated_at | date: 'short'}}</td>
+				<td><a href="#/templates/{{template.id}}" class="btn btn-link">View</a> <a href="#/templates/{{template.id}}/edit" class="btn btn-link">Edit</a></td>
+			</tr>
+		</tbody>
+	</table>
+</section>

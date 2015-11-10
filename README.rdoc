@@ -12,6 +12,7 @@
 * Different Imod (input/page designer) styles selectable by user
 * Test mode! First fill-out is testing key, checks subsequent entries and scores.
 * Fields or their data sets can be shared with groups or individuals.
+* Select APA/MLA/Chicago/etc format and the page automatically loads with whatever
 
 == BUGS
 * Null field name in statistics, derive from name/placeholder/default value
@@ -20,7 +21,7 @@
 
 == Roadmap for V1
 * FAQ/Support Pages
-& Graphs by type
+* Graphs by type
 * Graphs export to various formats and image
 * Color scheme for inner layout, styling for paper across all pages, javascript modify css class?
 * Lockdown by admin
