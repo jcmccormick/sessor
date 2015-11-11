@@ -1,9 +1,5 @@
 /* Global Styles */
 
-.view-frame {
-
-}
-
 @media(min-width:768px) {
 	.navbar-top {
 		padding: 0 20px;
@@ -11,6 +7,21 @@
 	.collapse-nav {
 		display: block !important;
 		float: left;
+	}
+}
+
+/* Menu Link Colors */
+.form-header,
+.navbar-top {
+	a:not(.btn-default) {
+		color: white;
+		&:hover {
+			color: #eb8f5f !important;
+		}
+		&:hover:not(.btn),
+		&:focus {
+			background-color: transparent !important;
+		}
 	}
 }
 
@@ -25,7 +36,8 @@
 }
 
 .navbar-top {
-	background-color: #3498db !important;
+    border-top-left-radius: 80px;
+	background-color: #337ab7 !important;
 
 	.navbar-brand {
 		padding: 15px;
@@ -50,9 +62,13 @@
 	}
 
 	.user-menu {
-		color: white;
+		.glyphicon {
+			color: white !important;
+		}
 		&:hover {
-			color: #e74c3c;
+			.glyphicon {
+				color: #e74c3c !important;
+			}
 		}
 	}
 }
@@ -75,7 +91,7 @@
 	margin-top: 0 !important;
 
 	&.bump-left {
-		left: -85px !important;
+		left: -115px !important;
 	}
 
 	li>span {
@@ -108,22 +124,7 @@
 		left: 25px;
 	}
 	&.bump-left:before {
-		left: 100px;
-	}
-}
-
-/* Menu Link Colors */
-.form-header,
-.navbar-top {
-	a:not(.btn-default) {
-		color: white;
-		&:hover {
-			color: #e74c3c !important;
-		}
-		&:hover:not(.btn),
-		&:focus {
-			background-color: transparent !important;
-		}
+		left: 130px;
 	}
 }
 

@@ -47,15 +47,12 @@ $desktop: 62em;
 body {
 	font-family: 'Open Sans', sans-serif !important;
 	background-color: #f5f5f5 !important;
-}
-input::-ms-clear {
-	display: none;
+	.clerkr-c span {
+		font-family: 'Poiret One', sans-serif !important;
+	}
 }
 blockquote {
 	white-space: pre-wrap;
-}
-.clerkr-c span {
-	font-family: 'Poiret One', sans-serif !important;
 }
 .logdout,
 .ng-leave,
@@ -80,7 +77,8 @@ blockquote {
 	font-style: italic;
 }
 .save-now {
-	border-bottom: 2px solid #e74c3c;
+	border-bottom: 4px solid #337ab7;
+	border-bottom-style: dotted;
 }
 .required-error {
 	color:red;
@@ -93,6 +91,14 @@ blockquote {
 .btn.active {
 	-webkit-box-shadow: none!important;
 	box-shadow: none!important;
+}
+.btn-link {
+	color: #337ab7 !important;
+}
+.btn {
+	.glyphicon {
+		color: #eb8f5f;
+	}
 }
 .table {
 	th:not(:first-child),
@@ -180,18 +186,6 @@ blockquote {
 			font-size: 26px;
 		}
 	}
-
-	&.alert-danger:before {
-		content: "Something went wrong...";
-	}
-
-	&.alert-success:before {
-		content: "Everything worked out after all...";
-	}
-
-	&.alert-info:before {
-		content: "Just some notes...";
-	}
 }
 
 /*
@@ -238,7 +232,7 @@ blockquote {
 	section {
 		top: 0;
 		z-index: 1;
-		background-color: #2980B9;
+		background-color: #e74c3c;
 		border-bottom-right-radius: 80px;
 		width: 100%;
 
@@ -249,7 +243,7 @@ blockquote {
 		.glyphicon-cog {
 			padding-right: 5px;
 			@include respond(tablet) {
-				padding-right: 20px;
+				padding-right: 0;
 			}
 		}
 
@@ -271,7 +265,6 @@ blockquote {
 			margin-bottom: 10px;
 			padding-left: 0;
 		}
-		
 	}
 }
 
@@ -294,7 +287,7 @@ blockquote {
 			&.force-hover,
 			&.field-hover {
 				&:before {
-					color: #337ab7;
+					color: #eb8f5f;
 				}
 			}
 		}
@@ -325,7 +318,7 @@ blockquote {
 
 			a {
 				text-align: left;
-				min-width: 31%;
+				min-width: 33%;
 				padding-left: 0;
 			}
 		}
@@ -381,7 +374,7 @@ blockquote {
 		position: static !important;
 
 		.selected-field-options {
-			margin: 15px 0;
+			margin: 15px -5px;
 		}
 	}
 
@@ -421,6 +414,15 @@ blockquote {
 				-ms-transform: rotate(90deg);
 				-o-transform: rotate(90deg);
 				transform: rotate(90deg);
+			}
+		}
+		.btn-group {
+			.switch-on {
+				color: #eb8f5f;
+				font-weight: bold;
+			}
+			:not(.switch-on) {
+				color: #aaa;
 			}
 		}
 	}
@@ -530,7 +532,7 @@ template-field-directive {
 			&:hover,
 			&.force-hover {
 				background-color: rgba(255,255,255,.5);
-				outline: 2px solid blue;
+				outline: 2px solid #e74c3c;
 				width: inherit;
 				height: inherit;
 				top: -5px;
@@ -538,7 +540,7 @@ template-field-directive {
 				right: -5px;
 				bottom: -5px;
 				i {
-					color: #337ab7;
+					color: #eb8f5f;
 				}
 			}
 		}

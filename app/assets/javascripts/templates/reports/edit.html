@@ -12,8 +12,8 @@
 						<li ng-if="vr.report.id"><a href="javascript:;" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this report?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vr.report.deleteReport(vr.repForm)"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
 					</ul>
 				</li>
-				<li><a href="javascript:;" ng-click="vr.save(true)"><span ng-class="{'save-now':!vr.repForm.$pristine}">Save</span></a></li>
-				<li class="form-specs-toggle pull-right" ng-if="!vr.report.id || vr.report.e" ng-click="vr.formSpeccing = !vr.formSpeccing" data-toggle="collapse" data-target=".form-specs" aria-expanded="true">
+				<li ng-if="vr.report.id"><a href="javascript:;" ng-click="vr.save(true)"><span ng-class="{'save-now':!vr.repForm.$pristine}">Save</span></a></li>
+				<li class="form-specs-toggle pull-right" ng-if="!vr.report.id || vr.report.e" data-toggle="collapse" data-target=".form-specs" aria-expanded="true">
 					<a href="javascript:;"><i class="glyphicon glyphicon-cog pull-right"></i></a>
 				</li>
 			</ul>

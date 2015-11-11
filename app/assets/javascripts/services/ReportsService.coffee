@@ -9,7 +9,7 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 
 		# prepare a copy of the template for sending to the DB
 		# sending only the necessary data back
-		tempCopy = new ClassFactory()
+		tempCopy = ClassFactory()
 		angular.copy {
 			id: report.id
 			title: report.title
