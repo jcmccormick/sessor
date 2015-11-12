@@ -10,7 +10,7 @@ controllers.controller("StatisticsController",  ['StatisticsService', 'Templates
 		if sv.templates.length
 			StatisticsService.init().then((res)->
 				$.extend sv, res
-				sv.graph = {name:'Column',type:'ColumnChart'}
+				sv.graph = sv.graphs[0]
 				sv.days = 5
 				sv.filteredTemplates = ->
 					sv.templates.filter((template)->

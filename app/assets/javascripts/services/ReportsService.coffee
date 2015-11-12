@@ -98,7 +98,7 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 					$interval.cancel(timedSave)
 					dereg()
 				)
-
+				
 			# validate and save
 			validateReport(this).then((report)->
 				if !!report.errors
@@ -145,6 +145,7 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 				!this.templates && this.templates = []
 				!this.template_order && this.template_order = []
 				this.template_order.push template.id
+				form.$pristine = false
 				ts = this
 				this.saveReport(true, form).then ((res)->
 					ts.queryReport(res.id).then((res)->
@@ -152,6 +153,7 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 					)
 				), ->
 					ts.template_order.pop()
+					form.$setPristine()
 			return
 
 		removeTemplate: (template)->
