@@ -36,7 +36,19 @@ controllers.controller("ReportsController", ['$scope', '$routeParams', 'ReportsS
 			$scope.$on('$locationChangeStart', (event)->
 				vr.report.id && !vr.repForm.$pristine && !confirm('There are unsaved changes. Press cancel to return to the form.') && event.preventDefault()
 			)
+			vr.switchForm = (dir)->
+				index = vr.report.templates.indexOf(vr.report.form)
+				console.log index
+				vr.report.form = vr.report.templates[index+dir]
 			unbindFormWatch()
+	)
+
+	unbindListWatch = $scope.$watch (()-> vr.filteredList), ((newVal, oldVal)->
+		if vr.filteredList
+			vr.numPages = ->
+				Math.ceil(vr.filteredList.length/vr.pageSize)
+
+			unbindListWatch()
 	)
 
 

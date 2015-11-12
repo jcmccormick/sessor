@@ -139,7 +139,7 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 			else
 				!this.templates && this.templates = []
 				!this.template_order && this.template_order = []
-				this.template_order.push template.id
+				this.template_order.indexOf(template.id) == -1 && this.template_order.push template.id
 				ts = this
 				this.saveReport(true, form).then((res)-> ts.queryReport(res.id).then((res)-> ts.getReport(res.id) ) )
 			return
