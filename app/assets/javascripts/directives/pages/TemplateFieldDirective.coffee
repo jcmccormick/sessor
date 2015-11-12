@@ -76,8 +76,8 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 						<h5>{{option}}</h5>
 					</label>'
 		dropdown = '<select ng-options="option for option in field.o.options" '+standard+'
-									<option value="">{{field.o.placeholder || "Select an item..."}}</option>
-								</select>'
+						<option value="">{{field.o.placeholder || "Select an item..."}}</option>
+					</select>'
 
 		# masked = inputstart+' type="password" '+standard
 
@@ -85,9 +85,9 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 		cur_field = getTemplate(scope.field)
 
 		# Pre-parse the value
-		cur_value = if scope.report then scope.field.value.input else scope.field.o.default_value
+		cur_value = if scope.report then scope.field.value.input || scope.field.o.default_value else scope.field.o.default_value
 		if cur_value?
-			cur_field == 'checkbox' && cur_value = if cur_value == 't' then true else false 
+			cur_field == 'checkbox' && cur_value = if cur_value == 1 || 't' then true else false 
 			cur_field == 'integer' && cur_value = parseInt(cur_value, 10)
 			(cur_field == 'date' || cur_field == 'time') && cur_value = if cur_value != '1970-01-01T00:00:00.000Z' then new Date(cur_value) else ''
 
@@ -97,7 +97,7 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 
 		# Compile the field display after doublechecking that values are appropriate for their fieldtype
 		# If editing/viewing a template or editing a report, show <input> fields
-		if !scope.report || !(scope.report && !scope.report.e)
+		if (scope.template && !scope.report) || scope.report.e
 			switch cur_field
 				when "labelntext" then element.html fw+labelntext+fwend
 
@@ -118,16 +118,16 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 			# Else we're viewing a report, so only show 
 			# input text and not an actual <input> field
 
-			switch cur_field
-				when "integer" then scope.field.value.input = parseInt(scope.field.value.input, 10)
-				when "date" then scope.field.value.input? && scope.field.value.input = new Date(scope.field.value.input).format("DDDD, MMMM DS, YYYY")
-				when "time" then scope.field.value.input? && scope.field.value.input = new Date(scope.field.value.input).format("hh:mm TT")
-				when "checkbox" then scope.field.value.input = if scope.field.value.input == true then 'True' else 'False'
+			scope.valueCopy = angular.copy scope.field.value.input
 
-			(!scope.field.value.input? || scope.field.value.input == '') && scope.field.value.input = 'No Data'
+			switch cur_field
+				when "integer" then scope.valueCopy = parseInt(scope.valueCopy, 10)
+				when "date" then scope.valueCopy? && scope.valueCopy = new Date(scope.valueCopy).format("DDDD, MMMM DS, YYYY")
+				when "time" then scope.valueCopy? && scope.valueCopy = new Date(scope.valueCopy).format("hh:mm TT")
+				when "checkbox" then scope.valueCopy = (!scope.valueCopy && 'False') || 'True'
 
 			element.html '<h3>'+scope.field.o.name+'</h3>
-										<blockquote>'+scope.field.value.input+'</blockquote>'
+						<blockquote>{{valueCopy || "No data"}}</blockquote>'
 
 		$compile(element.contents()) scope
 		return

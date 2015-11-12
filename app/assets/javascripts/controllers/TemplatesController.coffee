@@ -22,6 +22,9 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'Report
 				unbindFieldsWatch()
 				unbindDraftWatch()
 			)
+			$scope.$on('$locationChangeStart', (event)->
+				vt.template.id && !vt.tempForm.$pristine && !confirm('There are unsaved changes. Press cancel to return to the form.') && event.preventDefault()
+			)
 
 	if tempId = parseInt($routeParams.templateId, 10)
 		exists = ($.grep vt.templates, (temp)-> temp.id == tempId)[0]
@@ -39,9 +42,6 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'Report
 
 	unbindFormWatch = $scope.$watch (()-> vt.tempForm), ((newVal, oldVal)->
 		if vt.tempForm
-			$scope.$on('$locationChangeStart', (event)->
-				vt.template.id && !vt.tempForm.$pristine && !confirm('There are unsaved changes. Press cancel to return to the form.') && event.preventDefault()
-			)
 			vt.save = (temporary)-> TemplatesService.saveTemplate(temporary, vt.tempForm)
 			vt.delete = (id)->
 				TemplatesService.getTemplate(id)

@@ -114,9 +114,9 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 
 				if report.id && form
 					!form.$pristine && report.$update({class: 'reports', id: report.id}, (res)->
-						deferred.resolve(res)
 						res.updated_at = moment().local().format()
 						$.extend ($.grep reports, (repo)-> repo.id == res.id)[0], res
+						deferred.resolve(res)
 						!temporary && $location.path("/reports/#{res.id}")
 						form.$setPristine()
 					)
