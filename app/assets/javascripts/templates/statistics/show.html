@@ -1,32 +1,24 @@
 <div class="form-header">
 	<section>
 		<ul class="nav top-nav">
-			<li><a href="javascript:;" ng-if="sv.graph && sv.days && sv.template && sv.field" ng-click="sv.showDataCounts(sv.graph)">Graph</a></li>
+			<li class="form-specs-toggle pull-right" ng-show="sv.type">
+				<a href="javascript:;" data-toggle="collapse" data-target=".form-specs" aria-expanded="true"><i class="glyphicon glyphicon-cog pull-right"></i></a>
+			</li>
+			<li><h5><p>Graph Type</p></h5></li>
+			<li><select class="form-control" ng-model="sv.graph" ng-options="graph.name for graph in sv.graphs"></select></li>
+			<li><h5><p>Past # days</p></h5></li>
+			<li><select class="form-control" ng-model="sv.days" ng-options="day as day for day in [5, 10, 15, 30, 60, 90]"></select></li>
+			<li><h5><p>Page</p></h5></li>
+			<li><select class="form-control" ng-model="sv.template" ng-options="template as template.name for template in sv.filteredTemplates()"></select></li>
+			<li><h5><p>Field</p></h5></li>
+			<li><select class="form-control" ng-model="sv.field" ng-options="field as (field.o.name||field.o.placeholder) for field in sv.filteredFields()"></select></li>
+			<li><a href="javascript:;" ng-click="sv.showDataCounts(sv.graph)"><i class="glyphicon glyphicon-stats"></i> &nbsp; Graph</a></li>
 			<li><a href="javascript:;" ng-if="sv.type" ng-click="sv.type=undefined;sv.field=undefined">Reset</a></li>
 			<li><a href="javascript:;" ng-if="sv.type && sv.type != 'Table'" ng-click="sv.data.rows.reverse()">Reverse</a></li>
-			<li class="form-specs-toggle pull-right" data-toggle="collapse" data-target=".form-specs" aria-expanded="true">
-				<a href="javascript:;"><i class="glyphicon glyphicon-cog pull-right"></i></a>
-			</li>
 		</ul>
 
 		<div class="form-specs collapse in">
 			<div class="container-fluid">
-				<div class="col-xs-3 col-md-1">
-					<label for="graph-type">Graph</label>
-					<select id="graph-type" class="form-control" ng-model="sv.graph" ng-options="graph.name for graph in sv.graphs"></select>
-				</div>
-				<div class="col-xs-3 col-md-1">
-					<label for="graph-days">Past...days</label>
-					<select id="graph-days" class="form-control" ng-model="sv.days" ng-options="day as day for day in [5, 10, 15, 30, 60, 90]"></select>
-				</div>
-				<div class="col-xs-6 col-md-2">
-					<label for="template-select">Page</label>
-					<select id="template-select" class="form-control" ng-model="sv.template" ng-options="template as template.name for template in sv.filteredTemplates()"></select>
-				</div>
-				<div class="col-xs-6 col-md-2">
-					<label for="field-select">Field</label>
-					<select id="field-select" class="form-control" ng-model="sv.field" ng-if="sv.template.fields.length" ng-options="field as (field.o.name || field.o.placeholder) for field in sv.filteredFields()"></select>
-				</div>
 				<div ng-show="sv.type">
 					<div class="col-xs-3 col-md-1">
 						<label for="graph-width">Width</label>
