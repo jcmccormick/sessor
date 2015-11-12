@@ -39,8 +39,8 @@
 			<tr ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo:vt.pageSize">
 				<td>{{template.id}}</td>
 				<td class="btn-group" ng-click="template.draft = !template.draft; vt.setDraft(template.id)">
-					<a href="javascript:;" ng-show="!template.draft" class="btn switch-on">Drafted</a>
-					<a href="javascript:;" ng-show="template.draft" class="btn">Undrafted</a>
+					<a href="javascript:;" ng-show="template.draft" class="btn switch-on">Drafted</a>
+					<a href="javascript:;" ng-show="!template.draft" class="btn">Undrafted</a>
 				</td>
 				<td>{{template.name}}</td>
 				<td>{{template.updated_at | date: 'short'}}</td>
