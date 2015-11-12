@@ -7,29 +7,8 @@ module Api::V1#:nodoc:
     wrap_parameters include: Template.attribute_names + nested_attributes_names
 
     def index
-
-      queried_templates = if params.has_key?(:keywords)
-
-        keywords = params[:keywords]
-        
-        query = if keywords.to_i > 0
-          {:id => keywords.to_i}
-        elsif keywords.capitalize == 'Draft'
-          {:draft => 't'}
-        else
-          {:name => keywords}
-        end
-        current_user.templates.where(query)
-      else
-        current_user.templates
-      end
-
-      if params.has_key?(:ts)
-        render json: queried_templates.where(:draft => [nil,'f']).where.not(:id => params[:ts][1..-2].split(',').collect! {|n| n.to_i}).index_minned
-      else
-        render json: queried_templates.page(params[:page]).per(10).order(id: :desc).index_minned
-      end
-
+      templates = current_user.templates.eager_load(:fields).as_json(only: [:id, :name, :updated_at, :draft], include: {fields: {only: [:id, :fieldtype, :o]}})
+      render json: templates
     end
 
     def show
@@ -56,7 +35,7 @@ module Api::V1#:nodoc:
       if template.destroy
         head :no_content
       else
-        render json: { errors: 'A page may not be deleted while a report is using it.' }, status: 422
+        render json: { errors: 'A page may not be deleted while being used in a report.' }, status: 422
       end
     end
 

@@ -2,6 +2,15 @@ controllers = angular.module('controllers')
 controllers.controller('TemplatesController', ['$routeParams', '$scope', 'ReportsService', 'TemplatesService',
 ($routeParams, $scope, ReportsService, TemplatesService)->
 
+	vt = this
+
+	vt.templates = TemplatesService.listTemplates()
+	vt.sortType = 'updated_at'
+	vt.sortReverse = true
+	vt.currentPage = 0
+	vt.pageSize = 10
+	vt.newReport = (template, form)->
+		ReportsService.addTemplate(template, form)
 	setupTemp = ->
 		if vt.template.e = TemplatesService.editing()
 			unbindSectionsWatch = $scope.$watch (()-> vt.template.sections), ((newVal, oldVal)-> newVal != oldVal && vt.tempForm.$pristine = false), true
@@ -13,16 +22,6 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'Report
 				unbindFieldsWatch()
 				unbindDraftWatch()
 			)
-
-	vt = this
-
-	vt.templates = TemplatesService.listTemplates()
-	vt.sortType = 'updated_at'
-	vt.sortReverse = true
-	vt.currentPage = 0
-	vt.pageSize = 10
-	vt.newReport = (template, form)->
-		ReportsService.addTemplate(template, form)
 
 	if tempId = parseInt($routeParams.templateId, 10)
 		exists = ($.grep vt.templates, (temp)-> temp.id == tempId)[0]
@@ -40,10 +39,13 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'Report
 
 	unbindFormWatch = $scope.$watch (()-> vt.tempForm), ((newVal, oldVal)->
 		if vt.tempForm
-			vt.save = (temporary)-> TemplatesService.saveTemplate(temporary, vt.tempForm)
 			$scope.$on('$locationChangeStart', (event)->
 				vt.template.id && !vt.tempForm.$pristine && !confirm('There are unsaved changes. Press cancel to return to the form.') && event.preventDefault()
 			)
+			vt.save = (temporary)-> TemplatesService.saveTemplate(temporary, vt.tempForm)
+			vt.delete = (id)->
+				TemplatesService.getTemplate(id)
+				TemplatesService.deleteTemplate(vt.tempForm)
 			vt.setDraft = (id)->
 				TemplatesService.getTemplate(id).settingDraft = true
 				TemplatesService.saveTemplate(true, vt.tempForm)

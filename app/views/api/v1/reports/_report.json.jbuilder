@@ -1,4 +1,4 @@
-json.(@report, :id, :title, :allow_title, :template_order)
+json.(@report, :updated_at, :id, :title, :allow_title, :template_order)
 
 json.users @report.users do |user|
 	json.id user.id

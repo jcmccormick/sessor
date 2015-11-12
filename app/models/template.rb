@@ -40,7 +40,7 @@ class Template < ActiveRecord::Base
 
 	# Upon Template creation, set basic stuff
 	def set_defaults
-		self.draft = false
+		self.draft = true
 		self.sections = [{i:1,n:'',c:1}]
 	end
 

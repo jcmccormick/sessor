@@ -16,23 +16,23 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th><a href="javascript:;" ng-click="vr.sortType = 'id'; vr.sortReverse = !vr.sortReverse"># &nbsp; 
+				<th class="text-center"><a href="javascript:;" ng-click="vr.sortType = 'id'; vr.sortReverse = !vr.sortReverse"># &nbsp; 
 					<i ng-show="vr.sortType=='id' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
 					<i ng-show="vr.sortType=='id' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
 				</a></th>
-				<th><a href="javascript:;" ng-click="vr.sortType = 'name'; vr.sortReverse = !vr.sortReverse">Name &nbsp; 
-					<i ng-show="vr.sortType=='name' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-					<i ng-show="vr.sortType=='name' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+				<th class="text-center"><a href="javascript:;" ng-click="vr.sortType = 'title'; vr.sortReverse = !vr.sortReverse">Name &nbsp; 
+					<i ng-show="vr.sortType=='title' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
+					<i ng-show="vr.sortType=='title' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
 				</a></th>
-				<th><a href="javascript:;" ng-click="vr.sortType = 'pages'; vr.sortReverse = !vr.sortReverse">Pages &nbsp; 
-					<i ng-show="vr.sortType=='pages' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-					<i ng-show="vr.sortType=='pages' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+				<th class="text-center"><a href="javascript:;" ng-click="vr.sortType = 'templates[0].name'; vr.sortReverse = !vr.sortReverse">Pages &nbsp; 
+					<i ng-show="vr.sortType=='templates[0].name' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
+					<i ng-show="vr.sortType=='templates[0].name' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
 				</a></th>
-				<th><a href="javascript:;" ng-click="vr.sortType = 'updated_at'; vr.sortReverse = !vr.sortReverse">Updated At &nbsp; 
+				<th class="text-center"><a href="javascript:;" ng-click="vr.sortType = 'updated_at'; vr.sortReverse = !vr.sortReverse">Updated &nbsp; 
 					<i ng-show="vr.sortType=='updated_at' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
 					<i ng-show="vr.sortType=='updated_at' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
 				</a></th>
-				<th>Actions</th>
+				<th class="text-center">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -41,7 +41,11 @@
 				<td>{{report.title}}</td>
 				<td><span ng-repeat="template in report.templates">{{template.name}}<span ng-show="!$last">, </span></span></td>
 				<td>{{report.updated_at | date: 'short'}}</td>
-				<td><a href="#/reports/{{report.id}}" class="btn btn-link">View</a> <a href="#/reports/{{report.id}}/edit" class="btn btn-link">Edit</a></td>
+				<td>
+					<a href="#/reports/{{report.id}}" title="View" class="btn"><i class="glyphicon glyphicon-search"></i></a> 
+					<a href="#/reports/{{report.id}}/edit" title="Edit" class="btn"><i class="glyphicon glyphicon-pencil"></i></a>
+					<a href="javascript:;" title="Delete" class="btn" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this report?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vr.delete(report.id)"><i class="glyphicon glyphicon-trash"></i></a>
+				</td>
 			</tr>
 		</tbody>
 	</table>

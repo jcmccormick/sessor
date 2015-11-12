@@ -31,7 +31,7 @@
 					<div class="col-xs-6 col-md-3" ng-if="vr.templates.length">
 						<label for="add-pages">Add Page</label>
 						<div class="input-group">
-							<select id="add-pages" class="form-control" ng-options="template.name for template in vr.templates | filter: {draft: false}" ng-model="vr.template"></select>
+							<select id="add-pages" class="form-control" ng-options="template.name for template in vr.filteredTemplates()" ng-model="vr.template"></select>
 							<span class="input-group-btn">
 								<a href="javascript:;" class="btn btn-default" ng-click="vr.report.addTemplate(vr.template, vr.repForm)">Add</a>
 							</span>
@@ -41,11 +41,14 @@
 						<a href="javascript:;" ng-class="{'disabled':vr.report.form.id == vr.report.template_order[0]}" ng-click="vr.switchForm(-1)"><i class="glyphicon glyphicon-triangle-left"></i></a>
 						<label for="current-page">Current Page</label>
 						<a href="javascript:;" ng-class="{'disabled':vr.report.form.id == vr.report.template_order[vr.report.template_order.length-1]}" ng-click="vr.switchForm(1)"><i class="glyphicon glyphicon-triangle-right"></i></a>
-						<select id="current-page" class="form-control" ng-model="vr.report.form" ng-options="template.name for template in vr.report.templates"></select>
-					</div>
-					<div class="col-xs-6 col-md-3" ng-if="vr.report.templates.length">
-						<label class="col-xs-12">&nbsp;</label>
-						<a href="javascript:;" class="btn" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="vr.report.removeTemplate(vr.report.form)">Remove this page</a>
+						<div class="input-group">
+							<select id="current-page" class="form-control" ng-model="vr.report.form" ng-options="template.name for template in vr.report.templates"></select>
+							<span class="input-group-btn">
+								<a href="javascript:;" class="btn btn-default" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="vr.report.removeTemplate(vr.report.form)">
+									<i class="glyphicon glyphicon-trash"></i>
+								</a>
+							</span>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -95,10 +95,11 @@ blockquote {
 .btn-link {
 	color: #337ab7 !important;
 }
-.btn {
-	.glyphicon {
-		color: #eb8f5f;
-	}
+.table a,
+.btn-link,
+.btn .glyphicon {
+	color: #eb8f5f !important;
+	text-decoration: none !important;
 }
 .btn-group {
 	.switch-on {
@@ -113,9 +114,6 @@ blockquote {
 	th:not(:first-child),
 	td:not(:first-child) {
 		word-break: break-word;
-	}
-	a {
-		text-decoration: none !important;
 	}
 }
 

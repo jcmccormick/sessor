@@ -20,12 +20,12 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 
 		required = ''
 
-		report.templates.length && for template in report.templates
+		for template in report.templates
 			template && template.fields.length && for field in template.fields
 				tempCopy.values_attributes.push field.value
-				field.required && !field.value.input? && required += '<li>'+template.name+': '+field.name+'</li>'
+				field.o.required && !field.value.input? && required += '<li><strong>'+template.name+'</strong>: '+field.o.name+'</li>'
 
-		!!required && tempCopy.errors += 'The following fields are required<ul>'+required+'</ul>'
+		!!required && tempCopy.errors += '<h3>Required Fields</h3> <ul class="list-unstyled">'+required+'</ul>'
 
 		!tempCopy.title && tempCopy.title = 'Untitled'
 		!/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test(tempCopy.title) && tempCopy.errors += '<p>Title must begin with a letter and only contain letters and numbers.</p>'
@@ -36,18 +36,18 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 
 	sortTemplates = (report)->
 		sorted = []
-		if report.templates.length
-			for key in report.template_order
-				found = false
-				report.templates = report.templates.filter((template)->
-					if !found && template.id == key
-						sorted.push template
-						found = true
-						return false
-					else
-						return true
-				)
+		for key in report.template_order
+			found = false
+			report.templates = report.templates.filter((template)->
+				if !found && template.id == key
+					sorted.push template
+					found = true
+					return false
+				else
+					return true
+			)
 		report.templates = sorted
+		report.form = report.templates[report.templates.length-1]
 		return
 
 	{
@@ -55,7 +55,12 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 			return if $location.path().search('/edit') == -1 then false else true
 
 		listReports: ->
+			!reports.length && this.getReports()
 			return reports
+
+		getReports: ->
+			ClassFactory.query({class: 'reports'}, (res)-> $.extend reports, res)
+			return
 
 		getReport: (id)->
 			if !id
@@ -65,8 +70,7 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 				this.template_order = []
 				this.form = undefined
 			if report = ($.grep reports, (rep)-> rep.id == id)[0]
-				report.templates && sortTemplates(report)
-				report.form = ($.grep report.templates, (template)-> template.id == report.template_order[report.template_order.length-1])[0]
+				sortTemplates(report)
 			report = $.extend this, report
 			return report
 
@@ -99,6 +103,7 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 			validateReport(this).then((report)->
 				if !!report.errors
 					Flash.create('danger', report.errors, 'customAlert')
+					deferred.reject(report.errors)
 					return
 
 				!report.id && report.$save({class: 'reports'}, (res)->
@@ -122,11 +127,11 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 			return deferred.promise
 
 		deleteReport: (form)->
-			index = reports.indexOf ($.grep reports, (report)-> report.id == this.id)[0]
-			reports.splice(index, 1)
+			$.extend this, new ClassFactory()
 			this.$delete({class: 'reports', id: this.id}, ((res)->
+				index = reports.indexOf ($.grep reports, (report)->	res.id == report.id)[0]
+				reports.splice(index, 1)
 				form.$setPristine()
-				$rootScope.$broadcast('clearreports')
 				$location.path("/reports")
 			), (err)->
 				Flash.create('danger', '<p>'+err.data.errors+'</p>', 'customAlert')
@@ -139,9 +144,14 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 			else
 				!this.templates && this.templates = []
 				!this.template_order && this.template_order = []
-				this.template_order.indexOf(template.id) == -1 && this.template_order.push template.id
+				this.template_order.push template.id
 				ts = this
-				this.saveReport(true, form).then((res)-> ts.queryReport(res.id).then((res)-> ts.getReport(res.id) ) )
+				this.saveReport(true, form).then ((res)->
+					ts.queryReport(res.id).then((res)->
+						ts.getReport(res.id)
+					)
+				), ->
+					ts.template_order.pop()
 			return
 
 		removeTemplate: (template)->

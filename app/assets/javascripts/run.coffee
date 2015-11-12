@@ -18,11 +18,11 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$cacheFactor
 		$window.ga('send', 'pageview', { page: $location.url() })
 	)
 
-	angular.forEach ['auth:login-success', 'auth:validation-success'], (value)->
-		$rootScope.$on(value, -> ClassFactory.get({class: 'desktop_statistics'}, (res)->
-			$.extend ReportsService.listReports(), res.reports
-			$.extend TemplatesService.listTemplates(), res.templates
-		))
+	#angular.forEach ['auth:login-success', 'auth:validation-success'], (value)->
+		#$rootScope.$on(value, -> ClassFactory.get({class: 'desktop_statistics'}, (res)->
+		#	$.extend ReportsService.listReports(), res.reports
+		#	$.extend TemplatesService.listTemplates(), res.templates
+		#))
 	angular.forEach ['auth:invalid', 'auth:validation-error'], (value)->
 		$rootScope.$on(value, -> $auth.signOut() && $location.path('/') && Flash.create('danger', "Looks like there was an error validating your credentials. Please try logging in again or contact support if problems continue.", 'customAlert')
 		)

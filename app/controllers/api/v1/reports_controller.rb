@@ -7,21 +7,8 @@ module Api::V1 #:nodoc:
     wrap_parameters include: Report.attribute_names + nested_attributes_names
 
     def index
-
-      queried_reports = if params.has_key?(:keywords)
-
-        keywords = params[:keywords]
-
-        query = if keywords.to_i > 0
-          {:id => keywords.to_i}
-        else
-          {:title => keywords}
-        end
-        render json: current_user.reports.where(query).page(params[:page]).per(10).order(id: :desc).index_minned
-      else
-        render json: current_user.reports.page(params[:page]).per(10).order(id: :desc).index_minned
-      end
-
+      reports = current_user.reports.eager_load(:templates).as_json(:only => [:id, :title, :updated_at, :template_order], include: {templates: {only: [:id, :name]}})
+      render json: reports
     end
 
     def show

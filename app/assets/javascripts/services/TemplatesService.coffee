@@ -51,21 +51,25 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		!template.fields && template.fields = []
 		return ($.grep template.fields, (tempField)-> section_id == tempField.o.section_id && column_id == tempField.o.column_id).length+1
 
-
 	{
 		editing: ->
 			return if $location.path().search('/edit') == -1 then false else true
 
 		listTemplates: ->
+			!templates.length && this.getTemplates()
 			return templates
+
+		getTemplates: ->
+			ClassFactory.query({class: 'templates'}, (res)-> $.extend templates, res)
+			return
 
 		getTemplate: (id)->
 			if !id
 				delete this.id
-				delete this.name
-				delete this.fields
-				delete this.sections
-				delete this.e
+				this.name = ''
+				this.fields = []
+				this.sections = []
+				this.e = false
 			template = ($.grep templates, (temp)-> temp.id == id)[0]
 			template = $.extend this, template
 			return template
@@ -121,11 +125,11 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 		# delete template
 		deleteTemplate: (form)->
-			index = templates.indexOf ($.grep templates, (template)-> this.id == template.id)[0]
-			templates.splice(index, 1)
+			$.extend this, new ClassFactory()
 			this.$delete({class: 'templates', id: this.id}, ((res)->
+				index = templates.indexOf ($.grep templates, (template)-> res.id == template.id)[0]
+				templates.splice(index, 1)
 				form.$setPristine()
-				$rootScope.$broadcast('cleartemplates')
 				$location.path("/templates")
 			), (err)->
 				Flash.create('danger', '<p>'+err.data.errors+'</p>', 'customAlert')
