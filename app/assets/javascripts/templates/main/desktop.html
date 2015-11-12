@@ -20,8 +20,8 @@
 				<td>{{template.name}} <small ng-if="template.draft">DRAFT</small></td>
 				<td>{{template.updated_at | date : 'short'}}</td>
 				<td>
-					<a href="#/templates/{{template.id}}" class="btn btn-link">View</a>
-					<a href="#/templates/{{template.id}}/edit" class="btn btn-link">Edit</a>
+					<a href="#/templates/{{template.id}}" title="View" class="btn btn-link"><i class="glyphicon glyphicon-search"></i></a>
+					<a href="#/templates/{{template.id}}/edit" title="Edit" class="btn btn-link"><i class="glyphicon glyphicon-pencil"></i></a>
 				</td>
 			</tr>
 		</table>
@@ -48,8 +48,8 @@
 				<td><span ng-repeat="template in report.templates">{{template.name}}<span ng-show="!$last">, </span></span></td>
 				<td>{{report.updated_at | date : 'short'}}</td>
 				<td>
-					<a href="#/reports/{{report.id}}" class="btn btn-link">View</a>
-					<a href="#/reports/{{report.id}}/edit" class="btn btn-link">Edit</a>
+					<a href="#/reports/{{report.id}}" title="View" class="btn btn-link"><i class="glyphicon glyphicon-search"></i></a>
+					<a href="#/reports/{{report.id}}/edit" title="Edit" class="btn btn-link"><i class="glyphicon glyphicon-pencil"></i></a>
 				</td>
 			</tr>
 		</table>

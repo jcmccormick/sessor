@@ -95,7 +95,7 @@ blockquote {
 .btn-link {
 	color: #337ab7 !important;
 }
-.table a,
+.table th a,
 .btn-link,
 .btn .glyphicon {
 	color: #eb8f5f !important;
@@ -114,6 +114,12 @@ blockquote {
 	th:not(:first-child),
 	td:not(:first-child) {
 		word-break: break-word;
+	}
+	td {
+		vertical-align: middle !important;
+	}
+	a {
+		text-decoration: none !important;
 	}
 }
 

@@ -16,23 +16,23 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th class="text-center"><a href="javascript:;" ng-click="vt.sortType = 'id'; vt.sortReverse = !vt.sortReverse"># &nbsp; 
+				<th><a href="javascript:;" ng-click="vt.sortType = 'id'; vt.sortReverse = !vt.sortReverse"># &nbsp; 
 					<i ng-show="vt.sortType=='id' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
 					<i ng-show="vt.sortType=='id' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
 				</a></th>
-				<th class="text-center"><a href="javascript:;" ng-click="vt.sortType = 'draft'; vt.sortReverse = !vt.sortReverse">Draft &nbsp; 
+				<th><a href="javascript:;" ng-click="vt.sortType = 'draft'; vt.sortReverse = !vt.sortReverse">Draft &nbsp; 
 					<i ng-show="vt.sortType=='draft' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
 					<i ng-show="vt.sortType=='draft' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
 				</a></th>
-				<th class="text-center"><a href="javascript:;" ng-click="vt.sortType = 'name'; vt.sortReverse = !vt.sortReverse">Name &nbsp; 
+				<th><a href="javascript:;" ng-click="vt.sortType = 'name'; vt.sortReverse = !vt.sortReverse">Name &nbsp; 
 					<i ng-show="vt.sortType=='name' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
 					<i ng-show="vt.sortType=='name' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
 				</a></th>
-				<th class="text-center"><a href="javascript:;" ng-click="vt.sortType = 'updated_at'; vt.sortReverse = !vt.sortReverse">Updated &nbsp; 
+				<th><a href="javascript:;" ng-click="vt.sortType = 'updated_at'; vt.sortReverse = !vt.sortReverse">Updated &nbsp; 
 					<i ng-show="vt.sortType=='updated_at' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
 					<i ng-show="vt.sortType=='updated_at' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
 				</a></th>
-				<th class="text-center">Actions</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -40,8 +40,8 @@
 				<td>{{template.id}}</td>
 				<td>
 					<div class="btn-group" ng-click="template.draft = !template.draft; vt.setDraft(template.id)">
-						<a href="javascript:;" ng-show="template.draft" class="btn switch-on">Drafted</a>
-						<a href="javascript:;" ng-show="!template.draft" class="btn">Undrafted</a>
+						<a href="javascript:;" ng-show="template.draft" class="switch-on">Drafted</a>
+						<a href="javascript:;" ng-show="!template.draft">Undrafted</a>
 					</div>
 				</td>
 				<td>{{template.name}}</td>
