@@ -9,7 +9,7 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 
 		# prepare a copy of the template for sending to the DB
 		# sending only the necessary data back
-		tempCopy = ClassFactory()
+		tempCopy = new ClassFactory()
 		angular.copy {
 			id: report.id
 			title: report.title
@@ -135,7 +135,7 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 
 		addTemplate: (template, form)->
 			if template.draft
-				Flash.create('danger', '<p>Please turn off the <strong>draft</strong> setting for '+template.name+' to use it in a report.</p>', 'customAlert')
+				Flash.create('success', '<p>Please turn off the <strong>draft</strong> setting for '+template.name+' to use it in a report.</p>', 'customAlert')
 			else
 				!this.templates && this.templates = []
 				!this.template_order && this.template_order = []

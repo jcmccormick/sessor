@@ -21,10 +21,8 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'Report
 	vt.sortReverse = true
 	vt.currentPage = 0
 	vt.pageSize = 10
-	vt.numPages = ->
-		return Math.ceil(vt.templates.length/vt.pageSize)
-	vt.newReport = (template)->
-		ReportsService.addTemplate(template)
+	vt.newReport = (template, form)->
+		ReportsService.addTemplate(template, form)
 
 	if tempId = parseInt($routeParams.templateId, 10)
 		exists = ($.grep vt.templates, (temp)-> temp.id == tempId)[0]
@@ -46,9 +44,19 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'Report
 			$scope.$on('$locationChangeStart', (event)->
 				vt.template.id && !vt.tempForm.$pristine && !confirm('There are unsaved changes. Press cancel to return to the form.') && event.preventDefault()
 			)
+			vt.setDraft = (id)->
+				TemplatesService.getTemplate(id).settingDraft = true
+				TemplatesService.saveTemplate(true, vt.tempForm)
 			unbindFormWatch()
 	)
 
+	unbindListWatch = $scope.$watch (()-> vt.filteredList), ((newVal, oldVal)->
+		if vt.filteredList
+			vt.numPages = ->
+				Math.ceil(vt.filteredList.length/vt.pageSize)
+
+			unbindListWatch()
+	)
 
 
 	return vt

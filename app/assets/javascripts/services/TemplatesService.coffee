@@ -32,7 +32,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			while i--
 				template.fields[i].o == "destroy" && template.fields.splice(i, 1)
 
-			if !template.deletingSection
+			if !template.deletingSection || !template.settingDraft
 				# validate field name or placeholder presence
 				$.grep(tempCopy.fields_attributes, (field)->
 					!field.o.name && !field.o.placeholder && !field.o.default_value
@@ -43,6 +43,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		!/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test(tempCopy.name) && tempCopy.errors += '<p>Template names must begin with a letter and only contain letters and numbers.</p>'
 
 		template.deletingSection = false
+		template.settingDraft = false
 		deferred.resolve(tempCopy)
 		return deferred.promise
 
@@ -92,7 +93,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 				dereg()
 			)
 
-			this.deletingSection && form.$pristine = false
+			this.deletingSection || this.settingDraft && form.$pristine = false
 
 			# Validate and save
 			validateTemplate(this).then((template)->

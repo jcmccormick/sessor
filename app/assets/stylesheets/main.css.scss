@@ -100,6 +100,15 @@ blockquote {
 		color: #eb8f5f;
 	}
 }
+.btn-group {
+	.switch-on {
+		color: #eb8f5f;
+		font-weight: bold;
+	}
+	:not(.switch-on) {
+		color: #aaa;
+	}
+}
 .table {
 	th:not(:first-child),
 	td:not(:first-child) {
@@ -414,15 +423,6 @@ blockquote {
 				-ms-transform: rotate(90deg);
 				-o-transform: rotate(90deg);
 				transform: rotate(90deg);
-			}
-		}
-		.btn-group {
-			.switch-on {
-				color: #eb8f5f;
-				font-weight: bold;
-			}
-			:not(.switch-on) {
-				color: #aaa;
 			}
 		}
 	}

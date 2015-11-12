@@ -4,7 +4,7 @@
 * Timekeeping
 * Scheduling
 * Appointments
-* Talk
+* Talk -- Always attached to appt, will show a message for appointment date until time of appt.
 * Email
 * ControllerAs
 * Template tags for public searching

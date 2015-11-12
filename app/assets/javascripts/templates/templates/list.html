@@ -2,12 +2,12 @@
 	<section>
 		<ul class="nav top-nav">
 			<li><a href="#/templates/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
-			<li><input type="text" class="form-control" placeholder="Search" ng-model="vt.keywords"></li>
+			<li><input type="text" class="form-control" placeholder="Search" ng-model="vt.keywords" ng-change="vt.currentPage = 0"></li>
 			<li><select class="form-control" ng-model="vt.pageSize" ng-options="distance as distance for distance in [10, 25, 50, 100]" ng-change="vt.currentPage = 0"></select></li>
 			<li><h5><p>per page</p></h5></li>
 			<li><a href="javascript:;" ng-class="{'disabled':vt.currentPage==0}" ng-click="vt.currentPage = vt.currentPage-1"><i class="glyphicon glyphicon-triangle-left"></i></a></li>
-			<li><h5><p>{{vt.currentPage+1}} of {{vt.numPages()}}</p></h5></li>
-			<li><a href="javascript:;" ng-class="{'disabled':vt.currentPage>=vt.templates.length/vt.pageSize-1}" ng-click="vt.currentPage = vt.currentPage+1"><i class="glyphicon glyphicon-triangle-right"></i></a></li>
+			<li><h5><p>{{(vt.filteredList.length && vt.currentPage+1) || 0}} of {{vt.numPages() || 0}}</p></h5></li>
+			<li><a href="javascript:;" ng-class="{'disabled':vt.currentPage>=vt.numPages()-1}" ng-click="vt.currentPage = vt.currentPage+1"><i class="glyphicon glyphicon-triangle-right"></i></a></li>
 		</ul>
 	</section>
 </div>
@@ -36,9 +36,12 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="template in vt.templates | filter:vt.keywords | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo:vt.pageSize">
+			<tr ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo:vt.pageSize">
 				<td>{{template.id}}</td>
-				<td><i ng-show="template.draft" class="glyphicon glyphicon-ok"></i></td>
+				<td class="btn-group" ng-click="template.draft = !template.draft; vt.setDraft(template.id)">
+					<a href="javascript:;" ng-show="!template.draft" class="btn switch-on">Drafted</a>
+					<a href="javascript:;" ng-show="template.draft" class="btn">Undrafted</a>
+				</td>
 				<td>{{template.name}}</td>
 				<td>{{template.updated_at | date: 'short'}}</td>
 				<td><a href="#/templates/{{template.id}}" class="btn btn-link">View</a> <a href="#/templates/{{template.id}}/edit" class="btn btn-link">Edit</a> <a href="javascript:;" class="btn btn-link" ng-click="vt.newReport(template, vt.tempForm)">New Report</a></td>
