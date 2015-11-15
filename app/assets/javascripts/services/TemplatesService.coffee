@@ -21,7 +21,9 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			while i--
 				template.fields[i].o == "destroy" && template.fields.splice(i, 1)
 
-			if !template.deletingSection || !template.settingDraft
+			console.log template.deletingSection
+
+			if !template.deletingSection && !template.settingDraft
 				# validate field name or placeholder presence
 				$.grep(tempCopy.fields_attributes, (field)->
 					!field.o.name && !field.o.placeholder && !field.o.default_value
@@ -99,7 +101,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 				dereg()
 			)
 
-			this.deletingSection || this.settingDraft && form.$pristine = false
+			(this.deletingSection || this.settingDraft) && form.$pristine = false
 
 			# Validate and save
 			validateTemplate(this).then((template)->
@@ -115,8 +117,6 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 				if template.id
 					!form.$pristine && template.$update({class: 'templates', id: template.id}, (res)->
-						res.updated_at = moment().local().format()
-						$.extend templates[$.map(templates, (x)-> x.id).indexOf(res.id)], res
 						!temporary && $location.path("/templates/#{res.id}")
 						form.$setPristine()
 						return

@@ -5,6 +5,4 @@ class Value < ActiveRecord::Base
 	# Relates to Report.
 	belongs_to :report
 
-	after_update { report.touch }
-
 end

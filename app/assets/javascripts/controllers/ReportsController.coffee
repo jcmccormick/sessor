@@ -16,10 +16,14 @@ controllers.controller("ReportsController", ['$scope', '$routeParams', 'ReportsS
 
 			for template in vr.report.templates
 				template.e = false
-				!template.sections && nosections = true
-				moment(template.updated_at).format('X') > moment(vr.report.updated_at).format('X') && outofdate = true
 
-			(outofdate || nosections) && ReportsService.queryReport(vr.report.id, true).then((res)->
+				if vr.report.loadedFromDB
+					fields_values = $.map(template.fields, (x)-> x.value)
+					console.log template.fields.length
+					console.log fields_values.length
+					(!template.sections || (template.fields.length != fields_values.length)) && reload = true
+
+			(!vr.report.loadedFromDB || reload) && ReportsService.queryReport(vr.report.id, true).then((res)->
 				$.extend vr.report, res
 				vr.report.form = vr.report.templates[0]
 			)

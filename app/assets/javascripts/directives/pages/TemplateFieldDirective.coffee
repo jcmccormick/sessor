@@ -65,8 +65,8 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 		time = inputstart+' type="time" '+standard
 
 		checkbox = '<label for="{{field.o.section_id}}{{field.o.column_id}}{{field.id}}" class="clearfix">
-						'+inputstart+' type="checkbox" class="form-control imod" '+fid+checkboxmodel+inputend+'
-						<h5>{{field.o.name}}</h5>
+						'+inputstart+' type="checkbox" class="form-control imod" ng-true-value="\'t\'" ng-false-value="\'f\'"'+fid+checkboxmodel+inputend+'
+						<h5>{{field.o.name}}</h5>`
 					</label>'
 		radio = '   <span ng-if="field.o.options && !field.o.options.length">
 						Click to add options...
@@ -84,16 +84,17 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 		# Verify field type
 		cur_field = getTemplate(scope.field)
 
-		# Pre-parse the value
-		cur_value = if scope.report then scope.field.value.input || scope.field.o.default_value else scope.field.o.default_value
-		if cur_value?
-			cur_field == 'checkbox' && cur_value = if cur_value == 1 || 't' then true else false 
-			cur_field == 'integer' && cur_value = parseInt(cur_value, 10)
-			(cur_field == 'date' || cur_field == 'time') && cur_value = if cur_value != '1970-01-01T00:00:00.000Z' then new Date(cur_value) else ''
+		if (scope.report && scope.field.value) || (!scope.report && scope.field.default_value)
 
-		# Reattach parsed value
-		!scope.report && scope.field.o.default_value = cur_value
-		scope.report && scope.field.value.input = cur_value
+			# Pre-parse the value
+			cur_value = if scope.report then scope.field.value.input || scope.field.o.default_value else scope.field.o.default_value
+			if cur_value?
+				cur_field == 'integer' && cur_value = parseInt(cur_value, 10)
+				(cur_field == 'date' || cur_field == 'time') && cur_value = if cur_value != '1970-01-01T00:00:00.000Z' then new Date(cur_value) else ''
+
+			# Reattach parsed value
+			!scope.report && scope.field.o.default_value = cur_value
+			scope.report && scope.field.value.input = cur_value
 
 		# Compile the field display after doublechecking that values are appropriate for their fieldtype
 		# If editing/viewing a template or editing a report, show <input> fields

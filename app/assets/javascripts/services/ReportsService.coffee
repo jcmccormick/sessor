@@ -6,16 +6,17 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 
 	validateReport = (report)->
 		required = ''
+		report.errors = ''
 		report.values_attributes = []
 		for template in report.templates
 			template.fields && for field in template.fields
-				report.values_attributes.push field.value
+				field.fieldtype != 'labelntext' && report.values_attributes.push field.value
 				field.o.required && !field.value.input? && required += '<li><strong>'+template.name+'</strong>: '+field.o.name+'</li>'
 
 		!!required && report.errors += '<h3>Required Fields</h3> <ul class="list-unstyled">'+required+'</ul>'
 
-		!report.title && report.title = 'Untitled'
 		!/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test(report.title) && report.errors += '<p>Title must begin with a letter and only contain letters and numbers.</p>'
+		!report.title && report.title = 'Untitled'
 
 		return report
 
@@ -44,6 +45,7 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 			exists = $.map(reports, (x)-> x.id).indexOf(id)
 			if !reports[exists].loadedFromDB || refreshing
 				ClassFactory.get({class: 'reports', id: id}, (res)->
+					res.loadedFromDB = true
 					deferred.resolve(res)
 				)
 			else
@@ -65,6 +67,8 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 				report.errors = ''
 				deferred.reject()
 				return deferred.promise
+
+			console.log report
 
 			if !report.id
 				report.$save({class: 'reports'}, (res)->

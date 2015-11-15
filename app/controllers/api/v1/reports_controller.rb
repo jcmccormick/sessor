@@ -33,6 +33,7 @@ module Api::V1 #:nodoc:
 				report.update_attributes(allowed_params)
 			end
 			current_user.reports << report unless current_user.reports.include?(report)
+			report.touch if report.values.find_index { |x| x.changed? }
 			head :no_content
 		end
 

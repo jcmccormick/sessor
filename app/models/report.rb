@@ -32,7 +32,7 @@ class Report < ActiveRecord::Base
 
   def populate_values
     template_order.each do |template_id|
-      template = Template.eager_load(:fields).find(template_id)
+      template = Template.find(template_id)
       templates << template unless templates.include?(template)
       field_ids = template.fields.map { |x| x.id }
       if template.fields.where.not(fieldtype: 'labelntext').count > values.where(field_id: field_ids).count
@@ -44,6 +44,11 @@ class Report < ActiveRecord::Base
           end
         end
       end
+    end
+    if self.changed?
+      exclude_ids = Field.where(template_id: template_order).where.not(fieldtype: 'labelntext').map { |x| x.id }
+      pp exclude_ids
+      values.where.not(field_id: exclude_ids).destroy_all
     end
   end
 
