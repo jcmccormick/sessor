@@ -5,7 +5,6 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 	reports = []
 
 	validateReport = (report)->
-
 		required = ''
 		report.values_attributes = []
 		for template in report.templates
@@ -45,8 +44,6 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 			exists = $.map(reports, (x)-> x.id).indexOf(id)
 			if !reports[exists].loadedFromDB || refreshing
 				ClassFactory.get({class: 'reports', id: id}, (res)->
-					console.log 'db load result:'
-					console.log res
 					deferred.resolve(res)
 				)
 			else
@@ -86,8 +83,6 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 				)
 				if !form.$pristine
 					report.$update({class: 'reports', id: report.id}, (res)->
-						console.log 'update result:'
-						console.log res
 						form.$setPristine()
 						deferred.resolve(res)
 						!temporary && $location.path("/reports/#{report.id}")
@@ -108,7 +103,6 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 			return
 
 		addTemplate: (report, form)->
-			console.log 'adding template'
 			rs = this
 			form.$pristine = false
 			!report.id && $.extend report, new ClassFactory()

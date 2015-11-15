@@ -1,4 +1,3 @@
+<ng-include ng-if="user.id" src="'main/menu.html'"></ng-include>
 
-	<ng-include ng-if="user.id" src="'main/menu.html'"></ng-include>
-
-	<div class="view-frame animate-view" ng-class="{'logdout':!user.id}" ng-view bs-popover></div>
+<div class="view-frame animate-view" ng-class="{'logdout':!user.id}" ng-view bs-popover></div>

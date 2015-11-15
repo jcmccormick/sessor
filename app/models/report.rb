@@ -32,13 +32,16 @@ class Report < ActiveRecord::Base
 
   def populate_values
     template_order.each do |template_id|
-      template = Template.find(template_id)
+      template = Template.eager_load(:fields).find(template_id)
       templates << template unless templates.include?(template)
-      if template.fields.where.not(fieldtype: 'labelntext').count != values.count
+      field_ids = template.fields.map { |x| x.id }
+      if template.fields.where.not(fieldtype: 'labelntext').count > values.where(field_id: field_ids).count
         template.fields.each do |field|
-          Value.where(report_id: self.id, field_id: field.id).first_or_create do |value|
-            value.input = field.default_value
-          end unless field.fieldtype == 'labelntext'
+          if field.fieldtype != 'labelntext'
+            Value.where(report_id: self.id, field_id: field.id).first_or_create do |value|
+              value.input = field.default_value
+            end
+          end
         end
       end
     end

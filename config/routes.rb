@@ -13,7 +13,6 @@ Rails.application.routes.draw do
       resources :templates, only: [:index, :show, :create, :update, :destroy]
       resources :fields, only: [:index, :show, :create, :update, :destroy]
       resources :values, only: [:index, :show, :create, :update, :destroy]
-      resources :desktop_statistics, only: :index
       get 'values_statistics/counts', :to => 'values_statistics#counts'
     end
   end  
