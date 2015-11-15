@@ -14,13 +14,13 @@ class Template < ActiveRecord::Base
 	has_many :values, through: :reports
 
 	# Saving a Template saves its associated Fields.
-	accepts_nested_attributes_for :fields, reject_if: :reject_field, allow_destroy: true
+	accepts_nested_attributes_for :fields, allow_destroy: true
 
 	# Create a scope that assures the loading of all Template associations in a single DB call. Used as `Templates.minned`.
 	#default_scope { eager_load(:fields) }
 
 	# Titles must start with a letter and only contain letters and numbers. 
-	validates :name, format: { with: /\A[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
+	validates :name, presence: true
 
 	# Serialize sections.
 	serialize :sections, Array
@@ -42,13 +42,6 @@ class Template < ActiveRecord::Base
 	def set_defaults
 		self.draft = true
 		self.sections = [{i:1,n:'',c:1}]
-	end
-
-	def reject_field(attributes)
-		exists = attributes['id'].present?
-		empty = attributes.slice(:o).values == [nil]
-		attributes.merge!({:_destroy => 1}) if exists and empty
-		return (!exists and empty)
 	end
 
 	# Check for existing report associations

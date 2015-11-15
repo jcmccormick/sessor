@@ -5,38 +5,31 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 	templates = []
 	
 	validateTemplate = (template)->
-		deferred = $q.defer()
 
-		# prepare a copy of the template for sending to the DB
-		# sending only the necessary data back
-		tempCopy = new ClassFactory()
-		angular.copy template, tempCopy
-
-		if tempCopy.fields && tempCopy.fields_attributes = tempCopy.fields
+		if template.fields.length && template.fields_attributes = angular.copy template.fields
 			# fields marked destroy are removed, as they will
-			# be removed when saving tempCopy; the following makes sure
+			# be removed when saving template; the following makes sure
 			# any deleted fields will be removed from the client's 
 			# template model
 			i = template.fields.length
 			while i--
-				template.fields[i].o == "destroy" && template.fields.splice(i, 1)
-
-			console.log template.deletingSection
+				template.fields[i]._destroy && template.fields.splice(i, 1)
 
 			if !template.deletingSection && !template.settingDraft
 				# validate field name or placeholder presence
-				$.grep(tempCopy.fields_attributes, (field)->
+				$.grep(template.fields_attributes, (field)->
 					!field.o.name && !field.o.placeholder && !field.o.default_value
-				).length && tempCopy.errors += '<p>Fields must have a name, placeholder, or default value.</p><p>Label and text elements must have a label or text.</p>'
+				).length && template.errors += '<p>Fields must have a name, placeholder, or default value.</p><p>Label and text elements must have a label or text.</p>'
+
+			for field in template.fields_attributes
+				delete field.value
 
 		# validate name
-		!tempCopy.name && template.name = 'Untitled'
-		!/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test(tempCopy.name) && tempCopy.errors += '<p>Template names must begin with a letter and only contain letters and numbers.</p>'
+		!template.name && template.name = 'Untitled'
 
-		template.deletingSection = false
-		template.settingDraft = false
-		deferred.resolve(tempCopy)
-		return deferred.promise
+		delete template.deletingSection
+		delete template.settingDraft
+		return template
 
 	newFieldOrdering = (template, section_id, column_id)->
 		!template.fields && template.fields = []
@@ -59,80 +52,69 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 				)
 			return deferred.promise
 
-		queryTemplate: (id)->
+		queryTemplate: (id, refreshing)->
 			deferred = $q.defer()
 			exists = $.map(templates, (x)-> x.id).indexOf(id)
-			if exists >= 0 && templates[exists].loadedFromDB
-				deferred.resolve(templates[exists])
-			else if id
+			if !templates[exists].loadedFromDB || refreshing
 				ClassFactory.get({class: 'templates', id: id}, (res)->
 					res.loadedFromDB = true
-					if exists >= 0
-						$.extend templates[exists], res
-					else
-						addex = templates.push(res)
-					deferred.resolve(templates[exists || addex-1])
+					deferred.resolve(res)
 				)
+			else
+				deferred.resolve(templates[exists])
 			return deferred.promise
 
 		getTemplates: ->
 			return templates
 
-		getTemplate: (id)->
-			if !id
-				delete this.id
-				this.name = ''
-				this.fields = []
-				this.sections = []
-				this.e = false
-			template = ($.grep templates, (temp)-> temp.id == id)[0]
-			template = $.extend this, template
+		extendTemplate: (id)->
+			exists = $.map(templates, (x)-> x.id).indexOf(id)
+			template = $.extend (templates[exists] || {name: '', sections: [], fields: []}), new ClassFactory()
 			return template
 
 		# save/update template
-		saveTemplate: (temporary, form)->
-			# Auto-save
-			!timedSave && timedSave = $interval (->
-				this.id && !form.$pristine && this.saveTemplate(true, form)
-			), 30000
-
-			!dereg && dereg = $rootScope.$on('$locationChangeSuccess', ()->
-				$interval.cancel(timedSave)
-				dereg()
-			)
-
-			(this.deletingSection || this.settingDraft) && form.$pristine = false
+		saveTemplate: (template, temporary, form)->
+			ts = this
+			(template.deletingSection || template.settingDraft) && form.$pristine = false
 
 			# Validate and save
-			validateTemplate(this).then((template)->
-				if !!template.errors
-					Flash.create('danger', template.errors, 'customAlert')
-					return
-				
-				!template.id && template.$save({class: 'templates'}, (res)->
+			validateTemplate(template)
+			if !!template.errors
+				Flash.create('danger', template.errors, 'customAlert')
+				template.errors = ''
+				return
+			
+			if !template.id
+				template.$save({class: 'templates'}, (res)->
 					templates.push res
 					$location.path("/templates/#{res.id}/edit")
 					return
 				)
-
-				if template.id
-					!form.$pristine && template.$update({class: 'templates', id: template.id}, (res)->
-						!temporary && $location.path("/templates/#{res.id}")
+			else
+				!timedSave && timedSave = $interval (->
+					template.id && !form.$pristine && ts.saveTemplate(template, true, form)
+				), 30000
+				!dereg && dereg = $rootScope.$on('$locationChangeSuccess', ()->
+					$interval.cancel(timedSave)
+					dereg()
+				)
+				if !form.$pristine
+					template.$update({class: 'templates', id: template.id}, (res)->
+						!temporary && $location.path("/templates/#{template.id}")
 						form.$setPristine()
 						return
 					)
-					form.$pristine && !temporary && $location.path("/templates/#{template.id}")
-					return
-			)
+				else
+					!temporary && $location.path("/templates/#{template.id}")
+				return
+
 			return
 
 		# delete template
-		deleteTemplate: (form)->
-			$.extend this, new ClassFactory()
-			this.$delete({class: 'templates', id: this.id}, ((res)->
-				index = templates.indexOf ($.grep templates, (template)-> res.id == template.id)[0]
+		deleteTemplate: (template)->
+			template.$delete({class: 'templates', id: template.id}, ((res)->
+				index = $.map(templates, (x)-> x.id).indexOf(template.id)
 				templates.splice(index, 1)
-				form.$setPristine()
 				$location.path("/templates")
 			), (err)->
 				Flash.create('danger', '<p>'+err.data.errors+'</p>', 'customAlert')
@@ -140,15 +122,14 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			return
 
 		# add section
-		addSection: ()->
-			!this.sections && this.sections = []
-			this.sections.push({
-				i: this.sections.length+1
-				n: (this.newSectionName || '')
+		addSection: (template)->
+			index = template.sections.push({
+				i: template.sections.length+1
+				n: (template.newSectionName || '')
 				c: 1
 			})
-			this.sO = this.sections[this.sections.length-1]
-			this.newSectionName = undefined
+			template.sO = template.sections[index]
+			template.newSectionName = undefined
 			return
 
 		# add section column
@@ -157,8 +138,8 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			return
 
 		# delete section column
-		deleteSectionColumn: (section)->
-			for field in this.fields
+		deleteSectionColumn: (template, section)->
+			for field in template.fields
 				field.o.section_id == section.i && field.o.column_id == section.c && prevent = true
 			if prevent 
 				Flash.create('danger', '<p>Please move any fields out of the last column.</p>', 'customAlert')
@@ -167,92 +148,89 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			return
 
 		# delete section
-		deleteSection: (section_id, form)->
-			this.sO = undefined
+		deleteSection: (template, section_id)->
+			template.sO = undefined
 
-			for field in this.fields
-				(field.o.section_id > section_id && field.o.section_id--) || field.o.section_id == section_id && field.o = 'destroy'
+			for field in template.fields
+				(field.o.section_id > section_id && field.o.section_id--) || field.o.section_id == section_id && field._destroy = true
 
-			this.sections.splice section_id-1, 1
-			for section in this.sections
+			template.sections.splice section_id-1, 1
+			for section in template.sections
 				section.i > section_id && section.i--
 
-			this.deletingSection = true
-			this.saveTemplate(true, form)
+			template.deletingSection = true
 			return
 
 		# reorder section up or down
-		moveSection: (index, new_index)->
-			if this.sections[new_index]
-				target = this.sections[new_index]
-				this.sections[new_index] = this.sections[index]
-				this.sections[index] = target
-				this.sO = this.sections[new_index]
+		moveSection: (template, index, new_index)->
+			if template.sections[new_index]
+				target = template.sections[new_index]
+				template.sections[new_index] = template.sections[index]
+				template.sections[index] = target
+				template.sO = template.sections[new_index]
 			return
 
-
 		# add field
-		addField: (section_id, column_id, type)->
+		addField: (template, section_id, column_id, type)->
 			field = new ClassFactory()
 			field.fieldtype = type.name
 			field.o = {}
-			field.o.column_order = newFieldOrdering(this, section_id, column_id)
+			field.o.column_order = newFieldOrdering(template, section_id, column_id)
 			field.o.section_id = section_id
 			field.o.column_id = column_id
-			this.sO = field
-			this.fields.push field
-			field.o.name = this.newFieldName
-			field.o.placeholder = this.newFieldPlaceholder
-			field.o.default_value = this.newFieldDefaultValue
-			!this.newFieldName && !this.newFieldPlaceholder && !this.newFieldDefaultValue && field.o.name = 'Untitled '+type.value
+			template.sO = field
+			template.fields.push field
+			field.o.name = template.newFieldName
+			field.o.placeholder = template.newFieldPlaceholder
+			field.o.default_value = template.newFieldDefaultValue
+			!template.newFieldName && !template.newFieldPlaceholder && !template.newFieldDefaultValue && field.o.name = 'Untitled '+type.value
 			field.o.glyphicon = type.glyphicon
-			field.template_id = this.id
+			field.template_id = template.id
 			field.$save({class: 'fields'}, (res)->
 				$rootScope.$broadcast('cleartemplates')
 			)
-			this.newFieldName = undefined
-			this.newFieldPlaceholder = undefined
-			this.newFieldDefaultValue = undefined
+			template.newFieldName = undefined
+			template.newFieldPlaceholder = undefined
+			template.newFieldDefaultValue = undefined
 			return
 
 		# delete field
-		deleteField: (field)->
-			this.sO = undefined
-			f = ($.grep this.fields, (f)-> f.id == field.id)[0]
-			index = this.fields.indexOf(f)
-			this.fields.splice index, 1
-			$.extend field, new ClassFactory()
-			field.$delete({class: 'fields', id: field.id})
-			for tempField in this.fields
-				tempField.o.section_id == f.o.section_id && tempField.o.column_id == f.o.column_id && tempField.o.column_order > f.o.column_order && tempField.o.column_order--
+		deleteField: (template, field)->
+			template.sO = undefined
+			field.$delete({class: 'fields', id: field.id}, ((res)->
+				index = $.map(template.fields, (x)-> x.id).indexOf(field.id)
+				for tempField in template.fields
+					tempField.o.section_id == template.fields[index].o.section_id && tempField.o.column_id == template.fields[index].o.column_id && tempField.o.column_order > template.fields[index].o.column_order && tempField.o.column_order--
+				template.fields.splice index, 1
+			), (err)->
+				console.log err
+			)
 			return
 
 		# change a field's section_id
-		changeFieldSection: (field, prev_section)->
+		changeFieldSection: (template, field, prev_section)->
 			prev_column = field.o.column_id
 			prev_column_order = field.o.column_order
 			field.o.column_id = 1
 			field.o.column_order = 1
-			for tempField in this.fields
+			for tempField in template.fields
 				tempField.o.section_id == prev_section*1 && tempField.o.column_id == prev_column && tempField.o.column_order >= prev_column_order && tempField.o.column_order--
 				tempField.id != field.id && tempField.o.section_id == field.o.section_id && tempField.o.column_id == field.o.column_id && tempField.o.column_order++
 			return
 
 		# change a field's column_id
-		changeFieldColumn: (field, column_id)->
+		changeFieldColumn: (template, field, column_id)->
 			orig_col = field.o.column_id
 			orig_col_ord = field.o.column_order
 			field.o.column_id = column_id
 			field.o.column_order = 1
 
-			sect = $.grep this.sections, (section)->
-				section.i == field.o.section_id
-			index = this.sections.indexOf(sect[0])
+			index = $.map(template.sections, (x)-> x.i).indexOf(field.o.section_id)
 
-			sect_fields = $.grep this.fields, (tempField)->
+			sect_fields = $.grep template.fields, (tempField)->
 				tempField.o.section_id == field.o.section_id
 
-			if column_id > 0 && column_id <= this.sections[index].c
+			if column_id > 0 && column_id <= template.sections[index].c
 				orig_col != column_id && for tempField in sect_fields
 					tempField.o.column_id == orig_col && tempField.o.column_order > orig_col_ord && tempField.o.column_order--
 					tempField.o.column_id == column_id && tempField.id != field.id && tempField.o.column_order++
@@ -262,17 +240,11 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			return
 
 		# reorder field up or down in a column
-		moveField: (field, direction)->
+		moveField: (template, field, direction)->
 
-			field_switch = $.grep this.fields, (tempField)->
-				if field.o.column_id == tempField.o.column_id && field.o.section_id == tempField.o.section_id
-					if direction == 'up'
-						field.o.column_order-1 == tempField.o.column_order
-					else
-						field.o.column_order+1 == tempField.o.column_order
+			field_switch = ($.grep template.fields, (tempField)->
+				field.o.column_id == tempField.o.column_id && field.o.section_id == tempField.o.section_id && (field.o.column_order+direction) == tempField.o.column_order)[0]
 
-			field_switch = field_switch[0]
-			
 			if !field_switch then return
 
 			target = field_switch.o.column_order
@@ -294,9 +266,9 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		# Helper functions
 
 		# set draft
-		assimilate: (draft)->
-			this.sO = undefined
-			$.extend this, draft
+		assimilate: (template, draft)->
+			template.sO = undefined
+			$.extend template, draft
 			return
 
 		supportedFields: [

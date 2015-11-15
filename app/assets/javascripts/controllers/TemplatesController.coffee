@@ -6,60 +6,98 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'Report
 
 	vt.templates = TemplatesService.listTemplates()
 
-	vt.sortType = 'id'
-	vt.sortReverse = true
-	vt.currentPage = 0
-	vt.pageSize = 10
+	if TemplatesService.creating() || tempId = parseInt($routeParams.templateId, 10)
+		vt.template = TemplatesService.extendTemplate(tempId)
 
-	vt.numPages = ->
-		Math.ceil(vt.filteredList.length/vt.pageSize)
+		tempId && !vt.template.loadedFromDB && TemplatesService.queryTemplate(tempId, true).then((res)->
+			$.extend vt.template, res
+		)
 
-	unbindFormWatch = $scope.$watch (()-> vt.tempForm), ((newVal, oldVal)->
-		if vt.tempForm
+		vt.save = (temporary)->
+			TemplatesService.saveTemplate(vt.template, temporary, vt.tempForm)
+			
+		if vt.template.e = TemplatesService.editing()
 
-			vt.newReport = (template, form)->
-				report = ReportsService.extendReport()
-				report.template_order.push template.id
-				ReportsService.addTemplate(report, form)
-			setupTemp = ->
-				if vt.template.e = TemplatesService.editing()
-					unbindSectionsWatch = $scope.$watch (()-> vt.template.sections), ((newVal, oldVal)-> newVal != oldVal && vt.tempForm.$pristine = false), true
-					unbindFieldsWatch = $scope.$watch (()-> vt.template.fields), ((newVal, oldVal)-> newVal != oldVal && vt.tempForm.$pristine = false), true
-					unbindDraftWatch = $scope.$watch (()-> vt.template.draft), ((newVal, oldVal)-> newVal != oldVal && vt.tempForm.$pristine = false)
+			$(document).bind 'keydown', (e)->
+				if e.ctrlKey && (e.which == 83)
+					e.preventDefault()
+					vr.save(true)
+					return false
 
-					$scope.$on('$destroy', ()->
-						unbindSectionsWatch()
-						unbindFieldsWatch()
-						unbindDraftWatch()
-					)
-					$scope.$on('$locationChangeStart', (event)->
-						vt.template.id && !vt.tempForm.$pristine && !confirm('There are unsaved changes. Press cancel to return to the form.') && event.preventDefault()
-					)
+			$scope.$on('$locationChangeStart', (event)->
+				!vt.tempForm.$pristine && !confirm('There are unsaved changes. Press cancel to return to the form.') && event.preventDefault()
+			)
 
-			if tempId = parseInt($routeParams.templateId, 10)
-				exists = ($.grep vt.templates, (temp)-> temp.id == tempId)[0]
+			vt.template.addSection = ->
+				TemplatesService.addSection(vt.template)
 
-				(!exists || (exists && !exists.sections)) && TemplatesService.queryTemplate(tempId).then((res)->
-					vt.template = TemplatesService.getTemplate(tempId)
-					setupTemp()
-				)
+			vt.template.addSectionColumn = (section)->
+				TemplatesService.addSectionColumn(section)
 
-				exists && exists.sections && exists.sections.length && vt.template = TemplatesService.getTemplate(tempId)
-				
-				vt.template && setupTemp()
-			else
-				vt.template = TemplatesService.getTemplate()
+			vt.template.deleteSectionColumn = (section)->
+				TemplatesService.deleteSectionColumn(vt.template, section)
 
-			vt.save = (temporary)->
-				TemplatesService.saveTemplate(temporary, vt.tempForm)
-			vt.delete = (id)->
-				TemplatesService.getTemplate(id)
-				TemplatesService.deleteTemplate(vt.tempForm)
-			vt.setDraft = (id)->
-				TemplatesService.getTemplate(id).settingDraft = true
-				TemplatesService.saveTemplate(true, vt.tempForm)
-			unbindFormWatch()
-	)
+			vt.template.deleteSection = (section)->
+				TemplatesService.deleteSection(vt.template, section.i)
+				vt.save(true)
+
+			vt.template.moveSection = (index, new_index)->
+				TemplatesService.moveSection(vt.template, index, new_index)
+
+			vt.template.addField = (section_id, column_id, type)->
+				TemplatesService.addField(vt.template, section_id, column_id, type)
+
+			vt.template.deleteField = (field)->
+				TemplatesService.deleteField(vt.template, field)
+
+			vt.template.changeFieldSection = (field, prev_section)->
+				TemplatesService.changeFieldSection(vt.template, field, prev_section)
+
+			vt.template.changeFieldColumn = (field, column_id)->
+				TemplatesService.changeFieldColumn(vt.template, field, column_id)
+
+			vt.template.moveField = (field, direction)->
+				TemplatesService.moveField(vt.template, field, direction)
+
+			vt.template.addOption = (field)->
+				TemplatesService.addOption(field)
+
+			vt.template.deleteOption = (field, option)->
+				TemplatesService.deleteOption(field, option)
+
+			vt.template.supportedFields = TemplatesService.supportedFields
+			vt.template.addFieldTypes = TemplatesService.addFieldTypes
+
+			unbindSectionsWatch = $scope.$watch (()-> vt.template.sections), ((newVal, oldVal)-> newVal != oldVal && vt.tempForm.$pristine = false), true
+			unbindFieldsWatch = $scope.$watch (()-> vt.template.fields), ((newVal, oldVal)-> newVal != oldVal && vt.tempForm.$pristine = false), true
+			unbindDraftWatch = $scope.$watch (()-> vt.template.draft), ((newVal, oldVal)-> newVal != oldVal && vt.tempForm.$pristine = false)
+
+			$scope.$on('$destroy', ()->
+				unbindSectionsWatch()
+				unbindFieldsWatch()
+				unbindDraftWatch()
+			)
+	else
+		vt.sortType = 'updated_at'
+		vt.sortReverse = true
+		vt.currentPage = 0
+		vt.pageSize = 10
+
+		vt.numPages = ->
+			Math.ceil(vt.filteredList.length/vt.pageSize)
+
+		vt.newReport = (template, form)->
+			report = ReportsService.extendReport()
+			report.template_order.push template.id
+			ReportsService.addTemplate(report, form)
+
+		vt.setDraft = (id)->
+			template = TemplatesService.extendTemplate(id)
+			template.settingDraft = true
+			TemplatesService.saveTemplate(template, true, vt.tempForm)
+
+	vt.delete = (template)->
+		TemplatesService.deleteTemplate(template)
 
 	return vt
 

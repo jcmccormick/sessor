@@ -15,9 +15,6 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 
 		!!required && report.errors += '<h3>Required Fields</h3> <ul class="list-unstyled">'+required+'</ul>'
 
-		!/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test(report.title) && report.errors += '<p>Title must begin with a letter and only contain letters and numbers.</p>'
-		!report.title && report.title = 'Untitled'
-
 		return report
 
 	{
@@ -68,8 +65,6 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 				deferred.reject()
 				return deferred.promise
 
-			console.log report
-
 			if !report.id
 				report.$save({class: 'reports'}, (res)->
 					index = reports.push res
@@ -97,9 +92,9 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 			return deferred.promise
 
 		deleteReport: (report)->
-			index = $.map(reports, (x)-> x.id).indexOf(report.id)
-			reports.splice(index, 1)
 			report.$delete({class: 'reports', id: report.id}, ((res)->
+				index = $.map(reports, (x)-> x.id).indexOf(report.id)
+				reports.splice(index, 1)
 				$location.path("/reports")
 			), (err)->
 				Flash.create('danger', '<p>'+err.data.errors+'</p>', 'customAlert')

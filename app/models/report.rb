@@ -23,7 +23,6 @@ class Report < ActiveRecord::Base
   has_many :values, dependent: :destroy
   serialize :template_order, Array
   accepts_nested_attributes_for :values
-  validates :title, format: { with: /\A[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
 
   # Populate the Values of the Fields associated with the Report.
   # Look over all the templates to see which are not yet associated with the report

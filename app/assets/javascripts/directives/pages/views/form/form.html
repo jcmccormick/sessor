@@ -1,7 +1,7 @@
 <draggable-options field="form.sO" form="form" class="field-options" ng-if="form.e && form.poppedOut && form.sO.o"></draggable-options>
 <div ng-form="myForm">
 
-	<div class="col-xs-12" ng-class="{'paper':!form.e}" ng-show="form.sections">
+	<div class="col-xs-12" ng-class="{'paper':!form.e}" ng-show="form.id && form.sections">
 		<small class="col-xs-12">
 			<span ng-if="report && !report.e">{{report.title}}</span>
 			<span ng-if="form.draft && !form.e">Draft</span>
@@ -29,7 +29,7 @@
 						<a href="javascript:;" class="btn" ng-if="section.c < 3" ng-click="form.addSectionColumn(section)"><i class="glyphicon glyphicon-plus"></i></a>
 						Column
 						<i class="glyphicon glyphicon-chevron-down"></i> &nbsp;
-						<a href="javascript:;" class="btn required-error" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(section.i, myForm.$$parentForm)"><i class="glyphicon glyphicon-trash"></i></a>
+						<a href="javascript:;" class="btn required-error" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(section)"><i class="glyphicon glyphicon-trash"></i></a>
 					</div>
 
 				</span>

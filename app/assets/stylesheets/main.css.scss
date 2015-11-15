@@ -407,7 +407,7 @@ blockquote {
 			position: relative;
 			height: 25px;
 			content: '';
-			background: repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
+			background: #337ab7;
 		}
 		.glyphicon-new-window {
 			display: none;
@@ -416,7 +416,7 @@ blockquote {
 				display: inline-block;
 			}
 
-			color: forestgreen;
+			color: forestgreen !important;
 			cursor: pointer;
 			-webkit-transform: rotate(-90deg);
 			-moz-transform: rotate(-90deg);

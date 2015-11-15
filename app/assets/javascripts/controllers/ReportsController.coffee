@@ -7,28 +7,23 @@ controllers.controller("ReportsController", ['$scope', '$routeParams', 'ReportsS
 	vr.templates = TemplatesService.listTemplates()
 	vr.reports = ReportsService.listReports()
 
-	if $routeParams.reportId || ReportsService.creating()
-		if ReportsService.creating()
-			vr.report = ReportsService.extendReport()
-		else
-			vr.report = ReportsService.extendReport(parseInt($routeParams.reportId, 10))
-			vr.report = ReportsService.sortTemplates(vr.report)
+	if ReportsService.creating() || repId = parseInt($routeParams.reportId, 10)
+		vr.report = ReportsService.extendReport(repId)
+		vr.report = ReportsService.sortTemplates(vr.report)
 
-			for template in vr.report.templates
-				template.e = false
+		for template in vr.report.templates
+			template.e = false
 
-				if vr.report.loadedFromDB
-					fields_values = $.map(template.fields, (x)-> x.value)
-					console.log template.fields.length
-					console.log fields_values.length
-					(!template.sections || (template.fields.length != fields_values.length)) && reload = true
+			if vr.report.loadedFromDB
+				fields_values = $.map(template.fields, (x)-> x.value)
+				(!template.sections || (template.fields.length != fields_values.length)) && reload = true
 
-			(!vr.report.loadedFromDB || reload) && ReportsService.queryReport(vr.report.id, true).then((res)->
-				$.extend vr.report, res
-				vr.report.form = vr.report.templates[0]
-			)
-
+		repId && (!vr.report.loadedFromDB || reload) && ReportsService.queryReport(repId, true).then((res)->
+			$.extend vr.report, res
 			vr.report.form = vr.report.templates[0]
+		)
+
+		vr.report.form = vr.report.templates[0]
 
 		vr.addTemplate = ->
 			vr.report.template_order.push vr.template.id
@@ -46,6 +41,12 @@ controllers.controller("ReportsController", ['$scope', '$routeParams', 'ReportsS
 			vr.report.form = vr.report.templates[index+dir]
 
 		if vr.report.e = ReportsService.editing()
+
+			$(document).bind 'keydown', (e)->
+				if e.ctrlKey && (e.which == 83)
+					e.preventDefault()
+					vr.save(true)
+					return false
 
 			$scope.$on('$locationChangeStart', (event)->
 				!vr.repForm.$pristine && !confirm('There are unsaved changes. Press cancel to return to the form.') && event.preventDefault()
@@ -77,7 +78,7 @@ controllers.controller("ReportsController", ['$scope', '$routeParams', 'ReportsS
 			Math.ceil(vr.filteredList.length/vr.pageSize)
 
 	vr.delete = (report)->
-		ReportsService.deleteReport(report, vr.repForm)
+		ReportsService.deleteReport(report)
 
 
 
