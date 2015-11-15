@@ -5,7 +5,7 @@ class Field < ActiveRecord::Base
 	validates :template, :fieldtype, presence: true
 
 	belongs_to :template
-
+	
 	serialize :o, JSON
 
 	before_save { o == 'destroy' || o['name'].present? || o['placeholder'].present? || o['default_value'].present? }

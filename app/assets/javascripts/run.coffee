@@ -3,8 +3,8 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$cacheFactor
 
 	$httpDefaultCache = $cacheFactory.get('$http')
 
-	angular.forEach ['cleartemplates','clearreports'], (value)->
-		$rootScope.$on(value, (event) -> $httpDefaultCache.removeAll())
+	# angular.forEach ['cleartemplates','clearreports'], (value)->
+	# 	$rootScope.$on(value, (event) -> $httpDefaultCache.removeAll())
 
 	$rootScope.$on('$routeChangeStart', (evt, next, current)->
 		!$auth.user.id && !current && next.$$route.originalPath == '/' && $auth.validateUser().then((res)-> $location.path('/desktop/'))
@@ -14,9 +14,9 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$cacheFactor
 		~absOldUrl.indexOf('reset_password=true') && $location.path('/pass_reset')
 	)
 	
-	$rootScope.$on('$routeChangeSuccess', ->
-		$window.ga('send', 'pageview', { page: $location.url() })
-	)
+	# $rootScope.$on('$routeChangeSuccess', ->
+	# 	$window.ga('send', 'pageview', { page: $location.url() })
+	# )
 
 	#angular.forEach ['auth:login-success', 'auth:validation-success'], (value)->
 		#$rootScope.$on(value, -> ClassFactory.get({class: 'desktop_statistics'}, (res)->

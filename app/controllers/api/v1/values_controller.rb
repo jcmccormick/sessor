@@ -2,30 +2,28 @@ module Api::V1 #:nodoc:
   class ValuesController < ApiController
 
     def index
-      if params.has_key?(:stats)
-        values = current_user.values.where(:field_id => params[:field_id]).order(created_at: :desc).as_json(only: [:input, :created_at])
-        render json: values
-      end
+      @values = current_user.values.where(report_id: params[:report_id])
     end
 
     def show
+      @value = current_user.values.find(params[:id])
     end
 
     def create
-      field = Field.find(params[:field_id])
-      @value = field.values.new(allowed_params)
+      report = current_user.reports.find(params[:report_id])
+      @value = report.values.new(allowed_params)
       @value.save
       render 'show', status: 201
     end
 
     def update
-      value = Value.find(params[:id])
+      value = current_user.values.find(params[:id])
       value.update(allowed_params)
       head :no_content
     end
 
     def destroy
-      value = Value.find(params[:id])
+      value = current_user.values.find(params[:id])
       value.destroy
       head :no_content
     end

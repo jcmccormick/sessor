@@ -6,8 +6,8 @@
 			<li><select class="form-control" ng-model="vt.pageSize" ng-options="distance as distance for distance in [10, 25, 50, 100]" ng-change="vt.currentPage = 0"></select></li>
 			<li><h5><p>per page</p></h5></li>
 			<li><a href="javascript:;" ng-class="{'disabled':vt.currentPage==0}" ng-click="vt.currentPage = vt.currentPage-1"><i class="glyphicon glyphicon-triangle-left"></i></a></li>
-			<li><h5><p>{{(vt.filteredList.length && vt.currentPage+1) || 0}} of {{vt.numPages() || 0}}</p></h5></li>
-			<li><a href="javascript:;" ng-class="{'disabled':vt.currentPage>=vt.numPages()-1}" ng-click="vt.currentPage = vt.currentPage+1"><i class="glyphicon glyphicon-triangle-right"></i></a></li>
+			<li><h5><p>{{(vt.filteredList.length && vt.currentPage+1) || 0}} of {{vt.filteredList.length && vt.numPages() || 0}}</p></h5></li>
+			<li><a href="javascript:;" ng-class="{'disabled':vt.filteredList.length && vt.currentPage>=vt.numPages()-1}" ng-click="vt.currentPage = vt.currentPage+1"><i class="glyphicon glyphicon-triangle-right"></i></a></li>
 		</ul>
 	</section>
 </div>

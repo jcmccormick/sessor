@@ -24,14 +24,6 @@ class Report < ActiveRecord::Base
   serialize :template_order, Array
   accepts_nested_attributes_for :values
   validates :title, format: { with: /\A[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*\z/ }
-  
-  default_scope { eager_load([{:templates => :fields}, :values])}
-
-
-  # Use a method to get as little information as needed when viewing all reports. Usable on ActiveRecord Relation.
-  def self.index_minned
-    includes(:templates).as_json(only: [:id, :title, :template_order], include: {templates: {only: [:id, :name]}})
-  end
 
   # Populate the Values of the Fields associated with the Report.
   # Look over all the templates to see which are not yet associated with the report
@@ -42,9 +34,11 @@ class Report < ActiveRecord::Base
     template_order.each do |template_id|
       template = Template.find(template_id)
       templates << template unless templates.include?(template)
-      template.fields.each do |field|
-        field.fieldtype != 'labelntext' && Value.where(report_id: self.id, field_id: field.id).first_or_create do |value|
-          value.input = field.default_value
+      if template.fields.where.not(fieldtype: 'labelntext').count != values.count
+        template.fields.each do |field|
+          Value.where(report_id: self.id, field_id: field.id).first_or_create do |value|
+            value.input = field.default_value
+          end unless field.fieldtype == 'labelntext'
         end
       end
     end

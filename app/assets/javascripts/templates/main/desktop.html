@@ -1,5 +1,5 @@
-<div class="paper row" desktop>
-	<div class="col-md-6">
+<div class="paper row">
+	<div class="col-md-6" ng-controller="TemplatesController as vt">
 		<h1>Pages 
 			<small>{{dv.templates.length}} 
 				<a href="#/templates/new" class="btn">New</a> 
@@ -15,7 +15,7 @@
 					<th>Actions</th>
 				</tr>
 			</thead>
-			<tr ng-repeat="template in dv.templates | orderBy:'-updated_at' | limitTo: 5">
+			<tr ng-repeat="template in vt.templates | orderBy:'-updated_at' | limitTo: 5">
 				<td>{{template.id}}</td>
 				<td>{{template.name}} <small ng-if="template.draft">DRAFT</small></td>
 				<td>{{template.updated_at | date : 'short'}}</td>
@@ -27,7 +27,7 @@
 		</table>
 	</div>
 
-	<div class="col-md-6">
+	<div class="col-md-6" ng-controller="ReportsController as vr">
 		<h1>Reports 
 			<small>{{dv.reports.length}} 
 				<a href="#/reports/new" class="btn">New</a> 
@@ -43,7 +43,7 @@
 					<th>Actions</th>
 				</tr>
 			</thead>
-			<tr ng-repeat="report in dv.reports | orderBy:'-updated_at' | limitTo: 5">
+			<tr ng-repeat="report in vr.reports | orderBy:'-updated_at' | limitTo: 5">
 				<td>{{report.id}}</td>
 				<td><span ng-repeat="template in report.templates">{{template.name}}<span ng-show="!$last">, </span></span></td>
 				<td>{{report.updated_at | date : 'short'}}</td>

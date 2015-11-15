@@ -10,21 +10,10 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		# prepare a copy of the template for sending to the DB
 		# sending only the necessary data back
 		tempCopy = new ClassFactory()
-		angular.copy {
-			id: template.id
-			name: template.name
-			draft: template.draft
-			private_group: template.private_group
-			private_world: template.private_world
-			group_edit: template.group_edit
-			group_editors: template.group_editors
-			sections: (template.sections && template.sections.length && template.sections) || undefined
-			fields_attributes: (template.fields && template.fields.length && template.fields) || undefined
-			errors: ''
-		}, tempCopy
+		angular.copy template, tempCopy
 
-		if tempCopy.fields_attributes && tempCopy.fields_attributes.length
-			# fields without a section ID are removed, as they will
+		if tempCopy.fields && tempCopy.fields_attributes = tempCopy.fields
+			# fields marked destroy are removed, as they will
 			# be removed when saving tempCopy; the following makes sure
 			# any deleted fields will be removed from the client's 
 			# template model
@@ -54,14 +43,38 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 	{
 		editing: ->
 			return if $location.path().search('/edit') == -1 then false else true
+		creating: ->
+			return if $location.path().search('/new') == -1 then false else true
 
 		listTemplates: ->
-			!templates.length && this.getTemplates()
-			return templates
+			deferred = $q.defer()
+			if templates.length
+				return templates
+			else
+				ClassFactory.query({class: 'templates'}, (res)->
+					$.extend templates, res
+					deferred.resolve(templates)
+				)
+			return deferred.promise
+
+		queryTemplate: (id)->
+			deferred = $q.defer()
+			exists = $.map(templates, (x)-> x.id).indexOf(id)
+			if exists >= 0 && templates[exists].loadedFromDB
+				deferred.resolve(templates[exists])
+			else if id
+				ClassFactory.get({class: 'templates', id: id}, (res)->
+					res.loadedFromDB = true
+					if exists >= 0
+						$.extend templates[exists], res
+					else
+						addex = templates.push(res)
+					deferred.resolve(templates[exists || addex-1])
+				)
+			return deferred.promise
 
 		getTemplates: ->
-			ClassFactory.query({class: 'templates'}, (res)-> $.extend templates, res)
-			return
+			return templates
 
 		getTemplate: (id)->
 			if !id
@@ -73,17 +86,6 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			template = ($.grep templates, (temp)-> temp.id == id)[0]
 			template = $.extend this, template
 			return template
-
-		queryTemplate: (id)->
-			deferred = $q.defer()
-			ClassFactory.get({class: 'templates', id: id}, (res)->
-				if templ = ($.grep templates, (template)-> template.id == id)[0]
-					$.extend templ, res
-				else
-					templates.push(res)
-				deferred.resolve()
-			)
-			return deferred.promise
 
 		# save/update template
 		saveTemplate: (temporary, form)->
@@ -108,18 +110,19 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 				!template.id && template.$save({class: 'templates'}, (res)->
 					templates.push res
 					$location.path("/templates/#{res.id}/edit")
+					return
 				)
 
 				if template.id
 					!form.$pristine && template.$update({class: 'templates', id: template.id}, (res)->
 						res.updated_at = moment().local().format()
-						$.extend ($.grep templates, (templ)-> templ.id == res.id)[0], res
+						$.extend templates[$.map(templates, (x)-> x.id).indexOf(res.id)], res
 						!temporary && $location.path("/templates/#{res.id}")
 						form.$setPristine()
+						return
 					)
 					form.$pristine && !temporary && $location.path("/templates/#{template.id}")
-				
-				$rootScope.$broadcast('cleartemplates')
+					return
 			)
 			return
 

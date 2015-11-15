@@ -5,11 +5,11 @@
 				<li class="dropdown">
 					<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Reports <b class="caret"></b></a>
 					<ul class="dropdown-menu" role="menu">
-						<li ng-if="vr.report.id"><a href="javascript:;" ng-click="vr.save()"><i class="glyphicon glyphicon-save"></i> &nbsp; View</a></li>
+						<li ng-if="vr.report.id"><a href="javascript:;" ng-click="vr.save(false)"><i class="glyphicon glyphicon-save"></i> &nbsp; View</a></li>
 						<li><a href="#/reports/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
 						<li><a href="#/reports"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
 						<li ng-if="vr.report.id" class="divider"></li>
-						<li ng-if="vr.report.id"><a href="javascript:;" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this report?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vr.report.deleteReport(vr.repForm)"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
+						<li ng-if="vr.report.id"><a href="javascript:;" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this report?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vr.delete(vr.report)"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
 					</ul>
 				</li>
 				<li ng-if="vr.report.id"><a href="javascript:;" ng-click="vr.save(true)"><span ng-class="{'save-now':!vr.repForm.$pristine}">Save</span></a></li>
@@ -31,9 +31,9 @@
 					<div class="col-xs-6 col-md-3" ng-if="vr.templates.length">
 						<label for="add-pages">Add Page</label>
 						<div class="input-group">
-							<select id="add-pages" class="form-control" ng-options="template.name for template in vr.filteredTemplates()" ng-model="vr.template"></select>
+							<select id="add-pages" class="form-control" ng-model="vr.template" ng-options="template.name for template in vr.filteredTemplates()"></select>
 							<span class="input-group-btn">
-								<a href="javascript:;" class="btn btn-default" ng-click="vr.report.addTemplate(vr.template, vr.repForm)">Add</a>
+								<a href="javascript:;" class="btn btn-default" ng-click="vr.addTemplate()">Add</a>
 							</span>
 						</div>
 					</div>
@@ -44,7 +44,7 @@
 						<div class="input-group">
 							<select id="current-page" class="form-control" ng-model="vr.report.form" ng-options="template.name for template in vr.report.templates"></select>
 							<span class="input-group-btn">
-								<a href="javascript:;" class="btn btn-default" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="vr.report.removeTemplate(vr.report.form)">
+								<a href="javascript:;" class="btn btn-default" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="vr.deleteTemplate()">
 									<i class="glyphicon glyphicon-trash"></i>
 								</a>
 							</span>

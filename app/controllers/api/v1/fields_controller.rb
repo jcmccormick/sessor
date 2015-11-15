@@ -1,9 +1,5 @@
 module Api::V1 #:nodoc:
   class FieldsController < ApiController
-    nested_attributes_names = Field.nested_attributes_options.keys.map do |key|
-      key.to_s.concat('_attributes').to_sym
-    end
-    wrap_parameters include: Field.attribute_names + nested_attributes_names
     
     def index
       if params.has_key?(:stats)
@@ -15,7 +11,7 @@ module Api::V1 #:nodoc:
     end
 
     def create
-      template = Template.find(params[:template_id])
+      template = current_user.templates.find(params[:template_id])
       @field = template.fields.new(allowed_params)
       @field.save
       render 'show', status: 201

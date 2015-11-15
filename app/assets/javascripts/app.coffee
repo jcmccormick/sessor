@@ -24,7 +24,16 @@ sessor = angular.module('sessor', [
 sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
 ($authProvider, $httpProvider, $routeProvider)->
 
-	authResolver = 'auth': ['$auth', ($auth)-> $auth.validateUser()]
+	authResolver = 'auth': ['$auth', 'ReportsService', 'TemplatesService', ($auth, ReportsService, TemplatesService)->
+		$auth.validateUser().then((res)->
+			if TemplatesService.listTemplates().length
+				return true
+			else
+				TemplatesService.listTemplates().then ->
+					ReportsService.listReports().then ->
+						return true
+		)
+	]
 
 	$authProvider.configure(apiUrl: "")
 	$httpProvider.interceptors.push('httpInterceptor')

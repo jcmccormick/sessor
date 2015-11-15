@@ -1,172 +1,148 @@
 services = angular.module('services')
-services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope', 'ClassFactory', 'Flash',
-($interval, $location, $q, $rootScope, ClassFactory, Flash)->
+services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope', 'ClassFactory', 'Flash', 'TemplatesService',
+($interval, $location, $q, $rootScope, ClassFactory, Flash, TemplatesService)->
 	
 	reports = []
 
 	validateReport = (report)->
-		deferred = $q.defer()
-
-		# prepare a copy of the template for sending to the DB
-		# sending only the necessary data back
-		tempCopy = new ClassFactory()
-		angular.copy {
-			id: report.id
-			title: report.title
-			template_order: report.template_order
-			values_attributes: []
-			errors: ''
-		}, tempCopy
 
 		required = ''
-
+		report.values_attributes = []
 		for template in report.templates
-			template && template.fields.length && for field in template.fields
-				tempCopy.values_attributes.push field.value
+			template.fields && for field in template.fields
+				report.values_attributes.push field.value
 				field.o.required && !field.value.input? && required += '<li><strong>'+template.name+'</strong>: '+field.o.name+'</li>'
 
-		!!required && tempCopy.errors += '<h3>Required Fields</h3> <ul class="list-unstyled">'+required+'</ul>'
+		!!required && report.errors += '<h3>Required Fields</h3> <ul class="list-unstyled">'+required+'</ul>'
 
-		!tempCopy.title && tempCopy.title = 'Untitled'
-		!/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test(tempCopy.title) && tempCopy.errors += '<p>Title must begin with a letter and only contain letters and numbers.</p>'
+		!report.title && report.title = 'Untitled'
+		!/^[a-zA-Z]*[a-zA-Z][a-zA-Z0-9_ ]*$/.test(report.title) && report.errors += '<p>Title must begin with a letter and only contain letters and numbers.</p>'
 
-		deferred.resolve(tempCopy)
-
-		return deferred.promise
-
-	sortTemplates = (report)->
-		sorted = []
-		for key in report.template_order
-			found = false
-			report.templates = report.templates.filter((template)->
-				if !found && template.id == key
-					sorted.push template
-					found = true
-					return false
-				else
-					return true
-			)
-		report.templates = sorted
-		report.form = report.templates[report.templates.length-1]
-		return
+		return report
 
 	{
 		editing: ->
 			return if $location.path().search('/edit') == -1 then false else true
+		creating: ->
+			return if $location.path().search('/new') == -1 then false else true
 
 		listReports: ->
-			!reports.length && this.getReports()
-			return reports
-
-		getReports: ->
-			ClassFactory.query({class: 'reports'}, (res)-> $.extend reports, res)
-			return
-
-		getReport: (id)->
-			if !id
-				delete this.id
-				this.title = 'Untitled'
-				this.templates = []
-				this.template_order = []
-				this.form = undefined
-			if report = ($.grep reports, (rep)-> rep.id == id)[0]
-				sortTemplates(report)
-			report = $.extend this, report
-			return report
-
-		queryReport: (id)->
 			deferred = $q.defer()
-			ClassFactory.get({class: 'reports', id: id}, (res)->
-				if report = ($.grep reports, (rep)-> rep.id == id)[0]
-					$.extend report, res
-				else
-					reports.push(res)
-				deferred.resolve(report || res)
-			)
+			if reports.length
+				return reports
+			else
+				rs = this
+				ClassFactory.query({class: 'reports'}, (res)->
+					$.extend reports, res
+					for report in reports
+						report = rs.sortTemplates(report)
+					deferred.resolve(reports)
+				)
 			return deferred.promise
 
-		# save/update report
-		saveReport: (temporary, form)->
+		queryReport: (id, refreshing)->
 			deferred = $q.defer()
-			# Auto-save
-			if this.id
+			exists = $.map(reports, (x)-> x.id).indexOf(id)
+			if !reports[exists].loadedFromDB || refreshing
+				ClassFactory.get({class: 'reports', id: id}, (res)->
+					console.log 'db load result:'
+					console.log res
+					deferred.resolve(res)
+				)
+			else
+				deferred.resolve(report[exists])
+			return deferred.promise
+
+		extendReport: (id)->
+			exists = $.map(reports, (x)-> x.id).indexOf(id)
+			report = $.extend (reports[exists] || {title: 'Untitled', templates: [], template_order: []}), new ClassFactory()
+			return report
+
+		# save/update report
+		saveReport: (report, temporary, form)->
+			rs = this
+			deferred = $q.defer()
+			validateReport(report)
+			if !!report.errors
+				Flash.create('danger', report.errors, 'customAlert')
+				report.errors = ''
+				deferred.reject()
+				return deferred.promise
+
+			if !report.id
+				report.$save({class: 'reports'}, (res)->
+					index = reports.push res
+					$location.path("/reports/#{res.id}/edit")
+					deferred.resolve(reports[index])
+				)
+			else
 				!timedSave && timedSave = $interval (->
-					this.id && !form.$pristine && this.saveReport(true, form)
+					report.id && !form.$pristine && rs.saveReport(report, true, form)
 				), 30000
 
 				!dereg && dereg = $rootScope.$on('$locationChangeSuccess', ()->
 					$interval.cancel(timedSave)
 					dereg()
 				)
-				
-			# validate and save
-			validateReport(this).then((report)->
-				if !!report.errors
-					Flash.create('danger', report.errors, 'customAlert')
-					deferred.reject(report.errors)
-					return
-
-				!report.id && report.$save({class: 'reports'}, (res)->
-					reports.push res
-					deferred.resolve(res)
-					$location.path("/reports/#{res.id}/edit")
-				)
-
-				if report.id && form
-					!form.$pristine && report.$update({class: 'reports', id: report.id}, (res)->
-						res.updated_at = moment().local().format()
-						$.extend ($.grep reports, (repo)-> repo.id == res.id)[0], res
-						deferred.resolve(res)
-						!temporary && $location.path("/reports/#{res.id}")
+				if !form.$pristine
+					report.$update({class: 'reports', id: report.id}, (res)->
+						console.log 'update result:'
+						console.log res
 						form.$setPristine()
+						deferred.resolve(res)
+						!temporary && $location.path("/reports/#{report.id}")
 					)
-					form.$pristine && !temporary && $location.path("/reports/#{report.id}")
+				else
+					!temporary && $location.path("/reports/#{report.id}")
 
-				$rootScope.$broadcast('clearreports')				
-			)
 			return deferred.promise
 
-		deleteReport: (form)->
-			$.extend this, new ClassFactory()
-			this.$delete({class: 'reports', id: this.id}, ((res)->
-				index = reports.indexOf ($.grep reports, (report)->	res.id == report.id)[0]
-				reports.splice(index, 1)
-				form.$setPristine()
+		deleteReport: (report)->
+			index = $.map(reports, (x)-> x.id).indexOf(report.id)
+			reports.splice(index, 1)
+			report.$delete({class: 'reports', id: report.id}, ((res)->
 				$location.path("/reports")
 			), (err)->
 				Flash.create('danger', '<p>'+err.data.errors+'</p>', 'customAlert')
 			)
 			return
 
-		addTemplate: (template, form)->
-			if template.draft
-				Flash.create('success', '<p>Please turn off the <strong>draft</strong> setting for '+template.name+' to use it in a report.</p>', 'customAlert')
-			else
-				!this.templates && this.templates = []
-				!this.template_order && this.template_order = []
-				this.template_order.push template.id
-				form.$pristine = false
-				ts = this
-				this.saveReport(true, form).then ((res)->
-					ts.queryReport(res.id).then((res)->
-						ts.getReport(res.id)
-					)
-				), ->
-					ts.template_order.pop()
-					form.$setPristine()
+		addTemplate: (report, form)->
+			console.log 'adding template'
+			rs = this
+			form.$pristine = false
+			!report.id && $.extend report, new ClassFactory()
+			rs.saveReport(report, true, form).then ((res)->
+				report.e && rs.queryReport(report.id, true).then((rep)->
+					$.extend report, rs.sortTemplates(rep)
+					report.form = report.templates[report.templates.length-1]
+				)
+			), (err)->
+				report.template_order.pop()
 			return
 
-		removeTemplate: (template)->
-			deferred = $q.defer()
-			templateindex = this.templates.indexOf(template)
-			orderindex = this.template_order.indexOf(template.id)
-			this.templates.splice templateindex, 1
-			this.template_order.splice orderindex, 1
-			this.form = if templateindex==0 then this.templates[0] else this.templates[templateindex-1]
-			this.$update({class: 'reports', id: this.id, did: template.id}, ->
-				Flash.create('success', '<p>'+template.name+' has been removed from the report.</p>', 'customAlert')
-				$rootScope.$broadcast('clearreports')
-			)
+		sortTemplates: (report)->
+			sorted = []
+			for key in report.template_order
+				found = false
+				TemplatesService.getTemplates().filter (template)->
+					if !found && template.id == key
+						sorted.push template
+						found = true
+						return false
+					else
+						return true
 
+			output = []
+
+			for template of sorted
+				output[template] = sorted[template]
+
+			for template of report.templates
+				angular.extend output[template], report.templates[template], true
+
+			report.templates = output
+			report.form = report.templates[0]
+			return report
 	}
 ])
