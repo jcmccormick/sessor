@@ -1,10 +1,10 @@
 controllers = angular.module('controllers')
-controllers.controller('TemplatesController', ['$routeParams', '$scope', 'ReportsService', 'TemplatesService',
-($routeParams, $scope, ReportsService, TemplatesService)->
+controllers.controller('TemplatesController', ['$routeParams', '$scope', 'localStorageService', 'ReportsService', 'TemplatesService',
+($routeParams, $scope, localStorageService, ReportsService, TemplatesService)->
 
 	vt = this
 
-	vt.templates = TemplatesService.getTemplates()
+	vt.templates = localStorageService.get('_cst')
 
 	if TemplatesService.creating() || tempId = parseInt($routeParams.templateId, 10)
 		vt.template = TemplatesService.extendTemplate(tempId)
@@ -89,7 +89,7 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'Report
 		vt.newReport = (template, form)->
 			report = ReportsService.extendReport()
 			report.template_order.push template.id
-			ReportsService.addTemplate(report, form)
+			ReportsService.saveReport(report, true, form)
 
 		vt.setDraft = (id)->
 			template = TemplatesService.extendTemplate(id)

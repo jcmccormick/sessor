@@ -4,16 +4,16 @@ controllers.controller("ReportsController", ['$scope', '$routeParams', 'localSto
 
 	vr = this
 
-	vr.templates = localStorageService.get('_cst')
 	vr.reports = localStorageService.get('_csr')
 
 	if ReportsService.creating() || repId = parseInt($routeParams.reportId, 10)
+		vr.templates = localStorageService.get('_cst')
 		vr.report = ReportsService.extendReport(repId)
 
 		for template in vr.report.templates
 			if vr.report.loadedFromDB
 				fields_values = $.map(template.fields, (x)-> x.value)
-				(!template.sections || (template.fields.length != fields_values.length)) && reload = true
+				(!template.sections || (fields_values && template.fields.length != fields_values.length) ) && reload = true
 
 
 		repId && (!vr.report.loadedFromDB || reload) && ReportsService.queryReport(repId, true).then((res)->
@@ -23,10 +23,19 @@ controllers.controller("ReportsController", ['$scope', '$routeParams', 'localSto
 
 		vr.report.form = vr.report.templates[0]
 
-		vr.addTemplate = ->
-			vr.report.template_order.push vr.template.id
-			ReportsService.addTemplate(vr.report, vr.repForm)
-			vr.template = vr.filteredTemplates()[0]
+		vr.addTemplate = (template)->
+			vr.repForm.$pristine = false
+			vr.report.template_order.push template.id
+			ReportsService.saveReport(vr.report, true, vr.repForm).then ((res)->
+				ReportsService.editing() && ReportsService.queryReport(repId, true).then((res)->
+					console.log res
+					$.extend vr.report, res
+					vr.report.form = vr.report.templates[vr.report.templates.length-1]
+					vr.template = vr.filteredTemplates()[0]
+				)
+			), (err)->
+				vr.report.template_order.pop()
+
 		vr.filteredTemplates = ->
 			vr.templates.filter((template)->
 				!template.draft && vr.report.template_order.indexOf(template.id) == -1

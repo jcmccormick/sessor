@@ -28,24 +28,16 @@ sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
 	($auth, localStorageService, ReportsService, TemplatesService)->
 		$auth.validateUser().then((res)->
 
-			# localStorageService.remove('_csr')
-			# localStorageService.remove('_cst')
-			# localStorageService.remove('_oldT')
-
-			templates = localStorageService.get('_cst')
 			reports = localStorageService.get('_csr')
-			oldT = localStorageService.get('_oldT')
-			oldR = localStorageService.get('_oldR')
+			templates = localStorageService.get('_cst')
 
-			if !templates && !reports
+			if !templates || !reports
 				TemplatesService.listTemplates().then (res)->
 					ReportsService.listReports().then (rep)->
 						return true
 			else
-				localStorageService.set('_cst', templates)
 				localStorageService.set('_csr', reports)
-				localStorageService.set('_oldT', templates)
-				localStorageService.set('_oldR', reports)
+				localStorageService.set('_cst', templates)
 				return true
 		)
 	]

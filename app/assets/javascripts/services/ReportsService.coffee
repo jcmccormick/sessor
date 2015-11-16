@@ -3,7 +3,7 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 ($interval, $location, $q, $rootScope, ClassFactory, Flash, localStorageService, TemplatesService)->
 	
 	reports = localStorageService.get('_csr')
-	slr = ->
+	slr = (reports)->
 		localStorageService.set('_csr', reports)
 	geti = (id)->
 		$.map(reports, (x)-> x.id).indexOf(id)
@@ -35,8 +35,7 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 			deferred = $q.defer()
 			rs = this
 			ClassFactory.query({class: 'reports'}, (res)->
-				$.extend reports, res
-				for report in reports
+				reports = for report in res
 					report = rs.sortTemplates(report)
 				slr(reports)
 				deferred.resolve(reports)
@@ -45,15 +44,16 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 
 		queryReport: (id, refreshing)->
 			deferred = $q.defer()
-			if !reports[geti(parseInt(id, 10))].loadedFromDB || refreshing
+			index = geti(parseInt(id, 10))
+			if refreshing || !reports[index].loadedFromDB
 				ClassFactory.get({class: 'reports', id: id}, (res)->
 					res.loadedFromDB = true
-					reports[geti(parseInt(id, 10))] = res
+					reports[index] = res
 					slr(reports)
 					deferred.resolve(res)
 				)
 			else
-				deferred.resolve(report[exists])
+				deferred.resolve(reports[index])
 			return deferred.promise
 
 		extendReport: (id)->
@@ -102,32 +102,14 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 
 		deleteReport: (report)->
 			$.extend report, new ClassFactory()
+			spliced = reports.splice(geti(report.id), 1)
+			slr(reports)
 			report.$delete({class: 'reports', id: report.id}, ((res)->
-				reports.splice(geti(report.id), 1)
-				slr(reports)
 				$location.path("/reports")
 			), (err)->
+				reports.unshift spliced
 				Flash.create('danger', '<p>'+err.data.errors+'</p>', 'customAlert')
 			)
-			return
-
-		addTemplate: (report, form)->
-			rs = this
-			form.$pristine = false
-			!report.id && $.extend report, new ClassFactory()
-			rs.saveReport(report, true, form).then ((res)->
-				TemplatesService.queryTemplate(report.template_order[report.template_order.length-1], true).then((res)->
-					report.e && rs.queryReport(report.id, true).then((res)->
-						res = rs.sortTemplates(res)
-						reports[geti(report.id)] = res
-						slr(reports)
-						$.extend report, reports[geti(report.id)]
-						report.form = report.templates[report.templates.length-1]
-					)
-				)
-			), (err)->
-				report.template_order.pop()
-
 			return
 
 		sortTemplates: (report)->

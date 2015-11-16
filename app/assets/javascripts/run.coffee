@@ -1,10 +1,5 @@
-angular.module("sessor").run (['$auth', '$rootScope', '$location', '$cacheFactory', '$window', 'ClassFactory', 'Flash', 'ReportsService', 'TemplatesService',
-($auth, $rootScope, $location, $cacheFactory, $window, ClassFactory, Flash, ReportsService, TemplatesService)->
-
-	$httpDefaultCache = $cacheFactory.get('$http')
-
-	# angular.forEach ['cleartemplates','clearreports'], (value)->
-	# 	$rootScope.$on(value, (event) -> $httpDefaultCache.removeAll())
+angular.module("sessor").run (['$auth', '$rootScope', '$location', '$window', 'Flash', 'localStorageService',
+($auth, $rootScope, $location, $window, Flash, localStorageService)->
 
 	$rootScope.$on('$routeChangeStart', (evt, next, current)->
 		!$auth.user.id && !current && next.$$route.originalPath == '/' && $auth.validateUser().then((res)-> $location.path('/desktop/'))
@@ -18,31 +13,25 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$cacheFactor
 	# 	$window.ga('send', 'pageview', { page: $location.url() })
 	# )
 
-	#angular.forEach ['auth:login-success', 'auth:validation-success'], (value)->
-		#$rootScope.$on(value, -> ClassFactory.get({class: 'desktop_statistics'}, (res)->
-		#	$.extend ReportsService.listReports(), res.reports
-		#	$.extend TemplatesService.listTemplates(), res.templates
-		#))
 	angular.forEach ['auth:invalid', 'auth:validation-error'], (value)->
 		$rootScope.$on(value, -> $auth.signOut() && $location.path('/') && Flash.create('danger', "Looks like there was an error validating your credentials. Please try logging in again or contact support if problems continue.", 'customAlert')
 		)
 	$rootScope.$on('auth:login-success', ->
 		Flash.create('success', 'Successfully logged in.', 'customAlert')
 		$location.path('/desktop/')
-		$httpDefaultCache.removeAll()
 	)
 
 	$rootScope.$on('auth:logout-success', ->
-		#ReportsService.listReports().length = 0
-		#TemplatesService.listTemplates().length = 0
 		Flash.create('success', 'You have logged out.', 'customAlert')
 		$location.path('/')
-		$httpDefaultCache.removeAll()
 	)
 
 	$rootScope.$on('auth:account-update-success', ->
 		Flash.create('success', 'Account updated successfully.', 'customAlert')
 	)
+
+	$rootScope.clearLocalStorage = ->
+		localStorageService.remove('_csr', '_cst')
 
 	$rootScope.handleSignOut = ->
 		$location.path('/sign_out')

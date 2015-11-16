@@ -53,23 +53,23 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		listTemplates: ->
 			deferred = $q.defer()
 			ClassFactory.query({class: 'templates'}, (res)->
-				$.extend templates, res
-				slt(templates)
-				deferred.resolve(templates)
+				slt(res)
+				deferred.resolve(res)
 			)
 			return deferred.promise
 
 		queryTemplate: (id, refreshing)->
 			deferred = $q.defer()
-			if !templates[geti(parseInt(id, 10))].loadedFromDB || refreshing
+			id = parseInt(id, 10)
+			if !templates[geti(id)].loadedFromDB || refreshing
 				ClassFactory.get({class: 'templates', id: id}, (res)->
 					res.loadedFromDB = true
-					templates[geti(parseInt(id, 10))] = res
+					templates[geti(id)] = res
 					slt(templates)
-					deferred.resolve(res)
+					deferred.resolve(templates[geti(id)])
 				)
 			else
-				deferred.resolve(templates[exists])
+				deferred.resolve(templates[geti(id)])
 			return deferred.promise
 
 		extendTemplate: (id)->
