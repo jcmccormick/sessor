@@ -1,22 +1,20 @@
 controllers = angular.module('controllers')
-controllers.controller("ReportsController", ['$scope', '$routeParams', 'ReportsService', 'TemplatesService',
-($scope, $routeParams, ReportsService, TemplatesService)->
+controllers.controller("ReportsController", ['$scope', '$routeParams', 'localStorageService', 'ReportsService', 'TemplatesService',
+($scope, $routeParams, localStorageService, ReportsService, TemplatesService)->
 
 	vr = this
 
-	vr.templates = TemplatesService.listTemplates()
-	vr.reports = ReportsService.listReports()
+	vr.templates = localStorageService.get('_cst')
+	vr.reports = localStorageService.get('_csr')
 
 	if ReportsService.creating() || repId = parseInt($routeParams.reportId, 10)
 		vr.report = ReportsService.extendReport(repId)
-		vr.report = ReportsService.sortTemplates(vr.report)
 
 		for template in vr.report.templates
-			template.e = false
-
 			if vr.report.loadedFromDB
 				fields_values = $.map(template.fields, (x)-> x.value)
 				(!template.sections || (template.fields.length != fields_values.length)) && reload = true
+
 
 		repId && (!vr.report.loadedFromDB || reload) && ReportsService.queryReport(repId, true).then((res)->
 			$.extend vr.report, res

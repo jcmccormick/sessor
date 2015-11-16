@@ -1,18 +1,23 @@
 services = angular.module('services')
-services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScope', 'ClassFactory', 'Flash',
-($interval, $location, $q, $rootScope, ClassFactory, Flash)->
+services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScope', 'ClassFactory', 'Flash', 'localStorageService',
+($interval, $location, $q, $rootScope, ClassFactory, Flash, localStorageService)->
 
-	templates = []
-	
+	templates = localStorageService.get('_cst')
+	slt = (templates)->
+		localStorageService.set('_cst', templates)
+	geti = (id)->
+		$.map(templates, (x)-> x.id).indexOf(id)
+
 	validateTemplate = (template)->
 
-		if template.fields.length && template.fields_attributes = angular.copy template.fields
+		if template.fields && template.fields.length && template.fields_attributes = angular.copy template.fields
 			# fields marked destroy are removed, as they will
 			# be removed when saving template; the following makes sure
 			# any deleted fields will be removed from the client's 
 			# template model
 			i = template.fields.length
 			while i--
+				delete template.fields[i].value
 				template.fields[i]._destroy && template.fields.splice(i, 1)
 
 			if !template.deletingSection && !template.settingDraft
@@ -38,38 +43,37 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 	{
 		editing: ->
 			return if $location.path().search('/edit') == -1 then false else true
+
 		creating: ->
 			return if $location.path().search('/new') == -1 then false else true
 
+		getTemplates: ->
+			return templates
+
 		listTemplates: ->
 			deferred = $q.defer()
-			if templates.length
-				return templates
-			else
-				ClassFactory.query({class: 'templates'}, (res)->
-					$.extend templates, res
-					deferred.resolve(templates)
-				)
+			ClassFactory.query({class: 'templates'}, (res)->
+				$.extend templates, res
+				slt(templates)
+				deferred.resolve(templates)
+			)
 			return deferred.promise
 
 		queryTemplate: (id, refreshing)->
 			deferred = $q.defer()
-			exists = $.map(templates, (x)-> x.id).indexOf(id)
-			if !templates[exists].loadedFromDB || refreshing
+			if !templates[geti(parseInt(id, 10))].loadedFromDB || refreshing
 				ClassFactory.get({class: 'templates', id: id}, (res)->
 					res.loadedFromDB = true
+					templates[geti(parseInt(id, 10))] = res
+					slt(templates)
 					deferred.resolve(res)
 				)
 			else
 				deferred.resolve(templates[exists])
 			return deferred.promise
 
-		getTemplates: ->
-			return templates
-
 		extendTemplate: (id)->
-			exists = $.map(templates, (x)-> x.id).indexOf(id)
-			template = $.extend (templates[exists] || {name: '', sections: [], fields: []}), new ClassFactory()
+			template = $.extend (templates[geti(id)] || {name: '', sections: [], fields: []}), new ClassFactory()
 			return template
 
 		# save/update template
@@ -87,6 +91,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			if !template.id
 				template.$save({class: 'templates'}, (res)->
 					templates.push res
+					slt(templates)
 					$location.path("/templates/#{res.id}/edit")
 					return
 				)
@@ -99,22 +104,33 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 					dereg()
 				)
 				if !form.$pristine
+					template.updated_at = moment().local().format()
+					$.extend templates[geti(template.id)], template
+					slt(templates)
+
+					reports = localStorageService.get('_csr')
+					newtemp = $.map(($.grep reports, (report)-> report.template_order.indexOf(template.id) != -1), (x)-> x.id)
+					for id in newtemp
+						report = $.map(reports, (x)-> x.id).indexOf(id)
+						templ = $.map(reports[report].templates, (x)-> x.id).indexOf(template.id)
+						reports[report].templates[templ] = templates[geti(template.id)]
+					localStorageService.set('_csr', reports)
+
 					template.$update({class: 'templates', id: template.id}, (res)->
-						!temporary && $location.path("/templates/#{template.id}")
 						form.$setPristine()
-						return
+						!temporary && $location.path("/templates/#{template.id}")
 					)
 				else
 					!temporary && $location.path("/templates/#{template.id}")
-				return
 
 			return
 
 		# delete template
 		deleteTemplate: (template)->
+			$.extend template, new ClassFactory()
 			template.$delete({class: 'templates', id: template.id}, ((res)->
-				index = $.map(templates, (x)-> x.id).indexOf(template.id)
-				templates.splice(index, 1)
+				templates.splice(geti(template.id), 1)
+				slt(templates)
 				$location.path("/templates")
 			), (err)->
 				Flash.create('danger', '<p>'+err.data.errors+'</p>', 'customAlert')

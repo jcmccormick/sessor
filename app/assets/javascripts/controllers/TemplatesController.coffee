@@ -4,7 +4,7 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'Report
 
 	vt = this
 
-	vt.templates = TemplatesService.listTemplates()
+	vt.templates = TemplatesService.getTemplates()
 
 	if TemplatesService.creating() || tempId = parseInt($routeParams.templateId, 10)
 		vt.template = TemplatesService.extendTemplate(tempId)
@@ -15,17 +15,17 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'Report
 
 		vt.save = (temporary)->
 			TemplatesService.saveTemplate(vt.template, temporary, vt.tempForm)
-			
+
 		if vt.template.e = TemplatesService.editing()
 
 			$(document).bind 'keydown', (e)->
 				if e.ctrlKey && (e.which == 83)
 					e.preventDefault()
-					vr.save(true)
+					vt.save(true)
 					return false
 
 			$scope.$on('$locationChangeStart', (event)->
-				!vt.tempForm.$pristine && !confirm('There are unsaved changes. Press cancel to return to the form.') && event.preventDefault()
+				(!vt.tempForm.$pristine && (!confirm('There are unsaved changes. Press cancel to return to the form.') && event.preventDefault() ) || vt.template.e = false ) || vt.template.e = false
 			)
 
 			vt.template.addSection = ->

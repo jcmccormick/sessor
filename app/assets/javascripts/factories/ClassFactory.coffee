@@ -10,7 +10,7 @@ factories.factory("ClassFactory", ['$auth', '$resource',
 			method: 'PUT'
 			isArray: true
 		get:
-			cache: false
+			cache: true
 			isArray: false
 	})
 ])

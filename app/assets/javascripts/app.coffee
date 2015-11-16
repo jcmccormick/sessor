@@ -10,7 +10,7 @@ sessor = angular.module('sessor', [
 	'ngAnimate',
 	'ng-token-auth',
 	'ngBootbox',
-	'ipCookie',
+	'LocalStorageModule',
 	'ui.sortable',
 	'googlechart',
 	'flash',
@@ -24,14 +24,29 @@ sessor = angular.module('sessor', [
 sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
 ($authProvider, $httpProvider, $routeProvider)->
 
-	authResolver = 'auth': ['$auth', 'ReportsService', 'TemplatesService', ($auth, ReportsService, TemplatesService)->
+	authResolver = 'auth': ['$auth', 'localStorageService', 'ReportsService', 'TemplatesService',
+	($auth, localStorageService, ReportsService, TemplatesService)->
 		$auth.validateUser().then((res)->
-			if TemplatesService.listTemplates().length
-				return true
-			else
-				TemplatesService.listTemplates().then ->
-					ReportsService.listReports().then ->
+
+			# localStorageService.remove('_csr')
+			# localStorageService.remove('_cst')
+			# localStorageService.remove('_oldT')
+
+			templates = localStorageService.get('_cst')
+			reports = localStorageService.get('_csr')
+			oldT = localStorageService.get('_oldT')
+			oldR = localStorageService.get('_oldR')
+
+			if !templates && !reports
+				TemplatesService.listTemplates().then (res)->
+					ReportsService.listReports().then (rep)->
 						return true
+			else
+				localStorageService.set('_cst', templates)
+				localStorageService.set('_csr', reports)
+				localStorageService.set('_oldT', templates)
+				localStorageService.set('_oldR', reports)
+				return true
 		)
 	]
 

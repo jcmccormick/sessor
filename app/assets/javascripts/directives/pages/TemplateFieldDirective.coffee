@@ -128,16 +128,26 @@ directives.directive('templateFieldDirective', ['$compile', 'TemplatesService',
 			# Else we're viewing a report, so only show 
 			# input text and not an actual <input> field
 
-			scope.valueCopy = angular.copy scope.field.value.input
+			if scope.field.value?
 
-			switch cur_field
-				when "integer" then scope.valueCopy = parseInt(scope.valueCopy, 10)
-				when "date" then scope.valueCopy? && scope.valueCopy = new Date(scope.valueCopy).format("DDDD, MMMM DS, YYYY")
-				when "time" then scope.valueCopy? && scope.valueCopy = new Date(scope.valueCopy).format("hh:mm TT")
-				when "checkbox" then scope.valueCopy = (!scope.valueCopy && 'False') || 'True'
+				scope.valueCopy = angular.copy scope.field.value.input
 
-			element.html '<h3>'+scope.field.o.name+'</h3>
-						<blockquote>{{valueCopy || "No data"}}</blockquote>'
+				scope.valueCopy? && ['integer','date','time','checkbox'].indexOf(cur_field) != -1 && scope.valueCopy = switch cur_field
+					when "integer"
+						parseInt(scope.valueCopy, 10)
+					when "date"
+						new Date(scope.valueCopy).format("DDDD, MMMM DS, YYYY")
+					when "time"
+						new Date(scope.valueCopy).format("hh:mm TT")
+					when "checkbox"
+						if scope.valueCopy == "f" then 'False' else 'True'
+
+				display = if cur_field == 'labelntext'
+					'<blockquote>{{valueCopy}}</blockquote>'
+				else
+					'<h4><strong>{{valueCopy || "No data"}}</strong></h4>'
+				
+			element.html '<h3>'+scope.field.o.name+'</h3>' + display
 
 		$compile(element.contents()) scope
 		return

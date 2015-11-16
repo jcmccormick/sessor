@@ -33,8 +33,8 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$cacheFactor
 	)
 
 	$rootScope.$on('auth:logout-success', ->
-		ReportsService.listReports().length = 0
-		TemplatesService.listTemplates().length = 0
+		#ReportsService.listReports().length = 0
+		#TemplatesService.listTemplates().length = 0
 		Flash.create('success', 'You have logged out.', 'customAlert')
 		$location.path('/')
 		$httpDefaultCache.removeAll()
