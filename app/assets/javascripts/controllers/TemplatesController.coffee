@@ -25,7 +25,10 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'localS
 					return false
 
 			$scope.$on('$locationChangeStart', (event)->
-				(!vt.tempForm.$pristine && (!confirm('There are unsaved changes. Press cancel to return to the form.') && event.preventDefault() ) || vt.template.e = false ) || vt.template.e = false
+				if !vt.tempForm.$pristine && !confirm('There are unsaved changes. Press cancel to return to the form.')
+					event.preventDefault()
+				else
+					vt.template = undefined
 			)
 
 			vt.template.addSection = ->

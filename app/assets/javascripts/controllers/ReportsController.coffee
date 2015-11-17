@@ -48,14 +48,18 @@ controllers.controller("ReportsController", ['$scope', '$routeParams', 'localSto
 
 		if vr.report.e = ReportsService.editing()
 
-			$(document).bind 'keydown', (e)->
+			vr && $(document).bind 'keydown', (e)->
 				if e.ctrlKey && (e.which == 83)
 					e.preventDefault()
 					vr.save(true)
 					return false
 
 			$scope.$on('$locationChangeStart', (event)->
-				!vr.repForm.$pristine && !confirm('There are unsaved changes. Press cancel to return to the form.') && event.preventDefault()
+				if !vr.repForm.$pristine && !confirm('There are unsaved changes. Press cancel to return to the form.')
+					event.preventDefault()
+				else
+					vr.report = undefined
+
 			)
 
 			vr.save = (temporary)->
