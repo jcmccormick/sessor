@@ -153,14 +153,11 @@ blockquote {
 	max-height: 0;
 	&.customAlert {
 		display: table;
-		background-color: #fafafa;
-		border: 1px solid rgba(0, 0, 0, 0.12);
+		position: fixed;
+		border: 1px solid #8A6D3B;
 		border-radius: 0;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-		color: #666;
-		padding: 15px 30px 15px 15px;
 		width: 80%;
-		position: fixed;
 		margin: 0 10%;
 		top: 0;
 		z-index: 9999;
@@ -168,7 +165,7 @@ blockquote {
 		@include respond(tablet) {
 			width: 50%;
 			margin: 0 25%;
-			padding: 20px 50px 20px 30px;
+			padding: 0 50px 10px;
 		}
 	}
 	&.alertIn {
@@ -183,24 +180,6 @@ blockquote {
 		-webkit-transform:translateY(-200%);
 		-moz-transform:translateY(-200%);
 		transform:translateY(-100%);
-	}
-
-	span[dynamic="flash.text"]:before {
-		content: "\a\a";
-		white-space: pre;
-	}
-
-	&[class*="alert-"]:before {
-		font-weight: bold;
-		font-size: 14px;
-
-		@include respond(mobile) {
-			font-size: 20px;
-		}
-
-		@include respond(desktop) {
-			font-size: 26px;
-		}
 	}
 }
 
@@ -249,7 +228,6 @@ blockquote {
 		top: 0;
 		z-index: 1;
 		background-color: #e74c3c;
-		border-bottom-right-radius: 80px;
 		width: 100%;
 
 		@include respond(tablet) {

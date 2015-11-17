@@ -57,7 +57,7 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 			return deferred.promise
 
 		extendReport: (id)->
-			return $.extend (reports[geti(parseInt(id, 10))] || {title: 'Untitled', templates: [], template_order: []}), new ClassFactory()
+			return $.extend (reports[geti(parseInt(id, 10))] || {title: '', templates: [], template_order: []}), new ClassFactory()
 
 		# save/update report
 		saveReport: (report, temporary, form)->
@@ -88,6 +88,7 @@ services.service('ReportsService', ['$interval', '$location', '$q', '$rootScope'
 					dereg()
 				)
 				if !form.$pristine
+					report.updated_at = moment().local().format()
 					reports[geti(report.id)] = report
 					slr(reports)
 					report.$update({class: 'reports', id: report.id}, (res)->

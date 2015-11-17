@@ -11,7 +11,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 	validateTemplate = (template)->
 
 		if template.fields && template.fields.length && template.fields_attributes = angular.copy template.fields
-			# fields marked destroy are removed, as they will
+			# fields marked destroy are removed locally, as they will
 			# be removed when saving template; the following makes sure
 			# any deleted fields will be removed from the client's 
 			# template model
@@ -20,20 +20,17 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 				delete template.fields[i].value
 				template.fields[i]._destroy && template.fields.splice(i, 1)
 
-			if !template.deletingSection && !template.settingDraft
-				# validate field name or placeholder presence
-				$.grep(template.fields_attributes, (field)->
-					!field.o.name && !field.o.placeholder && !field.o.default_value
-				).length && template.errors += '<p>Fields must have a name, placeholder, or default value.</p><p>Label and text elements must have a label or text.</p>'
+			# validate field name or placeholder presence
+			!template.deletingSection && $.grep(template.fields_attributes, (field)->
+				!field.o.name && !field.o.placeholder && !field.o.default_value
+			).length && template.errors += '<p>Fields must have a name, placeholder, or default value.</p><p>Label and text elements must have a label or text.</p>'
 
 			for field in template.fields_attributes
 				delete field.value
 
-		# validate name
-		!template.name && template.name = 'Untitled'
-
 		delete template.deletingSection
 		delete template.settingDraft
+		!template.$update && $.extend template, new ClassFactory()
 		return template
 
 	newFieldOrdering = (template, section_id, column_id)->
@@ -79,7 +76,6 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		# save/update template
 		saveTemplate: (template, temporary, form)->
 			ts = this
-			(template.deletingSection || template.settingDraft) && form.$pristine = false
 
 			# Validate and save
 			validateTemplate(template)
@@ -105,7 +101,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 				)
 				if !form.$pristine
 					template.updated_at = moment().local().format()
-					$.extend templates[geti(template.id)], template
+					templates[geti(template.id)] = template
 					slt(templates)
 
 					reports = localStorageService.get('_csr')
@@ -166,15 +162,11 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		# delete section
 		deleteSection: (template, section_id)->
 			template.sO = undefined
-
 			for field in template.fields
 				(field.o.section_id > section_id && field.o.section_id--) || field.o.section_id == section_id && field._destroy = true
-
 			template.sections.splice section_id-1, 1
 			for section in template.sections
 				section.i > section_id && section.i--
-
-			template.deletingSection = true
 			return
 
 		# reorder section up or down
@@ -280,6 +272,10 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			return
 
 		# Helper functions
+
+		# Warn if template is a draft
+		undraftFirst: ->
+			Flash.create('danger', '<h3>Error! <small>Template is drafted.</small></h3><p>Please undraft this template to use it in a report.</p>', 'customAlert')
 
 		# set draft
 		assimilate: (template, draft)->

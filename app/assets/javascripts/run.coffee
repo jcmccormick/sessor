@@ -2,7 +2,12 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$window', 'F
 ($auth, $rootScope, $location, $window, Flash, localStorageService)->
 
 	$rootScope.$on('$routeChangeStart', (evt, next, current)->
-		!$auth.user.id && !current && next.$$route.originalPath == '/' && $auth.validateUser().then((res)-> $location.path('/desktop/'))
+		console.log next
+		if !$auth.user.id && !current && (next.$$route.originalPath == '/' && next.$$route.originalPath == '/desktop')
+			$auth.validateUser().then ((res)->
+				$location.path('/desktop')
+			), (err)->
+				$location.path('/')
 	)
 
 	$rootScope.$on('$locationChangeStart', (evt, absNewUrl, absOldUrl)->
@@ -14,24 +19,27 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$window', 'F
 	# )
 
 	angular.forEach ['auth:invalid', 'auth:validation-error'], (value)->
-		$rootScope.$on(value, -> $auth.signOut() && $location.path('/') && Flash.create('danger', "Looks like there was an error validating your credentials. Please try logging in again or contact support if problems continue.", 'customAlert')
+		$rootScope.$on(value, ->
+			$auth.signOut()
+			$location.path('/')
+			Flash.create('danger', "<h3>Danger! <small>Auth</small></h3><p>Looks like there was an error validating your credentials. Please try logging in again or contact support if problems continue.</p>", 'customAlert')
 		)
 	$rootScope.$on('auth:login-success', ->
-		Flash.create('success', 'Successfully logged in.', 'customAlert')
-		$location.path('/desktop/')
+		Flash.create('success', '<h3>Success! <small>Auth</small></h3><p>Logged in.</p>', 'customAlert')
+		$location.path('/desktop')
 	)
 
 	$rootScope.$on('auth:logout-success', ->
-		Flash.create('success', 'You have logged out.', 'customAlert')
+		Flash.create('success', '<h3>Success! <small>Auth</small></h3><p>Logged out.</p>', 'customAlert')
 		$location.path('/')
 	)
 
 	$rootScope.$on('auth:account-update-success', ->
-		Flash.create('success', 'Account updated successfully.', 'customAlert')
+		Flash.create('success', '<h3>Success! <small>Auth</small></h3><p>Account updated.</p>', 'customAlert')
 	)
 
 	$rootScope.clearLocalStorage = ->
-		localStorageService.remove('_csr', '_cst')
+		localStorageService.clearAll()
 
 	$rootScope.handleSignOut = ->
 		$location.path('/sign_out')

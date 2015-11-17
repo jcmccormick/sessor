@@ -36,8 +36,7 @@
 }
 
 .navbar-top {
-    border-top-left-radius: 80px;
-	background-color: #337ab7 !important;
+	background-color: indigo;
 
 	.navbar-brand {
 		padding: 15px;
@@ -56,7 +55,7 @@
 		}
 		&:hover {
 			.icon-bar {
-				background-color: #e74c3c;
+				background-color: #eb8f5f !important;
 			}
 		}
 	}
@@ -67,7 +66,7 @@
 		}
 		&:hover {
 			.glyphicon {
-				color: #e74c3c !important;
+				color: #eb8f5f !important;
 			}
 		}
 	}

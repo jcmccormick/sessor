@@ -28,7 +28,6 @@ controllers.controller("ReportsController", ['$scope', '$routeParams', 'localSto
 			vr.report.template_order.push template.id
 			ReportsService.saveReport(vr.report, true, vr.repForm).then ((res)->
 				ReportsService.editing() && ReportsService.queryReport(repId, true).then((res)->
-					console.log res
 					$.extend vr.report, res
 					vr.report.form = vr.report.templates[vr.report.templates.length-1]
 					vr.template = vr.filteredTemplates()[0]
@@ -63,21 +62,18 @@ controllers.controller("ReportsController", ['$scope', '$routeParams', 'localSto
 				ReportsService.saveReport(vr.report, temporary, vr.repForm)
 
 			vr.deleteTemplate = ->
-				delId = parseInt(vr.report.form.id, 10)
-				index = vr.report.template_order.indexOf(delId)
+				vr.repForm.$pristine = false
+				vr.report.did = parseInt(vr.report.form.id, 10)
+				index = vr.report.template_order.indexOf(vr.report.did)
 				vr.report.template_order.splice index, 1
 				vr.report.templates.splice index, 1
-
-				vr.report.did = delId
-
-				vr.repForm.$pristine = false
 				vr.save(true).then((res)->
 					vr.report.did = undefined
 					vr.template = vr.filteredTemplates()[0]
 					vr.report.form = vr.report.templates[0]
 				)
 	else
-		vr.sortType = 'id'
+		vr.sortType = 'updated_at'
 		vr.sortReverse = true
 		vr.currentPage = 0
 		vr.pageSize = 10

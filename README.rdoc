@@ -13,6 +13,7 @@
 * Test mode! First fill-out is testing key, checks subsequent entries and scores.
 * Fields or their data sets can be shared with groups or individuals.
 * Select APA/MLA/Chicago/etc format and the page automatically loads with whatever
+* Polymorphic associations: element has template,field
 
 == BUGS
 * Saving a page w/o a section causes loss of object reference
@@ -22,7 +23,9 @@
 * Graphs by type
 * Graphs export to various formats and image
 * Color scheme for inner layout, styling for paper across all pages, javascript modify css class?
-* Lockdown by admin
-* Z-index light-up tour
+* Lockdown by admin, authenticate by ENV['admins'], attempt to run it off standard rails erb structure in /views
+* Z-index light-up tour, use cookies for this
 * Resolve root -> desktop or desktop -> root
+* Use cookie to remind users that the site uses cookies, set expiration to a year
 * For testing, ask users every 5, 10, 15, 20 mins, check route for page and store result in DB
+* Limit value creation based on values_attributes

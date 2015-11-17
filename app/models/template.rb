@@ -11,13 +11,8 @@ class Template < ActiveRecord::Base
 	# Relate to Fields.
 	has_many :fields, inverse_of: :template, dependent: :destroy
 
-	has_many :values, through: :reports
-
 	# Saving a Template saves its associated Fields.
 	accepts_nested_attributes_for :fields, allow_destroy: true
-
-	# Create a scope that assures the loading of all Template associations in a single DB call. Used as `Templates.minned`.
-	#default_scope { eager_load(:fields) }
 
 	# Titles must start with a letter and only contain letters and numbers. 
 	validates :name, presence: true

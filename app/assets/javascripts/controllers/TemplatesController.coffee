@@ -39,6 +39,8 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'localS
 
 			vt.template.deleteSection = (section)->
 				TemplatesService.deleteSection(vt.template, section.i)
+				vt.tempForm.$pristine = false
+				vt.template.deletingSection = true
 				vt.save(true)
 
 			vt.template.moveSection = (index, new_index)->
@@ -87,13 +89,15 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'localS
 			Math.ceil(vt.filteredList.length/vt.pageSize)
 
 		vt.newReport = (template, form)->
-			report = ReportsService.extendReport()
-			report.template_order.push template.id
-			ReportsService.saveReport(report, true, form)
+			if template.draft
+				TemplatesService.undraftFirst()
+			else
+				report = ReportsService.extendReport()
+				report.template_order.push template.id
+				ReportsService.saveReport(report, true, form)
 
-		vt.setDraft = (id)->
-			template = TemplatesService.extendTemplate(id)
-			template.settingDraft = true
+		vt.setDraft = (template)->
+			vt.tempForm.$pristine = false
 			TemplatesService.saveTemplate(template, true, vt.tempForm)
 
 	vt.delete = (template)->
