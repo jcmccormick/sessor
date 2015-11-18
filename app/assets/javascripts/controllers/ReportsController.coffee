@@ -80,7 +80,7 @@ controllers.controller("ReportsController", ['$scope', '$routeParams', 'localSto
 		vr.sortType = 'updated_at'
 		vr.sortReverse = true
 		vr.currentPage = 0
-		vr.pageSize = 10
+		vr.pageSize = 25
 		vr.numPages = ->
 			Math.ceil(vr.filteredList.length/vr.pageSize)
 

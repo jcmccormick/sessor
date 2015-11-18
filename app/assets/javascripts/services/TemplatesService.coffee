@@ -3,10 +3,11 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 ($interval, $location, $q, $rootScope, ClassFactory, Flash, localStorageService)->
 
 	templates = localStorageService.get('_cst')
-	slt = (templates)->
-		localStorageService.set('_cst', templates)
+	slt = (temps)->
+		localStorageService.set('_cst', temps)
 	geti = (id)->
-		$.map(templates, (x)-> x.id).indexOf(id)
+		temps = localStorageService.get('_cst')
+		$.map(temps, (x)-> x.id).indexOf(id)
 
 	validateTemplate = (template)->
 
@@ -58,6 +59,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		queryTemplate: (id, refreshing)->
 			deferred = $q.defer()
 			id = parseInt(id, 10)
+			templates = localStorageService.get('_cst')
 			if !templates[geti(id)].loadedFromDB || refreshing
 				ClassFactory.get({class: 'templates', id: id}, (res)->
 					res.loadedFromDB = true
@@ -70,7 +72,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			return deferred.promise
 
 		extendTemplate: (id)->
-			template = $.extend (templates[geti(id)] || {name: '', sections: [], fields: []}), new ClassFactory()
+			template = $.extend templates[geti(id)], new ClassFactory()
 			return template
 
 		# save/update template

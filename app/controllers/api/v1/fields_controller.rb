@@ -2,9 +2,7 @@ module Api::V1 #:nodoc:
   class FieldsController < ApiController
     
     def index
-      if params.has_key?(:stats)
-        render json: current_user.fields.where(:template_id => params[:template_id]).where.not(:fieldtype => 'labelntext').as_json(only: [:id, :name])
-      end
+      render json: current_user.fields.where(:template_id => params[:template_id]).where.not(:fieldtype => 'labelntext').as_json(only: [:id, :fieldtype, :o])
     end
 
     def show

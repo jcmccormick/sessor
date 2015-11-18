@@ -1,30 +1,49 @@
 controllers = angular.module('controllers')
-controllers.controller("StatisticsController",  ['StatisticsService', 'TemplatesService', '$scope',
-(StatisticsService, TemplatesService, $scope)->
+controllers.controller("StatisticsController",  ['localStorageService', 'StatisticsService', 'TemplatesService', '$scope',
+(localStorageService, StatisticsService, TemplatesService, $scope)->
 
 	sv = this
+	$.extend sv, StatisticsService
+	sv.templates = localStorageService.get('_cst')
+	sv.days = 5
+	sv.graph = sv.graphs[1]
+	sv.chart = {}
+	sv.chart.data = {}
+	sv.chart.view = {}
+	sv.chart.type = sv.graph.type
+	sv.chart.showTotals = true
+	sv.chart.options = {}
+	sv.chart.options.pieHole = 0
+	sv.chart.options.legend = {}
+	sv.chart.options.legend.position = 'bottom'
+	sv.chart.options.legend.alignment = 'start'
 
-	sv.templates = TemplatesService.listTemplates()
+	unbindTemplateWatch = $scope.$watch (()-> sv.orderedTemplates), (newVal, oldVal)->
+		if sv.orderedTemplates
+			sv.template = sv.orderedTemplates[0]
+			sv.checker()
+			unbindTemplateWatch()
 
-	unbindTempLoadWatch = $scope.$watch (()-> sv.templates), ((newVal, oldVal)->
-		if sv.templates.length
-			StatisticsService.init().then((res)->
-				$.extend sv, res
-				sv.graph = sv.graphs[0]
-				sv.days = 5
-				sv.filteredTemplates = ->
-					sv.templates.filter((template)->
-						template.fields.length && !template.draft
-					)
-				sv.template = sv.filteredTemplates()[0]
-				sv.filteredFields = ->
-					sv.template.fields.filter((field)->
-						'labelntext' != field.fieldtype
-					)
-				sv.field = sv.filteredFields()[0]
-				unbindTempLoadWatch()
+	unbindFieldWatch = $scope.$watch (()-> sv.filteredFields), (newVal, oldVal)->
+		if sv.filteredFields
+			sv.field = sv.filteredFields[0]
+			sv.update()
+			unbindFieldWatch()
+
+	sv.checker = ->
+		if !sv.template.fields
+			TemplatesService.queryTemplate(sv.template.id, true).then((res)->
+				$.extend sv.template, res
+				localStorageService.set('_cst', sv.templates)
 			)
-	)
+
+	sv.update = ->
+		sv.showDataCounts(sv).then((res)->
+			sv.chart = res
+		)
+
+	sv.setOptions = ->
+		sv.chart.view.columns = if !sv.chart.showTotals then sv.chart.noTotals else sv.chart.colsLen
 
 	return sv
 

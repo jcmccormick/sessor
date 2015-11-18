@@ -7,7 +7,10 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'localS
 	vt.templates = localStorageService.get('_cst')
 
 	if TemplatesService.creating() || tempId = parseInt($routeParams.templateId, 10)
-		vt.template = TemplatesService.extendTemplate(tempId)
+		vt.template = if tempId
+			TemplatesService.extendTemplate(tempId)
+		else
+			{name: '', sections: [], fields: []}
 
 		tempId && !vt.template.loadedFromDB && TemplatesService.queryTemplate(tempId, true).then((res)->
 			$.extend vt.template, res
@@ -70,7 +73,6 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'localS
 			vt.template.deleteOption = (field, option)->
 				TemplatesService.deleteOption(field, option)
 
-			vt.template.supportedFields = TemplatesService.supportedFields
 			vt.template.addFieldTypes = TemplatesService.addFieldTypes
 
 			unbindSectionsWatch = $scope.$watch (()-> vt.template.sections), ((newVal, oldVal)-> newVal != oldVal && vt.tempForm.$pristine = false), true
@@ -86,7 +88,7 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'localS
 		vt.sortType = 'updated_at'
 		vt.sortReverse = true
 		vt.currentPage = 0
-		vt.pageSize = 10
+		vt.pageSize = 25
 
 		vt.numPages = ->
 			Math.ceil(vt.filteredList.length/vt.pageSize)

@@ -1,6 +1,6 @@
 services = angular.module('services')
-services.service('StatisticsService', ['$q', 'ClassFactory',
-($q, ClassFactory)->
+services.service('StatisticsService', ['$q', 'ClassFactory', 'Flash',
+($q, ClassFactory, Flash)->
 
 	countCols = (chart)->
 		chart.colsLen = []
@@ -10,25 +10,23 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 			n++
 		chart.noTotals = angular.copy chart.colsLen
 		chart.noTotals.pop()
+		chart.view.columns = chart.colsLen
 		return
 
 	{
-
-		init: ->
+		showDataCounts: (sv)->
 			deferred = $q.defer()
-			this.setDefaults()
-			deferred.resolve(this)
+			ClassFactory.get({class: 'values_statistics', id: 'counts', field_id: sv.field.id, days: sv.days}, (res)->
+				!res.rows.length && Flash.create('danger', '<h3>Error! <small>No data</small></h3><p>There is no data for the selected field.</p>', 'customAlert')
+				sv.chart.data.cols = res.cols
+				sv.chart.data.rows = res.rows
+				countCols(sv.chart)
+				sv.chart.options.title = sv.template.name+': '+(sv.field.o.name || sv.field.o.placeholder)
+				sv.chart.options.width = Math.round($(document).width()*.95)
+				sv.chart.options.height = Math.round($(document).height()*.65)
+				deferred.resolve(sv.chart)
+			)
 			return deferred.promise
-
-		setDefaults: ->
-			this.data = {}
-			this.view = {}
-			this.options = {}
-			this.options.pieHole = 0
-			this.options.legend = {}
-			this.options.legend.position = 'bottom'
-			this.options.legend.alignment = 'start'
-			this.showTotals = true
 
 		graphs: [
 			{name:'Pie',type:'PieChart'}
@@ -38,21 +36,6 @@ services.service('StatisticsService', ['$q', 'ClassFactory',
 			{name:'Line',type:'LineChart'}
 			{name:'Table',type:'Table'}
 		]
-
-		showDataCounts: (graph)->
-			sv = this
-			ClassFactory.get({class: 'values_statistics', id: 'counts', field_id: sv.field.id, days: sv.days}, (res)->
-				sv.data.cols = res.cols
-				sv.data.rows = res.rows
-				countCols(sv)
-				sv.options.title = sv.template.name+': '+(sv.field.o.name || sv.field.o.placeholder)
-				sv.options.width = Math.round($(document).width()*.98)
-				sv.options.height = Math.round($(document).height()*.65)
-				sv.type = graph.type
-			)
-
-		setOptions: ->
-			this.view.columns = if !this.showTotals then this.noTotals else this.colsLen
 
 	}
 ])
