@@ -33,7 +33,6 @@ sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
 
 			if !templates || !reports
 				TemplatesService.listTemplates().then (res)->
-					console.log res
 					localStorageService.set('_cst', res)
 					ReportsService.listReports().then (rep)->
 						return true

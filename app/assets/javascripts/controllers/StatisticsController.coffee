@@ -25,16 +25,15 @@ controllers.controller("StatisticsController",  ['localStorageService', 'Statist
 			unbindTemplateWatch()
 
 	unbindFieldWatch = $scope.$watch (()-> sv.filteredFields), (newVal, oldVal)->
-		if sv.filteredFields
+		if sv.filteredFields && newVal != oldVal
 			sv.field = sv.filteredFields[0]
-			sv.update()
+			sv.field && sv.update()
 			unbindFieldWatch()
 
 	sv.checker = ->
 		if !sv.template.fields
 			TemplatesService.queryTemplate(sv.template.id, true).then((res)->
 				$.extend sv.template, res
-				localStorageService.set('_cst', sv.templates)
 			)
 
 	sv.update = ->

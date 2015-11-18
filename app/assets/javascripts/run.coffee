@@ -2,7 +2,6 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$window', 'F
 ($auth, $rootScope, $location, $window, Flash, localStorageService)->
 
 	$rootScope.$on('$routeChangeStart', (evt, next, current)->
-		console.log next
 		if !$auth.user.id && !current && (next.$$route.originalPath == '/' && next.$$route.originalPath == '/desktop')
 			$auth.validateUser().then ((res)->
 				$location.path('/desktop')
@@ -39,6 +38,8 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$window', 'F
 	)
 
 	$rootScope.clearLocalStorage = ->
+		console.log localStorageService.get('_cst')
+		console.log localStorageService.get('_csr')
 		localStorageService.clearAll()
 
 	$rootScope.handleSignOut = ->

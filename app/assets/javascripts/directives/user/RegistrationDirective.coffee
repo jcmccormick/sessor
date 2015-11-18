@@ -22,9 +22,9 @@ directives.directive('clerkrRegistration', ['$auth', '$location', 'Flash',
 			scope.subForg = ->
 				$auth.requestPasswordReset(scope.forgForm)
 				.success((res)->
-					Flash.create('success', '<p>'+res.message+'</p>', 'customAlert')
+					Flash.create('success', '<h3>Success! <small>Auth</small></h3><p>'+res.message+'</p>', 'customAlert')
 				).error((err)->
-					Flash.create('danger', '<p>'+err.errors+'</p>', 'customAlert')
+					Flash.create('danger', '<h3>Error! <small>Auth</small></h3><p>'+err.errors+'</p>', 'customAlert')
 				)
 
 			scope.regForm = {}
@@ -33,28 +33,28 @@ directives.directive('clerkrRegistration', ['$auth', '$location', 'Flash',
 				msg = validatePassword(scope.regForm.password, scope.regForm.password_confirmation)
 
 				if msg
-					Flash.create('danger', msg, 'customAlert')
+					Flash.create('danger', '<h3>Error! <small>Auth</small></h3><p>'+msg+'</p>', 'customAlert')
 				else
 					$auth.submitRegistration(scope.regForm)
 					.success((res)->
 						$location.path('/desktop')
-						Flash.create('success', "Account created! Welcome to Clerkr.", 'customAlert')
+						Flash.create('success', "<h3>Success! <small>Auth</small></h3><p>Account created! Welcome to Clerkr.</p>", 'customAlert')
 					).error((err)->
-						Flash.create('danger', "There was an error creating your account. The email may already be in use. Try again and contact support if errors persist.", 'customAlert')
+						Flash.create('danger', "<h3>Error! <small>Auth</small></h3><p>There was an error creating your account. The email may already be in use. Try again and contact support if errors persist.</p>", 'customAlert')
 					)
 
 			scope.subPass = ->
 				msg = validatePassword(scope.regForm.password, scope.regForm.password_confirmation)
 
 				if msg
-					Flash.create('danger', msg, 'customAlert')
+					Flash.create('danger', '<h3>Error! <small>Auth</small></h3><p>'+msg+'</p>', 'customAlert')
 				else
 					$auth.updatePassword(scope.regForm)
 					.success((res)->
-						Flash.create('success', "Your password has been updated.", 'customAlert')
+						Flash.create('success', "<h3>Success! <small>Auth</small></h3><p>Your password has been updated.</p>", 'customAlert')
 						scope.regForm = {}
 					).error((err)->
-						Flash.create('danger', '<p>'+err.errors+'</p>', 'customAlert')
+						Flash.create('danger', '<h3>Error! <small>Auth</small></h3><p>'+err.errors+'</p>', 'customAlert')
 					)
 	}
 ])

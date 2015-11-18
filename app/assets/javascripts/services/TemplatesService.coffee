@@ -10,6 +10,9 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 		$.map(temps, (x)-> x.id).indexOf(id)
 
 	validateTemplate = (template)->
+		template.errors = ''
+
+		!template.name && template.errors += '<p>Pages must have a name.</p>'
 
 		if template.fields && template.fields.length && template.fields_attributes = angular.copy template.fields
 			# fields marked destroy are removed locally, as they will
@@ -57,6 +60,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			return deferred.promise
 
 		queryTemplate: (id, refreshing)->
+			templates = localStorageService.get('_cst')
 			deferred = $q.defer()
 			id = parseInt(id, 10)
 			templates = localStorageService.get('_cst')
@@ -72,17 +76,19 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			return deferred.promise
 
 		extendTemplate: (id)->
+			templates = localStorageService.get('_cst')
 			template = $.extend templates[geti(id)], new ClassFactory()
 			return template
 
 		# save/update template
 		saveTemplate: (template, temporary, form)->
+			templates = localStorageService.get('_cst')
 			ts = this
 
 			# Validate and save
 			validateTemplate(template)
 			if !!template.errors
-				Flash.create('danger', template.errors, 'customAlert')
+				Flash.create('danger', '<h3>Error!</h3>'+template.errors, 'customAlert')
 				template.errors = ''
 				return
 			
@@ -94,10 +100,10 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 					return
 				)
 			else
-				!timedSave && timedSave = $interval (->
+				template.e && !timedSave && timedSave = $interval (->
 					template.id && !form.$pristine && ts.saveTemplate(template, true, form)
 				), 30000
-				!dereg && dereg = $rootScope.$on('$locationChangeSuccess', ()->
+				template.e && !dereg && dereg = $rootScope.$on('$locationChangeSuccess', ()->
 					$interval.cancel(timedSave)
 					dereg()
 				)
@@ -142,7 +148,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 				n: (template.newSectionName || '')
 				c: 1
 			})
-			template.sO = template.sections[index]
+			template.sO = template.sections[index-1]
 			template.newSectionName = undefined
 			return
 
@@ -182,6 +188,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 		# add field
 		addField: (template, section_id, column_id, type)->
+
 			field = new ClassFactory()
 			field.fieldtype = type.name
 			field.o = {}
@@ -196,9 +203,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			!template.newFieldName && !template.newFieldPlaceholder && !template.newFieldDefaultValue && field.o.name = 'Untitled '+type.value
 			field.o.glyphicon = type.glyphicon
 			field.template_id = template.id
-			field.$save({class: 'fields'}, (res)->
-				$rootScope.$broadcast('cleartemplates')
-			)
+			field.$save({class: 'fields'})
 			template.newFieldName = undefined
 			template.newFieldPlaceholder = undefined
 			template.newFieldDefaultValue = undefined

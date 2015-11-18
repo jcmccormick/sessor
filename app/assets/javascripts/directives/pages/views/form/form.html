@@ -16,7 +16,7 @@
 
 			<h2 ng-class="{'no-highlight':!form.e,'force-hover':form.sO==section,'field-hover':form.sO.section_id == section.i}" scroll-to=".force-hover" template="form">
 				{{(!form.e && section.n) || null}}
-				<input type="text" id="form-name" class="form-control imod" placeholder="Section name or blank" ng-if="form.e" ng-model="section.n" ng-click="form.sO=section" />
+				<input type="text" id="section-{{section.i}}-name" class="form-control imod" placeholder="Section name or blank" ng-if="form.e" ng-model="section.n" ng-click="form.sO=section" />
 			</h2>
 
 			<div class="section-layout" ng-if="form.e">
@@ -62,6 +62,14 @@
 					</div>
 				</div>
 			</div>
+		</div>
+
+		<div class="text-center col-xs-12 col-md-6 col-md-offset-3" ng-if="form.e && ((form.fields && form.fields.length) || 0) < 20">
+			<h1>&nbsp;</h1>
+			<h3>
+				<input type="text" class="form-control imod" placeholder="New section name or blank" ng-model="form.newSectionName" />
+				<a href="javascript:;" ng-click="form.addSection(form)" scroll-to=".force-hover" template="form"><div class="paper"><i class="glyphicon glyphicon-plus"></i> Add Section</div></a>
+			</h3>
 		</div>
 
 	</div>

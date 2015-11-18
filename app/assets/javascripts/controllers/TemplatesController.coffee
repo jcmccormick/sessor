@@ -53,6 +53,7 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'localS
 				TemplatesService.moveSection(vt.template, index, new_index)
 
 			vt.template.addField = (section_id, column_id, type)->
+				vt.save(true)
 				TemplatesService.addField(vt.template, section_id, column_id, type)
 
 			vt.template.deleteField = (field)->

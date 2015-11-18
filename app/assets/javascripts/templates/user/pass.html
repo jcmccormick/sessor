@@ -1,14 +1,13 @@
-<div ng-form="passForm">
-	<page-menu>
-		<li class="dropdown">
-			<a href="#/pass_reset" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Password <b class="caret"></b></a>
-			<ul class="dropdown-menu">
+<clerkr-registration ng-form="passForm">
+	<div class="form-header" ng-class="{'dropped':vt.formSpeccing}">
+		<section>
+			<ul class="nav top-nav">
 				<li><a href="javascript:;" ng-click="subPass()" ng-class="{'disabled':!passForm.$valid}"><i class="glyphicon glyphicon-save"></i> &nbsp; Update Password</a></li>
 			</ul>
-		</li>
-	</page-menu>
+		</section>
+	</div>
 	<div class="paper row">
-		<clerkr-registration class="col-xs-12 col-md-6 col-md-offset-3">
+		<section class="col-xs-12 col-md-6 col-md-offset-3">
 			<h2>Password <small>Please follow the guidelines below</small></h2>
 			<div class="form-group">
 				<input type="password" class="form-control imod" name="password" ng-model="regForm.password" required="required">
@@ -24,6 +23,6 @@
 			<div class="form-group">
 				<input type="password" class="form-control imod" name="password_confirmation" ng-model="regForm.password_confirmation" required="required">
 			</div>
-		</clerkr-registration>
+		</section>
 	</div>
-</div>
+</clerkr-registration>
