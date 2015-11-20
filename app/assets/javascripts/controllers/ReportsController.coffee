@@ -76,6 +76,15 @@ controllers.controller("ReportsController", ['$scope', '$routeParams', 'localSto
 					vr.template = vr.filteredTemplates()[0]
 					vr.report.form = vr.report.templates[0]
 				)
+
+		$(->
+			$('.form-header').css('min-height': (50+$('.form-specs').height())+'px')
+			$('.form-specs').on 'shown.bs.collapse', ->
+				$('.form-header').css('min-height': (50+$(this).height())+'px')
+		)
+		vr.checkSpec = ->
+			$('.form-specs').hasClass('in') && $('.form-header').css('min-height': '50px')
+			return true
 	else
 		vr.sortType = 'updated_at'
 		vr.sortReverse = true
@@ -86,8 +95,6 @@ controllers.controller("ReportsController", ['$scope', '$routeParams', 'localSto
 
 	vr.delete = (report)->
 		ReportsService.deleteReport(report)
-
-
 
 	return vr
 

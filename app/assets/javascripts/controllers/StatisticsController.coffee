@@ -44,6 +44,15 @@ controllers.controller("StatisticsController",  ['localStorageService', 'Statist
 	sv.setOptions = ->
 		sv.chart.view.columns = if !sv.chart.showTotals then sv.chart.noTotals else sv.chart.colsLen
 
+	$(->
+		$('.form-header').css('min-height': (50+$('.form-specs').height())+'px')
+		$('.form-specs').on 'shown.bs.collapse', ->
+			$('.form-header').css('min-height': (50+$(this).height())+'px')
+	)
+	sv.checkSpec = ->
+		$('.form-specs').hasClass('in') && $('.form-header').css('min-height': '50px')
+		return true
+
 	return sv
 
 ])

@@ -1,7 +1,7 @@
 <draggable-options field="form.sO" form="form" class="field-options" ng-if="form.e && form.poppedOut && form.sO.o"></draggable-options>
 <div class="fluid-container" ng-form="myForm">
 
-	<div class="col-xs-12" ng-class="{'col-md-6 col-md-offset-3':gridWidth()==1,'col-md-10 col-md-offset-1':gridWidth()==2}">
+	<div class="col-xs-12" ng-if="form.sections" ng-class="{'col-md-6 col-md-offset-3':gridWidth()==1,'col-md-10 col-md-offset-1':gridWidth()==2}">
 		<div class="paper clearfix" ng-show="form.id && form.sections" ng-class="{'paper-color':!form.e}">
 			<small class="col-xs-12">
 				<span ng-if="report && !report.e">{{report.title}}</span>

@@ -3,7 +3,7 @@
 		<section>
 			<ul class="nav top-nav">
 				<li class="form-specs-toggle" ng-if="!vt.template.id || vt.template.e">
-					<a href="javascript:;" data-toggle="collapse" data-target=".form-specs" aria-expanded="true">
+					<a href="javascript:;" ng-click="vt.checkSpec()" data-toggle="collapse" data-target=".form-specs" aria-expanded="true">
 						<i class="glyphicon glyphicon-cog pull-right"></i>
 					</a>
 				</li>
@@ -48,37 +48,35 @@
 			</ul>
 
 			<fieldset>
-				<div class="form-specs collapse" ng-class="{'in':!vt.template.id || vt.template.e}">
-					<div class="container-fluid">
-						<div class="col-xs-12" ng-if="!vt.template.id">
-							<p>Add a name, then press Enter</p>
-						</div>
+				<div class="form-specs container-fluid collapse" ng-class="{'in':!vt.template.id || vt.template.e}">
+					<div class="col-xs-12" ng-if="!vt.template.id">
+						<p>Add a name, then press Enter</p>
+					</div>
+					<div class="col-xs-6 col-md-3">
+						<label for="form-name">Page Name</label>
+						<input type="text" id="form-name" class="form-control" placeholder="Required" ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save(true)" />
+					</div>
+					<div ng-if="vt.template.e">
 						<div class="col-xs-6 col-md-3">
-							<label for="form-name">Page Name</label>
-							<input type="text" id="form-name" class="form-control" placeholder="Required" ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save(true)" />
-						</div>
-						<div ng-if="vt.template.e">
-							<div class="col-xs-6 col-md-3">
-								<label for="new-section-name">New Section Name</label>
-								<div class="input-group">
-									<input type="text" id="new-section-name" class="form-control" placeholder="Optional" ng-model="vt.template.newSectionName" />
-									<span class="input-group-btn">
-										<a href="javascript:;" class="btn btn-default" ng-click="vt.template.addSection(vt.template.newSectionName)" scroll-to=".force-hover" template="form">Add</a>
-									</span>
-								</div>
-							</div>
-							<div class="col-xs-6 col-md-3 col-lg-1">
-								<label>Draft</label>
-								<span class="btn-group btn-group-justified">
-									<a href="javascript:;" class="btn btn-primary" ng-if="vt.template.draft" ng-click="vt.template.draft = false">On</a>
-									<a href="javascript:;" class="btn btn-default" ng-if="!vt.template.draft" ng-click="vt.template.draft = true">Off</a>
+							<label for="new-section-name">New Section Name</label>
+							<div class="input-group">
+								<input type="text" id="new-section-name" class="form-control" placeholder="Optional" ng-model="vt.template.newSectionName" />
+								<span class="input-group-btn">
+									<a href="javascript:;" class="btn btn-default" ng-click="vt.template.addSection(vt.template.newSectionName)" scroll-to=".force-hover" template="form">Add</a>
 								</span>
 							</div>
-							<div class="col-xs-6 col-md-3 col-lg-1">
-								<div class="input-group">
-									<label>Fields</label>
-									<p>{{vt.template.fields.length || 0}} / 20</p>
-								</div>
+						</div>
+						<div class="col-xs-6 col-md-3 col-lg-1">
+							<label>Draft</label>
+							<span class="btn-group btn-group-justified">
+								<a href="javascript:;" class="btn btn-primary" ng-if="vt.template.draft" ng-click="vt.template.draft = false">On</a>
+								<a href="javascript:;" class="btn btn-default" ng-if="!vt.template.draft" ng-click="vt.template.draft = true">Off</a>
+							</span>
+						</div>
+						<div class="col-xs-6 col-md-3 col-lg-1">
+							<div class="input-group">
+								<label>Fields</label>
+								<p>{{vt.template.fields.length || 0}} / 20</p>
 							</div>
 						</div>
 					</div>

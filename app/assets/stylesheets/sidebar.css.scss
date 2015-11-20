@@ -130,6 +130,14 @@
 /*
  * Loading Rotate
  */
+.loading,
+loading {
+	i {
+		-moz-animation:.6s rotateRight infinite linear; 
+		-webkit-animation:.6s rotateRight infinite linear; 
+
+	}
+}
 loading {
 
 	div {
@@ -146,12 +154,6 @@ loading {
 			padding: 5px;
 			background-color: #FAEBCC;
 			border: 1px solid #8A6D3B;
-
-			i {
-				-moz-animation:.6s rotateRight infinite linear; 
-				-webkit-animation:.6s rotateRight infinite linear; 
-
-			}
 		}
 	}
 }

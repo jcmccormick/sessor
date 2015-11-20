@@ -1,8 +1,10 @@
 <div class="form-header">
 	<section>
 		<ul class="nav top-nav">
-			<li class="form-specs-toggle pull-right" ng-if="sv.chart.data.rows.length && sv.chart.data.cols.length">
-				<a href="javascript:;" data-toggle="collapse" data-target=".form-specs" aria-expanded="true"><i class="glyphicon glyphicon-cog pull-right"></i></a>
+			<li class="form-specs-toggle" ng-if="sv.chart.data.rows.length && sv.chart.data.cols.length">
+				<a href="javascript:;" ng-click="sv.checkSpec()" data-toggle="collapse" data-target=".form-specs" aria-expanded="true">
+					<i class="glyphicon glyphicon-cog pull-right"></i>
+				</a>
 			</li>
 			<li><h5><p>Type</p></h5></li>
 			<li><select class="form-control" ng-model="sv.graph" ng-options="graph.name for graph in sv.graphs" ng-change="sv.chart.type = sv.graph.type"></select></li>
@@ -17,8 +19,8 @@
 			<li><a href="javascript:;" ng-if="sv.chart.data.rows.length && sv.chart.type != 'Table'" ng-click="sv.chart.data.rows.reverse()">Reverse</a></li>
 		</ul>
 
-		<div class="form-specs collapse in">
-			<div class="container-fluid">
+		<fieldset>
+			<div class="form-specs container-fluid collapse in">
 				<div ng-if="sv.chart.data.rows.length && sv.chart.data.cols.length">
 					<div class="col-xs-3 col-md-1">
 						<label for="graph-width">Width</label>
@@ -72,10 +74,12 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</fieldset>
 	</section>
 </div>
-
-<div class="col-xs-12" ng-if="sv.chart.data.rows.length && sv.chart.data.cols.length">
-	<div class="paper paper-color" google-chart chart="sv.chart"></div>
+<div class="col-xs-12 text-center" ng-if="sv.chart.data.rows.length && sv.chart.data.cols.length">
+	<section class="paper paper-color">
+		<span class="loading h4" ng-if="!sv.chart.displayed">Initializing chart... <i class="glyphicon glyphicon-refresh"></i></span>
+		<article google-chart chart="sv.chart"></article>
+	</section>
 </div>

@@ -63,7 +63,6 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			templates = localStorageService.get('_cst')
 			deferred = $q.defer()
 			id = parseInt(id, 10)
-			templates = localStorageService.get('_cst')
 			if !templates[geti(id)].loadedFromDB || refreshing
 				ClassFactory.get({class: 'templates', id: id}, (res)->
 					res.loadedFromDB = true
@@ -282,7 +281,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 		# Warn if template is a draft
 		undraftFirst: ->
-			Flash.create('danger', '<h3>Error! <small>Template is drafted.</small></h3><p>Please undraft this template to use it in a report.</p>', 'customAlert')
+			Flash.create('danger', '<h3>Error! <small>Template</small></h3><p>Please undraft this template to use it in a report.</p>', 'customAlert')
 
 		# set draft
 		assimilate: (template, draft)->
