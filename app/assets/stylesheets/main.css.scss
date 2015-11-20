@@ -96,15 +96,18 @@ blockquote {
 .btn-link {
 	color: #337ab7 !important;
 }
+.btn .glyphicon.glyphicon-trash {
+	color: red !important;
+}
 .table th a,
 .btn-link,
 .btn .glyphicon {
-	color: #eb8f5f !important;
+	color: #337ab7 !important;
 	text-decoration: none !important;
 }
 .btn-group {
 	.switch-on {
-		color: #eb8f5f;
+		color: #337ab7;
 		font-weight: bold;
 	}
 	:not(.switch-on) {
@@ -126,7 +129,6 @@ blockquote {
 .google-visualization-table-td-number {
 	text-align: left !important;
 }
-
 @media (min-width: 768px) {
 	.modal {
 		text-align: center;
@@ -189,9 +191,7 @@ blockquote {
  */
 
 .paper {
-	margin: 0 0 20px 0 !important;
 	padding: 15px 0;
-	background-color: white;
 
 	h1 {
 		word-wrap: break-word;
@@ -199,7 +199,12 @@ blockquote {
 
 	@include respond(tablet) {
 		padding: 45px;
+		margin: 45px;
 	}
+}
+.paper-color {
+	background-color: white;
+	box-shadow: 5px 5px 5px 5px #aaa;
 }
 .gridline-workspace {
 	position: absolute;
@@ -213,17 +218,14 @@ blockquote {
 /* 
  * Template and Field Display
  */
-.form-header {
+
+.form-header,
+.form-header section fieldset {
 	-moz-transition: min-height .5s ease;
 	transition: min-height .5s ease;
+}
+.form-header {
 	min-height: 50px;
-
-	&.dropped {
-		min-height: 185px;
-		@include respond(desktop) {
-			min-height: 125px;
-		}
-	}
 
 	section {
 		top: 0;
@@ -243,7 +245,8 @@ blockquote {
 		}
 
 		label,
-		a:not(.btn-default), p {
+		a:not(.btn-default),
+		p {
 			color: white;
 		}
 
@@ -282,16 +285,18 @@ blockquote {
 			&.force-hover,
 			&.field-hover {
 				&:before {
-					color: #eb8f5f;
+					color: #337ab7;
 				}
 			}
 		}
-
+	}
+	.column {
+		background-color: white;
 	}
 	.section-layout,
 	.add-field-slide {
 		background-color: #eee;
-		overflow: hidden;
+		display: inline-table;
 	}
 	.section-layout {
 		padding: 8px 0;
@@ -299,8 +304,9 @@ blockquote {
 		border-bottom: 5px solid #ddd;
 	}
 	.add-field-slide {
+		margin: 15px -15px 0;
+		padding: 4px 0 12px;
 		border-top: 5px solid #ddd;
-		margin: 0 -15px;
 
 		a,
 		input {
@@ -310,39 +316,19 @@ blockquote {
 		.field-types {
 			display: flex;
 			flex-wrap: wrap;
-
 			a {
 				text-align: left;
-				min-width: 33%;
+				min-width: 50%;
 				padding-left: 0;
 			}
 		}
 	}
-	.column {
-		background-color: white;
-	}
+}
 
-	@include respond(desktop) {
-		.section-layout,
-		.add-field-slide {
-			max-height: 0;
-		}
-		.add-field-slide {
-			border-top: 0;
-		}
-	}
-
-	&.stay-open {
-		.section-layout,
-		.add-field-slide {
-			max-height: 355px;
-		}
-		.add-field-slide {
-			margin-top: 15px;
-			padding: 4px 0 12px;
-			border-top: 5px solid #ddd;
-		}
-	}
+.add-section {
+	background-color: white;
+	padding: 50px;
+	margin-bottom: 30px;
 }
 
 .field-options {
@@ -352,7 +338,7 @@ blockquote {
 
 	&.ui-draggable {
 		position: fixed !important;
-		opacity: .2;
+		opacity: .3;
 		padding: 0;
 		z-index: 1040;
 		width: 32.3%;
@@ -518,7 +504,7 @@ template-field-directive {
 			&:hover,
 			&.force-hover {
 				background-color: rgba(255,255,255,.5);
-				outline: 2px solid #e74c3c;
+				outline: 2px solid #337ab7;
 				width: inherit;
 				height: inherit;
 				top: -5px;
@@ -526,7 +512,7 @@ template-field-directive {
 				right: -5px;
 				bottom: -5px;
 				i {
-					color: #eb8f5f;
+					color: #337ab7;
 				}
 			}
 		}

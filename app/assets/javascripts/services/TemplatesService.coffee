@@ -137,7 +137,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 				slt(templates)
 				$location.path("/templates")
 			), (err)->
-				Flash.create('danger', '<p>'+err.data.errors+'</p>', 'customAlert')
+				Flash.create('danger', '<h3>Error! <small>Page</small></h3><p>'+err.data.errors+'</p>', 'customAlert')
 			)
 			return
 
@@ -162,7 +162,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 			for field in template.fields
 				field.o.section_id == section.i && field.o.column_id == section.c && prevent = true
 			if prevent 
-				Flash.create('danger', '<p>Please move any fields out of the last column.</p>', 'customAlert')
+				Flash.create('danger', '<h3>Error! <small>Column</small></h3><p>Please move any fields out of the last column.</p>', 'customAlert')
 			else
 				section.c--
 			return
@@ -188,7 +188,6 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 		# add field
 		addField: (template, section_id, column_id, type)->
-
 			field = new ClassFactory()
 			field.fieldtype = type.name
 			field.o = {}
@@ -211,6 +210,7 @@ services.service('TemplatesService', ['$interval', '$location', '$q', '$rootScop
 
 		# delete field
 		deleteField: (template, field)->
+			$.extend field, new ClassFactory()
 			template.sO = undefined
 			field.$delete({class: 'fields', id: field.id}, ((res)->
 				index = $.map(template.fields, (x)-> x.id).indexOf(field.id)

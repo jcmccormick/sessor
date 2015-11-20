@@ -14,6 +14,11 @@ directives.directive('templateFormDirective',[()->
 			$scope.setBreadcrumb = (template)->
 				$scope.form = template
 
+			$scope.gridWidth = ->
+				section_columns = ($.map $scope.form.sections, (x)-> x.c)
+				max = Math.max.apply(Math, section_columns)
+				return parseInt(max, 10)
+
 		]
 	}
 ])

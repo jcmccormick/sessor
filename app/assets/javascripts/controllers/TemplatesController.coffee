@@ -22,7 +22,7 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'localS
 		if vt.template.e = TemplatesService.editing()
 
 			$(document).bind 'keydown', (e)->
-				if e.ctrlKey && (e.which == 83)
+				if vt.template && e.ctrlKey && (e.which == 83)
 					e.preventDefault()
 					vt.save(true)
 					return false
@@ -30,8 +30,6 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'localS
 			$scope.$on('$locationChangeStart', (event)->
 				if !vt.tempForm.$pristine && !confirm('There are unsaved changes. Press cancel to return to the form.')
 					event.preventDefault()
-				else
-					vt.template = undefined
 			)
 
 			vt.template.addSection = ->

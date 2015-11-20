@@ -22,8 +22,8 @@ services.service('StatisticsService', ['$q', 'ClassFactory', 'Flash',
 				sv.chart.data.rows = res.rows
 				countCols(sv.chart)
 				sv.chart.options.title = sv.template.name+': '+(sv.field.o.name || sv.field.o.placeholder)
-				sv.chart.options.width = Math.round($(document).width()*.95)
-				sv.chart.options.height = Math.round($(document).height()*.65)
+				sv.chart.options.width = Math.round($(document).width()*.85)
+				sv.chart.options.height = Math.round($(document).height()*.6)
 				deferred.resolve(sv.chart)
 			)
 			return deferred.promise
