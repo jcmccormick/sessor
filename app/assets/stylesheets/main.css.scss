@@ -93,16 +93,13 @@ blockquote {
 	-webkit-box-shadow: none!important;
 	box-shadow: none!important;
 }
-.btn-link {
-	color: #337ab7 !important;
-}
 .btn .glyphicon.glyphicon-trash {
 	color: red !important;
 }
 .table th a,
 .btn-link,
 .btn .glyphicon {
-	color: #337ab7 !important;
+	color: forestgreen !important;
 	text-decoration: none !important;
 }
 .btn-group {
@@ -204,7 +201,7 @@ blockquote {
 }
 .paper-color {
 	background-color: white;
-	box-shadow: 5px 5px 5px 5px #aaa;
+	box-shadow: 10px 10px 1px 0px #aaa;
 }
 .gridline-workspace {
 	position: absolute;
@@ -227,9 +224,13 @@ blockquote {
 .form-header {
 	min-height: 50px;
 
+	p {
+		margin: 14px;
+	}
+
 	section {
 		top: 0;
-		z-index: 1;
+		z-index: 3;
 		background-color: darkgreen;
 		width: 100%;
 
@@ -291,6 +292,7 @@ blockquote {
 		}
 	}
 	.column {
+		display: inline-table;
 		background-color: white;
 	}
 	.section-layout,
@@ -304,7 +306,8 @@ blockquote {
 		border-bottom: 5px solid #ddd;
 	}
 	.add-field-slide {
-		margin: 15px -15px 0;
+		width: 100%;
+		margin: 15px 0 0;
 		padding: 4px 0 12px;
 		border-top: 5px solid #ddd;
 

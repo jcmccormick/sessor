@@ -84,14 +84,14 @@ controllers.controller('TemplatesController', ['$routeParams', '$scope', 'localS
 				unbindDraftWatch()
 			)
 
-		$(->
-			$('.form-header').css('min-height': (50+$('.form-specs').height())+'px')
-			$('.form-specs').on 'shown.bs.collapse', ->
-				$('.form-header').css('min-height': (50+$(this).height())+'px')
-		)
-		vt.checkSpec = ->
-			$('.form-specs').hasClass('in') && $('.form-header').css('min-height': '50px')
-			return true
+			$(->
+				$('.form-header').css('min-height': (50+$('.form-specs').height())+'px')
+				$('.form-specs').on 'shown.bs.collapse', ->
+					$('.form-header').css('min-height': (50+$(this).height())+'px')
+			)
+			vt.checkSpec = ->
+				$('.form-specs').hasClass('in') && $('.form-header').css('min-height': '50px')
+				return true
 	else
 		vt.sortType = 'updated_at'
 		vt.sortReverse = true

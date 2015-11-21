@@ -16,7 +16,7 @@
 	a:not(.btn-default) {
 		color: white;
 		&:hover {
-			color: #337ab7 !important;
+			color: rgb(100, 200, 250) !important;
 		}
 		&:hover:not(.btn),
 		&:focus {
@@ -55,18 +55,7 @@
 		}
 		&:hover {
 			.icon-bar {
-				background-color: #337ab7 !important;
-			}
-		}
-	}
-
-	.user-menu {
-		.glyphicon {
-			color: white !important;
-		}
-		&:hover {
-			.glyphicon {
-				color: #337ab7 !important;
+				background-color: rgb(100, 200, 250) !important;
 			}
 		}
 	}
