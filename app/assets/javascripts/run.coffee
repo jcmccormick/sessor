@@ -13,9 +13,9 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$window', 'F
 		~absOldUrl.indexOf('reset_password=true') && $location.path('/pass_reset')
 	)
 	
-	# $rootScope.$on('$routeChangeSuccess', ->
-	# 	$window.ga('send', 'pageview', { page: $location.url() })
-	# )
+	$rootScope.$on('$routeChangeSuccess', ->
+		$window.ga('send', 'pageview', { page: $location.url() })
+	)
 
 	angular.forEach ['auth:invalid', 'auth:validation-error'], (value)->
 		$rootScope.$on(value, ->
