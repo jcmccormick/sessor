@@ -223,11 +223,6 @@ blockquote {
 }
 .form-header {
 	min-height: 50px;
-
-	p {
-		margin: 14px;
-	}
-
 	section {
 		top: 0;
 		z-index: 3;
@@ -238,24 +233,14 @@ blockquote {
 			padding: 0 20px;
 		}
 
-		.glyphicon-cog {
-			padding-right: 5px;
-			@include respond(tablet) {
-				padding-right: 0;
-			}
+		p {
+			margin: 10px 0;
 		}
 
 		label,
 		a:not(.btn-default),
 		p {
 			color: white;
-		}
-
-		input,
-		select,
-		.btn-group,
-		.btn {
-			margin-top: 2px;
 		}
 
 		.col-xs-12,

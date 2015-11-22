@@ -25,9 +25,10 @@ controllers.controller("ReportsController", ['$scope', '$routeParams', 'localSto
 
 		vr.addTemplate = (template)->
 			vr.repForm.$pristine = false
+			!vr.report.id && skipRefresh = true
 			vr.report.template_order.push template.id
 			ReportsService.saveReport(vr.report, true, vr.repForm).then ((res)->
-				ReportsService.editing() && ReportsService.queryReport(repId, true).then((res)->
+				!skipRefresh && ReportsService.queryReport(repId, true).then((res)->
 					$.extend vr.report, res
 					vr.report.form = vr.report.templates[vr.report.templates.length-1]
 					vr.template = vr.filteredTemplates()[0]
