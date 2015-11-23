@@ -2,6 +2,9 @@ controllers = angular.module('controllers')
 controllers.controller('UsersController', ['$scope', '$auth', '$location', 'Flash',
 ($scope, $auth, $location, Flash)->
 	
+	$scope.$on 'auth:logout-success', ->
+		console.log 'what'
+
 	$scope.handleRegBtnClick = ->
 		str = $scope.regForm.password
 		if str.length < 8

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151103064323) do
+ActiveRecord::Schema.define(version: 20151123185436) do
 
   create_table "admins_reports", id: false, force: :cascade do |t|
     t.integer "admin_id",  limit: 4
@@ -28,6 +28,16 @@ ActiveRecord::Schema.define(version: 20151103064323) do
 
   add_index "admins_templates", ["admin_id"], name: "index_admins_templates_on_admin_id", using: :btree
   add_index "admins_templates", ["template_id"], name: "index_admins_templates_on_template_id", using: :btree
+
+  create_table "authorizations", force: :cascade do |t|
+    t.string   "provider",   limit: 255
+    t.string   "uid",        limit: 255
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "token",      limit: 255
+    t.string   "secret",     limit: 255
+  end
 
   create_table "contacts", force: :cascade do |t|
     t.string   "email",      limit: 255

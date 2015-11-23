@@ -1,6 +1,6 @@
 controllers = angular.module('controllers')
-controllers.controller("StatisticsController",  ['localStorageService', 'StatisticsService', 'TemplatesService', '$scope',
-(localStorageService, StatisticsService, TemplatesService, $scope)->
+controllers.controller("StatisticsController",	['googleChartApiPromise', 'localStorageService', 'StatisticsService', 'TemplatesService', '$scope',
+(googleChartApiPromise, localStorageService, StatisticsService, TemplatesService, $scope)->
 
 	sv = this
 	$.extend sv, StatisticsService
@@ -11,12 +11,6 @@ controllers.controller("StatisticsController",  ['localStorageService', 'Statist
 	sv.chart.data = {}
 	sv.chart.view = {}
 	sv.chart.type = sv.graph.type
-	sv.chart.showTotals = true
-	sv.chart.options = {}
-	sv.chart.options.pieHole = 0
-	sv.chart.options.legend = {}
-	sv.chart.options.legend.position = 'bottom'
-	sv.chart.options.legend.alignment = 'start'
 
 	unbindTemplateWatch = $scope.$watch (()-> sv.orderedTemplates), (newVal, oldVal)->
 		if sv.orderedTemplates
@@ -37,12 +31,8 @@ controllers.controller("StatisticsController",  ['localStorageService', 'Statist
 			)
 
 	sv.update = ->
-		sv.showDataCounts(sv).then((res)->
-			sv.chart = res
-		)
-
-	sv.setOptions = ->
-		sv.chart.view.columns = if !sv.chart.showTotals then sv.chart.noTotals else sv.chart.colsLen
+		sv.chartEditor && sv.chartEditor.closeDialog()
+		sv.showDataCounts(sv)
 
 	$(->
 		$('.form-header').css('min-height': (50+$('.form-specs').height())+'px')
@@ -52,7 +42,6 @@ controllers.controller("StatisticsController",  ['localStorageService', 'Statist
 	sv.checkSpec = ->
 		$('.form-specs').hasClass('in') && $('.form-header').css('min-height': '50px')
 		return true
-
 	return sv
 
 ])

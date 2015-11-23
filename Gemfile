@@ -14,6 +14,7 @@ gem 'bower-rails'
 gem 'angular-rails-templates'
 gem "foreman"
 gem 'devise_token_auth'
+gem 'omniauth-google-oauth2'
 gem 'bcrypt', '~> 3.1.10'
 gem 'kaminari'
 gem 'figaro'

@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   root 'home#index' 
 
-  mount_devise_token_auth_for 'User', at: 'auth', skip: [:omniauth_callbacks]
-  
+  mount_devise_token_auth_for 'User', at: 'auth'
+  get '/auth/:provider/callback', :to => 'sessions#create'
   resources :newsletters, only: :create
   resources :contacts, only: :create
 

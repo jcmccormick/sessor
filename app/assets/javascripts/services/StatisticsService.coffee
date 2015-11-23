@@ -1,30 +1,39 @@
 services = angular.module('services')
-services.service('StatisticsService', ['$q', 'ClassFactory', 'Flash',
-($q, ClassFactory, Flash)->
-
-	countCols = (chart)->
-		chart.colsLen = []
-		n = 0
-		while n < chart.data.cols.length
-			chart.colsLen.push n
-			n++
-		chart.noTotals = angular.copy chart.colsLen
-		chart.noTotals.pop()
-		chart.view.columns = chart.colsLen
-		return
+services.service('StatisticsService', ['$q', 'ClassFactory', 'Flash', 'googleChartApiPromise',
+($q, ClassFactory, Flash, googleChartApiPromise)->
 
 	{
 		showDataCounts: (sv)->
+			ids = $.map sv.template.fields, (x)-> x.id
 			deferred = $q.defer()
-			ClassFactory.get({class: 'values_statistics', id: 'counts', field_id: sv.field.id, days: sv.days}, (res)->
+			ClassFactory.get({class: 'values_statistics', id: 'counts', field_id: sv.field.id, days: sv.days, field_ids: ids}, (res)->
 				!res.rows.length && Flash.create('danger', '<h3>Error! <small>No data</small></h3><p>There is no data for the selected field.</p>', 'customAlert')
 				sv.chart.data.cols = res.cols
 				sv.chart.data.rows = res.rows
-				countCols(sv.chart)
-				sv.chart.options.title = sv.template.name+': '+(sv.field.o.name || sv.field.o.placeholder)
-				sv.chart.options.width = Math.round($(document).width()*.85)
-				sv.chart.options.height = Math.round($(document).height()*.6)
-				deferred.resolve(sv.chart)
+				#sv.chart.options.title = sv.template.name+': '+(sv.field.o.name || sv.field.o.placeholder)
+				if !sv.chart.displayed
+					googleChartApiPromise.then ->
+						chartEditor = undefined
+
+						sv.loadEditor = ->
+							wrapper = new google.visualization.ChartWrapper({
+								dataTable: sv.chart.data,
+								containerId: document.getElementById('google-chart')
+							})
+
+							sv.chartEditor = new google.visualization.ChartEditor()
+							google.visualization.events.addListener(sv.chartEditor, 'ok', redrawChart)
+							sv.chartEditor.openDialog(wrapper, {})
+
+						redrawChart = ->
+							sv.chartEditor.getChartWrapper().draw(document.getElementById('google-chart'))
+
+						sv.chart.displayed = true
+						sv.loadEditor()
+						deferred.resolve()
+				else
+					sv.loadEditor()
+					deferred.resolve()
 			)
 			return deferred.promise
 

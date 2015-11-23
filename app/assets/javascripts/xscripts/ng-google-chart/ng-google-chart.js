@@ -14,7 +14,7 @@
         .value('googleChartApiConfig', {
             version: '1',
             optionalSettings: {
-                packages: ['corechart']
+                packages: ['corechart','charteditor']
             }
         })
 
@@ -186,8 +186,18 @@
                                     };
 
                                     $scope.chartWrapper = new google.visualization.ChartWrapper(chartWrapperArgs);
+                                    $scope.chartEditor = new google.visualization.ChartEditor();
+
+                                    google.visualization.events.addListener($scope.chartEditor, 'ok', function () {
+                                        $scope.chartEditor.getChartWrapper().draw($elm[0]);
+                                        draw.tiggered = false;
+                                        draw();
+                                    });
                                     google.visualization.events.addListener($scope.chartWrapper, 'ready', function () {
                                         $scope.chart.displayed = true;
+                                        $scope.chart.editChart = function(){
+                                            $scope.chartEditor.openDialog($scope.chartWrapper, {});
+                                        }
                                         $scope.$apply(function (scope) {
                                             scope.onReady({ chartWrapper: scope.chartWrapper });
                                         });
@@ -210,6 +220,7 @@
                                     });
                                 }
                                 else {
+                                    $scope.chart.setWiHi();
                                     $scope.chartWrapper.setChartType($scope.chart.type);
                                     $scope.chartWrapper.setDataTable($scope.chart.data);
                                     $scope.chartWrapper.setView($scope.chart.view);
