@@ -27,6 +27,7 @@ group :production, :staging do
   gem "rails_stdout_logging"
   gem "rails_serve_static_assets"
   gem 'heroku-deflater'
+  gem 'memcachier'
 end
 group :development, :test do
   gem 'mysql2', '~> 0.3.18'
