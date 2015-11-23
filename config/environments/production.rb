@@ -34,7 +34,7 @@ Rails.application.configure do
   # Asset digests allow you to set far-future HTTP expiration dates on all assets,
   # yet still be able to expire them through the digest params.
   config.assets.digest = true
-  
+
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Specifies the header that your server uses for sending files.
@@ -55,7 +55,7 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
   # Use a different cache store in production.
-  client = Dalli::Client.new((ENV["MEMCACHIER_SERVERS"] || "").split(","),
+  client = Dalli::Client.new('mc2.dev.ec2.memcachier.com:11211',
                              :username => ENV["MEMCACHIER_USERNAME"],
                              :password => ENV["MEMCACHIER_PASSWORD"],
                              :failover => true,
