@@ -21,6 +21,7 @@ gem 'figaro'
 gem 'momentjs-rails'
 gem 'rack-cache'
 gem 'dalli'
+gem 'activerecord-session_store'
 group :production, :staging do
   gem 'pg'
   gem "rails_12factor"
