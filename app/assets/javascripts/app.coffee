@@ -43,7 +43,11 @@ sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
 		)
 	]
 
-	$authProvider.configure(apiUrl: "")
+	$authProvider.configure(
+		apiUrl: ""
+		authProviderPaths:
+			google: '/auth/google_oauth2'
+	)
 	$httpProvider.interceptors.push('httpInterceptor')
 
 	$routeProvider.when('/',

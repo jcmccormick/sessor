@@ -31,7 +31,6 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$window', 'F
 	$rootScope.$on('auth:logout-success', ->
 		Flash.create('success', '<h3>Success! <small>Auth</small></h3><p>Logged out.</p>', 'customAlert')
 		$location.path('/')
-		localStorageService.clearAll()
 	)
 
 	$rootScope.$on('auth:account-update-success', ->
@@ -42,6 +41,7 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$window', 'F
 		localStorageService.clearAll()
 
 	$rootScope.handleSignOut = ->
+		localStorageService.clearAll()
 		$location.path('/sign_out')
 		$rootScope.signOut()
 
