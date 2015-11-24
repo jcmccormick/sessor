@@ -7,7 +7,6 @@
     "angular-mocks": "latest",
     "angular-flash-alert": "latest",
     "angular-animate": "latest",
-    "angular-cookie": "latest",
     "angular-ui-sortable": "latest",
     "angular-local-storage": "latest",
     "angular-google-chart": "latest",

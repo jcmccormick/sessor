@@ -1,12 +1,12 @@
 {
     "name": "angular-flash-alert",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "homepage": "https://github.com/sachinchoolur/angular-flash",
     "authors": [
         "Sachin N <sachi77n@gmail.com>"
     ],
     "description": "Flash message for angularjs",
-    "main": "dist/angular-flash.js",
+    "main": ["dist/angular-flash.js", "dist/angular-flash.css"],
     "keywords": [
         "angular-flash",
         "flash",

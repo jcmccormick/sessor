@@ -1,13 +1,13 @@
 angular.module("sessor").run (['$auth', '$rootScope', '$location', '$window', 'Flash', 'localStorageService',
 ($auth, $rootScope, $location, $window, Flash, localStorageService)->
 
-	$rootScope.$on('$routeChangeStart', (evt, next, current)->
-		if !$auth.user.id && !current && (next.$$route.originalPath == '/' || next.$$route.originalPath == '/desktop')
-			$auth.validateUser().then ((res)->
-				$location.path('/desktop')
-			), (err)->
-				$location.path('/')
-	)
+	# $rootScope.$on('$routeChangeStart', (evt, next, current)->
+	# 	if !$auth.user.id && !current && (next.$$route.originalPath == '/' || next.$$route.originalPath == '/desktop')
+	# 		$auth.validateUser().then ((res)->
+	# 			$location.path('/desktop')
+	# 		), (err)->
+	# 			$location.path('/')
+	# )
 
 	$rootScope.$on('$locationChangeStart', (evt, absNewUrl, absOldUrl)->
 		~absOldUrl.indexOf('reset_password=true') && $location.path('/pass_reset')
@@ -40,9 +40,15 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$window', 'F
 	$rootScope.clearLocalStorage = ->
 		localStorageService.clearAll()
 
+	$rootScope.handleSignIn = ->
+		$auth.authenticate('google').then ((res)->
+			Flash.create('success', '<h3>Success! <small>Auth</small></h3><p>Logged in.</p>', 'customAlert')
+			$location.path('/desktop')
+		), (err)->
+
 	$rootScope.handleSignOut = ->
-		localStorageService.clearAll()
 		$location.path('/sign_out')
+		localStorageService.clearAll()
 		$rootScope.signOut()
 
 	$(document).on 'click.nav li', '.navbar-collapse.in', (e) ->
