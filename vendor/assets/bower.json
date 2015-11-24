@@ -2,17 +2,17 @@
   "name": "dsl-generated dependencies",
   "dependencies": {
     "angular": "latest",
-    "angular-route": "latest",
-    "angular-resource": "latest",
-    "angular-mocks": "latest",
-    "angular-flash-alert": "latest",
     "angular-animate": "latest",
-    "angular-ui-sortable": "latest",
+    "angular-cookie": "latest",
+    "angular-flash-alert": "latest",
     "angular-local-storage": "latest",
-    "angular-google-chart": "latest",
-    "ng-token-auth": "latest",
-    "bootstrap-sass-official": "latest",
+    "angular-mocks": "latest",
+    "angular-resource": "latest",
+    "angular-route": "latest",
+    "angular-ui-sortable": "latest",
     "bootbox": "latest",
+    "bootstrap-sass-official": "latest",
+    "ng-token-auth": "latest",
     "ngBootbox": "latest"
   }
 }
