@@ -14,7 +14,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= require bootstrap-sass-official/assets/javascripts/bootstrap.min.js
+//= require bootstrap-sprockets
 //= require angular/angular
 //= require angular-route/angular-route
 //= require angular-resource/angular-resource

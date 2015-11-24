@@ -8,7 +8,6 @@ asset 'angular-resource'
 asset 'angular-route'
 asset 'angular-ui-sortable'
 asset 'bootbox'
-asset 'bootstrap-sass-official'
 asset 'ng-token-auth'
 asset 'ngBootbox'
 # vim: ft=ruby
