@@ -43,11 +43,13 @@ sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
 		)
 	]
 
-	$authProvider.configure(
+	$authProvider.configure({
 		apiUrl: ""
+		omniauthWindowType: 'inAppBrowser'
 		authProviderPaths:
 			google: '/auth/google_oauth2'
-	)
+		storage: 'localStorage'
+	})
 	$httpProvider.interceptors.push('httpInterceptor')
 
 	$routeProvider.when('/',
