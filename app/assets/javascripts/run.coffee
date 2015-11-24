@@ -40,12 +40,6 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$window', 'F
 	$rootScope.clearLocalStorage = ->
 		localStorageService.clearAll()
 
-	$rootScope.handleSignIn = ->
-		$auth.authenticate('google').then ((res)->
-			Flash.create('success', '<h3>Success! <small>Auth</small></h3><p>Logged in.</p>', 'customAlert')
-			$location.path('/desktop')
-		), (err)->
-
 	$rootScope.handleSignOut = ->
 		$location.path('/sign_out')
 		localStorageService.clearAll()
