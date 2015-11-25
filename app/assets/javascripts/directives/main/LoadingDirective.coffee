@@ -1,23 +1,26 @@
-directives = angular.module('directives')
-directives.directive('loading', [()->
-	{
-		template: '<div ng-if="lv.loading"><span>Processing... <i class="glyphicon glyphicon-refresh"></i></span></div>'
-		scope: false
-		controllerAs: 'lv'
-		controller: ['$rootScope', ($rootScope)->
+do ->
+	'use strict'
 
-			lv = this
+	loading = ->
+		{
+			template: '<div ng-if="lv.loading"><span>Processing... <i class="glyphicon glyphicon-refresh"></i></span></div>'
+			scope: false
+			controllerAs: 'lv'
+			controller: ['$rootScope', ($rootScope)->
 
-			$rootScope.$on('loading:finish', ->
-				lv.loading = false
-			)
+				lv = this
 
-			$rootScope.$on('loading:progress', ->
-				lv.loading = true
-			)
+				$rootScope.$on('loading:finish', ->
+					lv.loading = false
+				)
 
-			return lv
-			
-		]
-	}
-])
+				$rootScope.$on('loading:progress', ->
+					lv.loading = true
+				)
+
+				return lv
+				
+			]
+		}
+
+	angular.module('clerkr').directive('loading', loading)

@@ -5,11 +5,11 @@
 				<li class="dropdown">
 					<a href class="dropdown-toggle" data-toggle="dropdown">Reports <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="#/reports/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
-						<li><a href="#/reports"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
+						<li><a href="/reports/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
+						<li><a href="/reports"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
 					</ul>
 				</li>
-				<li><a href="#/reports/{{vr.report.id}}/edit">Edit</a></li>
+				<li><a href="/reports/{{vr.report.id}}/edit">Edit</a></li>
 				<li><a href="javascript:;" ng-class="{'disabled':vr.report.form.id == vr.report.template_order[0]}" ng-click="vr.switchForm(-1)"><i class="glyphicon glyphicon-triangle-left"></i></a></li>
 				<li><select class="form-control" ng-options="template.name for template in vr.report.templates" ng-model="vr.report.form"></select></li>
 				<li><a href="javascript:;" ng-class="{'disabled':vr.report.form.id == vr.report.template_order[vr.report.template_order.length-1]}" ng-click="vr.switchForm(1)"><i class="glyphicon glyphicon-triangle-right"></i></a></li>

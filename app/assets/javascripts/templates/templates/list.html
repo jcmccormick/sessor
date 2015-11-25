@@ -1,7 +1,7 @@
 <div class="form-header">
 	<section>
 		<ul class="nav top-nav">
-			<li><a href="#/templates/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
+			<li><a href="/templates/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
 			<li><input type="text" class="form-control" placeholder="Search" ng-model="vt.keywords" ng-change="vt.currentPage = 0"></li>
 			<li><select class="form-control" ng-model="vt.pageSize" ng-options="distance as distance for distance in [10, 25, 50, 100]" ng-change="vt.currentPage = 0"></select></li>
 			<li><h5><p>per page</p></h5></li>
@@ -40,8 +40,8 @@
 				<td>{{template.id}}</td>
 				<td> 
 					<a href="javascript:;" class="btn" title="New Report" ng-click="vt.newReport(template, vt.tempForm)"><i class="glyphicon glyphicon-inbox"></i></a> 
-					<a href="#/templates/{{template.id}}" title="View" class="btn"><i class="glyphicon glyphicon-search"></i></a> 
-					<a href="#/templates/{{template.id}}/edit" title="Edit" class="btn"><i class="glyphicon glyphicon-pencil"></i></a>
+					<a href="/templates/{{template.id}}" title="View" class="btn"><i class="glyphicon glyphicon-search"></i></a> 
+					<a href="/templates/{{template.id}}/edit" title="Edit" class="btn"><i class="glyphicon glyphicon-pencil"></i></a>
 					<a href="javascript:;" class="btn" title="Delete" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this page?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vt.delete(template)"><i class="glyphicon glyphicon-trash"></i></a>
 				</td>
 				<td>

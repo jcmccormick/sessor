@@ -1,22 +1,26 @@
-factories = angular.module('factories')
-factories.factory("httpInterceptor", ['$q', '$rootScope', '$log',
-($q, $rootScope, $log)->
+do ->
+	'use strict'
 
-	loadingCount = 0
+	loadingInterceptor = ($q, $rootScope, $log)->
 
-	{
-		request: (config)->
-			++loadingCount == 1 && $rootScope.$broadcast('loading:progress')
-			return config || $q.when(config)
+		loadingCount = 0
 
-		response: (response)->
-			--loadingCount == 0 && $rootScope.$broadcast('loading:finish')
-			return response || $q.when(response)
+		{
+			request: (config)->
+				++loadingCount == 1 && $rootScope.$broadcast('loading:progress')
+				return config || $q.when(config)
 
-		responseError: (response)->
-			response.statusText == 'Unauthorized' && $rootScope.$broadcast('auth:invalid')
-			--loadingCount == 0 && $rootScope.$broadcast('loading:finish')
-			return $q.reject(response)
+			response: (response)->
+				--loadingCount == 0 && $rootScope.$broadcast('loading:finish')
+				return response || $q.when(response)
 
-	}
-])
+			responseError: (response)->
+				response.statusText == 'Unauthorized' && $rootScope.$broadcast('auth:invalid')
+				--loadingCount == 0 && $rootScope.$broadcast('loading:finish')
+				return $q.reject(response)
+
+		}
+
+	loadingInterceptor.$inject =  ['$q', '$rootScope', '$log']
+
+	angular.module('clerkr').factory("loadingInterceptor", loadingInterceptor)

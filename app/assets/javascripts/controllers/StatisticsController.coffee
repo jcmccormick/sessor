@@ -1,47 +1,50 @@
-controllers = angular.module('controllers')
-controllers.controller("StatisticsController",	['googleChartApiPromise', 'localStorageService', 'StatisticsService', 'TemplatesService', '$scope',
-(googleChartApiPromise, localStorageService, StatisticsService, TemplatesService, $scope)->
+do ->
+	'use strict'
 
-	sv = this
-	$.extend sv, StatisticsService
-	sv.templates = localStorageService.get('_cst')
-	sv.days = 5
-	sv.graph = sv.graphs[1]
-	sv.chart = {}
-	sv.chart.data = {}
-	sv.chart.view = {}
-	sv.chart.type = sv.graph.type
+	StatisticsController = (googleChartApiPromise, localStorageService, StatisticsService, TemplatesService, $scope)->
 
-	unbindTemplateWatch = $scope.$watch (()-> sv.orderedTemplates), (newVal, oldVal)->
-		if sv.orderedTemplates
-			sv.template = sv.orderedTemplates[0]
-			sv.checker()
-			unbindTemplateWatch()
+		sv = this
+		$.extend sv, StatisticsService
+		sv.templates = localStorageService.get('_cst')
+		sv.days = 5
+		sv.graph = sv.graphs[1]
+		sv.chart = {}
+		sv.chart.data = {}
+		sv.chart.view = {}
+		sv.chart.type = sv.graph.type
 
-	unbindFieldWatch = $scope.$watch (()-> sv.filteredFields), (newVal, oldVal)->
-		if sv.filteredFields && newVal != oldVal
-			sv.field = sv.filteredFields[0]
-			sv.field && sv.update()
-			unbindFieldWatch()
+		unbindTemplateWatch = $scope.$watch (()-> sv.orderedTemplates), (newVal, oldVal)->
+			if sv.orderedTemplates
+				sv.template = sv.orderedTemplates[0]
+				sv.checker()
+				unbindTemplateWatch()
 
-	sv.checker = ->
-		if !sv.template.fields
-			TemplatesService.queryTemplate(sv.template.id, true).then((res)->
-				$.extend sv.template, res
-			)
+		unbindFieldWatch = $scope.$watch (()-> sv.filteredFields), (newVal, oldVal)->
+			if sv.filteredFields && newVal != oldVal
+				sv.field = sv.filteredFields[0]
+				sv.field && sv.update()
+				unbindFieldWatch()
 
-	sv.update = ->
-		sv.chartEditor && sv.chartEditor.closeDialog()
-		sv.showDataCounts(sv)
+		sv.checker = ->
+			if !sv.template.fields
+				TemplatesService.queryTemplate(sv.template.id, true).then((res)->
+					$.extend sv.template, res
+				)
 
-	$(->
-		$('.form-header').css('min-height': (50+$('.form-specs').height())+'px')
-		$('.form-specs').on 'shown.bs.collapse', ->
-			$('.form-header').css('min-height': (50+$(this).height())+'px')
-	)
-	sv.checkSpec = ->
-		$('.form-specs').hasClass('in') && $('.form-header').css('min-height': '50px')
-		return true
-	return sv
+		sv.update = ->
+			sv.chartEditor && sv.chartEditor.closeDialog()
+			sv.showDataCounts(sv)
 
-])
+		$(->
+			$('.form-header').css('min-height': (50+$('.form-specs').height())+'px')
+			$('.form-specs').on 'shown.bs.collapse', ->
+				$('.form-header').css('min-height': (50+$(this).height())+'px')
+		)
+		sv.checkSpec = ->
+			$('.form-specs').hasClass('in') && $('.form-header').css('min-height': '50px')
+			return true
+		return sv
+
+	StatisticsController.$inject = ['googleChartApiPromise', 'localStorageService', 'StatisticsService', 'TemplatesService', '$scope']
+
+	angular.module('clerkr').controller("StatisticsController", StatisticsController)

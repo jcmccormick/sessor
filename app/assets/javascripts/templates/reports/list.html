@@ -1,7 +1,7 @@
 <div class="form-header">
 	<section>
 		<ul class="nav top-nav">
-			<li><a href="#/reports/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
+			<li><a href="/reports/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
 			<li><input type="text" class="form-control" placeholder="Search" ng-model="vr.keywords" ng-change="vr.currentPage = 0"></li>
 			<li><select class="form-control" ng-model="vr.pageSize" ng-options="distance as distance for distance in [10, 25, 50, 100]" ng-change="vr.currentPage = 0"></select></li>
 			<li><h5><p>per page</p></h5></li>
@@ -39,8 +39,8 @@
 			<tr ng-repeat="report in vr.filteredList = (vr.reports | filter:vr.keywords) | orderBy:vr.sortType:vr.sortReverse | startFrom:vr.currentPage*vr.pageSize | limitTo:vr.pageSize">
 				<td>{{report.id}}</td>
 				<td>
-					<a href="#/reports/{{report.id}}" title="View" class="btn"><i class="glyphicon glyphicon-search"></i></a> 
-					<a href="#/reports/{{report.id}}/edit" title="Edit" class="btn"><i class="glyphicon glyphicon-pencil"></i></a>
+					<a href="/reports/{{report.id}}" title="View" class="btn"><i class="glyphicon glyphicon-search"></i></a> 
+					<a href="/reports/{{report.id}}/edit" title="Edit" class="btn"><i class="glyphicon glyphicon-pencil"></i></a>
 					<a href="javascript:;" title="Delete" class="btn" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this report?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vr.delete(report)"><i class="glyphicon glyphicon-trash"></i></a>
 				</td>
 				<td>{{report.title}}</td>

@@ -1,6 +1,9 @@
-filters = angular.module('filters')
-filters.filter("startFrom", [->
-	return (input, start)->
-		start = +start
-		return input.slice start
-])
+do ->
+	'use strict'
+
+	startFrom = ->
+		(input, start)->
+			start = +start
+			input.slice start
+
+	angular.module('clerkr').filter("startFrom", startFrom)
