@@ -3,6 +3,8 @@ do ->
 
 	run = ($auth, $rootScope, $location, $window, Flash, localStorageService)->
 
+		console.log $auth
+
 		$rootScope.$on '$locationChangeStart', (evt, absNewUrl, absOldUrl)->
 			~absOldUrl.indexOf('reset_password=true') && $location.path('/pass_reset')
 
