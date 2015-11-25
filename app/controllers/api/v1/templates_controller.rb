@@ -1,3 +1,4 @@
+# Templates Controller
 module Api::V1#:nodoc:
 	class TemplatesController < ApiController
 

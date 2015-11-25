@@ -26,8 +26,9 @@ sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
 
 	authResolver = 'auth': ['$auth', 'localStorageService', 'ReportsService', 'TemplatesService',
 	($auth, localStorageService, ReportsService, TemplatesService)->
-		$auth.validate('google').then((res)->
-
+		if !$auth.userIsAuthenticated()
+			return false
+		else
 			reports = localStorageService.get('_csr')
 			templates = localStorageService.get('_cst')
 
@@ -35,12 +36,11 @@ sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
 				TemplatesService.listTemplates().then (res)->
 					localStorageService.set('_cst', res)
 					ReportsService.listReports().then (rep)->
+						localStorageService.set('_csr', rep)
 						return true
 			else
 				localStorageService.set('_csr', reports)
 				localStorageService.set('_cst', templates)
-				return true
-		)
 	]
 
 	$authProvider.configure({

@@ -7,13 +7,15 @@
 class ApplicationController < ActionController::Base
 
 	# Protect the site from CSRF
-	protect_from_forgery with: :null_session, :if => Proc.new { |c| c.request.format == 'application/json' }
-	
+	protect_from_forgery with: :null_session#, :if => Proc.new { |c| c.request.format == 'application/json' }
+
 	# Include depdencies for `clean_pagination`, `devise`, and response types.
 	include DeviseTokenAuth::Concerns::SetUserByToken
-	include ActionController::MimeResponds
+	#include ActionController::MimeResponds
 
 	before_action :configure_permitted_parameters, if: :devise_controller?
+
+	respond_to :json
 
 	protected
 

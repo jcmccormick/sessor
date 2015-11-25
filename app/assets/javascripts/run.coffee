@@ -19,13 +19,13 @@ angular.module("sessor").run (['$auth', '$rootScope', '$location', '$window', 'F
 
 	angular.forEach ['auth:invalid', 'auth:validation-error'], (value)->
 		$rootScope.$on(value, ->
-			$auth.signOut()
 			$location.path('/')
 			Flash.create('danger', "<h3>Danger! <small>Auth</small></h3><p>Looks like there was an error validating your credentials. Please try logging in again or contact support if problems continue.</p>", 'customAlert')
 		)
+		
 	$rootScope.$on('auth:login-success', ->
 		Flash.create('success', '<h3>Success! <small>Auth</small></h3><p>Logged in.</p>', 'customAlert')
-		$location.path('/desktop')
+		#$location.path('/desktop')
 	)
 
 	$rootScope.$on('auth:logout-success', ->

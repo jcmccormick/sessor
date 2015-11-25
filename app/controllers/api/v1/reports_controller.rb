@@ -1,3 +1,4 @@
+# Reports Controller
 module Api::V1 #:nodoc:
 	class ReportsController < ApiController
 		

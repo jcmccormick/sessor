@@ -1,7 +1,7 @@
+# Value Statistics Controller. Generates a response specifically to perform statistics on Values.
 module Api::V1 #:nodoc:
-
-	# Generates a response specifically to perform statistics on Values.
 	class ValuesStatisticsController < ApiController
+		
 		def counts
 
 			from = params[:from] || (params[:days].to_i-1).days.ago.to_date || -2

@@ -30,8 +30,5 @@ class User < ActiveRecord::Base
           :recoverable, :rememberable, :trackable, :validatable,
           :confirmable, :omniauthable
   include DeviseTokenAuth::Concerns::User
-  
-  def self.create_from_hash!(hash)
-    create(:name => hash['user_info']['name'])
-  end
+
 end
