@@ -26,7 +26,7 @@ sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
 
 	authResolver = 'auth': ['$auth', 'localStorageService', 'ReportsService', 'TemplatesService',
 	($auth, localStorageService, ReportsService, TemplatesService)->
-		if !$auth.userIsAuthenticated()
+		if !$auth.user.signedIn
 			return false
 		else
 			reports = localStorageService.get('_csr')

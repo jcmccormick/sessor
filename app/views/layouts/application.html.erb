@@ -16,7 +16,9 @@
     </style>
   </head>
   <body ng-app="sessor">
-    <span class="landing-page" ng-init="landing={}" ng-if="false || !user.id">
+    <pre>{{user}}</pre>
+
+    <span class="landing-page" ng-init="landing={}" ng-if="false || !user.signedIn">
       <form role="form" class="brand-bar" ng-init="loginForm = {}">
         <h1 class="col-xs-5 col-md-2 col-md-offset-1 clerkr-c"><span>Clerkr</span></h1>
         <div class="h1 col-xs-7 col-md-4">

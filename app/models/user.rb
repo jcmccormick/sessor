@@ -1,8 +1,6 @@
 # Standard User class. Controlled by `devise_token_auth` on the back-end, `ng-token-auth` on the front-end. 
 
 class User < ActiveRecord::Base
-  has_many :authorizations
-
   # Relate to Group.
   belongs_to :group
 
@@ -17,6 +15,8 @@ class User < ActiveRecord::Base
 
   # Relate to Values
   has_many :values, through: :reports
+  
+  include DeviseTokenAuth::Concerns::User
 
 
   # Before saving set UID to a Universial Unique ID, and skip e-mail confirmation.
@@ -29,6 +29,5 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
           :recoverable, :rememberable, :trackable, :validatable,
           :confirmable, :omniauthable
-  include DeviseTokenAuth::Concerns::User
 
 end
