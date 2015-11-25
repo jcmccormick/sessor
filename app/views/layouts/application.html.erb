@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<script>
+			if (!navigator.cookieEnabled) document.write('Please enable javascript and cookies in your browser.');
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			ga('create', 'UA-68636218-1', 'auto');
+		</script>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans|Poiret+One' rel='stylesheet' type='text/css'>
 		<base href="/" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 		<meta name="author" content="Joe McCormick" />
 		<meta name="abstract" content="Cloud reporting for individuals and businesses." />
-		<meta name="description" content="Clerkr, a cloud service offering cloud reporting to individuals and businesses, with stats, employee management, client engagement, and more. Check it out!" />
+		<meta name="description" content="Clerkr, a cloud service offering reporting to individuals and businesses, with stats, employee management, client engagement, and more. Check us out, today!" />
 		<meta name="keywords" content="reporting tools, data tracking, employee system, client engagement, small-business software, hobby tracker, interactive graphs, cloud computing, online scheduling, appointments, asynchronous tutoring" />
 		<meta name="geo.region" content="USA" />
 		<meta name="geo.placename" content="New York, NY" />
-		<meta name="geo.poisition" content="40.7127840; -74.0059410" />
+		<meta name="geo.position" content="40.7127840; -74.0059410" />
 		<meta name="ICBM" content="40.7127840; -74.0059410" />
 		<meta name="revisit-after" content="1 month" />
 		<meta name="google" content="nositelinkssearchbox" />
@@ -21,17 +30,8 @@
 		<noscript>Please enable javascript and cookies in your browser.</noscript>
 
 		<%= yield %>
-
-		<script>
-			if (!navigator.cookieEnabled) document.write('Please enable javascript and cookies in your browser.');
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-			ga('create', 'UA-68636218-1', 'auto');
-		</script>
-		<%= stylesheet_link_tag 'application', media: 'all' %>
 		<%= javascript_include_tag 'application' %>
+		<%= stylesheet_link_tag 'application', media: 'all' %>
 	</body>
 
 </html>

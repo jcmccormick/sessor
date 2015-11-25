@@ -158,39 +158,38 @@ loading {
 /*
  * Vertical Flip
  */
-.verticalFlip{
-	padding-right: 125px;
-	display: inline;
-	text-indent: 4px;
-
+.verticalFlip {
+	font-weight: bold;
+	font-size: 70px;
+	
 	span{
-		animation: vertical 12.5s linear infinite 0s;
-		-ms-animation: vertical 12.5s linear infinite 0s;
-		-webkit-animation: vertical 12.5s linear infinite 0s;
+		$times: 11;
+		$delay: $times * 2.5s;
+
+		animation: vertical $delay linear infinite 0s;
+		-ms-animation: vertical $delay linear infinite 0s;
+		-webkit-animation: vertical $delay linear infinite 0s;
 		color: #00abe9;
 		opacity: 0;
-		overflow: hidden;
 		position: absolute;
+		left: 0;
+		right: 0;
+		font-size: larger;
+		font-family: serif;
 
-		&:nth-child(2){
-			animation-delay: 2.5s;
-			-ms-animation-delay: 2.5s;
-			-webkit-animation-delay: 2.5s;
-		}
-		&:nth-child(3){
-			animation-delay: 5s;
-			-ms-animation-delay: 5s;
-			-webkit-animation-delay: 5s;
-		}
-		&:nth-child(4){
-			animation-delay: 7.5s;
-			-ms-animation-delay: 7.5s;
-			-webkit-animation-delay: 7.5s;
-		}
-		&:nth-child(5){
-			animation-delay: 10s;
-			-ms-animation-delay: 10s;
-			-webkit-animation-delay: 10s;
+		$n: 1;
+		@while ($n <= $times) {
+		
+			$delay: $n * 2.5s;
+
+			&:nth-child(#{$n}) {
+				animation-delay: $delay;
+				-ms-animation-delay: $delay;
+				-webkit-animation-delay: $delay;
+			}
+
+			$n: $n + 1;
+
 		}
 	}
 }
