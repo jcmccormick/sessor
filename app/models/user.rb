@@ -1,33 +1,32 @@
 # Standard User class. Controlled by `devise_token_auth` on the back-end, `ng-token-auth` on the front-end. 
-
 class User < ActiveRecord::Base
-  # Relate to Group.
-  belongs_to :group
+	
+	include DeviseTokenAuth::Concerns::User
+	# Relate to Group.
+	belongs_to :group
 
-  # Relate to Templates.
-  has_and_belongs_to_many :templates
+	# Relate to Templates.
+	has_and_belongs_to_many :templates
 
-  # Relate to Reports.
-  has_and_belongs_to_many :reports
+	# Relate to Reports.
+	has_and_belongs_to_many :reports
 
-  # Relate to Fields
-  has_many :fields, through: :templates
+	# Relate to Fields
+	has_many :fields, through: :templates
 
-  # Relate to Values
-  has_many :values, through: :reports
-  
-  include DeviseTokenAuth::Concerns::User
+	# Relate to Values
+	has_many :values, through: :reports
 
+	# Include default devise modules.
+	devise :omniauthable, :rememberable, :trackable, :validatable
 
-  # Before saving set UID to a Universial Unique ID, and skip e-mail confirmation.
-  before_save -> do
-    self.uid = SecureRandom.uuid
-    skip_confirmation!
-  end
-
-  # Include default devise modules.
-  devise :database_authenticatable, :registerable,
-          :recoverable, :rememberable, :trackable, :validatable,
-          :confirmable, :omniauthable
+	# def self.from_omniauth(auth)
+	# 	where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+	# 		user.provider = auth.provider
+	# 		user.uid = auth.uid
+	# 		user.email = auth.info.email
+	# 		user.password = Devise.friendly_token[0,20]
+	# 	end
+	# end
 
 end

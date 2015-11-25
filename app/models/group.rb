@@ -1,5 +1,4 @@
 # INACTIVE: Will provide Group functionality to Users.
-
 class Group < ActiveRecord::Base
   
   # Relate to Users.

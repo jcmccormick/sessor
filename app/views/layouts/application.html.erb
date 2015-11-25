@@ -1,189 +1,25 @@
 <!DOCTYPE html>
-<html ng-csp>
-  <head>
-    <title>Clerkr</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <%= csrf_meta_tags %>
-    <style>
-      .landing-page {background-color: white;}
-      .brand-bar {display: inline-block;}
-      .approach {padding: 120px 20px;}
-      .down {cursor: pointer;}
-      .features > * > * {margin: 30px 0;}
-      .newsletter {display: block;padding: 160px  40px;}
-      .officials {padding: 60px 10px;}
-      .col-xs-12 {width: 100%;}
-    </style>
-  </head>
-  <body ng-app="sessor">
-    <pre>{{user}}</pre>
+<html>
+	<head>
+		<title>Clerkr</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<%= csrf_meta_tags %>
+	</head>
+	<body ng-app="sessor">
+		<noscript>Please enable javascript and cookies in your browser.</noscript>
 
-    <span class="landing-page" ng-init="landing={}" ng-if="false || !user.signedIn">
-      <form role="form" class="brand-bar" ng-init="loginForm = {}">
-        <h1 class="col-xs-5 col-md-2 col-md-offset-1 clerkr-c"><span>Clerkr</span></h1>
-        <div class="h1 col-xs-7 col-md-4">
-          <a href="javascript:;" class="btn" ng-click="landing.extra='about'" scroll-to="#about" bypass="true">About</a>
-          <a href="javascript:;" class="btn" ng-click="landing.extra='contact'" scroll-to="#contact" bypass="true">Contact</a>
-          <a href="javascript:;" class="btn" ng-click="landing.extra='development'" scroll-to="#development" bypass="true">Development</a>
-        </div>
-        <div class="h4 col-xs-12 col-md-4 login" bs-popover>
-          <div class="input-group">
-            <input type="email" name="email" placeholder="Email" ng-model="loginForm.email" required="required" class="form-control">
-            <span class="input-group-btn" style="width:0px;"></span>
-            <input type="password" name="password" placeholder="Password" ng-model="loginForm.password" required="required" class="form-control" style="margin-left:-1px">
-            <span class="input-group-btn">
-              <a href="javascript:;" class="btn btn-success" ng-click="submitLogin(loginForm)">Login</a>
-            </span>
-          </div>
-          <div rel="popover" data-container="body" data-placement="bottom" data-html="true" data-title="Under Development" data-content="<p>Registrations are currently limited right now while we develop the site. For now, you can sign up to our newsletter below.</p>">
-            <a href="javascript:;" class="btn" ng-click="landing.reg=false;landing.forg=!landing.forg">Forgot password?</a>
-            <a href="javascript:;" class="btn pull-right" ng-click="landing.forg=false;landing.reg=!landing.reg">Register</a>
-            <a href="javascript:;" class="btn pull-right" ng-click="authenticate('google')">Login with Google</a>
-          </div>
-        </div>
-      </form>
+		<%= yield %>
 
-      <clerkr-registration class="row" ng-if="landing.forg || landing.reg">
-        <div class="col-xs-12 col-md-6 col-md-offset-3">
-          <form name="forgotForm" ng-if="landing.forg">
-            <input type="email" name="email" placeholder="Email" class="form-control imod" ng-model="forgForm.email" required="required">
-              
-            <a href="javascript:;" class="close pull-left h1" ng-click="landing.forg=false">Close </a>
-            <a href="javascript:;" class="btn btn-primary pull-right h1" ng-click="subForg()" ng-disabled="!forgotForm.$valid">Submit</a>
-          </form>
+		<script>
+			if (!navigator.cookieEnabled) document.write('Please enable javascript and cookies in your browser.');
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			ga('create', 'UA-68636218-1', 'auto');
+		</script>
+		<%= stylesheet_link_tag 'application', media: 'all' %>
+		<%= javascript_include_tag 'application' %>
+	</body>
 
-          <form name="registerForm" ng-if="landing.reg">
-            <div class="form-group">
-              <input type="email" class="form-control imod" name="email" placeholder="Email" ng-model="regForm.email" required="required">
-            </div>
-
-            <div class="form-group">
-              <input type="text" class="form-control imod" placeholder="Nickname" ng-model="regForm.nickname" required="required">
-            </div>
-
-            <div class="form-group">
-              <input type="password" class="form-control imod" placeholder="Password" ng-model="regForm.password" required="required">
-              <h4>&nbsp; minimum <b>8 characters</b>, at least <b>1 letter</b>, at least <b>1 number</b>, may contain <b>!@#$%^&amp;*()_+</b></h4>
-            </div>
-
-            <div class="form-group">
-              <input type="password" class="form-control imod" placeholder="Confirm Password" ng-model="regForm.password_confirmation" required="required">
-            </div>
-
-            <a href="javascript:;" class="close pull-left h1" ng-click="landing.reg=false">Close</a>
-            <a href="javascript:;" class="btn btn-primary pull-right" ng-click="subReg()" ng-disabled="!registerForm.$valid">Register</a>
-          </form>
-        </div>
-      </clerkr-registration>
-
-      <div class="approach">
-        <h1>Connect your data. Easy. Are you a
-          <div class="verticalFlip">
-            <span>Hobbyist?</span>
-            <span>Scientist?</span>
-            <span>Teacher?</span>
-            <span>Researcher?</span>
-            <span>Clerkr?</span>
-          </div>
-        </h1>
-      </div>
-
-      <h1 class="text-center down" scroll-to=".features" bypass="true"><i class="glyphicon glyphicon-chevron-down"></i></h1>
-
-      <div class="features container-fluid">
-        <div class="col-xs-12">
-          <div class="col-xs-12 col-md-6">
-            <i class="glyphicon glyphicon-file"></i>
-            <h1>Designed Data</h1>
-            <h3>Clerkr bases its services on the pages of data you create. Fine tune your process and increase productivity and efficiency.</h3>
-          </div>
-          <div class="col-xs-12 col-md-6">
-            <i class="glyphicon glyphicon-briefcase"></i>
-            <h1>Group Time</h1>
-            <h3>Got a crew? Let's join forces. Got a business? We can help with that too: scheduling, appointments, client engagement, all integrated with your pages.</h3>
-          </div>
-        </div>
-        <div class="col-xs-12">
-          <div class="col-xs-12 col-md-6">
-            <i class="glyphicon glyphicon-inbox"></i>
-            <h1>Growth is Key</h1>
-            <h3>All users start with a set amount of reports to create. This number will naturally increase over time, and can be expanded.</h3>
-          </div>
-          <div class="col-xs-12 col-md-6">
-            <i class="glyphicon glyphicon-stats"></i>
-            <h1>Nerd Out</h1>
-            <h3>Take a break and reflect on our various charts and graphs. Save your visualizations and export the data for use elsewhere.</h3>
-          </div>
-        </div>
-      </div>
-
-      <newsletter id="newsletter" class="newsletter container-fluid text-center">
-        <div ng-form="newsForm">
-          <h1>Get the news, only when we've got it</h1>
-          <div class="input-group">
-            <input type="email" name="email" class="form-control imod" placeholder="Email" ng-model="nv.email" required="required">
-            <span class="input-group-btn">
-              <a href="javascript:;" class="btn" ng-click="nv.newSubscribe(nv.email, newsForm)" ng-disabled="!newsForm.$valid">Submit</a>
-            </span>
-          </div>
-        </div>
-      </newsletter>
-
-      <div class="officials">
-        <div class="text-center">
-          <a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='about'}" ng-click="landing.extra='about'" scroll-to="#about" bypass="true">About</a>
-          <a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='contact'}" ng-click="landing.extra='contact'" scroll-to="#contact" bypass="true">Contact</a>
-          <a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='development'}" ng-click="landing.extra='development'" scroll-to="#development" bypass="true">Development</a>
-        </div>
-        <div ng-show="landing.extra" class="extras col-xs-12 col-md-6 col-md-offset-3">
-          <div ng-show="landing.extra=='about'" id="about" class="h3">
-            <h3>Clerkr offers services for individuals and more for businesses.</h3>
-            <br />
-            <h1>For individuals...</h1>
-            <blockquote>
-              <h3>Keep track of hobbies, sports, exercise, research, anything you can think of.</h3>
-              <h3>Use your pages for surveys.</h3>
-              <h3>Create interactive and visually-appealing graphs; print, save, and export your data views.</h3>
-            </blockquote>
-            <h1>For businesses...</h1>
-            <blockquote>
-              <h3>Schedule employees and keep track of their time online.</h3>
-              <h3>Use pages on your site and for online or kiosk-based customer submissions.</h3>
-              <h3>Interact with customers in online appointments.</h3>
-              <h3>Get combined and individual stats for the members in your group.</h3>
-            </blockquote>
-          </div>
-          <contact ng-show="landing.extra=='contact'" id="contact">
-            <form name="contForm">
-            <input type="email" name="email" class="form-control imod" placeholder="Email" ng-model="cv.email" required="required">
-            <br /><br />
-            <textarea type="text" rows="6" class="form-control imod" placeholder="Message" ng-model="cv.message" required="required"></textarea>
-            <a href="javascript:;" class="btn btn-success pull-right h1" ng-click="cv.newContact(cv.email, cv.message, contForm)" ng-disabled="!contForm.$valid">Submit</a>
-          </form>
-          </contact>
-          <div ng-show="landing.extra=='development'" id="development">
-            <h3>We're currently under development and looking to begin open individual-use testing in Spring 2016.</h3>
-          </div>
-          <a href="javascript:;" class="close pull-left h1" ng-click="landing={}">Close</a>
-        </div>
-
-      </div>
-      <h4 id="copyright" class="text-center col-xs-12">&copy; 2015 Clerkr</h4>
-    </span>
-    <%= yield %>
-    <loading></loading>
-    <div flash-message="7500"></div>
-  </body>
-
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-68636218-1', 'auto');
-  </script>
-  <%= stylesheet_link_tag 'application', media: 'all' %>
-  <%= javascript_include_tag 'application' %>
-  <noscript>Please enable javascript and cookies in your browser.</noscript>
-  <script>if (!navigator.cookieEnabled) document.write('Please enable javascript and cookies in your browser.');</script>
 </html>

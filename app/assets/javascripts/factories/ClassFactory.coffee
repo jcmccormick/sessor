@@ -1,6 +1,6 @@
 factories = angular.module('factories')
-factories.factory("ClassFactory", ['$auth', '$resource',
-($auth, $resource)->
+factories.factory("ClassFactory", ['$resource',
+($resource)->
 	return $resource('v1/:class/:id', { format: 'json' }, {
 		query:
 			method: 'GET'

@@ -1,5 +1,4 @@
 # A Template is the starting point of the system. A Template contains all of the information needed to visually create an HTML form using AngularJS.
-
 class Template < ActiveRecord::Base
 
 	# Relate to Users.

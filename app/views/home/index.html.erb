@@ -1,3 +1,130 @@
-<ng-include ng-if="user.signedIn" src="'main/menu.html'"></ng-include>
+<style>
+	.landing-page {background-color: white;width:100%;}
+	.brand-bar {display: inline-block;}
+	.approach {padding: 120px 20px;}
+	.down {cursor: pointer;}
+	.features > * > * {margin: 30px 0;}
+	.newsletter {display: block;padding: 160px  40px;}
+	.officials {padding: 60px 10px;}
+	.col-xs-12 {width: 100%;}
+	.col-xs-6 {width: 50%;}
+</style>
 
-<div class="view-frame animate-view" ng-class="{'logdout':!user.signedIn}" ng-view bs-popover></div>
+<ng-include src="'main/menu.html'" ng-if="user.signedIn"></ng-include>
+
+<loading></loading>
+<div flash-message="7500"></div>
+
+<main ng-if="user.signedIn" class="view-frame animate-view" ng-view bs-popover></main>
+
+<section class="landing-page" ng-init="landing={}" ng-if="false || !user.signedIn">
+
+	<!-- Signed-out Menu -->
+	<nav class="navbar-top" role="navigation">
+		<div class="navbar-header">
+			<span class="navbar-brand"><a href="#/">Clerkr</a></span>
+			<ul class="nav top-nav pull-left">
+				<li><a href="javascript:;" ng-click="landing.extra='about'" scroll-to="#about" bypass="true">About</a></li>
+				<li><a href="javascript:;" ng-click="landing.extra='contact'" scroll-to="#contact" bypass="true">Contact</a></li>
+				<li><a href="javascript:;" ng-click="landing.extra='development'" scroll-to="#development" bypass="true">Development</a></li>
+			</ul>
+			<ul class="nav pull-right">
+				<li><a href="javascript:;" ng-click="authenticate('google')">Sign in with Google</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="approach">
+		<h1>Connect your data. Easy. Are you a
+			<div class="verticalFlip">
+				<span>Hobbyist?</span>
+				<span>Scientist?</span>
+				<span>Educator?</span>
+				<span>Researcher?</span>
+				<span>Clerkr?</span>
+			</div>
+		</h1>
+	</div>
+
+	<h1 class="text-center down" scroll-to=".features" bypass="true"><i class="glyphicon glyphicon-chevron-down"></i></h1>
+
+	<div class="features container-fluid">
+		<div class="col-xs-12">
+			<div class="col-xs-12 col-md-6">
+				<i class="glyphicon glyphicon-file"></i>
+				<h1>Designed Data</h1>
+				<h3>Clerkr bases its services on the pages of data you create. Fine tune your process and increase productivity and efficiency.</h3>
+			</div>
+			<div class="col-xs-12 col-md-6">
+				<i class="glyphicon glyphicon-briefcase"></i>
+				<h1>Group Time</h1>
+				<h3>Got a crew? Let's join forces. Got a business? We can help with that too: scheduling, appointments, client engagement, all integrated with your pages.</h3>
+			</div>
+		</div>
+		<div class="col-xs-12">
+			<div class="col-xs-12 col-md-6">
+				<i class="glyphicon glyphicon-inbox"></i>
+				<h1>Growth is Key</h1>
+				<h3>All users start with a set amount of reports to create. This number will naturally increase over time, and can be expanded.</h3>
+			</div>
+			<div class="col-xs-12 col-md-6">
+				<i class="glyphicon glyphicon-stats"></i>
+				<h1>Nerd Out</h1>
+				<h3>Take a break and reflect on our various charts and graphs. Save your visualizations and export the data for use elsewhere.</h3>
+			</div>
+		</div>
+	</div>
+
+	<newsletter id="newsletter" class="newsletter container-fluid text-center">
+		<div ng-form="newsForm">
+			<h1>Get the news, only when we've got it</h1>
+			<div class="input-group">
+				<input type="email" name="email" class="form-control imod" placeholder="Email" ng-model="nv.email" required="required">
+				<span class="input-group-btn">
+					<a href="javascript:;" class="btn" ng-click="nv.newSubscribe(nv.email, newsForm)" ng-disabled="!newsForm.$valid">Submit</a>
+				</span>
+			</div>
+		</div>
+	</newsletter>
+
+	<div class="officials" ng-init="landing.extra='about'">
+		<div class="text-center">
+			<a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='about'}" ng-click="landing.extra='about'" scroll-to="#about" bypass="true">About</a>
+			<a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='contact'}" ng-click="landing.extra='contact'" scroll-to="#contact" bypass="true">Contact</a>
+			<a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='development'}" ng-click="landing.extra='development'" scroll-to="#development" bypass="true">Development</a>
+		</div>
+		<div ng-show="landing.extra" class="extras col-xs-12 col-md-6 col-md-offset-3">
+			<div ng-show="landing.extra=='about'" id="about" class="h3">
+				<h3>Clerkr offers services for individuals and more for businesses.</h3>
+				<br />
+				<h1>For individuals...</h1>
+				<blockquote>
+					<h3>Keep track of hobbies, sports, exercise, research, anything you can think of.</h3>
+					<h3>Use your pages for surveys.</h3>
+					<h3>Create interactive and visually-appealing graphs; print, save, and export your data views.</h3>
+				</blockquote>
+				<h1>For businesses...</h1>
+				<blockquote>
+					<h3>Schedule employees and keep track of their time online.</h3>
+					<h3>Use pages on your site and for online or kiosk-based customer submissions.</h3>
+					<h3>Interact with customers in online appointments.</h3>
+					<h3>Get combined and individual stats for the members in your group.</h3>
+				</blockquote>
+			</div>
+			<contact ng-show="landing.extra=='contact'" id="contact">
+				<form name="contForm">
+					<input type="email" name="email" class="form-control imod" placeholder="Email" ng-model="cv.email" required="required">
+					<br /><br />
+					<textarea type="text" rows="6" class="form-control imod" placeholder="Message" ng-model="cv.message" required="required"></textarea>
+					<a href="javascript:;" class="btn btn-success pull-right h1" ng-click="cv.newContact(cv.email, cv.message, contForm)" ng-disabled="!contForm.$valid">Submit</a>
+				</form>
+			</contact>
+			<div ng-show="landing.extra=='development'" id="development">
+				<h3>We're currently under development and looking to begin open individual-use testing in Spring 2016.</h3>
+			</div>
+			<a href="javascript:;" class="close pull-left h1" ng-click="landing={}">Close</a>
+		</div>
+
+	</div>
+	<h4 id="copyright" class="text-center col-xs-12">&copy; 2015 Clerkr</h4>
+</section>

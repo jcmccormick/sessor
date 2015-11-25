@@ -24,11 +24,9 @@ sessor = angular.module('sessor', [
 sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
 ($authProvider, $httpProvider, $routeProvider)->
 
-	authResolver = 'auth': ['$auth', 'localStorageService', 'ReportsService', 'TemplatesService',
+	resolver = 'auth': ['$auth', 'localStorageService', 'ReportsService', 'TemplatesService',
 	($auth, localStorageService, ReportsService, TemplatesService)->
-		if !$auth.user.signedIn
-			return false
-		else
+		$auth.validateUser().then ->
 			reports = localStorageService.get('_csr')
 			templates = localStorageService.get('_cst')
 
@@ -51,87 +49,80 @@ sessor.config(['$authProvider', '$httpProvider', '$routeProvider',
 
 	$routeProvider.when('/',
 		templateUrl: "main/index.html"
+		resolve: resolver
 	)
 	.when('/support',
 		templateUrl: "main/support.html"
-		resolve: authResolver
+		resolve: resolver
 	)
 	.when('/contact',
 		templateUrl: "main/contact.html"
-		resolve: authResolver
-	)
-	.when('/sign_out',
-		templateUrl: "user/destroy.html"
-		resolve: authResolver
+		resolve: resolver
 	)
 	.when('/pass_reset',
 		templateUrl: "user/pass.html"
-		resolve: authResolver
-	)
-	.when('/desktop',
-		templateUrl: "main/desktop.html"
-		resolve: authResolver
+		resolve: resolver
 	)
 	.when('/profile',
 		templateUrl: "user/edit.html"
 		controller: 'UsersController'
-		resolve: authResolver
+		resolve: resolver
 	) # REPORTS ROUTES #
 	.when('/reports',
 		templateUrl: "reports/list.html"
 		controller: 'ReportsController'
 		controllerAs: 'vr'
-		resolve: authResolver
+		resolve: resolver
 	)
 	.when('/reports/new/',
 		templateUrl: "reports/edit.html"
 		controller: 'ReportsController'
 		controllerAs: 'vr'
-		resolve: authResolver
+		resolve: resolver
 	)
 	.when('/reports/:reportId',
 		templateUrl: "reports/view.html"
 		controller: 'ReportsController'
 		controllerAs: 'vr'
-		resolve: authResolver
+		resolve: resolver
 	)
 	.when('/reports/:reportId/edit'
 		templateUrl: "reports/edit.html"
 		controller: 'ReportsController'
 		controllerAs: 'vr'
-		resolve: authResolver
+		resolve: resolver
 	) # TEMPLATES ROUTES #
 	.when('/templates',
 		templateUrl: "templates/list.html"
 		controller: 'TemplatesController'
 		controllerAs: 'vt'
-		resolve: authResolver
+		resolve: resolver
 	)
 	.when('/templates/new',
 		templateUrl: "templates/edit.html"
 		controller: 'TemplatesController'
 		controllerAs: 'vt'
-		resolve: authResolver
+		resolve: resolver
 	)
 	.when('/templates/:templateId',
 		templateUrl: "templates/view.html"
 		controller: 'TemplatesController'
 		controllerAs: 'vt'
-		resolve: authResolver
+		resolve: resolver
 	)
 	.when('/templates/:templateId/edit'
 		templateUrl: "templates/edit.html"
 		controller: 'TemplatesController'
 		controllerAs: 'vt'
-		resolve: authResolver
+		resolve: resolver
 	) # STATISTICS ROUTES #
 	.when('/statistics',
 		templateUrl: "statistics/show.html"
 		controller: 'StatisticsController'
 		controllerAs: 'sv'
-		resolve: authResolver
+		resolve: resolver
 	)
-	.otherwise('/desktop')
+	.otherwise('/')
 ])
 
 controllers = angular.module('controllers',[])

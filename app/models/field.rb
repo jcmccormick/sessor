@@ -1,5 +1,4 @@
 # Fields are created at-will and linked to their parent Column. They contain Options in the case of Radio or Dropdown fields, and a Value that contains no Report ID (the Default Value).
-
 class Field < ActiveRecord::Base
 
 	validates :template, :fieldtype, presence: true

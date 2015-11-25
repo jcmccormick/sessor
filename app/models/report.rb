@@ -16,7 +16,6 @@
 # * Holds a scope that assures the least amount of data needed to index. Use `current_user.reports.index_minned`.
 # * New Reports check for Values associated with the Template.fields and create Values tied to the Report.
 # * Updated Reports check for new Values associated with new Template.fields and create Values tied to the Report.
-
 class Report < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_and_belongs_to_many :templates
