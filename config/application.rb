@@ -8,9 +8,7 @@ Bundler.require(*Rails.groups)
 
 module Sessor
 	class Application < Rails::Application
-		if Rails.env.development? 
-			OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE 
-		end
+		
 		config.cache_store = :dalli_store
 
 		# Settings in config/environments/* take precedence over those specified here.
