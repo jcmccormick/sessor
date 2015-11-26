@@ -14,8 +14,6 @@
 		<meta name="revisit-after" content="1 month" />
 		<meta name="google" content="nositelinkssearchbox" />
 		<%= csrf_meta_tags %>
-		<%= javascript_include_tag 'application', async: true %>
-		<%= stylesheet_link_tag 'application', media: 'all' %>
 		<title>Clerkr</title>
 		<!-- data, software, tools -->
 	</head>
@@ -23,4 +21,6 @@
 		<noscript>Please enable javascript and cookies in your browser.</noscript>
 		<%= yield %>
 	</body>
+	<%= javascript_include_tag 'application', async: true, cache: true %>
+	<%= stylesheet_link_tag 'application', media: 'all' %>
 </html>
