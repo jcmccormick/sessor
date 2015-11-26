@@ -113,6 +113,8 @@ GEM
     ffi (1.9.10-x64-mingw32)
     figaro (1.1.1)
       thor (~> 0.14)
+    font-kit-rails (1.2.0)
+      rails
     foreman (0.78.0)
       thor (~> 0.19.1)
     globalid (0.3.6)
@@ -297,6 +299,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.0)
   faker
   figaro
+  font-kit-rails (~> 1.2.0)
   foreman
   heroku-deflater
   jbuilder (~> 2.0)

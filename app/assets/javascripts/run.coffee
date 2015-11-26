@@ -1,15 +1,10 @@
 do ->
 	'use strict'
 
-	run = ($auth, $rootScope, $location, $window, Flash, localStorageService)->
-
-		console.log $auth
+	run = ($auth, $location, $rootScope, Flash, localStorageService)->
 
 		$rootScope.$on '$locationChangeStart', (evt, absNewUrl, absOldUrl)->
 			~absOldUrl.indexOf('reset_password=true') && $location.path('/pass_reset')
-
-		$rootScope.$on '$routeChangeSuccess', ->
-			$window.ga('send', 'pageview', { page: $location.url() })
 
 		$rootScope.$on 'auth:login-success', ->
 			Flash.create('success', '<h3>Success! <small>Auth</small></h3><p>Logged in.</p>', 'customAlert')
@@ -42,6 +37,6 @@ do ->
 			!$('.form-header section').hasClass('affix') && $(this).scrollTop() >= 50 && $('.form-header section').addClass('affix')
 			$('.form-header section').hasClass('affix') && $(this).scrollTop() < 50 && $('.form-header section').removeClass('affix')
 
-	run.$inject = ['$auth', '$rootScope', '$location', '$window', 'Flash', 'localStorageService']
+	run.$inject = ['$auth', '$location', '$rootScope', 'Flash', 'localStorageService']
 
 	angular.module('clerkr').run(run)
