@@ -160,8 +160,13 @@ loading {
  */
 .verticalFlip {
 	font-weight: bold;
-	font-size: 70px;
-	min-height: 70px;
+	font-size: 40px;
+	min-height: 40px;
+
+	@media(min-width:768px) {
+		font-size: 70px;
+		min-height: 70px;
+	}
 	
 	span{
 		$times: 11;

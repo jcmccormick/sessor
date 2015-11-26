@@ -594,7 +594,11 @@ input.imod {
 		}
 
 		h3 {
-			font-size: 60px;
+			font-size: 30px;
+
+			@include respond(tablet) {
+				font-size: 60px;
+			}
 		}
 	}
 
