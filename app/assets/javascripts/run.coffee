@@ -4,7 +4,9 @@ do ->
 	run = ($auth, $location, $rootScope, Flash, localStorageService)->
 
 		$rootScope.$on '$locationChangeSuccess', ->
-			$location.$$host != 'localhost' && GoogleAnalytics.trackPageview $location.path
+			if $rootScope.loadedForGA
+				$location.$$host != 'localhost' && GoogleAnalytics.trackPageview $location.path
+			$rootScope.loadedForGA = true
 
 		$rootScope.$on '$locationChangeStart', (evt, absNewUrl, absOldUrl)->
 			~absOldUrl.indexOf('reset_password=true') && $location.path('/pass_reset')
