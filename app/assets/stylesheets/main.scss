@@ -586,24 +586,81 @@ input.imod {
 	}
 
 	.approach {
-		background: #d8f0fc;
-		text-align: center;
+		overflow: hidden;
+		img {
+			width: 400%;
+			@include respond(mobile) { width: 250%; }
+			@include respond(tablet) { width: 215%; }
+			@include respond(desktop) { width: 100%; }
 
-		@include respond(mobile) {
-			padding: 280px 20px;
+			&:after {
+				position: absolute;
+				top: 90%;
+				content: "Connect your data. Easy.";
+				width: 100%;
+				text-align: center;
+			}
 		}
+		section {
+			position: absolute;
+			width: 100%;
+			color: white !important;
 
-		h3 {
-			font-size: 30px;
+			h2,
+			h3 {
+				text-align: center;
+			}
+			h2 {
+				font-size: 30px;
 
-			@include respond(tablet) {
-				font-size: 60px;
+				@include respond(tablet) {
+					font-size: 60px;
+				}
+
+				/*
+				 * Vertical Flip
+				 */
+				.verticalFlip {
+					display: block;
+					font-size: 56px;
+					padding: 50px 0 150px;
+
+					span{
+						animation: vertical 27.5s linear infinite 2.5s;
+						-ms-animation: vertical 27.5s linear infinite 2.5s;
+						-webkit-animation: vertical 27.5s linear infinite 2.5s;
+						color: #00abe9 !important;
+						opacity: 0;
+						font-size: larger;
+						font-weight: bold;
+						position: absolute;
+						left: 0;
+						right: 0;
+
+						$times: 12;
+						@while $times > 2 {
+							$times: $times - 1;
+							$delay: $times * 2.5s;
+
+							&:nth-child(#{$times}) {
+								animation-delay: $delay;
+							}
+						}
+					}
+				}
+				@keyframes vertical {
+					0% { transform: rotateX(180deg); }
+					5% { opacity: 1;  transform: rotateX(5deg); }
+					7% { opacity: 0; }
+				}
 			}
 		}
 	}
 
-	.down {
+	.down i {
+		padding: 15px;
 		cursor: pointer;
+		font-size: larger !important;
 	}
 
 	.features {

@@ -3,6 +3,16 @@ do ->
 
 	config = ($authProvider, $httpProvider, $routeProvider, $locationProvider)->
 
+		$locationProvider.html5Mode true
+
+		$httpProvider.interceptors.push 'loadingInterceptor'
+
+		$authProvider.configure
+			apiUrl: ''
+			storage: 'localStorage'
+			apiProviderPaths:
+				google: 'auth/google_oauth2'
+
 		resolver = 'auth': ['$auth', 'localStorageService', 'ReportsService', 'TemplatesService',
 		($auth, localStorageService, ReportsService, TemplatesService)->
 			$auth.validateUser().then ->
@@ -19,16 +29,6 @@ do ->
 					localStorageService.set('_csr', reports)
 					localStorageService.set('_cst', templates)
 		]
-
-		$locationProvider.html5Mode true
-
-		$authProvider.configure
-			apiUrl: ''
-			storage: 'localStorage'
-			apiProviderPaths:
-				google: 'auth/google_oauth2'
-
-		$httpProvider.interceptors.push 'loadingInterceptor'
 
 		$routeProvider.when('/',
 			templateUrl: "main/index.html"

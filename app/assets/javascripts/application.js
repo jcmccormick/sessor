@@ -13,9 +13,9 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
-//= require angular/angular
-//= require bootstrap
 //= require moment
+//= require bootstrap-sprockets
+//= require angular/angular
 //= require angular-route/angular-route
 //= require angular-resource/angular-resource
 //= require angular-flash-alert/dist/angular-flash
