@@ -682,7 +682,7 @@ input.imod {
 	}
 
 	newsletter {
-		margin-top: 200px;
+		margin-top: 50px;
 		font-size: 18px;
 		display: block;
 		background-color: rgba(34,139,34,0.3);
@@ -696,16 +696,7 @@ input.imod {
 			background-color: white;
 		}
 
-		@include respond(mobile) {
-			margin-top: 50px;
-		}
-
-		@include respond(tablet) {
-			margin-top: 50px;
-		}
-
 		@include respond(desktop) {
-			margin-top: 0;
 			font-size: 40px;
 
 			input,
