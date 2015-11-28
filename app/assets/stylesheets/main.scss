@@ -632,7 +632,6 @@ input.imod {
 						$times: 12;
 						$basedelay: $times * 2.5s;
 						animation: vertical $basedelay linear infinite 2.5s;
-						-ms-animation: vertical $basedelay linear infinite 2.5s;
 						-webkit-animation: vertical $basedelay linear infinite 2.5s;
 
 						$looptimes: $times + 1;
@@ -642,6 +641,7 @@ input.imod {
 
 							&:nth-child(#{$looptimes}) {
 								animation-delay: $delay;
+								-webkit-animation-delay: $delay;
 							}
 						}
 					}
