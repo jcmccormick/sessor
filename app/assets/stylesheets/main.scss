@@ -197,7 +197,9 @@ blockquote {
 }
 .paper-color {
 	background-color: white;
-	box-shadow: 10px 10px 1px 0px #aaa;
+	@include respond(tablet) {
+		box-shadow: 10px 10px 1px 0px #aaa;
+	}
 }
 .gridline-workspace {
 	position: absolute;
