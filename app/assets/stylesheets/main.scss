@@ -606,61 +606,68 @@ input.imod {
 			width: 100%;
 			color: white !important;
 
-			h2,
+			h2 ,
 			h3 {
 				text-align: center;
 			}
+			h3 {
+				font-family: 'Open Sans';
+			}
 			h2 {
-				font-size: 30px;
+				span {
+					font-size: 30px;
+					font-family: 'PT Serif';
 
-				@include respond(tablet) {
-					font-size: 60px;
+					@include respond(tablet) {
+						font-size: 60px;
+					}
 				}
 
-				/*
-				 * Vertical Flip
-				 */
 				.verticalFlip {
 					display: block;
 					font-size: 56px;
 					padding: 50px 0 150px;
 
 					span{
-						animation: vertical 27.5s linear infinite 2.5s;
-						-ms-animation: vertical 27.5s linear infinite 2.5s;
-						-webkit-animation: vertical 27.5s linear infinite 2.5s;
+						$times: 11;
+						$basedelay: $times * 2.5s;
+						animation: vertical $basedelay linear infinite 2.5s;
+						-ms-animation: vertical $basedelay linear infinite 2.5s;
+						-webkit-animation: vertical $basedelay linear infinite 2.5s;
 						color: #00abe9 !important;
 						opacity: 0;
 						font-size: larger;
 						font-weight: bold;
+						font-family: 'Ubuntu';
 						position: absolute;
 						left: 0;
 						right: 0;
 
-						$times: 12;
-						@while $times > 2 {
-							$times: $times - 1;
-							$delay: $times * 2.5s;
+						$looptimes: $times + 1;
+						@while $looptimes > 2 {
+							$looptimes: $looptimes - 1;
+							$delay: $looptimes * 2.5s;
 
-							&:nth-child(#{$times}) {
+							&:nth-child(#{$looptimes}) {
 								animation-delay: $delay;
 							}
 						}
 					}
 				}
 				@keyframes vertical {
-					0% { transform: rotateX(180deg); }
-					5% { opacity: 1;  transform: rotateX(5deg); }
-					7% { opacity: 0; }
+					1% { opacity: 1; }
+					11% { opacity: 0; }
 				}
 			}
 		}
 	}
 
-	.down i {
+	.down {
 		padding: 15px;
 		cursor: pointer;
-		font-size: larger !important;
+		i{
+			font-size: larger !important;
+		}
 	}
 
 	.features {

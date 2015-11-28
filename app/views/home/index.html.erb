@@ -17,7 +17,7 @@
 
 <main ng-if="user.signedIn" class="view-frame animate-view" ng-view></main>
 
-<section class="landing-page" ng-init="landing={}" ng-if="false || !user.signedIn">
+<section class="landing-page" ng-init="landing={}" ng-show="false || !user.signedIn">
 
 	<!-- Signed-out Menu -->
 	<nav class="navbar-top" role="navigation">
@@ -33,18 +33,18 @@
 	</nav>
 	<article class="approach">
 		<section>
-			<h2>Are you a... 
+			<h2><span>Are you a... </span>
 				<small class="verticalFlip">
 					<span>Hobbyist?</span>
 					<span>Scientist?</span>
 					<span>Teacher?</span>
 					<span>Researcher?</span>
 					<span>Tutor?</span>
-					<span>Tycoon?</span>
+					<span>Investigator?</span>
 					<span>Doctor?</span>
 					<span>Dentist?</span>
 					<span>Professional?</span>
-					<span>Researcher?</span>
+					<span>Student?</span>
 					<span>Clerkr?</span>
 				</small>
 			</h2>
