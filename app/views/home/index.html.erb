@@ -39,6 +39,7 @@
 					<span>Scientist?</span>
 					<span>Teacher?</span>
 					<span>Researcher?</span>
+					<span>Athlete?</span>
 					<span>Tutor?</span>
 					<span>Investigator?</span>
 					<span>Doctor?</span>
@@ -49,6 +50,18 @@
 				</small>
 			</h2>
 			<h3>Connect your data. Easy.</h3>
+
+			<newsletter>
+				<div ng-form="newsForm">
+					<h1>Get the news, only when we've got it</h1>
+					<div class="input-group">
+						<input type="email" name="email" class="form-control imod" placeholder="Email" ng-model="nv.email" required="required">
+						<span class="input-group-btn">
+							<a href="javascript:;" class="btn" ng-click="nv.newSubscribe(nv.email, newsForm)" ng-disabled="!newsForm.$valid">Submit</a>
+						</span>
+					</div>
+				</div>
+			</newsletter>
 		</section>
 		<%= image_tag 'skyline.png' %>
 	</article>
@@ -81,18 +94,6 @@
 			</div>
 		</div>
 	</div>
-
-	<newsletter id="newsletter" class="newsletter container-fluid text-center">
-		<div ng-form="newsForm">
-			<h1>Get the news, only when we've got it</h1>
-			<div class="input-group">
-				<input type="email" name="email" class="form-control imod" placeholder="Email" ng-model="nv.email" required="required">
-				<span class="input-group-btn">
-					<a href="javascript:;" class="btn" ng-click="nv.newSubscribe(nv.email, newsForm)" ng-disabled="!newsForm.$valid">Submit</a>
-				</span>
-			</div>
-		</div>
-	</newsletter>
 
 	<div class="officials" ng-init="landing.extra='about'">
 		<div class="text-center">
@@ -129,7 +130,6 @@
 			<div ng-show="landing.extra=='development'" id="development">
 				<h3>We're currently under development and looking to begin open individual-use testing in Spring 2016.</h3>
 			</div>
-			<a href="javascript:;" class="close pull-left h1" ng-click="landing={}">Close</a>
 		</div>
 
 	</div>

@@ -605,43 +605,35 @@ input.imod {
 			position: absolute;
 			width: 100%;
 			color: white !important;
+			overflow-x: hidden;
 
 			h2 ,
 			h3 {
 				text-align: center;
 			}
 			h3 {
-				font-family: 'Open Sans';
+				font-style: italic;
 			}
 			h2 {
-				span {
-					font-size: 30px;
-					font-family: 'PT Serif';
-
-					@include respond(tablet) {
-						font-size: 60px;
-					}
-				}
-
 				.verticalFlip {
 					display: block;
 					font-size: 56px;
-					padding: 50px 0 150px;
+					padding: 50px 0;
 
 					span{
-						$times: 11;
+						position: absolute;
+						opacity: 0;
+						right: 0;
+						left: 0;
+						color: forestgreen;
+						font-weight: bold;
+						font-family: 'Ubuntu';
+
+						$times: 12;
 						$basedelay: $times * 2.5s;
 						animation: vertical $basedelay linear infinite 2.5s;
 						-ms-animation: vertical $basedelay linear infinite 2.5s;
 						-webkit-animation: vertical $basedelay linear infinite 2.5s;
-						color: forestgreen !important;
-						opacity: 0;
-						font-size: larger;
-						font-weight: bold;
-						font-family: 'Ubuntu';
-						position: absolute;
-						right: 0;
-						left: 0;
 
 						$looptimes: $times + 1;
 						@while $looptimes > 2 {
@@ -657,7 +649,7 @@ input.imod {
 				@keyframes vertical {
 					0% { }
 					2% { opacity: 1; }
-					8% { opacity: 1; font-size: 78px; }
+					8% { opacity: 1; font-size: larger; }
 					9% { opacity: .5; }
 					10% { opacity: 0; font-size: 10px; }
 				}
@@ -690,25 +682,32 @@ input.imod {
 	}
 
 	newsletter {
+		margin-top: 200px;
+		font-size: 18px;
 		display: block;
-		padding: 160px	40px;
-		background-color: #FCE4D8;
+		background-color: rgba(0,0,0,.5);
+		padding: 20px 10% 50px;
 
 		input,
 		.btn {
 			font-size: 24px !important;
-			background-color: #FCE4D8;
 			color: #00abe9;
 			height: 60px;
-			line-height: 1.75;
+			background-color: white;
+		}
+
+		@include respond(mobile) {
+			margin-top: 50px;
+		}
+
+		@include respond(tablet) {
+			margin-top: 50px;
 		}
 
 		@include respond(desktop) {
-			padding: 250px 20%;
-
-			.input-group {
-				margin: 110px 0;
-			}
+			margin-top: 0;
+			padding: 20px 33%;
+			font-size: 40px;
 
 			input,
 			.btn {
