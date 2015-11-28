@@ -634,14 +634,14 @@ input.imod {
 						animation: vertical $basedelay linear infinite 2.5s;
 						-ms-animation: vertical $basedelay linear infinite 2.5s;
 						-webkit-animation: vertical $basedelay linear infinite 2.5s;
-						color: #00abe9 !important;
+						color: forestgreen !important;
 						opacity: 0;
 						font-size: larger;
 						font-weight: bold;
 						font-family: 'Ubuntu';
 						position: absolute;
-						left: 0;
 						right: 0;
+						left: 0;
 
 						$looptimes: $times + 1;
 						@while $looptimes > 2 {
@@ -655,8 +655,11 @@ input.imod {
 					}
 				}
 				@keyframes vertical {
-					1% { opacity: 1; }
-					11% { opacity: 0; }
+					0% { }
+					2% { opacity: 1; }
+					8% { opacity: 1; font-size: 78px; }
+					9% { opacity: .5; }
+					10% { opacity: 0; font-size: 10px; }
 				}
 			}
 		}
