@@ -686,7 +686,7 @@ input.imod {
 		font-size: 18px;
 		display: block;
 		background-color: rgba(34,139,34,0.3);
-		padding: 20px 10% 50px;
+		padding: 1px 10% 20px;
 
 		input,
 		.btn {
@@ -706,7 +706,6 @@ input.imod {
 
 		@include respond(desktop) {
 			margin-top: 0;
-			padding: 20px 33%;
 			font-size: 40px;
 
 			input,
