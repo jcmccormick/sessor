@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151123231801) do
+ActiveRecord::Schema.define(version: 20151129082103) do
 
   create_table "admins_reports", id: false, force: :cascade do |t|
     t.integer "admin_id",  limit: 4
@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(version: 20151123231801) do
     t.boolean  "draft"
     t.text     "sections",      limit: 65535
     t.text     "columns",       limit: 65535
+    t.string   "gs_id",         limit: 255
   end
 
   create_table "templates_users", id: false, force: :cascade do |t|
@@ -167,6 +168,9 @@ ActiveRecord::Schema.define(version: 20151123231801) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "group_id",               limit: 4
+    t.string   "refresh_token",          limit: 255
+    t.string   "access_token",           limit: 255
+    t.integer  "expires_at",             limit: 4
   end
 
   add_index "users", ["email"], name: "index_users_on_email", using: :btree

@@ -27,20 +27,20 @@ class Template < ActiveRecord::Base
 
 	private
 
-	# Use a method to get as little information as needed when viewing all templates. Usable on ActiveRecord Relationship.
-	def self.index_minned
-		eager_load(:fields).as_json(only: [:id, :name, :sections, :draft])
-	end
+		# Use a method to get as little information as needed when viewing all templates. Usable on ActiveRecord Relationship.
+		def self.index_minned
+			eager_load(:fields).as_json(only: [:id, :name, :sections, :draft])
+		end
 
-	# Upon Template creation, set basic stuff
-	def set_defaults
-		self.draft = true
-		self.sections = [{i:1,n:'',c:1}]
-	end
+		# Upon Template creation, set basic stuff
+		def set_defaults
+			self.draft = true
+			self.sections = [{i:1,n:'',c:1}]
+		end
 
-	# Check for existing report associations
-	def allow_destroy
-		reports.empty?
-	end
+		# Check for existing report associations
+		def allow_destroy
+			reports.empty?
+		end
 
 end

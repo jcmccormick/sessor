@@ -1,7 +1,10 @@
 # Standard User class. Controlled by `devise_token_auth` on the back-end, `ng-token-auth` on the front-end. 
 class User < ActiveRecord::Base
 	
+	# Include default devise modules.
 	include DeviseTokenAuth::Concerns::User
+	devise :omniauthable, :rememberable, :trackable, :validatable, :omniauth_providers => [:google_oauth2]
+
 	# Relate to Group.
 	belongs_to :group
 
@@ -17,16 +20,20 @@ class User < ActiveRecord::Base
 	# Relate to Values
 	has_many :values, through: :reports
 
-	# Include default devise modules.
-	devise :omniauthable, :rememberable, :trackable, :validatable
-
-	# def self.from_omniauth(auth)
-	# 	where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-	# 		user.provider = auth.provider
-	# 		user.uid = auth.uid
-	# 		user.email = auth.info.email
-	# 		user.password = Devise.friendly_token[0,20]
-	# 	end
-	# end
+	def refresh_google_oauth2_token
+		oauth_client = OAuth2::Client.new(
+			ENV['GOOGLE_CLIENT_ID'],
+			ENV['GOOGLE_CLIENT_SECRET'],
+			:site => "https://accounts.google.com",
+			:token_url => "/o/oauth2/token",
+			:authorize_url => "/o/oauth2/auth",
+			:ssl => {:verify => !Rails.env.development?}
+		)
+		access_token = OAuth2::AccessToken.from_hash(oauth_client, {:refresh_token => self.refresh_token})
+		access_token = access_token.refresh!
+		self.access_token = access_token.token
+		self.expires_at = Time.now + access_token.expires_in
+		self.save
+	end
 
 end

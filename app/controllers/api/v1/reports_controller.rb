@@ -12,7 +12,7 @@ module Api::V1 #:nodoc:
 		end
 
 		def show
-			current_user.reports.find(params[:id]).populate_values
+			current_user.reports.find(params[:id]).populate_values(google_drive)
 			@report = current_user.reports.eager_load({:templates => :fields}, :values).find(params[:id])
 			@report
 		end

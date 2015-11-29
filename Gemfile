@@ -24,6 +24,8 @@ gem 'rack-cache'
 gem 'dalli'
 gem 'activerecord-session_store'
 gem 'font-kit-rails', '~> 1.2.0'
+gem 'google-api-client'
+gem 'google_drive'
 group :production, :staging do
 	gem 'pg'
 	gem "rails_12factor"

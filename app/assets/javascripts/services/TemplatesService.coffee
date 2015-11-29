@@ -100,13 +100,15 @@ do ->
 						return
 					)
 				else
-					template.e && !timedSave && timedSave = $interval (->
-						template.id && !form.$pristine && ts.saveTemplate(template, true, form)
-					), 30000
-					template.e && !dereg && dereg = $rootScope.$on('$locationChangeSuccess', ()->
-						$interval.cancel(timedSave)
-						dereg()
-					)
+					# template.e && !template.timedSave && template.timedSave = $interval (->
+					# 	!form.$pristine && ts.saveTemplate(template, true, form)
+					# 	console.log template
+					# ), 30000
+					# template.e && !template.dereg && template.dereg = $rootScope.$on('$locationChangeSuccess', ->
+					# 	$interval.cancel(template.timedSave)
+					# 	template.timedSave = undefined
+					# 	template.dereg()
+					# )
 					if !form.$pristine
 						template.updated_at = moment().local().format()
 						templates[geti(template.id)] = template

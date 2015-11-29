@@ -82,14 +82,14 @@ do ->
 					)
 				else
 				
-					!timedSave && timedSave = $interval (->
-						report.id && !form.$pristine && rs.saveReport(report, true, form)
-					), 30000
+					# !timedSave && timedSave = $interval (->
+					# 	report.id && !form.$pristine && rs.saveReport(report, true, form)
+					# ), 30000
 
-					!dereg && dereg = $rootScope.$on('$locationChangeSuccess', ()->
-						$interval.cancel(timedSave)
-						dereg()
-					)
+					# !dereg && dereg = $rootScope.$on('$locationChangeSuccess', ()->
+					# 	$interval.cancel(timedSave)
+					# 	dereg()
+					# )
 					if !form.$pristine
 						report.updated_at = moment().local().format()
 						reports[geti(report.id)] = report

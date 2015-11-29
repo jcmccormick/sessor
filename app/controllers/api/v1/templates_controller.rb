@@ -16,7 +16,11 @@ module Api::V1#:nodoc:
 		end
 
 		def create
+			spreadsheet = google_drive.create_spreadsheet(params[:name])
+			worksheet = spreadsheet.worksheets[0]
+			worksheet_url = worksheet.cells_feed_url
 			@template = current_user.templates.new(allowed_params)
+			@template.gs_id = worksheet_url
 			@template.save
 			current_user.templates << @template
 			render 'show', status: 201
@@ -24,6 +28,7 @@ module Api::V1#:nodoc:
 
 		def update
 			template = current_user.templates.find(params[:id])
+			update_worksheet if params[:fields_attributes]
 			template.sections = params[:sections]
 			template.update_attributes(allowed_params)
 			current_user.templates << template unless current_user.templates.include?(template)
@@ -33,6 +38,7 @@ module Api::V1#:nodoc:
 		def destroy
 			template = current_user.templates.find(params[:id])
 			if template.destroy
+				google_drive.file_by_id(template.gs_id).delete()
 				head :no_content
 			else
 				render json: { errors: 'A page may not be deleted while being used in a report.' }, status: 422
@@ -42,7 +48,7 @@ module Api::V1#:nodoc:
 		private
 			def allowed_params
 				params.require(:template).permit(
-					:name, :draft, :private_group, :private_world, :group_id, :group_edit, :group_editors,
+					:name, :gs_id, :draft, :private_group, :private_world, :group_id, :group_edit, :group_editors,
 					{:sections => []},
 					{:fields_attributes => [
 						:id, :fieldtype, :_destroy, {:o => [
@@ -50,6 +56,23 @@ module Api::V1#:nodoc:
 						]}
 					]}
 				)
+			end
+
+			def update_worksheet
+				template = current_user.templates.find_by_id(params[:id])
+				fields_names = template.fields.where.not(fieldtype: 'labelntext').only(:o).map{ |x| x.o['name'] }.sort_by { |n| n.downcase }
+				new_fields_names = params[:fields_attributes].select { |x| x['fieldtype'] != 'labelntext' }.map{ |x| x['o']['name'] }.sort_by { |n| n.downcase }
+				comparative = fields_names-new_fields_names
+				new_fields_names.unshift 'Updated At'
+				new_fields_names.unshift 'Created At'
+				new_fields_names.unshift 'Report ID'
+				if comparative.length > 0 || template.name != params[:name]
+					pp new_fields_names
+					worksheet = google_drive.worksheet_by_url(template.gs_id)
+					worksheet.title = params[:name]
+					worksheet.list.keys = new_fields_names
+					worksheet.save
+				end
 			end
 	end
 end
