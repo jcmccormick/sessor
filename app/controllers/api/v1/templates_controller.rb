@@ -67,7 +67,6 @@ module Api::V1#:nodoc:
 				new_fields_names.unshift 'Created At'
 				new_fields_names.unshift 'Report ID'
 				if comparative.length > 0 || template.name != params[:name]
-					pp new_fields_names
 					worksheet = google_drive.worksheet_by_url(template.gs_id)
 					worksheet.title = params[:name]
 					worksheet.list.keys = new_fields_names
