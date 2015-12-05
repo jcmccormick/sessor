@@ -1,82 +1,83 @@
 # Value Statistics Controller. Generates a response specifically to perform statistics on Values.
 module Api::V1 #:nodoc:
-	class ValuesStatisticsController < ApiController
-		
-		def counts
+    class ValuesStatisticsController < ApplicationController
+        before_action :authenticate_user!
+        
+        def counts
 
-			from = params[:from] || (params[:days].to_i-1).days.ago.to_date || -2
-			to = params[:to] || 0.days.ago.to_date
+            from = params[:from] || (params[:days].to_i-1).days.ago.to_date || -2
+            to = params[:to] || 0.days.ago.to_date
 
-			all_data = current_user.values.all
-						.where(field_id: params[:field_id], created_at: from.beginning_of_day .. to.end_of_day)
-						.where.not(input: nil)
-						.order(input: :desc)
-						.group_by { |value| [value['created_at'].to_date, value['input']] }
-						.map { |k, v| {'date': k.first, 'input': k.last, 'count': v.length} }
+            all_data = current_user.values.all
+                        .where(field_id: params[:field_id], created_at: from.beginning_of_day .. to.end_of_day)
+                        .where.not(input: nil)
+                        .order(input: :desc)
+                        .group_by { |value| [value['created_at'].to_date, value['input']] }
+                        .map { |k, v| {'date': k.first, 'input': k.last, 'count': v.length} }
 
-			# the object which will hold the data to be returned
-			grouped = {:cols => [], :rows => []}
+            # the object which will hold the data to be returned
+            grouped = {:cols => [], :rows => []}
 
-			# Populate columns with a determined set of values for inputs
-			diffvals = Array.new
-			all_data.each { |day| diffvals.push day[:input] }
-			diffvals = diffvals.uniq
-			diffvals.each { |input| grouped[:cols].push({'id': "#{input}-id", 'label': input, 'type': 'number'}) }
-			grouped[:cols].unshift({'id': 'day', 'label': 'Date', 'type': 'string'})
+            # Populate columns with a determined set of values for inputs
+            diffvals = Array.new
+            all_data.each { |day| diffvals.push day[:input] }
+            diffvals = diffvals.uniq
+            diffvals.each { |input| grouped[:cols].push({'id': "#{input}-id", 'label': input, 'type': 'number'}) }
+            grouped[:cols].unshift({'id': 'day', 'label': 'Date', 'type': 'string'})
 
-			# Create a set of dates that the actual data will be merged into
-			zeros = Array.new
-			(0..params[:days].to_i-1).each do |n|
-				diffvals.each do |input|
-					hash = Hash.new
-					hash[:date], hash[:input], hash[:count] = n.days.ago.to_date, input, 0
-					zeros.push hash
-				end
-			end
+            # Create a set of dates that the actual data will be merged into
+            zeros = Array.new
+            (0..params[:days].to_i-1).each do |n|
+                diffvals.each do |input|
+                    hash = Hash.new
+                    hash[:date], hash[:input], hash[:count] = n.days.ago.to_date, input, 0
+                    zeros.push hash
+                end
+            end
 
-			# Group the data by date after mapping the actual data into the premade set of dates
-			data_by_date = zeros.map do |first_hash| 
-				all_data.each do |second_hash|
-					if first_hash[:date] == second_hash[:date] && first_hash[:input] == second_hash[:input]
-						first_hash[:count] = second_hash[:count]
-						break
-					end
-				end
-				first_hash
-			end.group_by { |i| i[:date]}
+            # Group the data by date after mapping the actual data into the premade set of dates
+            data_by_date = zeros.map do |first_hash| 
+                all_data.each do |second_hash|
+                    if first_hash[:date] == second_hash[:date] && first_hash[:input] == second_hash[:input]
+                        first_hash[:count] = second_hash[:count]
+                        break
+                    end
+                end
+                first_hash
+            end.group_by { |i| i[:date]}
 
-			# Populate rows of data
-			data_by_date.each_with_index do |(date, values), day|
-				grouped[:rows][day] = {c: [{ v: date }] }
-				(0..diffvals.length-1).each { |value| grouped[:rows][day][:c].push({v: values[value][:count] }) }
-				#grouped[:rows][day][:c].push({v: values.map {|v| v[:count]}.reduce(0, :+) })
-			end 
+            # Populate rows of data
+            data_by_date.each_with_index do |(date, values), day|
+                grouped[:rows][day] = {c: [{ v: date }] }
+                (0..diffvals.length-1).each { |value| grouped[:rows][day][:c].push({v: values[value][:count] }) }
+                #grouped[:rows][day][:c].push({v: values.map {|v| v[:count]}.reduce(0, :+) })
+            end 
 
-			#grouped[:cols].push({'id': "s", 'label': "Total", 'type': 'number'}) 
+            #grouped[:cols].push({'id': "s", 'label': "Total", 'type': 'number'}) 
 
-			grouped[:rows].reverse!
-
-
-			###########################
-
-			# the object which will hold the data to be returned
-			# grouped = {:cols => [], :rows => []}
-
-			# standard_data = current_user.values.all.where(field_id: params[:field_ids])
-			# field_data = current_user.fields.all.where(id: params[:field_ids]).map { |x| x.name }
-			# grouped[:cols].push({'id': 'Date', 'label': 'Date', 'type': 'date'})
-			# field_data.each { |input| grouped[:cols].push({'id': input, 'label': input, 'type': 'string'}) }
-
-			# standard_data.each{ |value| grouped[:rows]
-			# 	.push({c: [
-			# 		{v: value[:created_at].to_date}, 
-			# 		{v: value[:input]}
-			# 	]})
-			# }
+            grouped[:rows].reverse!
 
 
-			render json: grouped
-		end
+            ###########################
 
-	end
+            # the object which will hold the data to be returned
+            # grouped = {:cols => [], :rows => []}
+
+            # standard_data = current_user.values.all.where(field_id: params[:field_ids])
+            # field_data = current_user.fields.all.where(id: params[:field_ids]).map { |x| x.name }
+            # grouped[:cols].push({'id': 'Date', 'label': 'Date', 'type': 'date'})
+            # field_data.each { |input| grouped[:cols].push({'id': input, 'label': input, 'type': 'string'}) }
+
+            # standard_data.each{ |value| grouped[:rows]
+            #   .push({c: [
+            #       {v: value[:created_at].to_date}, 
+            #       {v: value[:input]}
+            #   ]})
+            # }
+
+
+            render json: grouped
+        end
+
+    end
 end

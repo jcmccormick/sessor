@@ -1,26 +1,26 @@
 do ->
-	'use strict'
+    'use strict'
 
-	loading = ->
-		{
-			template: '<div ng-if="lv.loading"><span>Processing... <i class="glyphicon glyphicon-refresh"></i></span></div>'
-			scope: false
-			controllerAs: 'lv'
-			controller: ['$rootScope', ($rootScope)->
+    loading = ->
+        {
+            template: '<div ng-if="lv.loading"><span>Processing... <i class="glyphicon glyphicon-refresh"></i></span></div>'
+            scope: false
+            controllerAs: 'lv'
+            controller: ['$rootScope', ($rootScope)->
 
-				lv = this
+                lv = this
 
-				$rootScope.$on('loading:finish', ->
-					lv.loading = false
-				)
+                $rootScope.$on('loading:finish', ->
+                    lv.loading = false
+                )
 
-				$rootScope.$on('loading:progress', ->
-					lv.loading = true
-				)
+                $rootScope.$on('loading:progress', ->
+                    lv.loading = true
+                )
 
-				return lv
-				
-			]
-		}
+                return lv
+                
+            ]
+        }
 
-	angular.module('clerkr').directive('loading', loading)
+    angular.module('clerkr').directive('loading', loading)

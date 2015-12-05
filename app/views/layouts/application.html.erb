@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html>
-	<head ng-csp>
-		<base href="/" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-		<meta name="author" content="Joe McCormick" />
-		<meta name="abstract" content="Cloud reporting for individuals and businesses." />
-		<meta name="description" content="Clerkr, a cloud service offering reporting to individuals and businesses, with stats, employee management, client engagement, and more. Check us out, today!" />
-		<meta name="keywords" content="reporting tools, data tracking, employee system, client engagement, small-business software, hobby tracker, interactive graphs, cloud computing, online scheduling, appointments, asynchronous tutoring" />
-		<meta name="geo.region" content="USA" />
-		<meta name="geo.placename" content="New York, NY" />
-		<meta name="geo.position" content="40.7127840; -74.0059410" />
-		<meta name="revisit-after" content="1 month" />
-		<meta name="google" content="nositelinkssearchbox" />
-		<%= csrf_meta_tags %>
-		<title>Clerkr</title>
-		<!-- data, software, tools -->
-	</head>
-	<body ng-app="clerkr">
-		<noscript>Please enable javascript and cookies in your browser.</noscript>
-		<%= yield %>
-	</body>
-	<%= javascript_include_tag 'application', async: Rails.env.production?, cache: true %>
-	<%= stylesheet_link_tag 'application', media: 'all', cache: true %>
+    <head ng-csp>
+        <base href="/" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="author" content="Joe McCormick" />
+        <meta name="abstract" content="Cloud reporting for individuals and businesses." />
+        <meta name="description" content="Clerkr, a cloud service offering reporting to individuals and businesses, with stats, employee management, client engagement, and more. Making work more productive." />
+        <meta name="keywords" content="reporting tools, data tracking, employee system, client engagement, small-business software, hobby tracker, interactive graphs, cloud computing, online scheduling, appointments, asynchronous tutoring" />
+        <meta name="geo.region" content="USA" />
+        <meta name="geo.placename" content="New York, NY" />
+        <meta name="geo.position" content="40.7127840; -74.0059410" />
+        <meta name="revisit-after" content="1 month" />
+        <meta name="google" content="nositelinkssearchbox" />
+        <%= csrf_meta_tags %>
+        <title>Clerkr - Reporting for individuals and businesses.</title>
+        <!-- data, software, tools -->
+    </head>
+    <body ng-app="clerkr">
+        <noscript>Please enable javascript and cookies in your browser.</noscript>
+        <%= yield %>
+    </body>
+    <%= javascript_include_tag 'application', async: Rails.env.production?, cache: true %>
+    <%= stylesheet_link_tag 'application', media: 'all', cache: true %>
 </html>

@@ -1,24 +1,24 @@
 do ->
-	'use strict'
+    'use strict'
 
-	contact = ->
-		{
-			controllerAs: 'cv'
-			controller: ['$http', 'Flash', ($http, Flash)->
-				
-				cv = this
+    contact = ->
+        {
+            controllerAs: 'cv'
+            controller: ['$http', 'Flash', ($http, Flash)->
+                
+                cv = this
 
-				cv.newContact = (email, message, form)->
-					$http.post('/contacts', {email: email, message: message}).then((res)->
-						Flash.create('success', '<p>Thanks for your message.</p>', 'customAlert')
-						cv.email = undefined
-						cv.message = undefined
-						form.$setUntouched()
-					)
+                cv.newContact = (email, message, form)->
+                    $http.post('/contacts', {email: email, message: message}).then((res)->
+                        Flash.create('success', '<p>Thanks for your message.</p>', 'customAlert')
+                        cv.email = undefined
+                        cv.message = undefined
+                        form.$setUntouched()
+                    )
 
-				return cv
+                return cv
 
-			]
-		}
+            ]
+        }
 
-	angular.module('clerkr').directive('contact', contact)
+    angular.module('clerkr').directive('contact', contact)

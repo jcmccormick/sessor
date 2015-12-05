@@ -1,9 +1,9 @@
 do ->
-	'use strict'
+    'use strict'
 
-	startFrom = ->
-		(input, start)->
-			start = +start
-			input.slice start
+    startFrom = ->
+        (input, start)->
+            start = +start
+            input.slice start
 
-	angular.module('clerkr').filter("startFrom", startFrom)
+    angular.module('clerkr').filter("startFrom", startFrom)

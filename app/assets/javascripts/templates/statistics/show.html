@@ -1,23 +1,23 @@
 <div class="form-header">
-	<section>
-		<ul class="nav top-nav">
-			<li><h5><p>Past # days</p></h5></li>
-			<li><select class="form-control" ng-model="sv.days" ng-options="day as day for day in [5, 10, 15, 30, 60, 90]"></select></li>
-			<li><h5><p>Page</p></h5></li>
-			<li><select class="form-control" ng-model="sv.template" ng-options="template as template.name for template in sv.orderedTemplates = (sv.templates | orderBy:'-updated_at')" ng-change="sv.checker()"></select></li>
-			<li><h5><p>Field</p></h5></li>
-			<li><select class="form-control" ng-model="sv.field" ng-options="field as (field.o.name||field.o.placeholder) for field in sv.filteredFields = ( sv.template.fields | filter: {fieldtype: '!labelntext'} )"></select></li>
-			<li><a href="javascript:;" ng-click="sv.update()"><i class="glyphicon glyphicon-stats"></i> &nbsp; Graph</a></li>
-			<li><a href="javascript:;" ng-if="sv.chart.data.rows.length" ng-click="sv.chart.data = {};sv.chartEditor.closeDialog()">Reset</a></li>
-		</ul>
-	</section>
+    <section>
+        <ul class="nav top-nav">
+            <li><h5><p>Past # days</p></h5></li>
+            <li><select class="form-control" ng-model="sv.days" ng-options="day as day for day in [5, 10, 15, 30, 60, 90]"></select></li>
+            <li><h5><p>Page</p></h5></li>
+            <li><select class="form-control" ng-model="sv.template" ng-options="template as template.name for template in sv.orderedTemplates = (sv.templates | orderBy:'-updated_at')" ng-change="sv.checker()"></select></li>
+            <li><h5><p>Field</p></h5></li>
+            <li><select class="form-control" ng-model="sv.field" ng-options="field as (field.o.name||field.o.placeholder) for field in sv.filteredFields = ( sv.template.fields | filter: {fieldtype: '!labelntext'} )"></select></li>
+            <li><a href="javascript:;" ng-click="sv.update()"><i class="glyphicon glyphicon-stats"></i> &nbsp; Graph</a></li>
+            <li><a href="javascript:;" ng-if="sv.chart.data.rows.length" ng-click="sv.chart.data = {};sv.chartEditor.closeDialog()">Reset</a></li>
+        </ul>
+    </section>
 </div>
 <div class="col-xs-12" ng-if="sv.chart.data.rows.length && sv.chart.data.cols.length">
-	<section class="paper paper-color">
-		<span class="loading h4" ng-if="!sv.chart.displayed">Initializing chart... <i class="glyphicon glyphicon-refresh"></i></span>
-		<a href="javascript:;" class="btn btn-primary" ng-click="sv.loadEditor()" ng-if="sv.chart.displayed">Edit</a>
-<!-- 		<div class="chart-edit"></div>
-		<article google-chart chart="sv.chart"></article> -->
-		<article id="google-chart" style="height: 400px; width: 600px;"></article>
-	</section>
+    <section class="paper paper-color">
+        <span class="loading h4" ng-if="!sv.chart.displayed">Initializing chart... <i class="glyphicon glyphicon-refresh"></i></span>
+        <a href="javascript:;" class="btn btn-primary" ng-click="sv.loadEditor()" ng-if="sv.chart.displayed">Edit</a>
+<!--        <div class="chart-edit"></div>
+        <article google-chart chart="sv.chart"></article> -->
+        <article id="google-chart" style="height: 400px; width: 600px;"></article>
+    </section>
 </div>

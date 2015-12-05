@@ -1,57 +1,130 @@
 # Reports Controller
 module Api::V1 #:nodoc:
-	class ReportsController < ApiController
-		
-		nested_attributes_names = Report.nested_attributes_options.keys.map do |key|
-			key.to_s.concat('_attributes').to_sym
-		end
-		wrap_parameters include: Report.attribute_names + nested_attributes_names
+    class ReportsController < ApplicationController
+        before_action :authenticate_user!
+        include Sheeted
 
-		def index
-			render json: current_user.reports.as_json(only: [:id, :title, :updated_at, :template_order])
-		end
+        wrap_parameters include: Report.wrapped_params
 
-		def show
-			current_user.reports.find(params[:id]).populate_values(google_drive)
-			@report = current_user.reports.eager_load({:templates => :fields}, :values).find(params[:id])
-			@report
-		end
+        def index
+            render json: current_user.reports.as_json(only: [:id, :title, :updated_at, :template_order])
+        end
 
-		def create
-			@report = current_user.reports.new(allowed_params)
-			@report.save
-			current_user.reports << @report
-			render 'show', status: 201
-		end
+        def show
+            @report = current_user.reports.eager_load({:templates => :fields}).find(params[:id])
+        end
 
-		def update
-			report = current_user.reports.find(params[:id])
-			report.template_order = params[:template_order]
-			if params.has_key?(:did)
-				report.disassociate_template(params[:did])
-				report.update_attributes(params.require(:report).permit({:template_order => []}))
-			else
-				report.update_attributes(allowed_params)
-			end
-			current_user.reports << report unless current_user.reports.include?(report)
-			report.touch if report.values.find_index { |x| x.changed? }
-			head :no_content
-		end
+        def create
+            @report = current_user.reports.new(allowed_params)
+            @report.save
+            update_worksheet(@report)
+            current_user.reports << @report
+            render 'show', status: 201
+        end
 
-		def destroy
-			report = current_user.reports.find(params[:id])
-			report.destroy
-			head :no_content
-		end
+        def update
+            report = current_user.reports.find(params[:id])
+            report.template_order = params[:template_order]
+            if params.has_key?(:did)
+                report.disassociate_template(params[:did])
+                report.update_attributes(params.require(:report).permit({:template_order => []}))
+            else
+                update_worksheet(report)
+                report.update_attributes(allowed_params)
+            end
+            current_user.reports << report unless current_user.reports.include?(report)
+            report.touch if report.values.find_index { |x| x.changed? }
+            head :no_content
+        end
 
-		private
-			def allowed_params
-				params.require(:report).permit(
-					:id, :title, {:template_order => []}, :allow_title, :submission, :response, :active, :location,
-					values_attributes: [
-						:id, :input, :field_id
-					]      
-				)
-			end
-	end
+        def destroy
+            report = current_user.reports.find(params[:id])
+            report.destroy
+            head :no_content
+        end
+
+        private
+            def allowed_params
+                params.require(:report).permit(
+                    :id, :title, {:template_order => []}, :allow_title, :submission, :response, :active, :location,
+                    values_attributes: [
+                        :id, :input, :field_id
+                    ]      
+                )
+            end
+
+            def update_worksheet(report)
+                report.template_order.each do |template_id|
+                    template = current_user.templates.find_by_id(template_id)
+                    report.templates << template unless report.templates.include?(template)
+                    worksheet = google_drive.worksheet_by_url(template.gs_id)
+
+                    if template.fields.length
+                        report_found = false
+                        fields = template.fields.where.not(fieldtype: 'labelntext').sort_by { |n| n.o['name'].downcase }
+                        worksheet.list.each do |row|
+                            if row['Report ID'] == report.id
+                                report_found = true
+                                row['Updated At'] = Time.now
+                                fields.each do |field|
+                                    params[:values].each do |value|
+                                        if field.id == value.field_id
+                                            row[field.o['name']] = value.input
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                        if !report_found
+                            new_row = Hash.new
+                            new_row['Report ID'] = report.id
+                            new_row['Created At'] = report.created_at
+                            new_row['Updated At'] = Time.now
+                            fields.each do |field|
+                                new_row[field.o['name']] = field.o['default_value']
+                            end
+                            worksheet.list.push new_row
+                        end
+                        worksheet.save if worksheet.dirty?
+                    end
+                end
+            end
+
+            def call_worksheet
+                @report.template_order
+            end
+
+
+                        # field_ids = template.fields.map { |x| x.id }
+                        # if template.fields.where.not(fieldtype: 'labelntext').count > values.where(field_id: field_ids).count
+                        #   template.fields.where.not(fieldtype: 'labelntext').each do |field|
+                        #       Value.where(report_id: self.id, field_id: field.id).first_or_create do |value|
+                        #           value.input = field.default_value
+                        #       end
+                        #   end
+                        # end
+                    # else
+                    #   worksheet
+                    # end
+                # end
+                # if self.changed?
+                #   exclude_ids = Field.where(template_id: template_order).where.not(fieldtype: 'labelntext').map { |x| x.id }
+                #   pp exclude_ids
+                #   values.where.not(field_id: exclude_ids).destroy_all
+                # end
+            # end
+
+            def disassociate_template(did, unvalued=[])
+                template = templates.find(did)
+                template.fields.each do |field|
+                    values.each do |value|
+                        if field.id == value.field_id
+                            unvalued.push value.id
+                        end
+                    end
+                end
+                values.where(:id => unvalued).destroy_all
+                templates.delete(template)
+            end
+    end
 end

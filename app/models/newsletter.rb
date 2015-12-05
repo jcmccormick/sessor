@@ -1,3 +1,3 @@
 class Newsletter < ActiveRecord::Base
-	validates :email, uniqueness: true
+    validates :email, uniqueness: true
 end

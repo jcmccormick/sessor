@@ -1,31 +1,31 @@
 <div class="form-header">
-	<section>
-		<ul class="nav top-nav">
-			<li><a href="javascript:;" ng-click="updateAccount(user)">Update Account</a></li>
-			<li><a href="/pass_reset">Change Password</a></li>
-		</ul>
-	</section>
+    <section>
+        <ul class="nav top-nav">
+            <li><a href="javascript:;" ng-click="updateAccount(user)">Update Account</a></li>
+            <li><a href="/pass_reset">Change Password</a></li>
+        </ul>
+    </section>
 </div>
 <div class="paper row">
-	<form class="col-xs-12 col-md-6 col-md-offset-3">
-		<fieldset ng-disabled="!user.signedIn">
+    <form class="col-xs-12 col-md-6 col-md-offset-3">
+        <fieldset ng-disabled="!user.signedIn">
 
-			<h3>E-mail</h3>
-			<div class="form-group">
-				<input type="email" name="email" class="form-control imod" ng-model="user.email" ng-disabled="true">
-			</div>
-			<h3>Name</h3>
-			<div class="form-group">
-				<input type="text" name="name" class="form-control imod" ng-model="user.name">
-			</div>
-			<h3>Nickname</h3>
-			<div class="form-group">
-				<input type="text" name="nickname" class="form-control imod" ng-model="user.nickname">
-			</div>
+            <h3>E-mail</h3>
+            <div class="form-group">
+                <input type="email" name="email" class="form-control imod" ng-model="user.email" ng-disabled="true">
+            </div>
+            <h3>Name</h3>
+            <div class="form-group">
+                <input type="text" name="name" class="form-control imod" ng-model="user.name">
+            </div>
+            <h3>Nickname</h3>
+            <div class="form-group">
+                <input type="text" name="nickname" class="form-control imod" ng-model="user.nickname">
+            </div>
 
-    		<p></p>
-    		<p></p>
+            <p></p>
+            <p></p>
 
-		</fieldset>
-	</form>
+        </fieldset>
+    </form>
 </div>

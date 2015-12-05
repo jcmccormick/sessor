@@ -1,113 +1,113 @@
 <div class="paper paper-color fluid-container">
-	<div class="row">
-		<div class="col-md-6" ng-controller="TemplatesController as vt">
-			<section ng-form="vt.tempForm" class="col-xs-12">
-				<h1>Pages 
-					<small>{{vt.templates.length}} 
-						<a href="/templates/new" class="btn">New</a> 
-						<a href="/templates" class="btn">View All</a>
-					</small>
-				</h1>
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th><a href="javascript:;" ng-click="vt.sortType = 'id'; vt.sortReverse = !vt.sortReverse"># &nbsp; 
-								<i ng-show="vt.sortType=='id' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-								<i ng-show="vt.sortType=='id' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
-							</a></th>
-							<th>Actions</th>
-							<th><a href="javascript:;" ng-click="vt.sortType = 'draft'; vt.sortReverse = !vt.sortReverse">Draft &nbsp; 
-								<i ng-show="vt.sortType=='draft' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-								<i ng-show="vt.sortType=='draft' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
-							</a></th>
-							<th><a href="javascript:;" ng-click="vt.sortType = 'name'; vt.sortReverse = !vt.sortReverse">Name &nbsp; 
-								<i ng-show="vt.sortType=='name' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-								<i ng-show="vt.sortType=='name' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
-							</a></th>
-							<th><a href="javascript:;" ng-click="vt.sortType = 'updated_at'; vt.sortReverse = !vt.sortReverse">Updated &nbsp; 
-								<i ng-show="vt.sortType=='updated_at' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-								<i ng-show="vt.sortType=='updated_at' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
-							</a></th>
-						</tr>
-					</thead>
-					<tbody ng-if="vt.templates.length">
-						<tr ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo: 5">
-							<td>{{template.id}}</td>
-							<td> 
-								<a href="javascript:;" class="btn" title="New Report" ng-click="vt.newReport(template, vt.tempForm)"><i class="glyphicon glyphicon-inbox"></i></a> 
-								<a href="/templates/{{template.id}}" title="View" class="btn"><i class="glyphicon glyphicon-search"></i></a> 
-								<a href="/templates/{{template.id}}/edit" title="Edit" class="btn"><i class="glyphicon glyphicon-pencil"></i></a>
-								<a href="javascript:;" class="btn" title="Delete" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this page?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vt.delete(template)"><i class="glyphicon glyphicon-trash"></i></a>
-							</td>
-							<td>
-								<div class="btn-group" ng-click="template.draft = !template.draft; vt.setDraft(template)">
-									<a href="javascript:;" ng-show="template.draft" class="switch-on">Drafted</a>
-									<a href="javascript:;" ng-show="!template.draft">Undrafted</a>
-								</div>
-							</td>
-							<td>{{template.name}}</td>
-							<td>{{template.updated_at | date: 'short'}}</td>
-						</tr>
-					</tbody>
-				</table>
-			</section>
-		</div>
+    <div class="row">
+        <div class="col-md-6" ng-controller="TemplatesController as vt">
+            <section ng-form="vt.tempForm" class="col-xs-12">
+                <h1>Pages 
+                    <small>{{vt.templates.length}} 
+                        <a href="/templates/new" class="btn">New</a> 
+                        <a href="/templates" class="btn">View All</a>
+                    </small>
+                </h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th><a href="javascript:;" ng-click="vt.sortType = 'id'; vt.sortReverse = !vt.sortReverse"># &nbsp; 
+                                <i ng-show="vt.sortType=='id' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
+                                <i ng-show="vt.sortType=='id' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+                            </a></th>
+                            <th>Actions</th>
+                            <th><a href="javascript:;" ng-click="vt.sortType = 'draft'; vt.sortReverse = !vt.sortReverse">Draft &nbsp; 
+                                <i ng-show="vt.sortType=='draft' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
+                                <i ng-show="vt.sortType=='draft' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+                            </a></th>
+                            <th><a href="javascript:;" ng-click="vt.sortType = 'name'; vt.sortReverse = !vt.sortReverse">Name &nbsp; 
+                                <i ng-show="vt.sortType=='name' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
+                                <i ng-show="vt.sortType=='name' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+                            </a></th>
+                            <th><a href="javascript:;" ng-click="vt.sortType = 'updated_at'; vt.sortReverse = !vt.sortReverse">Updated &nbsp; 
+                                <i ng-show="vt.sortType=='updated_at' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
+                                <i ng-show="vt.sortType=='updated_at' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+                            </a></th>
+                        </tr>
+                    </thead>
+                    <tbody ng-if="vt.templates.length">
+                        <tr ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo: 5">
+                            <td>{{template.id}}</td>
+                            <td> 
+                                <a href="javascript:;" class="btn" title="New Report" ng-click="vt.newReport(template, vt.tempForm)"><i class="glyphicon glyphicon-inbox"></i></a> 
+                                <a href="/templates/{{template.id}}" title="View" class="btn"><i class="glyphicon glyphicon-search"></i></a> 
+                                <a href="/templates/{{template.id}}/edit" title="Edit" class="btn"><i class="glyphicon glyphicon-pencil"></i></a>
+                                <a href="javascript:;" class="btn" title="Delete" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this page?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vt.delete(template)"><i class="glyphicon glyphicon-trash"></i></a>
+                            </td>
+                            <td>
+                                <div class="btn-group" ng-click="template.draft = !template.draft; vt.setDraft(template)">
+                                    <a href="javascript:;" ng-show="template.draft" class="switch-on">Drafted</a>
+                                    <a href="javascript:;" ng-show="!template.draft">Undrafted</a>
+                                </div>
+                            </td>
+                            <td>{{template.name}}</td>
+                            <td>{{template.updated_at | date: 'short'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
 
-		<div class="col-md-6" ng-controller="ReportsController as vr">
-			<section ng-form="vr.repForm" class="col-xs-12">
-				<h1>Reports 
-					<small>{{vr.reports.length}} 
-						<a href="/reports/new" class="btn">New</a> 
-						<a href="/reports" class="btn">View All</a> 
-					</small>
-				</h1>
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th><a href="javascript:;" ng-click="vr.sortType = 'id'; vr.sortReverse = !vr.sortReverse"># &nbsp; 
-								<i ng-show="vr.sortType=='id' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-								<i ng-show="vr.sortType=='id' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
-							</a></th>
-							<th>Actions</th>
-							<th><a href="javascript:;" ng-click="vr.sortType = 'title'; vr.sortReverse = !vr.sortReverse">Name &nbsp; 
-								<i ng-show="vr.sortType=='title' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-								<i ng-show="vr.sortType=='title' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
-							</a></th>
-							<th><a href="javascript:;" ng-click="vr.sortType = 'templates[0].name'; vr.sortReverse = !vr.sortReverse">Pages &nbsp; 
-								<i ng-show="vr.sortType=='templates[0].name' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-								<i ng-show="vr.sortType=='templates[0].name' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
-							</a></th>
-							<th><a href="javascript:;" ng-click="vr.sortType = 'updated_at'; vr.sortReverse = !vr.sortReverse">Updated &nbsp; 
-								<i ng-show="vr.sortType=='updated_at' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-								<i ng-show="vr.sortType=='updated_at' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
-							</a></th>
-						</tr>
-					</thead>
-					<tbody ng-if="vr.reports.length">
-						<tr ng-repeat="report in vr.filteredList = (vr.reports | filter:vr.keywords) | orderBy:vr.sortType:vr.sortReverse | startFrom:vr.currentPage*vr.pageSize | limitTo: 5">
-							<td>{{report.id}}</td>
-							<td>
-								<a href="/reports/{{report.id}}" title="View" class="btn"><i class="glyphicon glyphicon-search"></i></a> 
-								<a href="/reports/{{report.id}}/edit" title="Edit" class="btn"><i class="glyphicon glyphicon-pencil"></i></a>
-								<a href="javascript:;" title="Delete" class="btn" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this report?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vr.delete(report)"><i class="glyphicon glyphicon-trash"></i></a>
-							</td>
-							<td>{{report.title}}</td>
-							<td><span ng-repeat="template in report.templates track by $index">{{template.name}}<span ng-show="!$last">, </span></span></td>
-							<td>{{report.updated_at | date: 'short'}}</td>
-						</tr>
-					</tbody>
-				</table>
-			</section>
-		</div>
-	</div>
+        <div class="col-md-6" ng-controller="ReportsController as vr">
+            <section ng-form="vr.repForm" class="col-xs-12">
+                <h1>Reports 
+                    <small>{{vr.reports.length}} 
+                        <a href="/reports/new" class="btn">New</a> 
+                        <a href="/reports" class="btn">View All</a> 
+                    </small>
+                </h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th><a href="javascript:;" ng-click="vr.sortType = 'id'; vr.sortReverse = !vr.sortReverse"># &nbsp; 
+                                <i ng-show="vr.sortType=='id' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
+                                <i ng-show="vr.sortType=='id' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+                            </a></th>
+                            <th>Actions</th>
+                            <th><a href="javascript:;" ng-click="vr.sortType = 'title'; vr.sortReverse = !vr.sortReverse">Name &nbsp; 
+                                <i ng-show="vr.sortType=='title' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
+                                <i ng-show="vr.sortType=='title' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+                            </a></th>
+                            <th><a href="javascript:;" ng-click="vr.sortType = 'templates[0].name'; vr.sortReverse = !vr.sortReverse">Pages &nbsp; 
+                                <i ng-show="vr.sortType=='templates[0].name' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
+                                <i ng-show="vr.sortType=='templates[0].name' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+                            </a></th>
+                            <th><a href="javascript:;" ng-click="vr.sortType = 'updated_at'; vr.sortReverse = !vr.sortReverse">Updated &nbsp; 
+                                <i ng-show="vr.sortType=='updated_at' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
+                                <i ng-show="vr.sortType=='updated_at' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+                            </a></th>
+                        </tr>
+                    </thead>
+                    <tbody ng-if="vr.reports.length">
+                        <tr ng-repeat="report in vr.filteredList = (vr.reports | filter:vr.keywords) | orderBy:vr.sortType:vr.sortReverse | startFrom:vr.currentPage*vr.pageSize | limitTo: 5">
+                            <td>{{report.id}}</td>
+                            <td>
+                                <a href="/reports/{{report.id}}" title="View" class="btn"><i class="glyphicon glyphicon-search"></i></a> 
+                                <a href="/reports/{{report.id}}/edit" title="Edit" class="btn"><i class="glyphicon glyphicon-pencil"></i></a>
+                                <a href="javascript:;" title="Delete" class="btn" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this report?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vr.delete(report)"><i class="glyphicon glyphicon-trash"></i></a>
+                            </td>
+                            <td>{{report.title}}</td>
+                            <td><span ng-repeat="template in report.templates track by $index">{{template.name}}<span ng-show="!$last">, </span></span></td>
+                            <td>{{report.updated_at | date: 'short'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
 
-	<div class="row">
-		<div class="col-md-6">
-			<h1>Stats</h1>
-			<a href="/statistics" class="btn">View</a>
-		</div>
-		<div class="col-md-6">
-			<h1>Group</h1>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Stats</h1>
+            <a href="/statistics" class="btn">View</a>
+        </div>
+        <div class="col-md-6">
+            <h1>Group</h1>
+        </div>
+    </div>
 </div>
