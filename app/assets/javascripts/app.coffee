@@ -8,6 +8,7 @@ do ->
         'ngRoute',
         'ngResource',
         'ngAnimate',
+        'ngMaterial',
         'ng-token-auth',
         'ngBootbox',
         'LocalStorageModule',

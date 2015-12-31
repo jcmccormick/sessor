@@ -2,6 +2,7 @@
 <html>
     <head ng-csp>
         <base href="/" />
+        <meta http-equiv="Cache-control" content="public, max-age=2592000">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <meta name="author" content="Joe McCormick" />
         <meta name="abstract" content="Cloud reporting for individuals and businesses." />
@@ -15,6 +16,17 @@
         <%= csrf_meta_tags %>
         <title>Clerkr - Reporting for individuals and businesses.</title>
         <!-- data, software, tools -->
+        <style>
+            .landing-page {background-color: white;width:100%;}
+            .navbar-brand {display: inline-block;}
+            .approach {width: 100%;}
+            .down {width: 100%;cursor: pointer;}
+            .features > * > * {margin: 30px 0;}
+            .newsletter {display: block;padding: 160px  40px;}
+            .officials {padding: 60px 10px;}
+            .col-xs-12 {width: 100%;}
+            .col-xs-6 {width: 50%;}
+        </style>
     </head>
     <body ng-app="clerkr">
         <noscript>Please enable javascript and cookies in your browser.</noscript>

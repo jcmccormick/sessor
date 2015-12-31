@@ -16,12 +16,14 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require angular/angular
+//= require angular-aria
 //= require angular-route/angular-route
 //= require angular-resource/angular-resource
 //= require angular-flash-alert/dist/angular-flash
 //= require angular-mocks/angular-mocks
 //= require angular-animate/angular-animate
 //= require angular-local-storage/dist/angular-local-storage.min
+//= require angular-material/angular-material.min
 //= require angular-rails-templates
 //= require angular-cookie
 //= require angular-ui-sortable

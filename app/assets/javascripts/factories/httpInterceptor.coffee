@@ -1,7 +1,7 @@
 do ->
     'use strict'
 
-    loadingInterceptor = ($q, $rootScope, $log)->
+    loadingInterceptor = ($q, $rootScope)->
 
         loadingCount = 0
 
@@ -21,6 +21,6 @@ do ->
 
         }
 
-    loadingInterceptor.$inject =  ['$q', '$rootScope', '$log']
+    loadingInterceptor.$inject =  ['$q', '$rootScope']
 
     angular.module('clerkr').factory("loadingInterceptor", loadingInterceptor)

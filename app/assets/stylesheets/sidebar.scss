@@ -63,12 +63,17 @@
 }
 
 /* Brand Bar/Page Menu */
-.top-nav>li:hover {
-    ul {
-        display: block;
-        margin-top: 0;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
+.top-nav {
+    >li:hover {
+        ul {
+            display: block;
+            margin-top: 0;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    }
+    input[type="text"] {
+        margin-top: 3px;
     }
 }
 

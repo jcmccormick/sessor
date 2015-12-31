@@ -1,7 +1,7 @@
 do ->
     'use strict'
 
-    TemplatesController = ($routeParams, $scope, localStorageService, ReportsService, TemplatesService)->
+    TemplatesController = ($routeParams, $scope, $window, localStorageService, ReportsService, TemplatesService)->
 
         vt = this
 
@@ -97,11 +97,11 @@ do ->
                     $('.form-specs').hasClass('in') && $('.form-header').css('min-height': '50px')
                     return true
         else
+            # Options for sorting in the sortable views
             vt.sortType = 'updated_at'
             vt.sortReverse = true
             vt.currentPage = 0
             vt.pageSize = 25
-
             vt.numPages = ->
                 Math.ceil(vt.filteredList.length/vt.pageSize)
 
@@ -120,8 +120,12 @@ do ->
         vt.delete = (template)->
             TemplatesService.deleteTemplate(template)
 
+        vt.view_sheet = (template)->
+            $window.open(template.gs_url, template.name)
+            return true
+
         return vt
 
-    TemplatesController.$inject = ['$routeParams', '$scope', 'localStorageService', 'ReportsService', 'TemplatesService']
+    TemplatesController.$inject = ['$routeParams', '$scope', '$window', 'localStorageService', 'ReportsService', 'TemplatesService']
 
     angular.module('clerkr').controller('TemplatesController', TemplatesController)

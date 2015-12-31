@@ -10,6 +10,7 @@
     "angular-resource": "latest",
     "angular-route": "latest",
     "angular-ui-sortable": "latest",
+    "angular-material": "latest",
     "bootbox": "latest",
     "ng-token-auth": "latest",
     "ngBootbox": "latest"

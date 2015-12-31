@@ -17,6 +17,7 @@ module Api::V1#:nodoc:
         def create
             create_spreadsheet(params[:name])
             @template = current_user.templates.new(allowed_params)
+            @template.gs_url = @spreadsheet.human_url
             @template.gs_id = @spreadsheet.worksheets[0].cells_feed_url
             @template.save
             current_user.templates << @template
