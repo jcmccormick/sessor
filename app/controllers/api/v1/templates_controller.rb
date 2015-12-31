@@ -69,8 +69,6 @@ module Api::V1#:nodoc:
                     end
 
                     worksheet.save if worksheet.dirty?
-                else
-                    pp 'fields unchanged'
                 end
 
             end
