@@ -16,7 +16,7 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require angular/angular
-//= require angular-aria
+//= require angular-aria/angular-aria.min
 //= require angular-route/angular-route
 //= require angular-resource/angular-resource
 //= require angular-flash-alert/dist/angular-flash
