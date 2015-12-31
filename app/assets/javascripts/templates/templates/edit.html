@@ -53,10 +53,10 @@
                 </li>
                 <li ng-if="vt.template.id"><p>{{vt.template.fields.length || 0}} of 20 fields used</p></li>
                 <li ng-if="vt.template.id"><a href="javascript:;" ng-bootbox-confirm="
-                    <h3>Click OK to view the Google Spreadsheet for this Page.</h3>
+                    <h3>Click OK to view the Google Spreadsheet for {{vt.template.name}}.</h3>
                     <p class='required-error'>Important!</p>
-                    <p>Any changes you make on the Google Spreadsheet <strong>will not</strong> be reflected on Clerkr. Do not make attempts to modify the Google Spreadsheet. Instead, export it locally to your computer, or make a copy on Google Drive to make changes.</p>
-                    <p>Making changes to the Spreadsheet may cause it to stop working with Clerkr, and by clicking OK you are acknowdgleging this.</p>" ng-bootbox-confirm-action="vt.view_sheet(vt.template)">View Google Sheet</a></li>
+                    <p>Any changes you make on the Google Spreadsheet <strong>will not</strong> be reflected on Clerkr. Do not make attempts to modify the Google Spreadsheet. Instead, export it locally to your computer, or make a copy on Google Drive for your own uses.</p>
+                    <p>By clicking OK, you understand that modifying the original Spreadsheet may cause it to stop working with Clerkr.</p>" ng-bootbox-confirm-action="vt.view_sheet(vt.template)">View Google Sheet</a></li>
             </ul>
         </section>
     </div>
