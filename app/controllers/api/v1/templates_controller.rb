@@ -46,7 +46,7 @@ module Api::V1#:nodoc:
         private
             def allowed_params
                 params.require(:template).permit(
-                    :name, :gs_id, :draft, :private_group, :private_world, :group_id, :group_edit, :group_editors,
+                    :name, :gs_url, :gs_id, :draft, :private_group, :private_world, :group_id, :group_edit, :group_editors,
                     {:sections => []},
                     {:fields_attributes => [
                         :id, :fieldtype, :_destroy, {:o => [
