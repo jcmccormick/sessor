@@ -20,8 +20,8 @@
 //= require angular-resource/angular-resource
 //= require angular-flash-alert/dist/angular-flash
 //= require angular-mocks/angular-mocks
-//= require angular-material/angular-material.min
-//= require angular-aria/angular-aria.min
+//= require angular-material.min
+//= require angular-aria/angular-aria
 //= require angular-animate/angular-animate
 //= require angular-local-storage/dist/angular-local-storage.min
 //= require angular-rails-templates
