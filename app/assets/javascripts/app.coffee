@@ -9,6 +9,7 @@ do ->
         'ngResource',
         'ngAnimate',
         'ngMaterial',
+        'ngAria',
         'ng-token-auth',
         'ngBootbox',
         'LocalStorageModule',
