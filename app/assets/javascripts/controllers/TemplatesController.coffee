@@ -98,6 +98,7 @@ do ->
                     return true
         else
             # Options for sorting in the sortable views
+            vt.viewStyle = 'sortable'
             vt.sortType = 'updated_at'
             vt.sortReverse = true
             vt.currentPage = 0

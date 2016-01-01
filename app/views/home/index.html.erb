@@ -5,7 +5,7 @@
 
 <main ng-if="user.signedIn" class="view-frame animate-view" ng-view></main>
 
-<section class="landing-page" ng-init="landing={}" ng-show="false || !user.signedIn">
+<section class="landing-page" ng-init="landing={}" ng-show="false || !user.signedIn" ng-cloak>
 
     <!-- Signed-out Menu -->
     <nav class="navbar-top" role="navigation">

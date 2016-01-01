@@ -88,6 +88,7 @@ do ->
                     $('.form-specs').hasClass('in') && $('.form-header').css('min-height': '50px')
                     return true
         else
+            vr.viewStyle = 'sortable'
             vr.sortType = 'updated_at'
             vr.sortReverse = true
             vr.currentPage = 0
