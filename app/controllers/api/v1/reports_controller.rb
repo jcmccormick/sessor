@@ -80,7 +80,7 @@ module Api::V1 #:nodoc:
                             new_row['Report ID'] = report.id
                             new_row['Created At'] = report.created_at
                             new_row['Updated At'] = Time.now
-                            fields.each do |field|
+                            template.fields.where.not(fieldtype: 'labelntext').each do |field|
                                 new_row["#{field.id} #{field.o['name']}"] = field.o['default_value']
                             end
                             worksheet.list.push new_row

@@ -96,8 +96,8 @@ do ->
             vr.numPages = ->
                 Math.ceil(vr.filteredList.length/vr.pageSize)
 
-        vr.delete = (report)->
-            ReportsService.deleteReport(report)
+        vr.delete = (report, ev)->
+            ReportsService.deleteReport(report, ev)
 
         return vr
 

@@ -10,7 +10,7 @@ do ->
 
                 cv.newContact = (email, message, form)->
                     $http.post('/contacts', {email: email, message: message}).then((res)->
-                        Flash.create('success', '<p>Thanks for your message.</p>', 'customAlert')
+                        Flash.create('success', '<h2>Success! <small>Contact</small></h2><p>Thanks for your message.</p>', 'customAlert')
                         cv.email = undefined
                         cv.message = undefined
                         form.$setUntouched()
