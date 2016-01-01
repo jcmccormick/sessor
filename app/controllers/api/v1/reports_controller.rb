@@ -17,8 +17,8 @@ module Api::V1 #:nodoc:
         def create
             @report = current_user.reports.new(allowed_params)
             @report.save
-            update_worksheet(@report)
             current_user.reports << @report
+            update_worksheet(@report)
             render 'show', status: 201
         end
 
@@ -61,15 +61,15 @@ module Api::V1 #:nodoc:
 
                     if template.fields.length
                         report_found = false
-                        fields = template.fields.where.not(fieldtype: 'labelntext').sort_by { |n| n.o['name'].downcase }
                         worksheet.list.each do |row|
-                            if row['Report ID'] == report.id
+                            if row['Report ID'] == report.id.to_s
                                 report_found = true
                                 row['Updated At'] = Time.now
-                                fields.each do |field|
-                                    params[:values].each do |value|
-                                        if field.id == value.field_id
-                                            row[field.o['name']] = value.input
+                                template.fields.where.not(fieldtype: 'labelntext').each do |field|
+                                    params[:values_attributes].each do |value|
+                                        puts value
+                                        if field.id.to_s == value['field_id'].to_s
+                                            row["#{field.id} #{field.o['name']}"] = value['input']
                                         end
                                     end
                                 end
@@ -81,7 +81,7 @@ module Api::V1 #:nodoc:
                             new_row['Created At'] = report.created_at
                             new_row['Updated At'] = Time.now
                             fields.each do |field|
-                                new_row[field.o['name']] = field.o['default_value']
+                                new_row["#{field.id} #{field.o['name']}"] = field.o['default_value']
                             end
                             worksheet.list.push new_row
                         end

@@ -118,8 +118,8 @@ do ->
                 vt.tempForm.$pristine = false
                 TemplatesService.saveTemplate(template, true, vt.tempForm)
 
-        vt.delete = (template)->
-            TemplatesService.deleteTemplate(template)
+        vt.delete = (template, ev)->
+            TemplatesService.deleteTemplate(template, ev)
 
         vt.view_sheet = (template)->
             $window.open(template.gs_url, template.name)

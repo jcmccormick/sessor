@@ -59,7 +59,7 @@
                     <tr ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo: 5">
                         <td>{{template.id}}</td>
                         <td> 
-                            <a href="javascript:;" class="btn" title="New Report" ng-click="vt.newReport(template, vt.tempForm)"><i class="glyphicon glyphicon-inbox"></i></a> 
+                            <a href="javascript:;" class="btn" title="New Report" ng-click="vt.newReport(template, vt.tempForm)"><i class="glyphicon glyphicon-send"></i></a> 
                             <a href="/templates/{{template.id}}" title="View" class="btn"><i class="glyphicon glyphicon-search"></i></a> 
                             <a href="/templates/{{template.id}}/edit" title="Edit" class="btn"><i class="glyphicon glyphicon-pencil"></i></a>
                             <a href="javascript:;" class="btn" title="Delete" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this page?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vt.delete(template)"><i class="glyphicon glyphicon-trash"></i></a>
@@ -81,11 +81,9 @@
             <md-card ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo: 5">
                 <md-card-content>
                     <h2><small>#{{template.id}}</small> {{template.name || 'Untitled'}}</h2>
-                    <p>
-                        <div class="btn-group" ng-click="template.draft = !template.draft; vt.setDraft(template)">
-                            <a href="javascript:;" ng-show="template.draft" class="switch-on">Drafted</a>
-                            <a href="javascript:;" ng-show="!template.draft">Undrafted</a>
-                        </div>
+                    <p class="btn-group" ng-click="template.draft = !template.draft; vt.setDraft(template)">
+                        <a href="javascript:;" ng-show="template.draft" class="switch-on">Drafted</a>
+                        <a href="javascript:;" ng-show="!template.draft">Undrafted</a>
                     </p>
                 </md-card-content>
                 <md-card-actions layout="row" layout-align="end center">
@@ -93,7 +91,7 @@
                         <md-tooltip md-direction="top">
                             New Report with {{template.name}}
                         </md-tooltip>
-                        <i class="glyphicon glyphicon-inbox"></i>
+                        <i class="glyphicon glyphicon-send"></i>
                     </md-button>
                     <md-button href="/templates/{{template.id}}" class="md-icon-button md-primary" aria-label="View #{{template.id}} {{template.name}}">
                         <md-tooltip md-direction="top">
@@ -107,7 +105,7 @@
                         </md-tooltip>
                         <i class="glyphicon glyphicon-pencil"></i>
                     </md-button>
-                    <md-button class="md-icon-button md-warn" aria-label="Delete #{{template.id}} {{template.name}}">
+                    <md-button ng-click="vt.delete(template, $event)" class="md-icon-button md-warn" aria-label="Delete #{{template.id}} {{template.name}}">
                         <md-tooltip md-direction="top">
                             Delete
                         </md-tooltip>
@@ -151,7 +149,7 @@
             </div>
         </md-toolbar>
 
-        <md-content ng-show="vr.viewStyle == 'sortable'" ng-form="vr.repForm" flex layout-padding>
+        <md-content ng-show="vr.viewStyle == 'sortable'" ng-form="vr.repForm">
             <table class="table table-striped">
                 <thead>
                     <tr>

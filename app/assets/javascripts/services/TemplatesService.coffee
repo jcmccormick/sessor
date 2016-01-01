@@ -1,7 +1,7 @@
 do ->
     'use strict'
 
-    TemplatesService = ($interval, $location, $q, $rootScope, ClassFactory, Flash, localStorageService)->
+    TemplatesService = ($interval, $location, $mdDialog, $q, $rootScope, ClassFactory, Flash, localStorageService)->
 
         templates = localStorageService.get('_cst')
         slt = (temps)->
@@ -138,15 +138,22 @@ do ->
                 return
 
             # delete template
-            deleteTemplate: (template)->
-                $.extend template, new ClassFactory()
-                template.$delete({class: 'templates', id: template.id}, ((res)->
-                    templates.splice(geti(template.id), 1)
-                    slt(templates)
-                    $location.path("/templates")
-                ), (err)->
-                    Flash.create('danger', '<h3>Error! <small>Page</small></h3><p>'+err.data.errors+'</p>', 'customAlert')
-                )
+            deleteTemplate: (template, ev)->
+                confirm = $mdDialog.confirm()
+                    .title('Are you sure you want to delete this page?')
+                    .content('Pressing DELETE will permanently remove '+template.name+', if it is not connected to any reports.')
+                    .targetEvent(ev)
+                    .ok('DELETE')
+                    .cancel('Get me out of here!')
+                $mdDialog.show(confirm).then ->
+                    $.extend template, new ClassFactory()
+                    template.$delete({class: 'templates', id: template.id}, ((res)->
+                        templates.splice(geti(template.id), 1)
+                        slt(templates)
+                        $location.path("/templates")
+                    ), (err)->
+                        Flash.create('danger', '<h3>Error! <small>Page</small></h3><p>'+err.data.errors+'</p>', 'customAlert')
+                    )
                 return
 
             # add section
@@ -346,6 +353,6 @@ do ->
         #   $location.path().search(template.id+'/edit') == -1 && clearInterval(collectDrafts)
         # ), 10000
 
-    TemplatesService.$inject = ['$interval', '$location', '$q', '$rootScope', 'ClassFactory', 'Flash', 'localStorageService']
+    TemplatesService.$inject = ['$interval', '$location', '$mdDialog', '$q', '$rootScope', 'ClassFactory', 'Flash', 'localStorageService']
 
     angular.module('clerkr').service('TemplatesService', TemplatesService)
