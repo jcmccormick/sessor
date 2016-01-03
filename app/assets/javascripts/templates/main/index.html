@@ -1,220 +1,255 @@
 <div layout="row" layout-sm="column">
     <md-card flex ng-controller="TemplatesController as vt">
-        <md-toolbar>
+
+        <!-- Page Toolbar -->
+
+        <md-toolbar class="md-site-secondary">
             <div class="md-toolbar-tools">
                 <h2>
                     <span>Pages</span>
                 </h2>
-                <md-button href="/templates/new" class="md-icon-button md-mini md-primary md-hue-3" aria-label="New Page">
+                <md-button href="/templates/new" class="md-icon-button" aria-label="New Page">
                     <md-tooltip md-direction="right">
                         New Page
                     </md-tooltip>
-                    <i class="glyphicon glyphicon-plus"></i>
+                    <md-icon>add</md-icon>
                 </md-button>
-                <md-button href="/templates" class="md-icon-button md-mini md-primary md-hue-3" aria-label="View All Pages">
+                <md-button href="/templates" class="md-icon-button" aria-label="View All Pages">
                     <md-tooltip md-direction="right">
                         View All Pages
                     </md-tooltip>
-                    <i class="glyphicon glyphicon-search"></i>
-                </md-button>
-                <md-button ng-click="vt.viewStyle = 'sortable'" class="md-icon-button md-mini md-primary md-hue-3" aria-label="Sortable View">
-                    <md-tooltip md-direction="right">
-                        Sortable View
-                    </md-tooltip>
-                    <i class="glyphicon glyphicon-list"></i>
-                </md-button>
-                <md-button ng-click="vt.viewStyle = 'card'" class="md-icon-button md-mini md-primary md-hue-3" aria-label="Card View">
-                    <md-tooltip md-direction="right">
-                        Card View
-                    </md-tooltip>
-                    <i class="glyphicon glyphicon-th-large"></i>
+                    <md-icon>search</md-icon>
                 </md-button>
             </div>
         </md-toolbar>
 
-        <md-content ng-show="vt.viewStyle == 'sortable'" ng-form="vt.tempForm">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th><a href="javascript:;" ng-click="vt.sortType = 'id'; vt.sortReverse = !vt.sortReverse"># &nbsp; 
-                            <i ng-show="vt.sortType=='id' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-                            <i ng-show="vt.sortType=='id' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
-                        </a></th>
-                        <th>Actions</th>
-                        <th><a href="javascript:;" ng-click="vt.sortType = 'draft'; vt.sortReverse = !vt.sortReverse">Draft &nbsp; 
-                            <i ng-show="vt.sortType=='draft' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-                            <i ng-show="vt.sortType=='draft' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
-                        </a></th>
-                        <th><a href="javascript:;" ng-click="vt.sortType = 'name'; vt.sortReverse = !vt.sortReverse">Name &nbsp; 
-                            <i ng-show="vt.sortType=='name' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-                            <i ng-show="vt.sortType=='name' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
-                        </a></th>
-                        <th><a href="javascript:;" ng-click="vt.sortType = 'updated_at'; vt.sortReverse = !vt.sortReverse">Updated &nbsp; 
-                            <i ng-show="vt.sortType=='updated_at' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-                            <i ng-show="vt.sortType=='updated_at' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
-                        </a></th>
-                    </tr>
-                </thead>
-                <tbody ng-if="vt.templates.length">
-                    <tr ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo: 5">
-                        <td>{{template.id}}</td>
-                        <td> 
-                            <a href="javascript:;" class="btn" title="New Report" ng-click="vt.newReport(template, vt.tempForm)"><i class="glyphicon glyphicon-send"></i></a> 
-                            <a href="/templates/{{template.id}}" title="View" class="btn"><i class="glyphicon glyphicon-search"></i></a> 
-                            <a href="/templates/{{template.id}}/edit" title="Edit" class="btn"><i class="glyphicon glyphicon-pencil"></i></a>
-                            <a href="javascript:;" class="btn" ng-click="vt.delete(template, $event)"><i class="glyphicon glyphicon-trash"></i></a>
-                        </td>
-                        <td>
-                            <div class="btn-group" ng-click="template.draft = !template.draft; vt.setDraft(template)">
-                                <a href="javascript:;" ng-show="template.draft" class="switch-on">Drafted</a>
-                                <a href="javascript:;" ng-show="!template.draft">Undrafted</a>
-                            </div>
-                        </td>
-                        <td>{{template.name}}</td>
-                        <td>{{template.updated_at | date: 'short'}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </md-content>
+        <md-content>
+            <md-tabs md-dynamic-height md-border-bottom ng-form="vt.tempForm">
+                <md-tab label="sorted">
+                    <md-content>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th><a href="javascript:;" ng-click="vt.sortType = 'id'; vt.sortReverse = !vt.sortReverse"># &nbsp; 
+                                        <md-icon ng-show="vt.sortType=='id' && !vt.sortReverse">expand_more</md-icon> 
+                                        <md-icon ng-show="vt.sortType=='id' && vt.sortReverse">expand_less</md-icon
+                                    </a></th>
+                                    <th>Actions</th>
+                                    <th><a href="javascript:;" ng-click="vt.sortType = 'draft'; vt.sortReverse = !vt.sortReverse">Draft &nbsp; 
+                                        <md-icon ng-show="vt.sortType=='draft' && !vt.sortReverse">expand_more</md-icon> 
+                                        <md-icon ng-show="vt.sortType=='draft' && vt.sortReverse">expand_less</md-icon
+                                    </a></th>
+                                    <th><a href="javascript:;" ng-click="vt.sortType = 'name'; vt.sortReverse = !vt.sortReverse">Name &nbsp; 
+                                        <md-icon ng-show="vt.sortType=='name' && !vt.sortReverse">expand_more</md-icon> 
+                                        <md-icon ng-show="vt.sortType=='name' && vt.sortReverse">expand_less</md-icon
+                                    </a></th>
+                                    <th><a href="javascript:;" ng-click="vt.sortType = 'updated_at'; vt.sortReverse = !vt.sortReverse">Updated &nbsp; 
+                                        <md-icon ng-show="vt.sortType=='updated_at' && !vt.sortReverse">expand_more</md-icon> 
+                                        <md-icon ng-show="vt.sortType=='updated_at' && vt.sortReverse">expand_less</md-icon
+                                    </a></th>
+                                </tr>
+                            </thead>
+                            <tbody ng-if="vt.templates.length">
+                                <tr ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo: 5">
+                                    <td>{{template.id}}</td>
+                                    <td> 
+                                        <md-button class="md-icon-button md-primary" ng-click="vt.newReport(template, vt.tempForm)">
+                                            <md-tooltip md-direction="bottom">
+                                                New Report with {{template.name}}
+                                            </md-tooltip>
+                                            <md-icon>insert_drive_file</md-icon>
+                                        </md-button> 
+                                        <md-button class="md-icon-button md-primary" href="/templates/{{template.id}}">
+                                            <md-tooltip md-direction="bottom">
+                                                View
+                                            </md-tooltip>
+                                            <md-icon>search</md-icon>
+                                        </md-button> 
+                                        <md-button class="md-icon-button md-primary" href="/templates/{{template.id}}/edit">
+                                            <md-tooltip md-direction="bottom">
+                                                Edit
+                                            </md-tooltip>
+                                            <md-icon>create</md-icon>
+                                        </md-button>
+                                        <md-button class="md-icon-button md-warn" ng-click="vt.delete(template, $event)">
+                                            <md-tooltip md-direction="bottom">
+                                                Delete
+                                            </md-tooltip>
+                                            <md-icon>delete</md-icon>
+                                        </md-button>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" ng-click="template.draft = !template.draft; vt.setDraft(template)">
+                                            <a href="javascript:;" ng-show="template.draft" class="switch-on">Drafted</a>
+                                            <a href="javascript:;" ng-show="!template.draft">Undrafted</a>
+                                        </div>
+                                    </td>
+                                    <td>{{template.name}}</td>
+                                    <td>{{template.updated_at | date: 'short'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </md-content>
+                </md-tab>
+                <md-tab label="expanded">
+                    <md-content class="md-padding" layout="column">
+                        <md-card ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo: 5">
+                
+                            <!-- <template-form-directive class="page-preview" form="template"></template-form-directive> -->
 
-        <md-content ng-show="vt.viewStyle == 'card'" layout="column">
-            <md-card ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo: 5">
-                <md-card-content>
-                    <h2><small>#{{template.id}}</small> {{template.name || 'Untitled'}}</h2>
-                    <p class="btn-group" ng-click="template.draft = !template.draft; vt.setDraft(template)">
-                        <a href="javascript:;" ng-show="template.draft" class="switch-on">Drafted</a>
-                        <a href="javascript:;" ng-show="!template.draft">Undrafted</a>
-                    </p>
-                </md-card-content>
-                <md-card-actions layout="row" layout-align="end center">
-                    <md-button ng-click="vt.newReport(template, vt.tempForm)" class="md-fab md-mini md-primary" aria-label="New Report with {{template.name}}">
-                        <md-tooltip md-direction="top">
-                            New Report with {{template.name}}
-                        </md-tooltip>
-                        <i class="glyphicon glyphicon-send"></i>
-                    </md-button>
-                    <md-button href="/templates/{{template.id}}" class="md-icon-button md-primary" aria-label="View #{{template.id}} {{template.name}}">
-                        <md-tooltip md-direction="top">
-                            View
-                        </md-tooltip>
-                        <i class="glyphicon glyphicon-search"></i>
-                    </md-button>
-                    <md-button href="/templates/{{template.id}}/edit" class="md-icon-button md-primary" aria-label="Edit #{{template.id}} {{template.name}}">
-                        <md-tooltip md-direction="top">
-                            Edit
-                        </md-tooltip>
-                        <i class="glyphicon glyphicon-pencil"></i>
-                    </md-button>
-                    <md-button ng-click="vt.delete(template, $event)" class="md-icon-button md-warn" aria-label="Delete #{{template.id}} {{template.name}}">
-                        <md-tooltip md-direction="top">
-                            Delete
-                        </md-tooltip>
-                        <i class="glyphicon glyphicon-trash"></i>
-                    </md-button>
-                </md-card-actions>
-            </md-card>
+                            <md-card-content ng-init="template.e = false">
+                                <h2><small>#{{template.id}}</small> {{template.name || 'Untitled'}}</h2>
+                                <p class="btn-group" ng-click="template.draft = !template.draft; vt.setDraft(template)">
+                                    <a href="javascript:;" ng-show="template.draft" class="switch-on">Drafted</a>
+                                    <a href="javascript:;" ng-show="!template.draft">Undrafted</a>
+                                </p>
+                            </md-card-content>
+
+                            <md-card-actions layout="row" layout-align="end center">
+                                <md-button ng-click="vt.newReport(template, vt.tempForm)" class="md-fab md-mini md-primary" aria-label="New Report with {{template.name}}">
+                                    <md-tooltip md-direction="top">
+                                        New Report with {{template.name}}
+                                    </md-tooltip>
+                                    <md-icon>insert_drive_file</md-icon>
+                                </md-button>
+                                <md-button href="/templates/{{template.id}}" class="md-icon-button md-primary" aria-label="View #{{template.id}} {{template.name}}">
+                                    <md-tooltip md-direction="top">
+                                        View
+                                    </md-tooltip>
+                                    <md-icon>search</md-icon>
+                                </md-button>
+                                <md-button href="/templates/{{template.id}}/edit" class="md-icon-button md-primary" aria-label="Edit #{{template.id}} {{template.name}}">
+                                    <md-tooltip md-direction="top">
+                                        Edit
+                                    </md-tooltip>
+                                    <md-icon>create</md-icon>
+                                </md-button>
+                                <md-button ng-click="vt.delete(template, $event)" class="md-icon-button md-warn" aria-label="Delete #{{template.id}} {{template.name}}">
+                                    <md-tooltip md-direction="top">
+                                        Delete
+                                    </md-tooltip>
+                                    <md-icon>delete</md-icon>
+                                </md-button>
+                            </md-card-actions>
+                        </md-card>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
         </md-content>
     </md-card>
 
     <md-card flex ng-controller="ReportsController as vr">
-        <md-toolbar>
+        
+        <!-- Report Toolbar -->
+
+        <md-toolbar class="md-site-secondary">
             <div class="md-toolbar-tools">
                 <h2>
                     <span>Reports</span>
                 </h2>
-                <md-button href="/reports/new" class="md-icon-button md-mini md-primary md-hue-3" aria-label="New Report">
+                <md-button href="/reports/new" class="md-icon-button" aria-label="New Report">
                     <md-tooltip md-direction="right">
                         New Report
                     </md-tooltip>
-                    <i class="glyphicon glyphicon-plus"></i>
+                    <md-icon>add</md-icon>
                 </md-button>
-                <md-button href="/reports" class="md-icon-button md-mini md-primary md-hue-3" aria-label="View All Reports">
+                <md-button href="/reports" class="md-icon-button" aria-label="View All Reports">
                     <md-tooltip md-direction="right">
                         View All Reports
                     </md-tooltip>
-                    <i class="glyphicon glyphicon-search"></i>
-                </md-button>
-                <md-button ng-click="vr.viewStyle = 'sortable'" class="md-icon-button md-mini md-primary md-hue-3" aria-label="Sortable View">
-                    <md-tooltip md-direction="right">
-                        Sortable View
-                    </md-tooltip>
-                    <i class="glyphicon glyphicon-list"></i>
-                </md-button>
-                <md-button ng-click="vr.viewStyle = 'card'" class="md-icon-button md-mini md-primary md-hue-3" aria-label="Card View">
-                    <md-tooltip md-direction="right">
-                        Card View
-                    </md-tooltip>
-                    <i class="glyphicon glyphicon-th-large"></i>
+                    <md-icon>search</md-icon>
                 </md-button>
             </div>
         </md-toolbar>
 
-        <md-content ng-show="vr.viewStyle == 'sortable'" ng-form="vr.repForm">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th><a href="javascript:;" ng-click="vr.sortType = 'id'; vr.sortReverse = !vr.sortReverse"># &nbsp; 
-                            <i ng-show="vr.sortType=='id' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-                            <i ng-show="vr.sortType=='id' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
-                        </a></th>
-                        <th>Actions</th>
-                        <th><a href="javascript:;" ng-click="vr.sortType = 'title'; vr.sortReverse = !vr.sortReverse">Name &nbsp; 
-                            <i ng-show="vr.sortType=='title' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-                            <i ng-show="vr.sortType=='title' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
-                        </a></th>
-                        <th><a href="javascript:;" ng-click="vr.sortType = 'templates[0].name'; vr.sortReverse = !vr.sortReverse">Pages &nbsp; 
-                            <i ng-show="vr.sortType=='templates[0].name' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-                            <i ng-show="vr.sortType=='templates[0].name' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
-                        </a></th>
-                        <th><a href="javascript:;" ng-click="vr.sortType = 'updated_at'; vr.sortReverse = !vr.sortReverse">Updated &nbsp; 
-                            <i ng-show="vr.sortType=='updated_at' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-                            <i ng-show="vr.sortType=='updated_at' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
-                        </a></th>
-                    </tr>
-                </thead>
-                <tbody ng-if="vr.reports.length">
-                    <tr ng-repeat="report in vr.filteredList = (vr.reports | filter:vr.keywords) | orderBy:vr.sortType:vr.sortReverse | startFrom:vr.currentPage*vr.pageSize | limitTo: 5">
-                        <td>{{report.id}}</td>
-                        <td>
-                            <a href="/reports/{{report.id}}" title="View" class="btn"><i class="glyphicon glyphicon-search"></i></a> 
-                            <a href="/reports/{{report.id}}/edit" title="Edit" class="btn"><i class="glyphicon glyphicon-pencil"></i></a>
-                            <a href="javascript:;" class="btn" ng-click="vr.delete(report, $event)"><i class="glyphicon glyphicon-trash"></i></a>
-                        </td>
-                        <td>{{report.title}}</td>
-                        <td><span ng-repeat="template in report.templates track by $index">{{template.name}}<span ng-show="!$last">, </span></span></td>
-                        <td>{{report.updated_at | date: 'short'}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </md-content>
-
-        <md-content ng-show="vr.viewStyle == 'card'" layout="column">
-            <md-card ng-repeat="report in vr.filteredList = (vr.reports | filter:vr.keywords) | orderBy:vr.sortType:vr.sortReverse | startFrom:vr.currentPage*vr.pageSize | limitTo: 5">
-                <md-card-content>
-                    <h2><small>#{{report.id}}</small> {{report.title || 'Untitled'}}</h2>
-                    <p ng-repeat="template in report.templates track by $index">{{template.name}}</p>
-                </md-card-content>
-                <md-card-actions layout="row" layout-align="end center">
-                    <md-button href="/reports/{{report.id}}" class="md-icon-button md-primary" aria-label="View #{{report.id}} {{report.title || 'Untitled'}}">
-                        <md-tooltip md-direction="top">
-                            View
-                        </md-tooltip>
-                        <i class="glyphicon glyphicon-search"></i>
-                    </md-button>
-                    <md-button href="/reports/{{report.id}}/edit" class="md-icon-button md-primary" aria-label="Edit #{{report.id}} {{report.title || 'Untitled'}}">
-                        <md-tooltip md-direction="top">
-                            Edit
-                        </md-tooltip>
-                        <i class="glyphicon glyphicon-pencil"></i>
-                    </md-button>
-                    <md-button ng-click="vr.delete(report, $event)" class="md-icon-button md-warn" aria-label="Delete #{{report.id}} {{report.title || 'Untitled'}}">
-                        <md-tooltip md-direction="top">
-                            Delete
-                        </md-tooltip>
-                        <i class="glyphicon glyphicon-trash"></i>
-                    </md-button>
-                </md-card-actions>
-            </md-card>
-        </md-content>
+        <md-content>
+            <md-tabs md-dynamic-height md-border-bottom ng-form="vr.repForm">
+                <md-tab label="sorted">
+                    <md-content>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th><a href="javascript:;" ng-click="vr.sortType = 'id'; vr.sortReverse = !vr.sortReverse"># &nbsp; 
+                                        <md-icon ng-show="vr.sortType=='id' && !vr.sortReverse">expand_more</md-icon> 
+                                        <md-icon ng-show="vr.sortType=='id' && vr.sortReverse">expand_less</md-icon
+                                    </a></th>
+                                    <th>Actions</th>
+                                    <th><a href="javascript:;" ng-click="vr.sortType = 'title'; vr.sortReverse = !vr.sortReverse">Name &nbsp; 
+                                        <md-icon ng-show="vr.sortType=='title' && !vr.sortReverse">expand_more</md-icon> 
+                                        <md-icon ng-show="vr.sortType=='title' && vr.sortReverse">expand_less</md-icon
+                                    </a></th>
+                                    <th><a href="javascript:;" ng-click="vr.sortType = 'templates[0].name'; vr.sortReverse = !vr.sortReverse">Pages &nbsp;
+                                        <md-icon ng-show="vr.sortType=='templates[0].name' && !vr.sortReverse">expand_more</md-icon> 
+                                        <md-icon ng-show="vr.sortType=='templates[0].name' && vr.sortReverse">expand_less</md-icon
+                                    </a></th>
+                                    <th><a href="javascript:;" ng-click="vr.sortType = 'updated_at'; vr.sortReverse = !vr.sortReverse">Updated &nbsp; 
+                                        <md-icon ng-show="vr.sortType=='updated_at' && !vr.sortReverse">expand_more</md-icon> 
+                                        <md-icon ng-show="vr.sortType=='updated_at' && vr.sortReverse">expand_less</md-icon
+                                    </a></th>
+                                </tr>
+                            </thead>
+                            <tbody ng-if="vr.reports.length">
+                                <tr ng-repeat="report in vr.filteredList = (vr.reports | filter:vr.keywords) | orderBy:vr.sortType:vr.sortReverse | startFrom:vr.currentPage*vr.pageSize | limitTo: 5">
+                                    <td>{{report.id}}</td>
+                                    <td>
+                                        <md-button class="md-icon-button md-primary" href="/reports/{{report.id}}">
+                                            <md-tooltip md-direction="bottom">
+                                                View
+                                            </md-tooltip>
+                                            <md-icon>search</md-icon>
+                                        </md-button> 
+                                        <md-button class="md-icon-button md-primary" href="/reports/{{report.id}}/edit">
+                                            <md-tooltip md-direction="bottom">
+                                                Edit
+                                            </md-tooltip>
+                                            <md-icon>create</md-icon>
+                                        </md-button>
+                                        <md-button class="md-icon-button md-warn" ng-click="vr.delete(report, $event)">
+                                            <md-tooltip md-direction="bottom">
+                                                Delete
+                                            </md-tooltip>
+                                            <md-icon>delete</md-icon>
+                                        </md-button>
+                                    </td>
+                                    <td>{{report.title || 'Untitled'}}</td>
+                                    <td><span ng-repeat="template in report.templates track by $index">{{template.name}}<span ng-show="!$last">, </span></span></td>
+                                    <td>{{report.updated_at | date: 'short'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </md-content>
+                </md-tab>
+                <md-tab label="expanded">
+                    <md-content layout="column">
+                        <md-card ng-repeat="report in vr.filteredList = (vr.reports | filter:vr.keywords) | orderBy:vr.sortType:vr.sortReverse | startFrom:vr.currentPage*vr.pageSize | limitTo: 5">
+                            <md-card-content>
+                                <h2><small>#{{report.id}}</small> {{report.title || 'Untitled'}}</h2>
+                                <p ng-repeat="template in report.templates track by $index">{{template.name}}</p>
+                            </md-card-content>
+                            <md-card-actions layout="row" layout-align="end center">
+                                <md-button href="/reports/{{report.id}}" class="md-icon-button md-primary" aria-label="View #{{report.id}} {{report.title || 'Untitled'}}">
+                                    <md-tooltip md-direction="top">
+                                        View
+                                    </md-tooltip>
+                                    <md-icon>search</md-icon>
+                                </md-button>
+                                <md-button href="/reports/{{report.id}}/edit" class="md-icon-button md-primary" aria-label="Edit #{{report.id}} {{report.title || 'Untitled'}}">
+                                    <md-tooltip md-direction="top">
+                                        Edit
+                                    </md-tooltip>
+                                    <md-icon>create</md-icon>
+                                </md-button>
+                                <md-button ng-click="vr.delete(report, $event)" class="md-icon-button md-warn" aria-label="Delete #{{report.id}} {{report.title || 'Untitled'}}">
+                                    <md-tooltip md-direction="top">
+                                        Delete
+                                    </md-tooltip>
+                                    <md-icon>delete</md-icon>
+                                </md-button>
+                            </md-card-actions>
+                        </md-card>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-content>        
     </md-card>
 </div>

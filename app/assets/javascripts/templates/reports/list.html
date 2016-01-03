@@ -17,33 +17,48 @@
         <thead>
             <tr>
                 <th><a href="javascript:;" ng-click="vr.sortType = 'id'; vr.sortReverse = !vr.sortReverse"># &nbsp; 
-                    <i ng-show="vr.sortType=='id' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-                    <i ng-show="vr.sortType=='id' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+                    <md-icon ng-show="vr.sortType=='id' && !vr.sortReverse">expand_more</md-icon> 
+                    <md-icon ng-show="vr.sortType=='id' && vr.sortReverse">expand_less</md-icon
                 </a></th>
                 <th>Actions</th>
                 <th><a href="javascript:;" ng-click="vr.sortType = 'title'; vr.sortReverse = !vr.sortReverse">Name &nbsp; 
-                    <i ng-show="vr.sortType=='title' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-                    <i ng-show="vr.sortType=='title' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+                    <md-icon ng-show="vr.sortType=='title' && !vr.sortReverse">expand_more</md-icon> 
+                    <md-icon ng-show="vr.sortType=='title' && vr.sortReverse">expand_less</md-icon
                 </a></th>
-                <th><a href="javascript:;" ng-click="vr.sortType = 'templates[0].name'; vr.sortReverse = !vr.sortReverse">Pages &nbsp; 
-                    <i ng-show="vr.sortType=='templates[0].name' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-                    <i ng-show="vr.sortType=='templates[0].name' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+                <th><a href="javascript:;" ng-click="vr.sortType = 'templates[0].name'; vr.sortReverse = !vr.sortReverse">Pages &nbsp;
+                    <md-icon ng-show="vr.sortType=='templates[0].name' && !vr.sortReverse">expand_more</md-icon> 
+                    <md-icon ng-show="vr.sortType=='templates[0].name' && vr.sortReverse">expand_less</md-icon
                 </a></th>
                 <th><a href="javascript:;" ng-click="vr.sortType = 'updated_at'; vr.sortReverse = !vr.sortReverse">Updated &nbsp; 
-                    <i ng-show="vr.sortType=='updated_at' && !vr.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-                    <i ng-show="vr.sortType=='updated_at' && vr.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+                    <md-icon ng-show="vr.sortType=='updated_at' && !vr.sortReverse">expand_more</md-icon> 
+                    <md-icon ng-show="vr.sortType=='updated_at' && vr.sortReverse">expand_less</md-icon
                 </a></th>
             </tr>
         </thead>
-        <tbody>
-            <tr ng-repeat="report in vr.filteredList = (vr.reports | filter:vr.keywords) | orderBy:vr.sortType:vr.sortReverse | startFrom:vr.currentPage*vr.pageSize | limitTo:vr.pageSize">
+        <tbody ng-if="vr.reports.length">
+            <tr ng-repeat="report in vr.filteredList = (vr.reports | filter:vr.keywords) | orderBy:vr.sortType:vr.sortReverse | startFrom:vr.currentPage*vr.pageSize | limitTo: 5">
                 <td>{{report.id}}</td>
                 <td>
-                    <a href="/reports/{{report.id}}" title="View" class="btn"><i class="glyphicon glyphicon-search"></i></a> 
-                    <a href="/reports/{{report.id}}/edit" title="Edit" class="btn"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <a href="javascript:;" title="Delete" class="btn" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this report?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vr.delete(report)"><i class="glyphicon glyphicon-trash"></i></a>
+                    <md-button class="md-icon-button md-primary" href="/reports/{{report.id}}">
+                        <md-tooltip md-direction="bottom">
+                            View
+                        </md-tooltip>
+                        <md-icon>search</md-icon>
+                    </md-button> 
+                    <md-button class="md-icon-button md-primary" href="/reports/{{report.id}}/edit">
+                        <md-tooltip md-direction="bottom">
+                            Edit
+                        </md-tooltip>
+                        <md-icon>create</md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button md-warn" ng-click="vr.delete(report, $event)">
+                        <md-tooltip md-direction="bottom">
+                            Delete
+                        </md-tooltip>
+                        <md-icon>delete</md-icon>
+                    </md-button>
                 </td>
-                <td>{{report.title}}</td>
+                <td>{{report.title || 'Untitled'}}</td>
                 <td><span ng-repeat="template in report.templates track by $index">{{template.name}}<span ng-show="!$last">, </span></span></td>
                 <td>{{report.updated_at | date: 'short'}}</td>
             </tr>

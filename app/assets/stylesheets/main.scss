@@ -38,15 +38,32 @@ $desktop: 62em;
 }
 
 /*
+ * Material Design Additions
+ */
+ 
+$site-color-primary: forestgreen;
+$site-color-secondary: darkgreen;
+
+.md-site-primary {
+    background-color: $site-color-primary;
+}
+
+.md-site-secondary {
+    background-color: $site-color-secondary;
+}
+
+/*
  * General Site
  */
 
 body {
     font-family: 'Open Sans', sans-serif !important;
-    background-color: #f5f5f5 !important;
     .clerkr-c span {
         font-family: 'Open Sans', sans-serif !important;
     }
+}
+.view-frame {
+    background-color: #f5f5f5;
 }
 blockquote {
     white-space: pre-wrap;
@@ -92,7 +109,6 @@ blockquote {
 .btn .glyphicon.glyphicon-trash {
     color: red !important;
 }
-.table th a,
 .btn-link,
 .btn .glyphicon {
     color: forestgreen !important;
@@ -208,6 +224,18 @@ blockquote {
     background-color: #f5f5f5 !important;
     background-image: linear-gradient(0deg, transparent 24%, rgba(0, 0, 0, .05) 25%, rgba(0, 0, 0, .05) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, .05) 75%, rgba(0, 0, 0, .05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 0, 0, .05) 25%, rgba(0, 0, 0, .05) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, .05) 75%, rgba(0, 0, 0, .05) 76%, transparent 77%, transparent) !important;
     background-size: 50px 50px;
+}
+.page-preview {
+    width: 95%;
+    position: absolute;
+    pointer-events: none;
+    -ms-zoom: 0.30;
+    -moz-transform: scale(0.30);
+    -moz-transform-origin: 100% 0;
+    -o-transform: scale(0.30);
+    -o-transform-origin: 100% 0;
+    -webkit-transform: scale(0.30);
+    -webkit-transform-origin: 100% 0;
 }
 
 /* 

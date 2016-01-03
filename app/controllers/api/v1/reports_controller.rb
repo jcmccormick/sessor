@@ -57,9 +57,9 @@ module Api::V1 #:nodoc:
                 report.template_order.each do |template_id|
                     template = current_user.templates.find_by_id(template_id)
                     report.templates << template unless report.templates.include?(template)
-                    worksheet = google_drive.worksheet_by_url(template.gs_id)
+                    
 
-                    if template.fields.length
+                    if template.fields.length && worksheet = google_drive.worksheet_by_url(template.gs_id)
                         report_found = false
                         worksheet.list.each do |row|
                             if row['Report ID'] == report.id.to_s

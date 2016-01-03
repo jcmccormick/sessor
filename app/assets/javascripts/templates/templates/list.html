@@ -17,32 +17,52 @@
         <thead>
             <tr>
                 <th><a href="javascript:;" ng-click="vt.sortType = 'id'; vt.sortReverse = !vt.sortReverse"># &nbsp; 
-                    <i ng-show="vt.sortType=='id' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-                    <i ng-show="vt.sortType=='id' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+                    <md-icon ng-show="vt.sortType=='id' && !vt.sortReverse">expand_more</md-icon> 
+                    <md-icon ng-show="vt.sortType=='id' && vt.sortReverse">expand_less</md-icon
                 </a></th>
                 <th>Actions</th>
                 <th><a href="javascript:;" ng-click="vt.sortType = 'draft'; vt.sortReverse = !vt.sortReverse">Draft &nbsp; 
-                    <i ng-show="vt.sortType=='draft' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-                    <i ng-show="vt.sortType=='draft' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+                    <md-icon ng-show="vt.sortType=='draft' && !vt.sortReverse">expand_more</md-icon> 
+                    <md-icon ng-show="vt.sortType=='draft' && vt.sortReverse">expand_less</md-icon
                 </a></th>
                 <th><a href="javascript:;" ng-click="vt.sortType = 'name'; vt.sortReverse = !vt.sortReverse">Name &nbsp; 
-                    <i ng-show="vt.sortType=='name' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-                    <i ng-show="vt.sortType=='name' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+                    <md-icon ng-show="vt.sortType=='name' && !vt.sortReverse">expand_more</md-icon> 
+                    <md-icon ng-show="vt.sortType=='name' && vt.sortReverse">expand_less</md-icon
                 </a></th>
                 <th><a href="javascript:;" ng-click="vt.sortType = 'updated_at'; vt.sortReverse = !vt.sortReverse">Updated &nbsp; 
-                    <i ng-show="vt.sortType=='updated_at' && !vt.sortReverse" class="glyphicon glyphicon-chevron-down"></i>
-                    <i ng-show="vt.sortType=='updated_at' && vt.sortReverse" class="glyphicon glyphicon-chevron-up"></i>
+                    <md-icon ng-show="vt.sortType=='updated_at' && !vt.sortReverse">expand_more</md-icon> 
+                    <md-icon ng-show="vt.sortType=='updated_at' && vt.sortReverse">expand_less</md-icon
                 </a></th>
             </tr>
         </thead>
-        <tbody>
-            <tr ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo:vt.pageSize">
+        <tbody ng-if="vt.templates.length">
+            <tr ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo: 5">
                 <td>{{template.id}}</td>
                 <td> 
-                    <a href="javascript:;" class="btn" title="New Report" ng-click="vt.newReport(template, vt.tempForm)"><i class="glyphicon glyphicon-send"></i></a> 
-                    <a href="/templates/{{template.id}}" title="View" class="btn"><i class="glyphicon glyphicon-search"></i></a> 
-                    <a href="/templates/{{template.id}}/edit" title="Edit" class="btn"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <a href="javascript:;" class="btn" title="Delete" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this page?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vt.delete(template)"><i class="glyphicon glyphicon-trash"></i></a>
+                    <md-button class="md-icon-button md-primary" ng-click="vt.newReport(template, vt.tempForm)">
+                        <md-tooltip md-direction="bottom">
+                            New Report with {{template.name}}
+                        </md-tooltip>
+                        <md-icon>insert_drive_file</md-icon>
+                    </md-button> 
+                    <md-button class="md-icon-button md-primary" href="/templates/{{template.id}}">
+                        <md-tooltip md-direction="bottom">
+                            View
+                        </md-tooltip>
+                        <md-icon>search</md-icon>
+                    </md-button> 
+                    <md-button class="md-icon-button md-primary" href="/templates/{{template.id}}/edit">
+                        <md-tooltip md-direction="bottom">
+                            Edit
+                        </md-tooltip>
+                        <md-icon>create</md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button md-warn" ng-click="vt.delete(template, $event)">
+                        <md-tooltip md-direction="bottom">
+                            Delete
+                        </md-tooltip>
+                        <md-icon>delete</md-icon>
+                    </md-button>
                 </td>
                 <td>
                     <div class="btn-group" ng-click="template.draft = !template.draft; vt.setDraft(template)">
