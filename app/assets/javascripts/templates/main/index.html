@@ -95,7 +95,6 @@
                     <md-content class="md-padding" layout="column">
                         <md-card ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo: 5">
                 
-                            <!-- <template-form-directive class="page-preview" form="template"></template-form-directive> -->
 
                             <md-card-content ng-init="template.e = false">
                                 <h2><small>#{{template.id}}</small> {{template.name || 'Untitled'}}</h2>
@@ -103,6 +102,7 @@
                                     <a href="javascript:;" ng-show="template.draft" class="switch-on">Drafted</a>
                                     <a href="javascript:;" ng-show="!template.draft">Undrafted</a>
                                 </p>
+                                <template-form-directive class="disabled" form="template"></template-form-directive>
                             </md-card-content>
 
                             <md-card-actions layout="row" layout-align="end center">
