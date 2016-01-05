@@ -11,7 +11,6 @@ do ->
         'ngMaterial',
         'ngAria',
         'ng-token-auth',
-        'ngBootbox',
         'LocalStorageModule',
         'ui.sortable',
         'googlechart',

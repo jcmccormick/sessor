@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 ruby '2.2.3'
 
+gem 'bundler', '>= 1.8.4'
+
 gem 'rails', '4.2.4'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -8,7 +10,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'bootstrap-sass', '~> 3.3.5'
-gem 'rails-angular-material'
+#gem 'rails-angular-material'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'responders'
@@ -27,6 +29,12 @@ gem 'activerecord-session_store'
 gem 'font-kit-rails', '~> 1.2.0'
 gem 'google-api-client'
 gem 'google_drive'
+
+source 'https://rails-assets.org' do
+    gem 'rails-assets-angular'
+    gem 'rails-assets-angular-material', '>= 1.0.1'
+end
+
 group :production, :staging do
     gem 'pg'
     gem "rails_12factor"

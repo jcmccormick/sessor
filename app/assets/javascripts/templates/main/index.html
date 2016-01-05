@@ -53,7 +53,7 @@
                                 <tr ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo: 5">
                                     <td>{{template.id}}</td>
                                     <td> 
-                                        <md-button class="md-icon-button md-primary" ng-click="vt.newReport(template, vt.tempForm)">
+                                        <md-button class="md-icon-button md-primary" href="javascript:;" ng-click="vt.newReport(template, vt.tempForm)">
                                             <md-tooltip md-direction="bottom">
                                                 New Report with {{template.name}}
                                             </md-tooltip>
@@ -71,7 +71,7 @@
                                             </md-tooltip>
                                             <md-icon>create</md-icon>
                                         </md-button>
-                                        <md-button class="md-icon-button md-warn" ng-click="vt.delete(template, $event)">
+                                        <md-button class="md-icon-button md-warn" href="javascript:;" ng-click="vt.delete(template, $event)">
                                             <md-tooltip md-direction="bottom">
                                                 Delete {{template.name}}
                                             </md-tooltip>
@@ -204,7 +204,7 @@
                                             </md-tooltip>
                                             <md-icon>create</md-icon>
                                         </md-button>
-                                        <md-button class="md-icon-button md-warn" ng-click="vr.delete(report, $event)">
+                                        <md-button class="md-icon-button md-warn" href="javascript:;" ng-click="vr.delete(report, $event)">
                                             <md-tooltip md-direction="bottom">
                                                 Delete
                                             </md-tooltip>
