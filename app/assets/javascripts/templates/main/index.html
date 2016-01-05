@@ -95,13 +95,18 @@
                     <md-content class="md-padding" layout="column">
                         <md-card ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo: 5">
                 
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">{{template.name || 'Untitled'}}</span>
+                                    <span class="md-subhead">#{{template.id}}</span>
+                                    <p class="btn-group" ng-click="template.draft = !template.draft; vt.setDraft(template)">
+                                        <a href="javascript:;" ng-show="template.draft" class="switch-on">Drafted</a>
+                                        <a href="javascript:;" ng-show="!template.draft">Undrafted</a>
+                                    </p>
+                                </md-card-title-text>
+                            </md-card-title>
 
                             <md-card-content ng-init="template.e = false">
-                                <h2><small>#{{template.id}}</small> {{template.name || 'Untitled'}}</h2>
-                                <p class="btn-group" ng-click="template.draft = !template.draft; vt.setDraft(template)">
-                                    <a href="javascript:;" ng-show="template.draft" class="switch-on">Drafted</a>
-                                    <a href="javascript:;" ng-show="!template.draft">Undrafted</a>
-                                </p>
                                 <template-form-directive class="disabled" form="template"></template-form-directive>
                             </md-card-content>
 
@@ -220,12 +225,17 @@
                     </md-content>
                 </md-tab>
                 <md-tab label="expand">
-                    <md-content layout="column">
+                    <md-content class="md-padding" layout="column">
                         <md-card ng-repeat="report in vr.filteredList = (vr.reports | filter:vr.keywords) | orderBy:vr.sortType:vr.sortReverse | startFrom:vr.currentPage*vr.pageSize | limitTo: 5">
-                            <md-card-content>
-                                <h2><small>#{{report.id}}</small> {{report.title || 'Untitled'}}</h2>
-                                <p ng-repeat="template in report.templates track by $index">{{template.name}}</p>
-                            </md-card-content>
+
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">{{report.title || 'Untitled'}}</span>
+                                    <span class="md-subhead">#{{report.id}}</span>
+                                    <p ng-repeat="template in report.templates track by $index">{{template.name}}</p>
+                                </md-card-title-text>
+                            </md-card-title>
+
                             <md-card-actions layout="row" layout-align="end center">
                                 <md-button href="/reports/{{report.id}}" class="md-icon-button md-primary" aria-label="View #{{report.id}} {{report.title || 'Untitled'}}">
                                     <md-tooltip md-direction="top">

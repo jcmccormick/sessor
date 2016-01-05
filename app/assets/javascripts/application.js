@@ -17,13 +17,13 @@
 //= require bootstrap-sprockets
 //= require angular
 //= require angular-aria
-//= require angular-route/angular-route
-//= require angular-resource/angular-resource
+//= require angular-route
+//= require angular-resource
 //= require angular-flash-alert/dist/angular-flash
 //= require angular-mocks/angular-mocks
 //= require angular-material
 //= require angular-animate
-//= require angular-local-storage/dist/angular-local-storage.min
+//= require angular-local-storage
 //= require angular-rails-templates
 //= require angular-cookie
 //= require angular-ui-sortable

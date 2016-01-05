@@ -234,6 +234,9 @@ GEM
       rails-assets-angular (= 1.4.8)
     rails-assets-angular-aria (1.4.8)
       rails-assets-angular (= 1.4.8)
+    rails-assets-angular-cookie (4.0.9)
+      rails-assets-angular
+    rails-assets-angular-local-storage (0.2.3)
     rails-assets-angular-material (1.0.1)
       rails-assets-angular (>= 1.4.8, < 2)
       rails-assets-angular-animate (>= 1.4.8, < 2)
@@ -241,6 +244,13 @@ GEM
       rails-assets-angular-messages (>= 1.4.8, < 2)
     rails-assets-angular-messages (1.4.8)
       rails-assets-angular (= 1.4.8)
+    rails-assets-angular-resource (1.4.8)
+      rails-assets-angular (= 1.4.8)
+    rails-assets-angular-route (1.4.8)
+      rails-assets-angular (= 1.4.8)
+    rails-assets-ng-token-auth (0.0.28)
+      rails-assets-angular (~> 1.4.4)
+      rails-assets-angular-cookie (~> 4.0.9)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
     rails-dom-testing (1.0.7)
@@ -379,7 +389,12 @@ DEPENDENCIES
   rack-cache
   rails (= 4.2.4)
   rails-assets-angular!
+  rails-assets-angular-cookie!
+  rails-assets-angular-local-storage!
   rails-assets-angular-material (>= 1.0.1)!
+  rails-assets-angular-resource!
+  rails-assets-angular-route!
+  rails-assets-ng-token-auth!
   rails-erd
   rails_12factor
   rails_serve_static_assets

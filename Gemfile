@@ -10,7 +10,6 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'bootstrap-sass', '~> 3.3.5'
-#gem 'rails-angular-material'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'responders'
@@ -33,6 +32,11 @@ gem 'google_drive'
 source 'https://rails-assets.org' do
     gem 'rails-assets-angular'
     gem 'rails-assets-angular-material', '>= 1.0.1'
+    gem 'rails-assets-angular-cookie'
+    gem 'rails-assets-angular-local-storage'
+    gem 'rails-assets-angular-resource'
+    gem 'rails-assets-angular-route'
+    gem 'rails-assets-ng-token-auth'
 end
 
 group :production, :staging do

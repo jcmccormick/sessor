@@ -17,7 +17,7 @@ do ->
                 $.extend vt.template, res
             )
 
-            vt.viewing = true
+            vt.template.viewing = true
 
             vt.save = (temporary)->
                 TemplatesService.saveTemplate(vt.template, temporary, vt.tempForm)

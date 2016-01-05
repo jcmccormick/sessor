@@ -45,11 +45,11 @@ $site-color-primary: forestgreen;
 $site-color-secondary: darkgreen;
 
 .md-site-primary {
-    background-color: $site-color-primary;
+    background-color: $site-color-primary !important;
 }
 
 .md-site-secondary {
-    background-color: $site-color-secondary;
+    background-color: $site-color-secondary !important;
 }
 
 /*

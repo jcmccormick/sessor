@@ -2,7 +2,7 @@
 <div ng-form="myForm">
 
     <div class="col-xs-12" ng-if="form.sections" ng-class="{'col-lg-6 col-lg-offset-3':gridWidth()==1,'col-lg-10 col-lg-offset-1':gridWidth()==2}">
-        <div class="clearfix" ng-show="form.id && form.sections" ng-class="{'paper paper-color ': form.e}">
+        <div class="clearfix" ng-show="form.id && form.sections" ng-class="{'paper paper-color ': form.e || form.viewing}">
             <small class="col-xs-12">
                 <span ng-if="report && !report.e">{{report.title}}</span>
                 <span ng-if="form.draft">Draft</span>

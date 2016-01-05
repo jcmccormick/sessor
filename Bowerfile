@@ -1,11 +1,4 @@
-asset 'angular-cookie'
 asset 'angular-flash-alert'
-asset 'angular-local-storage'
 asset 'angular-mocks'
-asset 'angular-resource'
-asset 'angular-route'
 asset 'angular-ui-sortable'
-asset 'bootbox'
-asset 'ng-token-auth'
-asset 'ngBootbox'
 # vim: ft=ruby

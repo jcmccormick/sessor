@@ -1,5 +1,5 @@
 # Clerkr
-# Copyright Joe McCormick 2015 All Rights Reserved
+# Copyright Joe McCormick 2016 All Rights Reserved
 do ->
     'use strict'
 
