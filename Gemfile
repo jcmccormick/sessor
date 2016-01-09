@@ -31,7 +31,7 @@ gem 'google_drive'
 #gem 'rails-angular-material'
 source 'https://rails-assets.org' do
     gem 'rails-assets-angular'
-    gem 'rails-assets-angular-material', '1.0.0'
+    gem 'rails-assets-angular-material', '0.9.8'
     gem 'rails-assets-angular-aria'
     gem 'rails-assets-angular-animate'
     gem 'rails-assets-angular-cookie'
