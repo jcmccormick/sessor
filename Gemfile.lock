@@ -231,6 +231,8 @@ GEM
       sprockets-rails
     rails-angular-material (0.10.0)
     rails-assets-angular (1.4.8)
+    rails-assets-angular-aria (1.4.8)
+      rails-assets-angular (= 1.4.8)
     rails-assets-angular-cookie (4.0.9)
       rails-assets-angular
     rails-assets-angular-local-storage (0.2.3)
@@ -380,6 +382,7 @@ DEPENDENCIES
   rails (= 4.2.4)
   rails-angular-material
   rails-assets-angular!
+  rails-assets-angular-aria!
   rails-assets-angular-cookie!
   rails-assets-angular-local-storage!
   rails-assets-angular-resource!
