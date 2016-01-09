@@ -89,15 +89,6 @@ do ->
                     unbindFieldsWatch()
                     unbindDraftWatch()
                 )
-
-                $(->
-                    $('.form-header').css('min-height': (50+$('.form-specs').height())+'px')
-                    $('.form-specs').on 'shown.bs.collapse', ->
-                        $('.form-header').css('min-height': (50+$(this).height())+'px')
-                )
-                vt.checkSpec = ->
-                    $('.form-specs').hasClass('in') && $('.form-header').css('min-height': '50px')
-                    return true
         else
             # Options for sorting in the sortable views
             vt.viewStyle = 'sortable'

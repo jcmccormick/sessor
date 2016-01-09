@@ -1,22 +1,22 @@
-<div class="form-header">
-    <section>
-        <ul class="nav top-nav">
-            <li><a href="/reports/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
-            <li><input type="text" class="form-control" placeholder="Search" ng-model="vr.keywords" ng-change="vr.currentPage = 0"></li>
-            <li><select class="form-control" ng-model="vr.pageSize" ng-options="distance as distance for distance in [10, 25, 50, 100]" ng-change="vr.currentPage = 0"></select></li>
-            <li><h5><p>per page</p></h5></li>
-            <li><a href="javascript:;" ng-class="{'disabled':vr.currentPage==0}" ng-click="vr.currentPage = vr.currentPage-1"><i class="glyphicon glyphicon-triangle-left"></i></a></li>
-            <li><h5><p>{{(vr.filteredList.length && vr.currentPage+1) || 0}} of {{(vr.filteredList.length && vr.numPages()) || 0}}</p></h5></li>
-            <li><a href="javascript:;" ng-class="{'disabled':vr.filteredList.length && vr.currentPage>=vr.numPages()-1}" ng-click="vr.currentPage = vr.currentPage+1"><i class="glyphicon glyphicon-triangle-right"></i></a></li>
-        </ul>
-    </section>
-</div>
+<md-card>
+    <div class="form-header">
+        <section>
+            <ul class="nav top-nav">
+                <li><a href="/reports/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
+                <li><input type="text" class="form-control" placeholder="Search" ng-model="vr.keywords" ng-change="vr.currentPage = 0"></li>
+                <li><select class="form-control" ng-model="vr.pageSize" ng-options="distance as distance for distance in [10, 25, 50, 100]" ng-change="vr.currentPage = 0"></select></li>
+                <li><h5><p>per page</p></h5></li>
+                <li><a href="javascript:;" ng-class="{'disabled':vr.currentPage==0}" ng-click="vr.currentPage = vr.currentPage-1"><i class="glyphicon glyphicon-triangle-left"></i></a></li>
+                <li><h5><p>{{(vr.filteredList.length && vr.currentPage+1) || 0}} of {{(vr.filteredList.length && vr.numPages()) || 0}}</p></h5></li>
+                <li><a href="javascript:;" ng-class="{'disabled':vr.filteredList.length && vr.currentPage>=vr.numPages()-1}" ng-click="vr.currentPage = vr.currentPage+1"><i class="glyphicon glyphicon-triangle-right"></i></a></li>
+            </ul>
+        </section>
+    </div>
 
-<section ng-form="vr.repForm" class="col-xs-12">
-    <table class="table table-striped">
+    <table class="table table-striped" ng-form="vr.repForm">
         <thead>
             <tr>
-                <th><a href="javascript:;" ng-click="vr.sortType = 'id'; vr.sortReverse = !vr.sortReverse"># &nbsp; 
+                <th><a href="javascript:;" ng-click="vr.sortType = 'id'; vr.sortReverse = !vr.sortReverse">ID &nbsp; 
                     <md-icon ng-show="vr.sortType=='id' && !vr.sortReverse">expand_more</md-icon> 
                     <md-icon ng-show="vr.sortType=='id' && vr.sortReverse">expand_less</md-icon
                 </a></th>
@@ -64,4 +64,4 @@
             </tr>
         </tbody>
     </table>
-</section>
+</md-card>

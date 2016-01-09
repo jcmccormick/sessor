@@ -28,10 +28,10 @@ gem 'activerecord-session_store'
 gem 'font-kit-rails', '~> 1.2.0'
 gem 'google-api-client'
 gem 'google_drive'
-
+gem 'rails-angular-material'
 source 'https://rails-assets.org' do
     gem 'rails-assets-angular'
-    gem 'rails-assets-angular-material', '>= 1.0.1'
+    #gem 'rails-assets-angular-material', '>= 1.0.1'
     gem 'rails-assets-angular-cookie'
     gem 'rails-assets-angular-local-storage'
     gem 'rails-assets-angular-resource'
