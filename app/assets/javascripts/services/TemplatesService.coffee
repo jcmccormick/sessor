@@ -1,7 +1,7 @@
 do ->
     'use strict'
 
-    TemplatesService = ($interval, $location, $mdDialog, $q, $rootScope, ClassFactory, Flash, localStorageService)->
+    TemplatesService = ($interval, $location, $mdDialog, $q, $rootScope, $window, ClassFactory, Flash, localStorageService)->
 
         templates = localStorageService.get('_cst')
         slt = (temps)->
@@ -53,6 +53,35 @@ do ->
 
             creating: ->
                 return if $location.path().search('/new') == -1 then false else true
+
+            viewGoogleSheet: (ev, template)->
+                confirm = $mdDialog.confirm()
+                    .title('Click OK to view the Google Spreadsheet for'+template.name)
+                    .content('Important! Any changes you make on the Google Spreadsheet will not be reflected on Clerkr. Do not make attempts to modify the Google Spreadsheet. Instead, export it locally to your computer, or make a copy on Google Drive for your own uses. By clicking OK, you understand that modifying the original spreadsheet may cause it to stop working with Clerkr.')
+                    .targetEvent(ev)
+                    .ok('View Sheet')
+                    .cancel('Get me out of here!')
+                $mdDialog.show({
+                    targetEvent: ev
+                    template:
+                        """
+                            <md-dialog>
+                                <md-dialog-content>
+                                    <p class=\'required-error\'>Important!</p>
+                                    <p>Any changes you make on the Google Spreadsheet <strong>will not</strong> be reflected on Clerkr. Do not make attempts to modify the Google Spreadsheet. Instead, export it locally to your computer, or make a copy on Google Drive for your own uses.</p>
+                                    <p>By clicking OK, you understand that modifying the original Spreadsheet may cause it to stop working with Clerkr.</p>
+                                </md-dialog-content>
+                                <md-dialog-actions>
+                                    <md-button ng-click="closeDialog()" class="md-primary">Close</md-button>
+                                </md-dialog-actions>
+                            </md-dialog>
+                        """
+                    controller: ($mdDialog)->
+                        vd = this
+                        vd.closeDialog = $mdDialog().hide()
+                        return vd
+                }).then ->
+                    
 
             getTemplates: ->
                 return templates
@@ -353,6 +382,6 @@ do ->
         #   $location.path().search(template.id+'/edit') == -1 && clearInterval(collectDrafts)
         # ), 10000
 
-    TemplatesService.$inject = ['$interval', '$location', '$mdDialog', '$q', '$rootScope', 'ClassFactory', 'Flash', 'localStorageService']
+    TemplatesService.$inject = ['$interval', '$location', '$mdDialog', '$q', '$rootScope', '$window', 'ClassFactory', 'Flash', 'localStorageService']
 
     angular.module('clerkr').service('TemplatesService', TemplatesService)

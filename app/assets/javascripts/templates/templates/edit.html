@@ -1,66 +1,84 @@
-<div ng-form="vt.tempForm" ng-init="vt.formSpeccing=true">
-    <div class="form-header">
-        <section>
-            <ul class="nav top-nav">
-                <!-- <li class="form-specs-toggle" ng-if="!vt.template.id || vt.template.e">
-                    <a href="javascript:;" ng-click="vt.checkSpec()" data-toggle="collapse" data-target=".form-specs" aria-expanded="true">
-                        <i class="glyphicon glyphicon-cog pull-right"></i>
-                    </a>
-                </li> -->
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Pages <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="javascript:;" ng-click="vt.save()" ng-if="vt.template.id"><i class="glyphicon glyphicon-save"></i> &nbsp; View</a></li>
-                        <li><a href="/templates/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
-                        <li><a href="/templates"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
-                        <li ng-if="vt.template.id" class="divider"></li>
-                        <li><a href="javascript:;" ng-if="vt.template.id" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this page?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vt.delete(vt.template)"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
-                    </ul>
-                </li>
-                <li><a href="javascript:;" ng-click="vt.save(true)"><span ng-class="{'save-now':!vt.tempForm.$pristine}">Save</span></a></li>
-                <li class="dropdown" ng-if="vt.template.id">
-                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><span>Sharing</span></li>
-                        <li><span><label for="private_world"><input type="checkbox" id="private_world" name="private_world" ng-model="vt.template.private_world"> Share Public</label></span></li>
-                        <li><span><label for="private_group"><input type="checkbox" id="private_group" name="private_group" ng-model="vt.template.private_group"> Share Group</label></span></li>
-                        <div ng-if="vt.template.private_group == 1">
-                            <li class="divider"></li>
-                            <li><span>Group</span></li>
-                            <li><span><label for="group_edit"><input type="checkbox" id="group_edit" name="group_edit" ng-model="vt.template.group_edit"> Allow Editing</label></span></li>
-                            <div ng-if="vt.template.group_edit">
-                                <li><span>Editors</span></li>
-                                <li><span><a role="button">Add</a> / <a role="button">Remove</a></span></li>
+<md-content ng-class="{'gridline-workspace':vt.template.e}">
+    <md-card ng-form="vt.tempForm" ng-init="vt.formSpeccing=true">
+        <md-toolbar class="md-site-secondary">
+            <div class="md-toolbar-tools">
+                <h2>
+                    <span>Reports</span>
+                </h2>
+                <span flex></span>
+                <md-button href="/reports/new" class="md-fab md-mini md-site-primary" aria-label="new report">
+                    <md-tooltip md-direction="left">
+                        New Report
+                    </md-tooltip>
+                    <md-icon>add</md-icon>
+                </md-button>
+                <md-button href="/reports" class="md-icon-button" aria-label="view all reports">
+                    <md-tooltip md-direction="left">
+                        View All Reports
+                    </md-tooltip>
+                    <md-icon>search</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <div class="form-header">
+            <section>
+                <ul class="nav top-nav">
+                    <!-- <li class="form-specs-toggle" ng-if="!vt.template.id || vt.template.e">
+                        <a href="javascript:;" ng-click="vt.checkSpec()" data-toggle="collapse" data-target=".form-specs" aria-expanded="true">
+                            <i class="glyphicon glyphicon-cog pull-right"></i>
+                        </a>
+                    </li> -->
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Pages <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:;" ng-click="vt.save()" ng-if="vt.template.id"><i class="glyphicon glyphicon-save"></i> &nbsp; View</a></li>
+                            <li><a href="/templates/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
+                            <li><a href="/templates"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
+                            <li ng-if="vt.template.id" class="divider"></li>
+                            <li><a href="javascript:;" ng-if="vt.template.id" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this page?<br> All work will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="vt.delete(vt.template)"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="javascript:;" ng-click="vt.save(true)"><span ng-class="{'save-now':!vt.tempForm.$pristine}">Save</span></a></li>
+                    <li class="dropdown" ng-if="vt.template.id">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><span>Sharing</span></li>
+                            <li><span><label for="private_world"><input type="checkbox" id="private_world" name="private_world" ng-model="vt.template.private_world"> Share Public</label></span></li>
+                            <li><span><label for="private_group"><input type="checkbox" id="private_group" name="private_group" ng-model="vt.template.private_group"> Share Group</label></span></li>
+                            <div ng-if="vt.template.private_group == 1">
+                                <li class="divider"></li>
+                                <li><span>Group</span></li>
+                                <li><span><label for="group_edit"><input type="checkbox" id="group_edit" name="group_edit" ng-model="vt.template.group_edit"> Allow Editing</label></span></li>
+                                <div ng-if="vt.template.group_edit">
+                                    <li><span>Editors</span></li>
+                                    <li><span><a role="button">Add</a> / <a role="button">Remove</a></span></li>
+                                </div>
                             </div>
-                        </div>
-                    </ul>
-                </li>
-                <li class="dropdown" ng-if="vt.template.drafts.length">
-                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Drafts <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li ng-repeat="draft in vt.template.drafts | orderBy:'time'">
-                            <span>
-                                <a href="javascript:;" ng-click="vt.template.assimilate(draft)">Draft #{{$index+1}} {{draft.recent}}</a>
-                            </span>
-                        </li>
-                    </ul>
-                </li>
-                <li><input type="text" id="form-name" class="form-control" placeholder="Required" ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save(true)" /></li>
-                <li ng-if="!vt.template.id"><p>Enter a name for your Page and press Enter or Save</p></li>
-                <li ng-if="vt.template.id" class="btn-group" ng-click="vt.template.draft = !vt.template.draft">
-                    <a href="javascript:;" ng-show="vt.template.draft" class="switch-on">Drafted</a>
-                    <a href="javascript:;" ng-show="!vt.template.draft">Undrafted</a>
-                </li>
-                <li ng-if="vt.template.id"><p>{{vt.template.fields.length || 0}} of 20 fields used</p></li>
-                <li ng-if="vt.template.id"><a href="javascript:;" ng-show="vt.template.fields.length > 0" ng-bootbox-confirm="
-                    <h3>Click OK to view the Google Spreadsheet for {{vt.template.name}}.</h3>
-                    <p class='required-error'>Important!</p>
-                    <p>Any changes you make on the Google Spreadsheet <strong>will not</strong> be reflected on Clerkr. Do not make attempts to modify the Google Spreadsheet. Instead, export it locally to your computer, or make a copy on Google Drive for your own uses.</p>
-                    <p>By clicking OK, you understand that modifying the original Spreadsheet may cause it to stop working with Clerkr.</p>" ng-bootbox-confirm-action="vt.view_sheet(vt.template)">View Google Sheet</a></li>
-            </ul>
-        </section>
-    </div>
+                        </ul>
+                    </li>
+                    <li class="dropdown" ng-if="vt.template.drafts.length">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Drafts <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li ng-repeat="draft in vt.template.drafts | orderBy:'time'">
+                                <span>
+                                    <a href="javascript:;" ng-click="vt.template.assimilate(draft)">Draft #{{$index+1}} {{draft.recent}}</a>
+                                </span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><input type="text" id="form-name" class="form-control" placeholder="Required" ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save(true)" /></li>
+                    <li ng-if="!vt.template.id"><p>Enter a name for your Page and press Enter or Save</p></li>
+                    <li ng-if="vt.template.id" class="btn-group" ng-click="vt.template.draft = !vt.template.draft">
+                        <a href="javascript:;" ng-show="vt.template.draft" class="switch-on">Drafted</a>
+                        <a href="javascript:;" ng-show="!vt.template.draft">Undrafted</a>
+                    </li>
+                    <li ng-if="vt.template.id"><p>{{vt.template.fields.length || 0}} of 20 fields used</p></li>
+                    <li ng-if="vt.template.id"><md-button ng-click="vt.view_sheet($event, vt.template)" ng-show="vt.template.fields.length > 0">View Google Sheet</md-button></li>
+                </ul>
+            </section>
+        </div>
 
-    <template-form-directive ng-class="{'gridline-workspace':vt.template.e}" form="vt.template"></template-form-directive>
-    
-</form>
+        <template-form-directive layout-padding form="vt.template"></template-form-directive>
+        
+    </md-card>
+</md-content>

@@ -114,8 +114,8 @@ do ->
         vt.delete = (template, ev)->
             TemplatesService.deleteTemplate(template, ev)
 
-        vt.view_sheet = (template)->
-            $window.open(template.gs_url, template.name)
+        vt.view_sheet = (ev, template)->
+            TemplatesService.viewGoogleSheet(ev, template)
             return true
 
         return vt
