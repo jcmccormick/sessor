@@ -33,6 +33,7 @@ source 'https://rails-assets.org' do
     gem 'rails-assets-angular'
     #gem 'rails-assets-angular-material', '>= 1.0.1'
     gem 'rails-assets-angular-aria'
+    gem 'rails-assets-angular-animate'
     gem 'rails-assets-angular-cookie'
     gem 'rails-assets-angular-local-storage'
     gem 'rails-assets-angular-resource'
