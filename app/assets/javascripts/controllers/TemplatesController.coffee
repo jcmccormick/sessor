@@ -116,7 +116,6 @@ do ->
 
         vt.view_sheet = (ev, template)->
             TemplatesService.viewGoogleSheet(ev, template)
-            return true
 
         return vt
 

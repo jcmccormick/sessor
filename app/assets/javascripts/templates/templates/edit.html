@@ -3,21 +3,8 @@
         <md-toolbar class="md-site-secondary">
             <div class="md-toolbar-tools">
                 <h2>
-                    <span>Reports</span>
+                    <span>Page</span>
                 </h2>
-                <span flex></span>
-                <md-button href="/reports/new" class="md-fab md-mini md-site-primary" aria-label="new report">
-                    <md-tooltip md-direction="left">
-                        New Report
-                    </md-tooltip>
-                    <md-icon>add</md-icon>
-                </md-button>
-                <md-button href="/reports" class="md-icon-button" aria-label="view all reports">
-                    <md-tooltip md-direction="left">
-                        View All Reports
-                    </md-tooltip>
-                    <md-icon>search</md-icon>
-                </md-button>
             </div>
         </md-toolbar>
         <div class="form-header">
@@ -29,7 +16,7 @@
                         </a>
                     </li> -->
                     <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Pages <b class="caret"></b></a>
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">File <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="javascript:;" ng-click="vt.save()" ng-if="vt.template.id"><i class="glyphicon glyphicon-save"></i> &nbsp; View</a></li>
                             <li><a href="/templates/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
@@ -66,17 +53,23 @@
                             </li>
                         </ul>
                     </li>
-                    <li><input type="text" id="form-name" class="form-control" placeholder="Required" ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save(true)" /></li>
-                    <li ng-if="!vt.template.id"><p>Enter a name for your Page and press Enter or Save</p></li>
-                    <li ng-if="vt.template.id" class="btn-group" ng-click="vt.template.draft = !vt.template.draft">
-                        <a href="javascript:;" ng-show="vt.template.draft" class="switch-on">Drafted</a>
-                        <a href="javascript:;" ng-show="!vt.template.draft">Undrafted</a>
-                    </li>
-                    <li ng-if="vt.template.id"><p>{{vt.template.fields.length || 0}} of 20 fields used</p></li>
-                    <li ng-if="vt.template.id"><md-button ng-click="vt.view_sheet($event, vt.template)" ng-show="vt.template.fields.length > 0">View Google Sheet</md-button></li>
+                    <li ng-if="vt.template.id"><a href="javascript:;" ng-click="vt.view_sheet($event, vt.template)">View Google Sheet</a></li>
                 </ul>
             </section>
         </div>
+        <md-content layout-padding>
+            <md-input-container>
+                <input ng-model="vt.template.name" placeholder="Page Name" ng-keypress="($event.keyCode==13) && vt.save(true)">
+            </md-input-container>
+            <h4 ng-if="!vt.template.id"><span>Enter a name for your Page and press Enter or Save</span></h4>
+            <div layout="row" ng-if="vt.template.id">
+                <md-checkbox ng-model="vt.template.draft" aria-label="{{vt.template.name}} toggle draft">
+                    Draft
+                </md-checkbox>
+                <span flex></span>
+                <span><p>{{vt.template.fields.length || 0}} of 20 fields used</p></span>
+            </div>
+        </md-content>
 
         <template-form-directive layout-padding form="vt.template"></template-form-directive>
         

@@ -237,7 +237,7 @@ GEM
     rails-assets-angular-cookie (4.0.9)
       rails-assets-angular
     rails-assets-angular-local-storage (0.2.3)
-    rails-assets-angular-material (1.0.0)
+    rails-assets-angular-material (0.9.8)
       rails-assets-angular
       rails-assets-angular-animate
       rails-assets-angular-aria
@@ -390,7 +390,7 @@ DEPENDENCIES
   rails-assets-angular-aria!
   rails-assets-angular-cookie!
   rails-assets-angular-local-storage!
-  rails-assets-angular-material (= 1.0.0)!
+  rails-assets-angular-material (= 0.9.8)!
   rails-assets-angular-resource!
   rails-assets-angular-route!
   rails-assets-ng-token-auth!
