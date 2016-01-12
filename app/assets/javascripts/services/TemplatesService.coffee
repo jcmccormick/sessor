@@ -35,7 +35,7 @@ do ->
 
                 # validate field name or placeholder presence
                 !template.deletingSection && $.grep(template.fields_attributes, (field)->
-                    (field.fieldtype != 'labelntext' && !field.o.name) || (field.fieldtype == 'labelntext' && (!field.o.name || !field.o.default_value))
+                    (field.fieldtype != 'labelntext' && !field.o.name) || (field.fieldtype == 'labelntext' && (!field.o.name && !field.o.default_value))
                 ).length && template.errors += '<p>Fields must have a name.</p><p>Label and text elements must have a label <strong>or</strong> text.</p>'
 
             delete template.deletingSection
@@ -172,7 +172,7 @@ do ->
             addSection: (template)->
                 index = template.sections.push({
                     i: template.sections.length+1
-                    n: (template.newSectionName || '')
+                    n: ''
                     c: 1
                 })
                 template.sO = template.sections[index-1]
@@ -181,28 +181,38 @@ do ->
 
             # add section column
             addSectionColumn: (section)->
-                section.c++
+                if section.c < 3
+                    section.c++
                 return
 
             # delete section column
             deleteSectionColumn: (template, section)->
-                for field in template.fields
-                    field.o.section_id == section.i && field.o.column_id == section.c && prevent = true
-                if prevent 
-                    Flash.create('danger', '<h3>Error! <small>Column</small></h3><p>Please move any fields out of the last column.</p>', 'customAlert')
-                else
-                    section.c--
+                if section.c > 1
+                    for field in template.fields
+                        parseInt(field.o.section_id) == section.i && field.o.column_id == section.c && prevent = true
+                    if prevent 
+                        Flash.create('danger', '<h3>Error! <small>Column</small></h3><p>Please move any fields out of the last column.</p>', 'customAlert')
+                    else
+                        section.c--
                 return
 
             # delete section
-            deleteSection: (template, section_id)->
-                template.sO = undefined
-                for field in template.fields
-                    (field.o.section_id > section_id && field.o.section_id--) || field.o.section_id == section_id && field._destroy = true
-                template.sections.splice section_id-1, 1
-                for section in template.sections
-                    section.i > section_id && section.i--
-                return
+            deleteSection: (ev, template, section_id)->
+                deferred = $q.defer()
+                confirm = $mdDialog.confirm()
+                    .title('Are you sure you want to remove this section from the page?')
+                    .content('The section\'s columns and fields will also be removed and this is not reversible.')
+                    .targetEvent(ev)
+                    .ok('DELETE')
+                    .cancel('Get me out of here!')
+                $mdDialog.show(confirm).then ->
+                    template.sO = undefined
+                    for field in template.fields
+                        (field.o.section_id > section_id && field.o.section_id--) || field.o.section_id == section_id && field._destroy = true
+                    template.sections.splice section_id-1, 1
+                    for section in template.sections
+                        section.i > section_id && section.i--
+                    deferred.resolve()
 
             # reorder section up or down
             moveSection: (template, index, new_index)->
@@ -238,28 +248,36 @@ do ->
                 return deferred.promise
 
             # delete field
-            deleteField: (template, field)->
-                $.extend field, new ClassFactory()
-                template.sO = undefined
-                field.$delete({class: 'fields', id: field.id}, ((res)->
-                    index = $.map(template.fields, (x)-> x.id).indexOf(field.id)
-                    for tempField in template.fields
-                        tempField.o.section_id == template.fields[index].o.section_id && tempField.o.column_id == template.fields[index].o.column_id && tempField.o.column_order > template.fields[index].o.column_order && tempField.o.column_order--
-                    template.fields.splice index, 1
-                ), (err)->
-                    console.log err
-                )
+            deleteField: (ev, template, field)->
+                confirm = $mdDialog.confirm()
+                    .title('Are you sure you want to delete this field?')
+                    .content('Pressing DELETE will permanently remove '+field.o.name+' from this page. However, any data collected for this field on this page\'s Google Sheet will not be affected.')
+                    .targetEvent(ev)
+                    .ok('DELETE')
+                    .cancel('Get me out of here!')
+                $mdDialog.show(confirm).then ->
+                    $.extend field, new ClassFactory()
+                    template.sO = undefined
+                    field.$delete {class: 'fields', id: field.id}, ((res)->
+                        index = $.map(template.fields, (x)-> x.id).indexOf(field.id)
+                        for tempField in template.fields
+                            tempField.o.section_id == template.fields[index].o.section_id && tempField.o.column_id == template.fields[index].o.column_id && tempField.o.column_order > template.fields[index].o.column_order && tempField.o.column_order--
+                        template.fields.splice index, 1
+                    ), (err)->
+                        console.log err
+
                 return
 
             # change a field's section_id
             changeFieldSection: (template, field, prev_section)->
-                prev_column = field.o.column_id
-                prev_column_order = field.o.column_order
-                field.o.column_id = 1
-                field.o.column_order = 1
-                for tempField in template.fields
-                    tempField.o.section_id == prev_section*1 && tempField.o.column_id == prev_column && tempField.o.column_order >= prev_column_order && tempField.o.column_order--
-                    tempField.id != field.id && tempField.o.section_id == field.o.section_id && tempField.o.column_id == field.o.column_id && tempField.o.column_order++
+                if field.o.section_id != prev_section
+                    prev_column = field.o.column_id
+                    prev_column_order = field.o.column_order
+                    field.o.column_id = 1
+                    field.o.column_order = 1
+                    for tempField in template.fields
+                        tempField.o.section_id == prev_section*1 && tempField.o.column_id == prev_column && tempField.o.column_order >= prev_column_order && tempField.o.column_order--
+                        tempField.id != field.id && tempField.o.section_id == field.o.section_id && tempField.o.column_id == field.o.column_id && tempField.o.column_order++
                 return
 
             # change a field's column_id
@@ -269,7 +287,7 @@ do ->
                 field.o.column_id = column_id
                 field.o.column_order = 1
 
-                index = $.map(template.sections, (x)-> x.i).indexOf(field.o.section_id)
+                index = ($.map template.sections, (x)-> x.i).indexOf(parseInt(field.o.section_id, 10))
 
                 sect_fields = $.grep template.fields, (tempField)->
                     tempField.o.section_id == field.o.section_id
@@ -334,16 +352,16 @@ do ->
             ]
 
             addFieldTypes: [
-                {name:'labelntext',value:'Label & Text',glyphicon:'glyphicon-text-size'}
-                {name:'textfield',value:'Text Line',glyphicon:'glyphicon-font'}
-                {name:'textarea',value:'Text Area',glyphicon:'glyphicon-comment'}
-                {name:'email',value:'E-mail',glyphicon:'glyphicon-envelope'}
-                {name:'date',value:'Date',glyphicon:'glyphicon-calendar'}
-                {name:'time',value:'Time',glyphicon:'glyphicon-time'}
-                {name:'integer',value:'Integer',glyphicon:'glyphicon-th'}
-                {name:'checkbox',value:'Checkbox',glyphicon:'glyphicon-check'}
-                {name:'radio',value:'Radio',glyphicon:'glyphicon-record'}
-                {name:'dropdown',value:'Dropdown',glyphicon:'glyphicon-list'}
+                {name:'labelntext',value:'Label & Text',glyphicon:'text_fields'}
+                {name:'textfield',value:'Text Line',glyphicon:'text_format'}
+                {name:'textarea',value:'Text Area',glyphicon:'subject'}
+                {name:'email',value:'E-mail',glyphicon:'email'}
+                {name:'date',value:'Date',glyphicon:'date_range'}
+                {name:'time',value:'Time',glyphicon:'access_time'}
+                {name:'integer',value:'Integer',glyphicon:'dialpad'}
+                {name:'checkbox',value:'Checkbox',glyphicon:'check_box'}
+                {name:'radio',value:'Radio',glyphicon:'radio_button_checked'}
+                {name:'dropdown',value:'Dropdown',glyphicon:'payment'}
             ]
         }
 

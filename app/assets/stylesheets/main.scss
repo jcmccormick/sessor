@@ -51,7 +51,15 @@ $site-color-secondary: darkgreen;
 .md-site-secondary {
     background-color: $site-color-secondary !important;
 }
-
+.md-icon-button md-icon {
+    margin-bottom: 12px !important;
+}
+.md-no-padding {
+    padding: 0;
+}
+.cl-desktop-fab-align {
+    margin: 60px 0 0 !important;
+}
 /*
  * General Site
  */
@@ -277,62 +285,19 @@ blockquote {
 
 
 .section-row {
-
-    h2 {
-        &:not(.no-highlight) {
-            cursor: pointer;
-
-            &:before {
-                font-family: "Glyphicons Halflings";
-                content: "\e080";
-                position: absolute;
-                left: -16px;
-                color: #ddd;
-            }
-
-            &:hover,
-            &.force-hover,
-            &.field-hover {
-                &:before {
-                    color: #337ab7;
-                }
-            }
-        }
-    }
     .column {
-        display: inline-table;
         background-color: white;
     }
     .section-layout,
     .add-field-slide {
         background-color: #eee;
-        display: inline-table;
     }
     .section-layout {
-        padding: 8px 0;
         margin-top: -10px;
         border-bottom: 5px solid #ddd;
     }
     .add-field-slide {
-        width: 100%;
-        margin: 15px 0 0;
-        padding: 4px 0 12px;
         border-top: 5px solid #ddd;
-
-        a,
-        input {
-            margin-bottom: 5px;
-        }
-
-        .field-types {
-            display: flex;
-            flex-wrap: wrap;
-            a {
-                text-align: left;
-                min-width: 50%;
-                padding-left: 0;
-            }
-        }
     }
 }
 
@@ -351,7 +316,7 @@ blockquote {
         position: fixed !important;
         opacity: .3;
         padding: 0;
-        z-index: 1040;
+        z-index: 50;
         width: 32.3%;
         -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
@@ -481,7 +446,7 @@ template-field-directive {
         .glyphs {
             position: absolute;
             top: 0;
-            left: -20px;
+            left: -25px;
             width: 15px;
 
             .field-required {
@@ -516,13 +481,9 @@ template-field-directive {
             &.force-hover {
                 background-color: rgba(255,255,255,.5);
                 outline: 2px solid #337ab7;
-                width: inherit;
-                height: inherit;
-                top: -5px;
-                left: -5px;
-                right: -5px;
-                bottom: -5px;
-                i {
+                width: 100%;
+                height: 100%;
+                md-icon {
                     color: #337ab7;
                 }
             }

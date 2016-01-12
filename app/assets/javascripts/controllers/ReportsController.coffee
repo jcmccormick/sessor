@@ -83,7 +83,7 @@ do ->
             vr.sortType = 'updated_at'
             vr.sortReverse = true
             vr.currentPage = 0
-            vr.pageSize = 25
+            vr.pageSize = 5
             vr.numPages = ->
                 Math.ceil(vr.filteredList.length/vr.pageSize)
 

@@ -1,7 +1,7 @@
 do ->
     'use strict'
 
-    templateFieldDirective = ($compile, TemplatesService) ->
+    templateFieldDirective = ($compile, $filter, TemplatesService) ->
         
         getTemplate = (field) ->
             type = field.fieldtype
@@ -22,17 +22,25 @@ do ->
         linker = (scope, element, attrs)->
 
             # Create a container (form-group) for field input box layout
-            fwstart = '<div class="form-group" ng-class="{\'clear-align\':field.fieldtype==\'checkbox\' || field.fieldtype==\'radio\' || field.fieldtype==\'labelntext\',\'space\':field.fieldtype==\'checkbox\' && field.o.column_order == 1}" scroll-to=".force-hover" template="template">
-                    <div class="glyphs">
-                        <span ng-if="field.o.tooltip" bs-popover>
-                            <i class="glyphicon glyphicon-question-sign" rel="popover" data-container="body" data-placement="bottom" data-html="false" data-content="{{field.o.tooltip}}"></i>
-                        </span>
-                        <i class="glyphicon glyphicon-asterisk field-required" ng-if="field.o.required && !field.value.input && !field.o.default_value"></i>
-                    </div>'
+            fwstart = '<div class="form-group" ng-class="{\'clear-align\':field.fieldtype==\'checkbox\' || field.fieldtype==\'radio\' || field.fieldtype==\'labelntext\',\'space\':field.fieldtype==\'checkbox\' && field.o.column_order == 1}" scroll-to=".force-hover" template="template">'
             
-            fwmid = '<h3>{{field.o.name}}</h3>'
+            fwmid = '<h3>
+                <md-icon class="md-warn" ng-if="field.o.required && !field.value.input && !field.o.default_value">
+                    <md-tooltip md-direction="top">
+                        Required
+                    </md-tooltip>
+                    grade
+                </md-icon>
+                <md-icon ng-if="field.o.tooltip">
+                    <md-tooltip md-direction="top">
+                        {{field.o.tooltip}}
+                    </md-tooltip>
+                    live_help
+                </md-icon>
+                {{field.o.name}}
+            </h3>'
 
-            fwend = '<div class="field-overlay" ng-class="{\'force-hover\':template.sO.id == field.id}" ng-if="template.e"><i class="glyphicon {{field.o.glyphicon}}" ng-class="{\'bump-down\':field.fieldtype != \'checkbox\' && !field.o.name}"></i></div>
+            fwend = '<div class="field-overlay" md-ink-ripple="full" ng-click="template.sO=field" ng-class="{\'force-hover\':template.sO.id == field.id}" ng-if="template.e"><i class="glyphicon {{field.o.glyphicon}}" ng-class="{\'bump-down\':field.fieldtype != \'checkbox\' && !field.o.name}"></i></div>
                          </div>'
 
             fw = fwstart+fwmid
@@ -137,9 +145,9 @@ do ->
                         when "integer"
                             parseInt(scope.valueCopy, 10)
                         when "date"
-                            new Date(scope.valueCopy).format("DDDD, MMMM DS, YYYY")
+                            $filter('date')(scope.valueCopy, 'shortDate')
                         when "time"
-                            new Date(scope.valueCopy).format("hh:mm TT")
+                            $filter('date')(scope.valueCopy, 'shortTime')
                         when "checkbox"
                             if scope.valueCopy == "f" then 'False' else 'True'
 
@@ -164,6 +172,6 @@ do ->
             link: linker
         }
 
-    templateFieldDirective.$inject = ['$compile', 'TemplatesService']
+    templateFieldDirective.$inject = ['$compile', '$filter', 'TemplatesService']
         
     angular.module('clerkr').directive('templateFieldDirective', templateFieldDirective)

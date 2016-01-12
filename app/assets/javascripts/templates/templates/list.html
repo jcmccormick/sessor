@@ -5,7 +5,7 @@
                 <span>All Pages</span>
             </h2>
             <span flex></span>
-            <md-button href="/templates/new" class="md-fab md-mini md-site-primary" aria-label="new page">
+            <md-button href="/templates/new" class="md-fab md-mini md-site-primary cl-desktop-fab-align" aria-label="new page">
                 <md-tooltip md-direction="left">
                     New Page
                 </md-tooltip>
@@ -14,33 +14,31 @@
         </div>
     </md-toolbar>
 
-    <div class="md-padding">
-        <div layout="row">
-            <md-input-container flex>
-                <label>Search</label>
-                <input ng-model="vt.keywords" ng-change="vt.currentPage = 0">
-            </md-input-container>
-            <span flex></span>
-            <md-button class="md-icon-button md-primary" ng-repeat="distance in [10, 25, 50, 100]" ng-click="vt.pageSize = distance; vt.currentPage = 0" aria-label="{{distance}} entries per page">
-                <md-tooltip md-direction="bottom">
-                    entries per page
-                </md-tooltip>
-                {{distance}}
-            </md-button>
-            <md-button class="md-icon-button md-primary" ng-class="{'disabled':vt.currentPage==0}" ng-click="vt.currentPage = vt.currentPage-1" aria-label="back 1 page">
-                <md-tooltip md-direction="bottom">
-                    Back 1 page
-                </md-tooltip>
-                <md-icon>chevron_left</md-icon>
-            </md-button>
-            <h4><span>{{(vt.filteredList.length && vt.currentPage+1) || 0}} of {{vt.filteredList.length && vt.numPages() || 0}}</span></h4>
-            <md-button class="md-icon-button md-primary" ng-class="{'disabled':vt.filteredList.length && vt.currentPage>=vt.numPages()-1}" ng-click="vt.currentPage = vt.currentPage+1" aria-label="forward 1 page">
-                <md-tooltip md-direction="bottom">
-                    Forward 1 page
-                </md-tooltip>
-                <md-icon>chevron_right</md-icon>
-            </md-button>
-        </div>
+    <div layout="row" layout-padding layout-align="center center">
+        <md-input-container flex>
+            <label>Search</label>
+            <input ng-model="vt.keywords" ng-change="vt.currentPage = 0">
+        </md-input-container>
+        <span flex></span>
+        <md-button class="md-icon-button md-primary" ng-repeat="distance in [10, 25, 50, 100]" ng-click="vt.pageSize = distance; vt.currentPage = 0" aria-label="{{distance}} entries per page">
+            <md-tooltip md-direction="bottom">
+                entries per page
+            </md-tooltip>
+            {{distance}}
+        </md-button>
+        <md-button class="md-primary" ng-class="{'disabled':vt.currentPage==0}" ng-click="vt.currentPage = vt.currentPage-1" aria-label="back 1 page">
+            <md-tooltip md-direction="bottom">
+                Back 1 page
+            </md-tooltip>
+            <md-icon>chevron_left</md-icon>
+        </md-button>
+        {{(vt.filteredList.length && vt.currentPage+1) || 0}} of {{vt.filteredList.length && vt.numPages() || 0}}
+        <md-button class="md-primary" ng-class="{'disabled':vt.filteredList.length && vt.currentPage>=vt.numPages()-1}" ng-click="vt.currentPage = vt.currentPage+1" aria-label="forward 1 page">
+            <md-tooltip md-direction="bottom">
+                Forward 1 page
+            </md-tooltip>
+            <md-icon>chevron_right</md-icon>
+        </md-button>
     </div>
 
     <table class="table">
@@ -82,7 +80,7 @@
                             <md-tooltip md-direction="bottom">
                                 New Report with {{template.id}} {{template.name}}
                             </md-tooltip>
-                            <md-icon>insert_drive_file</md-icon>
+                            <md-icon>description</md-icon>
                         </md-button> 
                         <md-button href="/templates/{{template.id}}" class="md-icon-button md-primary" aria-label="view {{template.id}} {{template.name}}">
                             <md-tooltip md-direction="bottom">

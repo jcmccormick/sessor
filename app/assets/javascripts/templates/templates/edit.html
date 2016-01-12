@@ -7,6 +7,8 @@
                 </h2>
             </div>
         </md-toolbar>
+
+        <!-- TRANSITION THIS TO md-menu WHEN ANGULAR-MATERIAL 1.0.2 COMES -->
         <div class="form-header">
             <section>
                 <ul class="nav top-nav">
@@ -57,21 +59,36 @@
                 </ul>
             </section>
         </div>
-        <md-content layout-padding>
-            <md-input-container>
-                <input ng-model="vt.template.name" placeholder="Page Name" ng-keypress="($event.keyCode==13) && vt.save(true)">
+
+        <div layout="row" layout-padding>
+            <md-input-container flex="33">
+                <label>Page Name</label>
+                <input ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save(true)">
             </md-input-container>
-            <h4 ng-if="!vt.template.id"><span>Enter a name for your Page and press Enter or Save</span></h4>
-            <div layout="row" ng-if="vt.template.id">
+            <span flex></span>
+            <div layout="column" layout-align="center end" ng-if="vt.template.id">
+                {{vt.template.fields.length || 0}} of 20 fields used
                 <md-checkbox ng-model="vt.template.draft" aria-label="{{vt.template.name}} toggle draft">
                     Draft
                 </md-checkbox>
-                <span flex></span>
-                <span><p>{{vt.template.fields.length || 0}} of 20 fields used</p></span>
             </div>
-        </md-content>
+        </div>
+        <div layout-padding ng-if="!vt.template.id">Enter a name for your Page and press Enter or Save</div>
 
-        <template-form-directive layout-padding form="vt.template"></template-form-directive>
+        <draggable-options field="vt.template.sO" form="vt.template" class="field-options" ng-if="vt.template.e && vt.template.poppedOut && vt.template.sO.o"></draggable-options>
+
+        <template-form-directive form="vt.template"></template-form-directive>
+
+        <md-button ng-click="vt.template.addSection(form)" aria-label="add a new section" ng-if="vt.template.e && ((vt.template.fields && vt.template.fields.length) || 0) < 20">
+            <md-icon>add</md-icon> Add Section
+        </md-button>
         
+<!--         <div layout="column" layout-padding>
+            Test field mixing Clerkr style with Material Design
+            <md-input-container>
+                <label>Type here!</label>
+                <input type="text" class="imod">
+            </md-input-container>
+        </div> -->
     </md-card>
 </md-content>

@@ -1,4 +1,11 @@
 <md-card ng-form="vt.tempForm">
+    <md-toolbar class="md-site-secondary">
+        <div class="md-toolbar-tools">
+            <h2>
+                <span>Page</span>
+            </h2>
+        </div>
+    </md-toolbar>
     <div class="form-header">
         <section>
             <ul class="nav top-nav">
@@ -13,5 +20,10 @@
             </ul>
         </section>
     </div>
-    <template-form-directive class="paper" form="vt.template"></template-form-directive>
+
+    <div layout="row" layout-align="center center">
+        <h2>{{vt.template.name}}</h2>
+    </div>
+    
+    <template-form-directive form="vt.template"></template-form-directive>
 </md-card>

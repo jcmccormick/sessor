@@ -24,6 +24,8 @@ do ->
 
             if vt.template.e = TemplatesService.editing()
 
+                vt.template.sO = undefined
+
                 $(document).bind 'keydown', (e)->
                     if vt.template && e.ctrlKey && (e.which == 83)
                         e.preventDefault()
@@ -46,11 +48,11 @@ do ->
                 vt.template.deleteSectionColumn = (section)->
                     TemplatesService.deleteSectionColumn(vt.template, section)
 
-                vt.template.deleteSection = (section)->
-                    TemplatesService.deleteSection(vt.template, section.i)
-                    vt.tempForm.$pristine = false
-                    vt.template.deletingSection = true
-                    vt.save(true)
+                vt.template.deleteSection = (ev, section)->
+                    TemplatesService.deleteSection(ev, vt.template, section.i).then ->
+                        vt.tempForm.$pristine = false
+                        vt.template.deletingSection = true
+                        vt.save(true)
 
                 vt.template.moveSection = (index, new_index)->
                     TemplatesService.moveSection(vt.template, index, new_index)
@@ -60,8 +62,8 @@ do ->
                         vt.template.update_keys = true
                         vt.save(true)
 
-                vt.template.deleteField = (field)->
-                    TemplatesService.deleteField(vt.template, field)
+                vt.template.deleteField = (ev, field)->
+                    TemplatesService.deleteField(ev, vt.template, field)
 
                 vt.template.changeFieldSection = (field, prev_section)->
                     TemplatesService.changeFieldSection(vt.template, field, prev_section)
@@ -75,8 +77,8 @@ do ->
                 vt.template.addOption = (field)->
                     TemplatesService.addOption(field)
 
-                vt.template.deleteOption = (field, option)->
-                    TemplatesService.deleteOption(field, option)
+                vt.template.deleteOption = (ev, field, option)->
+                    TemplatesService.deleteOption(ev, field, option)
 
                 vt.template.addFieldTypes = TemplatesService.addFieldTypes
 
@@ -95,7 +97,7 @@ do ->
             vt.sortType = 'updated_at'
             vt.sortReverse = true
             vt.currentPage = 0
-            vt.pageSize = 25
+            vt.pageSize = 5
             vt.numPages = ->
                 Math.ceil(vt.filteredList.length/vt.pageSize)
 

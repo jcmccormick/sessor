@@ -1,67 +1,76 @@
-<draggable-options field="form.sO" form="form" class="field-options" ng-if="form.e && form.poppedOut && form.sO.o"></draggable-options>
-<div ng-form="myForm">
+<md-content layout="column" layout-padding ng-form="myForm" class="section-row" ng-if="form.id && form.sections" ng-repeat="section in form.sections track by $index">
 
-    <div class="col-xs-12" ng-if="form.sections" ng-class="{'col-lg-6 col-lg-offset-3':gridWidth()==1,'col-lg-10 col-lg-offset-1':gridWidth()==2}">
-        <div class="clearfix" ng-show="form.id && form.sections" ng-class="{'paper paper-color ': (form.e || form.viewing) && nostyle}">
-            <small class="col-xs-12">
-                <span ng-if="report && !report.e">{{report.title}}</span>
-            </small>
+    <div ng-if="!form.e" layout="row">
+        <h3>
+            {{section.n}}
+        </h3>
+    </div>
 
-            <div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
-                <h1><center>{{form.name}}</center></h1>
+    <div layout="row" layout-padding layout-align="center center" class="section-layout" ng-if="form.e">
+        <md-input-container class="md-no-padding">
+            <label>Section name (optional)</label>
+            <input type="text" id="section-{{section.i}}-name" ng-model="section.n" ng-click="form.sO=section">
+        </md-input-container>
+        <md-button ng-click="form.moveSection($index, $index-1)" class="md-icon-button" ng-disabled="form.sections.length <= 1" aria-label="switch with section above">
+            <md-tooltip md-direction="top">
+                Switch with section above
+            </md-tooltip>
+            <md-icon>arrow_upward</md-icon>
+        </md-button>
+        <md-button ng-click="form.moveSection($index, $index+1)" class="md-icon-button" ng-disabled="form.sections.length <= 1" aria-label="switch with section below">
+            <md-tooltip md-direction="top">
+                Switch with section below
+            </md-tooltip>
+            <md-icon>arrow_downward</md-icon>
+        </md-button>
+        <md-button ng-click="form.deleteSectionColumn(section)" class="md-icon-button" ng-disabled="section.c == 1" aria-label="remove column from {{section.n || 'Section' + section.i}}">
+            <md-tooltip md-direction="top">
+                Remove column from {{section.n || 'Section' + section.i}}
+            </md-tooltip>
+            <md-icon>remove</md-icon>
+        </md-button>
+        <md-button ng-click="form.addSectionColumn(section)" class="md-icon-button" ng-disabled="section.c == 3" aria-label="add column to {{section.n || 'Section' + section.i}}">
+            <md-tooltip md-direction="top">
+                Add column to {{section.n || 'Section' + section.i}}
+            </md-tooltip>
+            <md-icon>add</md-icon>
+        </md-button>
+        <span flex></span>
+        <md-button ng-click="form.deleteSection($event, section)" class="md-icon-button md-warn" aria-label="delete {{section.n || 'Section' + section.i}}">
+            <md-tooltip md-direction="left">
+                Delete {{section.n || 'Section' + section.i}}
+            </md-tooltip>
+            <md-icon>delete</md-icon>
+        </md-button>
+    </div>
+
+    <div layout-md="column" layout-gt-md="row">
+        <div layout-padding layout-fill ng-repeat="column in columnsArray(section.c) track by $index">
+            <div ng-repeat="field in form.fields | filter:{o:{column_id: $index+1, section_id: section.i}} | orderBy:'o.column_order'">
+                <template-field-directive myForm="myForm" field="field" template="form" report="report"></template-field-directive>
+
+                <draggable-options field="field" form="form" class="field-options" ng-show="form.e && !form.poppedOut && form.sO==field"></draggable-options>
             </div>
-            
-            <div class="section-row clearfix col-xs-12" ng-repeat="section in form.sections track by $index">
 
-                <h2 ng-class="{'no-highlight':!form.e,'force-hover':form.sO==section,'field-hover':form.sO.section_id == section.i}">
-                    {{(!form.e && section.n) || null}}
-                    <input type="text" id="section-{{section.i}}-name" class="form-control imod" placeholder="Section name or blank" ng-if="form.e" ng-model="section.n" ng-click="form.sO=section" />
-                </h2>
-
-                <div class="col-xs-12 section-layout" ng-if="form.e">
-                    <div class="pull-left" ng-if="form.sections.length > 1">
-                        &nbsp; Reorder
-                        <a href="javascript:;" class="btn" ng-click="form.moveSection($index, $index-1)"><i class="glyphicon glyphicon-arrow-up"></i></a>
-                        <a href="javascript:;" class="btn" ng-click="form.moveSection($index, $index+1)"><i class="glyphicon glyphicon-arrow-down"></i></a>
-                    </div>
-                    <div class="pull-right">
-                        <a href="javascript:;" class="btn" ng-if="section.c > 1" ng-click="form.deleteSectionColumn(section)"><i class="glyphicon glyphicon-minus"></i></a>
-                        <a href="javascript:;" class="btn" ng-if="section.c < 3" ng-click="form.addSectionColumn(section)"><i class="glyphicon glyphicon-plus"></i></a>
-                        Column
-                        <i class="glyphicon glyphicon-chevron-down"></i> &nbsp;
-                        <a href="javascript:;" class="btn required-error" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this section from the page?<br><br>The section's columns and fields will also be deleted and this is not reversible.</h4></center>" ng-bootbox-confirm-action="form.deleteSection(section)"><i class="glyphicon glyphicon-trash"></i></a>
-                    </div>
+            <div ng-if="form.e && ((form.fields && form.fields.length) || 0) < 20">
+                <div layout="column" layout-padding>
+                    <h4>
+                        <md-icon>arrow_upward</md-icon>
+                        <span>New Field</span>
+                        <small>{{section.n || 'Section '+(section.i)}}, Column {{$index+1}}</small>
+                    </h4>
+                    <md-input-container class="md-no-padding">
+                        <label>New Field Name</label>
+                        <input type="text" ng-model="form.newFieldName">
+                    </md-input-container>
                 </div>
-
-                <div class="col-xs-12 column" ng-class="{'col-md-6':section.c == 2, 'col-md-4':section.c == 3}" ng-repeat="column in columnsArray(section.c) track by $index">
-                    <div ng-repeat="field in form.fields | filter:{o:{column_id: $index+1, section_id: section.i}} | orderBy:'o.column_order'">
-                        <template-field-directive ng-click="form.sO=field" myForm="myForm" field="field" template="form" report="report"></template-field-directive>
-
-                        <draggable-options field="field" form="form" class="field-options" ng-if="form.e && !form.poppedOut && form.sO==field"></draggable-options>
-                    </div>
-
-                    <div class="add-field-slide" ng-if="form.e && ((form.fields && form.fields.length) || 0) < 20">
-                        <h4 class="col-xs-12">
-                            <i class="glyphicon glyphicon-chevron-up"></i> 
-                            <strong>New Field</strong> <small>{{section.n || 'Section '+(section.i)}}, Column {{$index+1}}</small>
-                        </h4>
-                        <h4 class="col-xs-12">
-                            <input type="text" class="form-control" placeholder="Name" ng-model="form.newFieldName">
-                        </h4>
-                        <div class="col-xs-12" class="field-types">
-                            <a href="javascript:;" class="btn" ng-disabled="!form.newFieldName" ng-class="{'disabled':!form.newFieldName}" ng-repeat="type in form.addFieldTypes" ng-click="form.addField(section.i, $parent.$index+1, type)">
-                                <i class="glyphicon {{type.glyphicon}}"></i> {{type.value}}
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <md-button ng-click="form.addField(section.i, $parent.$index+1, type)" ng-repeat="type in form.addFieldTypes" ng-disabled="!form.newFieldName" class="md-icon-button" aria-label="add a {{type.value}} field">
+                    <md-tooltip md-direction="top">
+                        Add a {{type.value}} field
+                    </md-tooltip>
+                    <md-icon>{{type.glyphicon}}</md-icon>
+                </md-button>
             </div>
         </div>
     </div>
-    <div class="text-center col-xs-12 col-md-6 col-md-offset-3" ng-if="form.e && ((form.fields && form.fields.length) || 0) < 20">
-        <h3 class="paper-color">
-            <input type="text" class="form-control imod" placeholder="New section name or blank" ng-model="form.newSectionName" />
-            <a href="javascript:;" ng-click="form.addSection(form)"><div class="add-section"><i class="glyphicon glyphicon-plus"></i> Add Section</div></a>
-        </h3>
-    </div>
-</div>
+</md-content>

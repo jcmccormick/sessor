@@ -1,4 +1,4 @@
-<div layout="row" layout-xs="column" layout-sm="column">
+<div layout="row" layout-xs="column" layout-sm="column" layout-md="column">
     <md-card flex ng-controller="TemplatesController as vt">
 
         <!-- Page Toolbar -->
@@ -9,21 +9,14 @@
                     <span>Pages</span>
                 </h2>
                 <span flex></span>
-                <md-button href="/templates/new" class="md-fab md-mini md-site-primary" aria-label="new page">
-                    <md-tooltip md-direction="left">
+                <md-button href="/templates/new" class="md-fab md-mini md-site-primary cl-desktop-fab-align" aria-label="new page">
+                    <md-tooltip md-direction="bottom">
                         New Page
                     </md-tooltip>
                     <md-icon>add</md-icon>
                 </md-button>
-                <md-button href="/templates" class="md-icon-button" aria-label="view all pages">
-                    <md-tooltip md-direction="left">
-                        View All Pages
-                    </md-tooltip>
-                    <md-icon>search</md-icon>
-                </md-button>
             </div>
         </md-toolbar>
-
         <md-content>
             <md-tabs md-dynamic-height md-border-bottom ng-form="vt.tempForm">
                 <md-tab label="sort">
@@ -51,7 +44,13 @@
                                 </tr>
                             </thead>
                             <tbody ng-if="vt.templates.length">
-                                <tr ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo: 5">
+                                <tr>
+                                    <md-input-container>
+                                        <label>Search</label>
+                                        <input ng-model="vt.keywords" ng-change="vt.currentPage = 0">
+                                    </md-input-container>
+                                </tr>
+                                <tr ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo: vt.pageSize">
                                     <td>{{template.id}}</td>
                                     <td>{{template.name}}</td>
                                     <td>
@@ -67,7 +66,7 @@
                                                 <md-tooltip md-direction="bottom">
                                                     New Report with {{template.id}} {{template.name}}
                                                 </md-tooltip>
-                                                <md-icon>insert_drive_file</md-icon>
+                                                <md-icon>description</md-icon>
                                             </md-button> 
                                             <md-button href="/templates/{{template.id}}" class="md-icon-button md-primary" aria-label="view {{template.id}} {{template.name}}">
                                                 <md-tooltip md-direction="bottom">
@@ -92,11 +91,33 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div layout="row" layout-padding layout-align="center center">
+                            <md-button class="md-icon-button md-primary" ng-repeat="distance in [5, 25, 100]" ng-click="vt.pageSize = distance; vt.currentPage = 0" aria-label="{{distance}} entries per page">
+                                <md-tooltip md-direction="top">
+                                    entries per page
+                                </md-tooltip>
+                                {{distance}}
+                            </md-button>
+                            <span flex></span>
+                            <md-button class="md-primary" ng-class="{'disabled':vt.currentPage==0}" ng-click="vt.currentPage = vt.currentPage-1" aria-label="back 1 page">
+                                <md-tooltip md-direction="top">
+                                    Back 1 page
+                                </md-tooltip>
+                                <md-icon>chevron_left</md-icon>
+                            </md-button>
+                            {{(vt.filteredList.length && vt.currentPage+1) || 0}} of {{vt.filteredList.length && vt.numPages() || 0}}
+                            <md-button class="md-primary" ng-class="{'disabled':vt.filteredList.length && vt.currentPage>=vt.numPages()-1}" ng-click="vt.currentPage = vt.currentPage+1" aria-label="forward 1 page">
+                                <md-tooltip md-direction="top">
+                                    Forward 1 page
+                                </md-tooltip>
+                                <md-icon>chevron_right</md-icon>
+                            </md-button>
+                        </div>
                     </md-content>
                 </md-tab>
                 <md-tab label="expand">
                     <md-content class="md-padding" layout="column">
-                        <md-card ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo: 5">
+                        <md-card ng-repeat="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo: vt.pageSize">
                 
 <!--                             <md-card-title>
                                 <md-card-title-text>
@@ -135,7 +156,7 @@
                                     <md-button ng-click="vt.currentTemplateView = template" ng-show="vt.currentTemplateView != template" ng-click>Show</md-button>
                                     <md-button ng-click="vt.currentTemplateView = undefined" ng-show="vt.currentTemplateView == template">Hide</md-button>
                                 </span>
-                                <template-form-directive ng-show="vt.currentTemplateView == template" ng-init="template.e = false" class="disabled" form="template" nostyle="true"></template-form-directive>
+                                <template-form-directive ng-if="vt.currentTemplateView == template" ng-init="template.e = false" class="disabled" form="template" nostyle="true"></template-form-directive>
                             </md-card-content>
 
                             <md-card-actions layout="row" layout-align="end center">
@@ -143,7 +164,7 @@
                                     <md-tooltip md-direction="top">
                                         New Report with {{template.id}} {{template.name}}
                                     </md-tooltip>
-                                    <md-icon>insert_drive_file</md-icon>
+                                    <md-icon>description</md-icon>
                                 </md-button>
                                 <md-button href="/templates/{{template.id}}" class="md-icon-button md-primary" aria-label="view {{template.id}} {{template.name}}">
                                     <md-tooltip md-direction="top">
@@ -181,21 +202,14 @@
                     <span>Reports</span>
                 </h2>
                 <span flex></span>
-                <md-button href="/reports/new" class="md-fab md-mini md-site-primary" aria-label="new report">
-                    <md-tooltip md-direction="left">
+                <md-button href="/reports/new" class="md-fab md-mini md-site-primary cl-desktop-fab-align" aria-label="new report">
+                    <md-tooltip md-direction="bottom">
                         New Report
                     </md-tooltip>
                     <md-icon>add</md-icon>
                 </md-button>
-                <md-button href="/reports" class="md-icon-button" aria-label="view all reports">
-                    <md-tooltip md-direction="left">
-                        View All Reports
-                    </md-tooltip>
-                    <md-icon>search</md-icon>
-                </md-button>
             </div>
         </md-toolbar>
-
         <md-content>
             <md-tabs md-dynamic-height md-border-bottom ng-form="vr.repForm">
                 <md-tab label="sort">
@@ -223,7 +237,13 @@
                                 </tr>
                             </thead>
                             <tbody ng-if="vr.reports.length">
-                                <tr ng-repeat="report in vr.filteredList = (vr.reports | filter:vr.keywords) | orderBy:vr.sortType:vr.sortReverse | startFrom:vr.currentPage*vr.pageSize | limitTo: 5">
+                                <tr>
+                                    <md-input-container>
+                                        <label>Search</label>
+                                        <input ng-model="vr.keywords" ng-change="vt.currentPage = 0">
+                                    </md-input-container>
+                                </tr>
+                                <tr ng-repeat="report in vr.filteredList = (vr.reports | filter:vr.keywords) | orderBy:vr.sortType:vr.sortReverse | startFrom:vr.currentPage*vr.pageSize | limitTo: vr.pageSize">
                                     <td>{{report.id}}</td>
                                     <td>{{report.title || 'Untitled'}}</td>
                                     <td><span ng-repeat="template in report.templates track by $index">{{template.name}}<span ng-show="!$last">, </span></span></td>
@@ -253,11 +273,33 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div layout="row" layout-padding layout-align="center center">
+                            <md-button class="md-icon-button md-primary" ng-repeat="distance in [5, 25, 100]" ng-click="vr.pageSize = distance; vr.currentPage = 0" aria-label="{{distance}} entries per page">
+                                <md-tooltip md-direction="bottom">
+                                    entries per page
+                                </md-tooltip>
+                                {{distance}}
+                            </md-button>
+                            <span flex></span>
+                            <md-button class="md-primary" ng-class="{'disabled':vr.currentPage==0}" ng-click="vr.currentPage = vr.currentPage-1" aria-label="back 1 page">
+                                <md-tooltip md-direction="bottom">
+                                    Back 1 page
+                                </md-tooltip>
+                                <md-icon>chevron_left</md-icon>
+                            </md-button>
+                            {{(vr.filteredList.length && vr.currentPage+1) || 0}} of {{vr.filteredList.length && vr.numPages() || 0}}
+                            <md-button class="md-primary" ng-class="{'disabled':vr.filteredList.length && vr.currentPage>=vt.numPages()-1}" ng-click="vr.currentPage = vr.currentPage+1" aria-label="forward 1 page">
+                                <md-tooltip md-direction="bottom">
+                                    Forward 1 page
+                                </md-tooltip>
+                                <md-icon>chevron_right</md-icon>
+                            </md-button>
+                        </div>
                     </md-content>
                 </md-tab>
                 <md-tab label="expand">
                     <md-content class="md-padding" layout="column">
-                        <md-card ng-repeat="report in vr.filteredList = (vr.reports | filter:vr.keywords) | orderBy:vr.sortType:vr.sortReverse | startFrom:vr.currentPage*vr.pageSize | limitTo: 5">
+                        <md-card ng-repeat="report in vr.filteredList = (vr.reports | filter:vr.keywords) | orderBy:vr.sortType:vr.sortReverse | startFrom:vr.currentPage*vr.pageSize | limitTo: vr.pageSize">
 
 <!--                             <md-card-title>
                                 <md-card-title-text>
