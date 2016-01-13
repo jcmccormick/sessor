@@ -52,24 +52,24 @@
                 <draggable-options field="field" form="form" class="field-options" ng-show="form.e && !form.poppedOut && form.sO==field"></draggable-options>
             </div>
 
-            <div ng-if="form.e && ((form.fields && form.fields.length) || 0) < 20">
-                <div layout="column" layout-padding>
-                    <h4>
-                        <md-icon>arrow_upward</md-icon>
-                        <span>New Field</span>
-                        <small>{{section.n || 'Section '+(section.i)}}, Column {{$index+1}}</small>
-                    </h4>
-                    <md-input-container class="md-no-padding">
-                        <label>New Field Name</label>
-                        <input type="text" ng-model="form.newFieldName">
-                    </md-input-container>
+            <div layout="column" layout-padding ng-if="form.e && ((form.fields && form.fields.length) || 0) < 20">
+                <h4>
+                    <md-icon>arrow_upward</md-icon>
+                    <span>New Field</span>
+                    <small>{{section.n || 'Section '+(section.i)}}, Column {{$index+1}}</small>
+                </h4>
+                <md-input-container class="md-no-padding">
+                    <label>New Field Name</label>
+                    <input type="text" ng-model="form.newFieldName">
+                </md-input-container>
+                <div layout-md="row" layout-wrap>
+                    <md-button flex ng-click="form.addField(section.i, $parent.$index+1, type)" ng-repeat="type in form.addFieldTypes" class="md-icon-button" aria-label="add a {{type.value}} field">
+                        <md-tooltip md-direction="bottom">
+                            Add a {{type.value}} field
+                        </md-tooltip>
+                        <md-icon>{{type.glyphicon}}</md-icon>
+                    </md-button>
                 </div>
-                <md-button ng-click="form.addField(section.i, $parent.$index+1, type)" ng-repeat="type in form.addFieldTypes" ng-disabled="!form.newFieldName" class="md-icon-button" aria-label="add a {{type.value}} field">
-                    <md-tooltip md-direction="top">
-                        Add a {{type.value}} field
-                    </md-tooltip>
-                    <md-icon>{{type.glyphicon}}</md-icon>
-                </md-button>
             </div>
         </div>
     </div>

@@ -67,6 +67,30 @@
             </md-select>
         </div>
     </div>
+    
+    <div layout="column" layout-padding ng-if="field.fieldtype == 'dropdown' || field.fieldtype == 'radio'">
+        <h4>
+            Options
+            <md-button ng-click="form.addOption(field)" class="md-icon-button" aria-label="add option for {{field.name}}">
+                <md-tooltip md-direction="top">
+                    Add option for {{field.name}}
+                </md-tooltip>
+                <md-icon>add</md-icon>
+            </md-button>
+        </h4>
+        <div layout="row" ng-repeat="option in field.o.options track by $index">
+            <md-input-container layout-fill>
+                <label>Option Name</label>
+                <input type="text" ng-model="field.o.options[$index]">
+            </md-input-container>
+            <md-button ng-click="form.deleteOption($event, field, option)" class="md-icon-button md-warn" aria-label="delete {{option || 'Option ' + $index*1+1}}">
+                <md-tooltip md-direction="left">
+                    Delete {{option || 'Option' + $index+1}}
+                </md-tooltip>
+                <md-icon>delete</md-icon>
+            </md-button>
+        </div>
+    </div>
 
     <div layout="row">
         <md-button ng-click="form.sO=undefined">close</md-button>
@@ -97,18 +121,6 @@
                 </md-tooltip>
                 <md-icon>keyboard_arrow_right</md-icon>
             </md-button>
-        </div>
-    </div>
-    <div class="col-xs-12" ng-if="field.fieldtype == 'dropdown' || field.fieldtype == 'radio'">
-        <h4>Options</h4>
-        <a href="javascript:;" class="btn" ng-click="form.addOption(field)">Add New</a>
-        <div class="input-group" ng-repeat="option in field.o.options track by $index">
-            <input type="text" class="form-control" ng-model="field.o.options[$index]">
-            <span class="input-group-btn">
-                <a href="javascript:;" class="btn btn-default" ng-bootbox-confirm="<center><h4>Are you sure you want to delete this option?<br><br>It will be permanently deleted.</h4></center>" ng-bootbox-confirm-action="form.deleteOption(field, option)">
-                    <i class="glyphicon glyphicon-trash"></i>
-                </a>
-            </span>
         </div>
     </div>
     <div class="drag-bar"></div>

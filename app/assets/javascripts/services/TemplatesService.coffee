@@ -321,8 +321,15 @@ do ->
                 return
 
             # delete field option
-            deleteOption: (field, option)->
-                field.o.options.splice option, 1
+            deleteOption: (ev, field, option)->
+                confirm = $mdDialog.confirm()
+                    .title('Are you sure you want to delete this field?')
+                    .content('Pressing DELETE will permanently remove '+field.o.name+' from this page. However, any data collected for this field on this page\'s Google Sheet will not be affected.')
+                    .targetEvent(ev)
+                    .ok('DELETE')
+                    .cancel('Get me out of here!')
+                $mdDialog.show(confirm).then ->
+                    field.o.options.splice option, 1
                 return
 
             # Helper functions
