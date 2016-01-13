@@ -166,7 +166,6 @@ do ->
                     ), (err)->
                         Flash.create('danger', '<h3>Error! <small>Page</small></h3><p>'+err.data.errors+'</p>', 'customAlert')
                     )
-                return
 
             # add section
             addSection: (template)->
