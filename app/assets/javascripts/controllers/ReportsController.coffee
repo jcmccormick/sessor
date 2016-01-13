@@ -87,8 +87,9 @@ do ->
             vr.numPages = ->
                 Math.ceil(vr.filteredList.length/vr.pageSize)
 
-        vr.delete = (report, ev)->
-            ReportsService.deleteReport(report, ev)
+        vr.delete = (ev, report)->
+            ReportsService.deleteReport(ev, report).then ->
+                vr.reports = localStorageService.get('_csr')
 
         return vr
 

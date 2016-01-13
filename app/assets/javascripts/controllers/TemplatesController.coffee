@@ -113,8 +113,9 @@ do ->
                 vt.tempForm.$pristine = false
                 TemplatesService.saveTemplate(template, true, vt.tempForm)
 
-        vt.delete = (template, ev)->
-            TemplatesService.deleteTemplate(template, ev)
+        vt.delete = (ev, template)->
+            TemplatesService.deleteTemplate(ev, template).then ->
+                vt.templates = localStorageService.get('_cst')
 
         vt.view_sheet = (ev, template)->
             TemplatesService.viewGoogleSheet(ev, template)

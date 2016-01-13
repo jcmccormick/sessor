@@ -104,8 +104,7 @@ do ->
 
                 return deferred.promise
 
-            deleteReport: (report, ev)->
-                console.log report
+            deleteReport: (ev, report)->
                 confirm = $mdDialog.confirm()
                     .title('Are you sure you want to delete this report?')
                     .content('Pressing DELETE will permanently remove '+(report.title || 'Untitled Report '+report.id)+'.')
@@ -114,15 +113,13 @@ do ->
                     .cancel('Get me out of here!')
                 $mdDialog.show(confirm).then ->
                     $.extend report, new ClassFactory()
-                    spliced = reports.splice(geti(report.id), 1)
-                    slr(reports)
                     report.$delete({class: 'reports', id: report.id}, ((res)->
+                        reports.splice(geti(report.id), 1)
+                        slr(reports)
                         $location.path("/")
                     ), (err)->
-                        reports.unshift spliced
                         Flash.create('danger', '<p>'+err.data.errors+'</p>', 'customAlert')
                     )
-                return
 
             sortTemplates: (report)->
                 sorted = []

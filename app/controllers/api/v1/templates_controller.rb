@@ -35,8 +35,10 @@ module Api::V1#:nodoc:
 
         def destroy
             template = current_user.templates.find(params[:id])
-            if template.destroy
-                google_drive.file_by_id(template.gs_id).delete()
+            if template.allow_destroy
+                call_spreadsheet(template.name)
+                spreadsheet.delete
+                template.destroy
                 head :no_content
             else
                 render json: { errors: 'A page may not be deleted while being used in a report.' }, status: 422

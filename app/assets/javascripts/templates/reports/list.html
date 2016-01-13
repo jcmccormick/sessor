@@ -83,7 +83,7 @@
                             </md-tooltip>
                             <md-icon>create</md-icon>
                         </md-button>
-                        <md-button ng-click="vr.delete(report, $event)" class="md-icon-button md-warn" aria-label="delete {{report.id}} {{report.title || 'untitled'}}">
+                        <md-button ng-click="vr.delete($event, report)" class="md-icon-button md-warn" aria-label="delete {{report.id}} {{report.title || 'untitled'}}">
                             <md-tooltip md-direction="bottom">
                                 Delete {{report.id}} {{report.title || 'untitled'}}
                             </md-tooltip>

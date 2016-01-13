@@ -19,6 +19,10 @@ module Sheeted extend ActiveSupport::Concern
         @spreadsheet = google_drive.create_spreadsheet(name)
     end
 
+    def call_spreadsheet(name)
+        @spreadsheet = google_drive.file_by_title(name)
+    end
+
     def call_worksheet(id)
         @worksheet = google_drive.worksheet_by_url(id)
     end

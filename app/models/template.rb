@@ -26,17 +26,18 @@ class Template < ActiveRecord::Base
     # Prevent destroy if attached to any reports
     before_destroy :allow_destroy
 
+
+    # Check for existing report associations
+    def allow_destroy
+        reports.empty?
+    end
+    
     private
 
         # Upon Template creation, set basic stuff
         def set_defaults
             self.draft = true
             self.sections = [{i:1,n:'',c:1}]
-        end
-
-        # Check for existing report associations
-        def allow_destroy
-            reports.empty?
         end
 
 end

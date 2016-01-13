@@ -150,7 +150,7 @@ do ->
                 return
 
             # delete template
-            deleteTemplate: (template, ev)->
+            deleteTemplate: (ev, template)->
                 confirm = $mdDialog.confirm()
                     .title('Are you sure you want to delete this page?')
                     .content('Pressing DELETE will permanently remove '+template.name+', if it is not connected to any reports.')
@@ -162,7 +162,7 @@ do ->
                     template.$delete({class: 'templates', id: template.id}, ((res)->
                         templates.splice(geti(template.id), 1)
                         slt(templates)
-                        $location.path("/templates")
+                        $location.path("/")
                     ), (err)->
                         Flash.create('danger', '<h3>Error! <small>Page</small></h3><p>'+err.data.errors+'</p>', 'customAlert')
                     )
@@ -189,7 +189,7 @@ do ->
             deleteSectionColumn: (template, section)->
                 if section.c > 1
                     for field in template.fields
-                        parseInt(field.o.section_id) == section.i && field.o.column_id == section.c && prevent = true
+                        parseInt(field.o.section_id, 10) == section.i && field.o.column_id == section.c && prevent = true
                     if prevent 
                         Flash.create('danger', '<h3>Error! <small>Column</small></h3><p>Please move any fields out of the last column.</p>', 'customAlert')
                     else
@@ -198,7 +198,6 @@ do ->
 
             # delete section
             deleteSection: (ev, template, section_id)->
-                deferred = $q.defer()
                 confirm = $mdDialog.confirm()
                     .title('Are you sure you want to remove this section from the page?')
                     .content('The section\'s columns and fields will also be removed and this is not reversible.')
@@ -207,12 +206,15 @@ do ->
                     .cancel('Get me out of here!')
                 $mdDialog.show(confirm).then ->
                     template.sO = undefined
+                    mapped_section_ids = $.map template.sections, (x)-> x.i
+                    sect_index = mapped_section_ids.indexOf(section_id)
                     for field in template.fields
-                        (field.o.section_id > section_id && field.o.section_id--) || field.o.section_id == section_id && field._destroy = true
-                    template.sections.splice section_id-1, 1
+                        field_sect_index = mapped_section_ids.indexOf(field.o.section_id)
+                        (field_sect_index > sect_index && field.o.section_id--) || field.o.section_id == section_id && field._destroy = true
                     for section in template.sections
-                        section.i > section_id && section.i--
-                    deferred.resolve()
+                        check_sect_index = mapped_section_ids.indexOf(section.i)
+                        check_sect_index > sect_index && section.i--
+                    template.sections.splice sect_index, 1
 
             # reorder section up or down
             moveSection: (template, index, new_index)->
