@@ -285,15 +285,9 @@ blockquote {
 
 
 .section-row {
-    .column {
-        background-color: white;
-    }
-    .section-layout,
-    .add-field-slide {
-        background-color: #eee;
-    }
     .section-layout {
         margin-top: -10px;
+        background-color: #eee;
         border-bottom: 5px solid #ddd;
     }
     .add-field-slide {
@@ -338,40 +332,12 @@ blockquote {
     .selected-field-options {
         background-color: #eee;
 
-        .col-xs-6,
-        .input-group {
-            margin-bottom: 5px;
-        }
-
         .drag-bar {
             display: block;
             position: relative;
             height: 25px;
             content: '';
             background: forestgreen;
-        }
-        .glyphicon-new-window {
-            display: none;
-
-            @include respond(desktop) {
-                display: inline-block;
-            }
-
-            color: forestgreen !important;
-            cursor: pointer;
-            -webkit-transform: rotate(-90deg);
-            -moz-transform: rotate(-90deg);
-            -ms-transform: rotate(-90deg);
-            -o-transform: rotate(-90deg);
-            transform: rotate(-90deg);
-
-            &.rotate {
-                -webkit-transform: rotate(90deg);
-                -moz-transform: rotate(90deg);
-                -ms-transform: rotate(90deg);
-                -o-transform: rotate(90deg);
-                transform: rotate(90deg);
-            }
         }
     }
 }

@@ -8,7 +8,6 @@ do ->
             scope:
                 form: '='
                 report: '='
-                nostyle: '='
             controller: ['$scope', ($scope)->
                 
                 $scope.columnsArray = (columns)->

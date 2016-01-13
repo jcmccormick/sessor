@@ -61,12 +61,12 @@
         </div>
 
         <div layout="row" layout-padding>
-            <md-input-container flex="33">
+            <md-input-container flex>
                 <label>Page Name</label>
                 <input ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save(true)">
             </md-input-container>
-            <span flex></span>
-            <div layout="column" layout-align="center end" ng-if="vt.template.id">
+            <span flex="5"></span>
+            <div layout="column" layout-padding layout-align="center center" ng-if="vt.template.id">
                 {{vt.template.fields.length || 0}} of 20 fields used
                 <md-checkbox ng-model="vt.template.draft" aria-label="{{vt.template.name}} toggle draft">
                     Draft

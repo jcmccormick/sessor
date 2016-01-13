@@ -17,8 +17,9 @@ do ->
             report.values_attributes = []
             for template in report.templates
                 template.fields && for field in template.fields
-                    field.fieldtype != 'labelntext' && report.values_attributes.push {field_id: field.id, input: field.value.input}
-                    field.value && field.o.required && !field.value.input? && required += '<li><strong>'+template.name+'</strong>: '+field.o.name+'</li>'
+                    if field.value
+                        field.fieldtype != 'labelntext' && report.values_attributes.push {field_id: field.id, input: field.value.input}
+                        field.o.required && !field.value.input? && required += '<li><strong>'+template.name+'</strong>: '+field.o.name+'</li>'
 
             !!required && report.errors += '<h3>Required Fields</h3> <ul class="list-unstyled">'+required+'</ul>'
 

@@ -3,7 +3,7 @@
 
         <!-- Page Toolbar -->
 
-        <md-toolbar class="md-site-secondary">
+        <md-toolbar ng-click="wee" class="md-site-secondary">
             <div class="md-toolbar-tools">
                 <h2>
                     <span>Pages</span>
@@ -153,10 +153,10 @@
                                         <md-button ng-show="!template.draft">Set to Draft</md-button>
                                     </span>
                                     <span flex></span>
-                                    <md-button ng-click="vt.currentTemplateView = template" ng-show="vt.currentTemplateView != template" ng-click>Show</md-button>
-                                    <md-button ng-click="vt.currentTemplateView = undefined" ng-show="vt.currentTemplateView == template">Hide</md-button>
+                                    <md-button ng-click="vt.queryTemplate(template.id)" ng-show="vt.currentTemplateView.id != template.id">Show</md-button>
+                                    <md-button ng-click="vt.currentTemplateView = undefined" ng-show="vt.currentTemplateView.id == template.id">Hide</md-button>
                                 </span>
-                                <template-form-directive ng-if="vt.currentTemplateView == template" ng-init="template.e = false" class="disabled" form="template" nostyle="true"></template-form-directive>
+                                <template-form-directive ng-if="vt.currentTemplateView.id == template.id" ng-init="template.e = false" form="template"></template-form-directive>
                             </md-card-content>
 
                             <md-card-actions layout="row" layout-align="end center">

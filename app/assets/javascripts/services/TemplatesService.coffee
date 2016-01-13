@@ -229,9 +229,9 @@ do ->
                 deferred = $q.defer()
                 field_names = $.map template.fields, (x)-> x.o.name
                 if (field_names.indexOf(template.newFieldName) != -1) || !template.newFieldName
-                    Flash.create('danger', '<h3>Error <small>Page</small></h3><p>Fields must have unique names.</p>', 'customAlert')
+                    Flash.create('danger', '<h3>Error! <small>Page</small></h3><p>Fields must have unique names.</p>', 'customAlert')
                     deferred.reject()
-                    return
+                    return deferred.promise
                 field = new ClassFactory()
                 field.template_id = template.id
                 field.fieldtype = type.name
@@ -250,6 +250,7 @@ do ->
 
             # delete field
             deleteField: (ev, template, field)->
+                deferred = $q.defer()
                 confirm = $mdDialog.confirm()
                     .title('Are you sure you want to delete this field?')
                     .content('Pressing DELETE will permanently remove '+field.o.name+' from this page. However, any data collected for this field on this page\'s Google Sheet will not be affected.')
@@ -264,10 +265,12 @@ do ->
                         for tempField in template.fields
                             tempField.o.section_id == template.fields[index].o.section_id && tempField.o.column_id == template.fields[index].o.column_id && tempField.o.column_order > template.fields[index].o.column_order && tempField.o.column_order--
                         template.fields.splice index, 1
+                        slt(templates)
+                        deferred.resolve()
                     ), (err)->
                         console.log err
-
-                return
+                        deferred.reject()
+                return deferred.promise
 
             # change a field's section_id
             changeFieldSection: (template, field, prev_section)->
@@ -306,7 +309,7 @@ do ->
             moveField: (template, field, direction)->
 
                 field_switch = ($.grep template.fields, (tempField)->
-                    field.o.column_id == tempField.o.column_id && field.o.section_id == tempField.o.section_id && (field.o.column_order+direction) == tempField.o.column_order)[0]
+                    field.o.column_id == tempField.o.column_id && field.o.section_id == tempField.o.section_id && (field.o.column_order+parseInt(direction)) == tempField.o.column_order)[0]
 
                 if !field_switch then return
 

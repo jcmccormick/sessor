@@ -6,47 +6,12 @@
         </h3>
     </div>
 
-    <div layout="row" layout-padding layout-align="center center" class="section-layout" ng-if="form.e">
-        <md-input-container class="md-no-padding">
-            <label>Section name (optional)</label>
-            <input type="text" id="section-{{section.i}}-name" ng-model="section.n" ng-click="form.sO=section">
-        </md-input-container>
-        <md-button ng-click="form.moveSection($index, $index-1)" class="md-icon-button" ng-disabled="form.sections.length <= 1" aria-label="switch with section above">
-            <md-tooltip md-direction="top">
-                Switch with section above
-            </md-tooltip>
-            <md-icon>arrow_upward</md-icon>
-        </md-button>
-        <md-button ng-click="form.moveSection($index, $index+1)" class="md-icon-button" ng-disabled="form.sections.length <= 1" aria-label="switch with section below">
-            <md-tooltip md-direction="top">
-                Switch with section below
-            </md-tooltip>
-            <md-icon>arrow_downward</md-icon>
-        </md-button>
-        <md-button ng-click="form.deleteSectionColumn(section)" class="md-icon-button" ng-disabled="section.c == 1" aria-label="remove column from {{section.n || 'Section' + section.i}}">
-            <md-tooltip md-direction="top">
-                Remove column from {{section.n || 'Section' + section.i}}
-            </md-tooltip>
-            <md-icon>remove</md-icon>
-        </md-button>
-        <md-button ng-click="form.addSectionColumn(section)" class="md-icon-button" ng-disabled="section.c == 3" aria-label="add column to {{section.n || 'Section' + section.i}}">
-            <md-tooltip md-direction="top">
-                Add column to {{section.n || 'Section' + section.i}}
-            </md-tooltip>
-            <md-icon>add</md-icon>
-        </md-button>
-        <span flex></span>
-        <md-button ng-click="form.deleteSection($event, section)" class="md-icon-button md-warn" aria-label="delete {{section.n || 'Section' + section.i}}">
-            <md-tooltip md-direction="left">
-                Delete {{section.n || 'Section' + section.i}}
-            </md-tooltip>
-            <md-icon>delete</md-icon>
-        </md-button>
-    </div>
+    <ng-include src="'directives/pages/views/form/section_options.html'" ng-if="form.e"></ng-include>
 
     <div layout-md="column" layout-gt-md="row">
         <div layout-padding layout-fill ng-repeat="column in columnsArray(section.c) track by $index">
             <div ng-repeat="field in form.fields | filter:{o:{column_id: $index+1, section_id: section.i}} | orderBy:'o.column_order'">
+                {{field.o.column_order}}
                 <template-field-directive myForm="myForm" field="field" template="form" report="report"></template-field-directive>
 
                 <draggable-options field="field" form="form" class="field-options" ng-show="form.e && !form.poppedOut && form.sO==field"></draggable-options>
@@ -63,11 +28,12 @@
                     <input type="text" ng-model="form.newFieldName">
                 </md-input-container>
                 <div layout-md="row" layout-wrap>
-                    <md-button flex ng-click="form.addField(section.i, $parent.$index+1, type)" ng-repeat="type in form.addFieldTypes" class="md-icon-button" aria-label="add a {{type.value}} field">
+                    <md-button flex ng-click="form.addField(section.i*1, $parent.$index+1, type)" ng-repeat="type in form.addFieldTypes" aria-label="add {{type.value}} field to {{section.n || 'section '+section.i}}, column {{column_id+1}}">
                         <md-tooltip md-direction="bottom">
-                            Add a {{type.value}} field
+                            Add {{type.value}} field to {{section.n || 'Section '+section.i}}, Column {{column_id+1}}
                         </md-tooltip>
                         <md-icon>{{type.glyphicon}}</md-icon>
+                        <p>{{type.value}}</p>
                     </md-button>
                 </div>
             </div>

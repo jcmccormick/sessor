@@ -63,7 +63,9 @@ do ->
                         vt.save(true)
 
                 vt.template.deleteField = (ev, field)->
-                    TemplatesService.deleteField(ev, vt.template, field)
+                    TemplatesService.deleteField(ev, vt.template, field).then ->
+                        vt.tempForm.$pristine = false
+                        vt.save(true)
 
                 vt.template.changeFieldSection = (field, prev_section)->
                     TemplatesService.changeFieldSection(vt.template, field, prev_section)
@@ -119,6 +121,11 @@ do ->
 
         vt.view_sheet = (ev, template)->
             TemplatesService.viewGoogleSheet(ev, template)
+
+        vt.queryTemplate = (id)->
+            TemplatesService.queryTemplate(id).then (res)->
+                vt.currentTemplateView = res
+
 
         return vt
 

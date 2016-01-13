@@ -59,7 +59,7 @@ module Api::V1#:nodoc:
             end
 
             def update_worksheet
-                if (formatted_params-formatted_fields).any? || params[:update_keys]
+                if (formatted_params-formatted_fields).any? || params[:update_keys] || name_differs
                     call_worksheet(template.gs_id)
 
                     worksheet.list.keys = if worksheet.list.keys.length < 3
@@ -70,13 +70,25 @@ module Api::V1#:nodoc:
                         base_keys + refreshed_existing_keys + new_keys
                     end
 
+
                     worksheet.save if worksheet.dirty?
+
+                end
+
+                if params[:name] != template.name
+                    call_spreadsheet(template.name)
+                    spreadsheet.title = params[:name]
+                    spreadsheet.save
                 end
 
             end
 
             def template
                 current_user.templates.find(params[:id])
+            end
+
+            def name_differs
+                
             end
 
             def fields
