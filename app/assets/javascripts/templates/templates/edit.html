@@ -1,94 +1,93 @@
-<md-content ng-class="{'gridline-workspace':vt.template.e}">
-    <md-card ng-form="vt.tempForm" ng-init="vt.formSpeccing=true">
-        <md-toolbar class="md-site-secondary">
-            <div class="md-toolbar-tools">
-                <h2>
-                    <span>Page</span>
-                </h2>
-            </div>
-        </md-toolbar>
 
-        <!-- TRANSITION THIS TO md-menu WHEN ANGULAR-MATERIAL 1.0.2 COMES -->
-        <div class="form-header">
-            <section>
-                <ul class="nav top-nav">
-                    <!-- <li class="form-specs-toggle" ng-if="!vt.template.id || vt.template.e">
-                        <a href="javascript:;" ng-click="vt.checkSpec()" data-toggle="collapse" data-target=".form-specs" aria-expanded="true">
-                            <i class="glyphicon glyphicon-cog pull-right"></i>
-                        </a>
-                    </li> -->
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">File <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="javascript:;" ng-click="vt.save()" ng-if="vt.template.id"><i class="glyphicon glyphicon-save"></i> &nbsp; View</a></li>
-                            <li><a href="/templates/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
-                            <li><a href="/templates"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
-                            <li ng-if="vt.template.id" class="divider"></li>
-                            <li><a href="javascript:;" ng-if="vt.template.id" ng-click="vt.delete($event, vt.template)"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="javascript:;" ng-click="vt.save(true)"><span ng-class="{'save-now':!vt.tempForm.$pristine}">Save</span></a></li>
-                    <li class="dropdown" ng-if="vt.template.id">
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><span>Sharing</span></li>
-                            <li><span><label for="private_world"><input type="checkbox" id="private_world" name="private_world" ng-model="vt.template.private_world"> Share Public</label></span></li>
-                            <li><span><label for="private_group"><input type="checkbox" id="private_group" name="private_group" ng-model="vt.template.private_group"> Share Group</label></span></li>
-                            <div ng-if="vt.template.private_group == 1">
-                                <li class="divider"></li>
-                                <li><span>Group</span></li>
-                                <li><span><label for="group_edit"><input type="checkbox" id="group_edit" name="group_edit" ng-model="vt.template.group_edit"> Allow Editing</label></span></li>
-                                <div ng-if="vt.template.group_edit">
-                                    <li><span>Editors</span></li>
-                                    <li><span><a role="button">Add</a> / <a role="button">Remove</a></span></li>
-                                </div>
+<md-card ng-form="vt.tempForm" ng-init="vt.formSpeccing=true">
+    <md-toolbar class="md-site-secondary">
+        <div class="md-toolbar-tools">
+            <h2>
+                <span>Page</span>
+            </h2>
+        </div>
+    </md-toolbar>
+
+    <!-- TRANSITION THIS TO md-menu WHEN ANGULAR-MATERIAL 1.0.2 COMES -->
+    <div class="form-header">
+        <section>
+            <ul class="nav top-nav">
+                <!-- <li class="form-specs-toggle" ng-if="!vt.template.id || vt.template.e">
+                    <a href="javascript:;" ng-click="vt.checkSpec()" data-toggle="collapse" data-target=".form-specs" aria-expanded="true">
+                        <i class="glyphicon glyphicon-cog pull-right"></i>
+                    </a>
+                </li> -->
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">File <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:;" ng-click="vt.save()" ng-if="vt.template.id"><i class="glyphicon glyphicon-save"></i> &nbsp; View</a></li>
+                        <li><a href="/templates/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
+                        <li><a href="/templates"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
+                        <li ng-if="vt.template.id" class="divider"></li>
+                        <li><a href="javascript:;" ng-if="vt.template.id" ng-click="vt.delete($event, vt.template)"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
+                    </ul>
+                </li>
+                <li><a href="javascript:;" ng-click="vt.save(true)"><span ng-class="{'save-now':!vt.tempForm.$pristine}">Save</span></a></li>
+                <li class="dropdown" ng-if="vt.template.id">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><span>Sharing</span></li>
+                        <li><span><label for="private_world"><input type="checkbox" id="private_world" name="private_world" ng-model="vt.template.private_world"> Share Public</label></span></li>
+                        <li><span><label for="private_group"><input type="checkbox" id="private_group" name="private_group" ng-model="vt.template.private_group"> Share Group</label></span></li>
+                        <div ng-if="vt.template.private_group == 1">
+                            <li class="divider"></li>
+                            <li><span>Group</span></li>
+                            <li><span><label for="group_edit"><input type="checkbox" id="group_edit" name="group_edit" ng-model="vt.template.group_edit"> Allow Editing</label></span></li>
+                            <div ng-if="vt.template.group_edit">
+                                <li><span>Editors</span></li>
+                                <li><span><a role="button">Add</a> / <a role="button">Remove</a></span></li>
                             </div>
-                        </ul>
-                    </li>
-                    <li class="dropdown" ng-if="vt.template.drafts.length">
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Drafts <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li ng-repeat="draft in vt.template.drafts | orderBy:'time'">
-                                <span>
-                                    <a href="javascript:;" ng-click="vt.template.assimilate(draft)">Draft #{{$index+1}} {{draft.recent}}</a>
-                                </span>
-                            </li>
-                        </ul>
-                    </li>
-                    <li ng-if="vt.template.id"><a href="javascript:;" ng-click="vt.view_sheet($event, vt.template)">View Google Sheet</a></li>
-                </ul>
-            </section>
+                        </div>
+                    </ul>
+                </li>
+                <li class="dropdown" ng-if="vt.template.drafts.length">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Drafts <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="draft in vt.template.drafts | orderBy:'time'">
+                            <span>
+                                <a href="javascript:;" ng-click="vt.template.assimilate(draft)">Draft #{{$index+1}} {{draft.recent}}</a>
+                            </span>
+                        </li>
+                    </ul>
+                </li>
+                <li ng-if="vt.template.id"><a href="javascript:;" ng-click="vt.view_sheet($event, vt.template)">View Google Sheet</a></li>
+            </ul>
+        </section>
+    </div>
+
+    <div layout="row" layout-padding>
+        <md-input-container flex>
+            <label>Page Name</label>
+            <input ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save(true)">
+        </md-input-container>
+        <span flex="5"></span>
+        <div layout="column" layout-padding layout-align="center center" ng-if="vt.template.id">
+            {{vt.template.fields.length || 0}} of 20 fields used
+            <md-checkbox ng-model="vt.template.draft" aria-label="{{vt.template.name}} toggle draft">
+                Draft
+            </md-checkbox>
         </div>
+    </div>
+    <div layout-padding ng-if="!vt.template.id">Enter a name for your Page and press Enter or Save</div>
 
-        <div layout="row" layout-padding>
-            <md-input-container flex>
-                <label>Page Name</label>
-                <input ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save(true)">
-            </md-input-container>
-            <span flex="5"></span>
-            <div layout="column" layout-padding layout-align="center center" ng-if="vt.template.id">
-                {{vt.template.fields.length || 0}} of 20 fields used
-                <md-checkbox ng-model="vt.template.draft" aria-label="{{vt.template.name}} toggle draft">
-                    Draft
-                </md-checkbox>
-            </div>
-        </div>
-        <div layout-padding ng-if="!vt.template.id">Enter a name for your Page and press Enter or Save</div>
+    <draggable-options field="vt.template.sO" form="vt.template" class="field-options" ng-if="vt.template.e && vt.template.poppedOut && vt.template.sO.o"></draggable-options>
 
-        <draggable-options field="vt.template.sO" form="vt.template" class="field-options" ng-if="vt.template.e && vt.template.poppedOut && vt.template.sO.o"></draggable-options>
+    <template-form-directive form="vt.template"></template-form-directive>
 
-        <template-form-directive form="vt.template"></template-form-directive>
-
-        <md-button ng-click="vt.template.addSection(form)" aria-label="add a new section" ng-if="vt.template.e && ((vt.template.fields && vt.template.fields.length) || 0) < 20">
-            <md-icon>add</md-icon> Add Section
-        </md-button>
-        
+    <md-button ng-click="vt.template.addSection(form)" aria-label="add a new section" ng-if="vt.template.e && ((vt.template.fields && vt.template.fields.length) || 0) < 20">
+        <md-icon>add</md-icon> Add Section
+    </md-button>
+    
 <!--         <div layout="column" layout-padding>
-            Test field mixing Clerkr style with Material Design
-            <md-input-container>
-                <label>Type here!</label>
-                <input type="text" class="imod">
-            </md-input-container>
-        </div> -->
-    </md-card>
-</md-content>
+        Test field mixing Clerkr style with Material Design
+        <md-input-container>
+            <label>Type here!</label>
+            <input type="text" class="imod">
+        </md-input-container>
+    </div> -->
+</md-card>
