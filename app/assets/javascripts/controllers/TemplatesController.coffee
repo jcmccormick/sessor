@@ -124,6 +124,7 @@ do ->
 
         vt.queryTemplate = (id)->
             TemplatesService.queryTemplate(id).then (res)->
+                vt.templates = localStorageService.get('_cst')
                 vt.currentTemplateView = res
 
 

@@ -4,8 +4,10 @@ do ->
     TemplatesService = ($interval, $location, $mdDialog, $q, $rootScope, $window, ClassFactory, Flash, localStorageService)->
 
         templates = localStorageService.get('_cst')
+
         slt = (temps)->
             localStorageService.set('_cst', temps)
+            
         geti = (id)->
             temps = localStorageService.get('_cst')
             $.map(temps, (x)-> x.id).indexOf(id)
@@ -45,7 +47,7 @@ do ->
 
         newFieldOrdering = (template, section_id, column_id)->
             !template.fields && template.fields = []
-            return ($.grep template.fields, (tempField)-> section_id == tempField.o.section_id && column_id == tempField.o.column_id).length+1
+            return ($.grep template.fields, (tempField)-> section_id == parseInt(tempField.o.section_id, 10) && column_id == tempField.o.column_id).length+1
 
         {
             editing: ->

@@ -56,26 +56,21 @@ module Api::V1 #:nodoc:
             def update_worksheet(report)
                 report.template_order.each do |template_id|
                     template = current_user.templates.find_by_id(template_id)
+                    fields = template.fields.where.not(fieldtype: 'labelntext')
                     report.templates << template unless report.templates.include?(template)
                     
-
-                    if template.fields.length && worksheet = google_drive.worksheet_by_url(template.gs_id)
-                        report_found = false
-                        worksheet.list.each do |row|
-                            if row['Report ID'] == report.id.to_s
-                                report_found = true
-                                row['Updated At'] = Time.now
-                                template.fields.where.not(fieldtype: 'labelntext').each do |field|
-                                    params[:values_attributes].each do |value|
-                                        puts value
-                                        if field.id.to_s == value['field_id'].to_s
-                                            row["#{field.id} #{field.o['name']}"] = value['input']
-                                        end
-                                    end
+                    if fields.any? && ws = google_drive.worksheet_by_url(template.gs_id)
+                        ids = ws.rows.map { |x| x[0].to_i }.drop(1)
+                        index = [*ids.each_with_index].bsearch { |x, _| x > report.id.to_i}.last + 1
+                        if index
+                            ws[index, 3] = Time.now
+                            params[:values_attributes].each do |value|
+                                fields.each do |field|
+                                    list_index = ws.list.keys.find_index("#{field.id} #{field.o['name']}") + 1
+                                    ws[index, list_index] = value['input'] if value['field_id'] == field.id
                                 end
                             end
-                        end
-                        if !report_found
+                        else
                             new_row = Hash.new
                             new_row['Report ID'] = report.id
                             new_row['Created At'] = report.created_at
@@ -83,36 +78,13 @@ module Api::V1 #:nodoc:
                             template.fields.where.not(fieldtype: 'labelntext').each do |field|
                                 new_row["#{field.id} #{field.o['name']}"] = field.o['default_value']
                             end
-                            worksheet.list.push new_row
+                            ws.list.push new_row
                         end
-                        worksheet.save if worksheet.dirty?
+
+                        ws.save if ws.dirty?
                     end
                 end
             end
-
-            def call_worksheet
-                @report.template_order
-            end
-
-
-                        # field_ids = template.fields.map { |x| x.id }
-                        # if template.fields.where.not(fieldtype: 'labelntext').count > values.where(field_id: field_ids).count
-                        #   template.fields.where.not(fieldtype: 'labelntext').each do |field|
-                        #       Value.where(report_id: self.id, field_id: field.id).first_or_create do |value|
-                        #           value.input = field.default_value
-                        #       end
-                        #   end
-                        # end
-                    # else
-                    #   worksheet
-                    # end
-                # end
-                # if self.changed?
-                #   exclude_ids = Field.where(template_id: template_order).where.not(fieldtype: 'labelntext').map { |x| x.id }
-                #   pp exclude_ids
-                #   values.where.not(field_id: exclude_ids).destroy_all
-                # end
-            # end
 
             def disassociate_template(did, unvalued=[])
                 template = templates.find(did)

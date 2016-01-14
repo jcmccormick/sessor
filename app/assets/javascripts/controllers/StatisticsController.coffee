@@ -26,6 +26,7 @@ do ->
                 unbindFieldWatch()
 
         sv.checker = ->
+            console.log sv.template
             if !sv.template.fields
                 TemplatesService.queryTemplate(sv.template.id, true).then((res)->
                     $.extend sv.template, res

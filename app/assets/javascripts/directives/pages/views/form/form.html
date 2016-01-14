@@ -1,4 +1,4 @@
-<md-content layout="column" layout-padding ng-form="myForm" class="section-row" ng-if="form.id && form.sections" ng-repeat="section in form.sections track by $index">
+<md-content layout="column" layout-padding ng-form="myForm" class="section-row" ng-repeat="section in form.sections track by $index">
 
     <div ng-if="!form.e" layout="row">
         <h3>
@@ -11,7 +11,7 @@
     <div layout-md="column" layout-gt-md="row">
         <div layout-padding layout-fill ng-repeat="column in columnsArray(section.c) track by $index">
             <div ng-repeat="field in form.fields | filter:{o:{column_id: $index+1, section_id: section.i}} | orderBy:'o.column_order'">
-                {{field.o.column_order}}
+
                 <template-field-directive myForm="myForm" field="field" template="form" report="report"></template-field-directive>
 
                 <draggable-options field="field" form="form" class="field-options" ng-show="form.e && !form.poppedOut && form.sO==field"></draggable-options>
@@ -28,7 +28,7 @@
                     <input type="text" ng-model="form.newFieldName">
                 </md-input-container>
                 <div layout-md="row" layout-wrap>
-                    <md-button flex ng-click="form.addField(section.i*1, $parent.$index+1, type)" ng-repeat="type in form.addFieldTypes" aria-label="add {{type.value}} field to {{section.n || 'section '+section.i}}, column {{column_id+1}}">
+                    <md-button flex ng-click="form.addField(section.i, $parent.$index+1, type)" ng-repeat="type in form.addFieldTypes" aria-label="add {{type.value}} field to {{section.n || 'section '+section.i}}, column {{column_id+1}}">
                         <md-tooltip md-direction="bottom">
                             Add {{type.value}} field to {{section.n || 'Section '+section.i}}, Column {{column_id+1}}
                         </md-tooltip>

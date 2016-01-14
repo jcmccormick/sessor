@@ -156,6 +156,7 @@
                                     <md-button ng-click="vt.queryTemplate(template.id)" ng-show="vt.currentTemplateView.id != template.id">Show</md-button>
                                     <md-button ng-click="vt.currentTemplateView = undefined" ng-show="vt.currentTemplateView.id == template.id">Hide</md-button>
                                 </span>
+                                
                                 <template-form-directive ng-if="vt.currentTemplateView.id == template.id" ng-init="template.e = false" form="template"></template-form-directive>
                             </md-card-content>
 

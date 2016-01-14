@@ -38,10 +38,6 @@ do ->
             if $(e.target).is('a')
                 $(this).removeClass('in').addClass 'collapse'
 
-        $(document).on 'scroll', ->
-            !$('.form-header section').hasClass('affix') && $(this).scrollTop() >= 50 && $('.form-header section').addClass('affix')
-            $('.form-header section').hasClass('affix') && $(this).scrollTop() < 50 && $('.form-header section').removeClass('affix')
-
     run.$inject = ['$auth', '$location', '$rootScope', 'Flash', 'localStorageService']
 
     angular.module('clerkr').run(run)

@@ -15,10 +15,10 @@ module Api::V1#:nodoc:
         end
 
         def create
-            create_spreadsheet(params[:name])
+            ss = create_spreadsheet(params[:name])
             @template = current_user.templates.new(allowed_params)
-            @template.gs_url = @spreadsheet.human_url
-            @template.gs_id = @spreadsheet.worksheets[0].cells_feed_url
+            @template.gs_url = ss.human_url
+            @template.gs_id = ss.worksheets[0].cells_feed_url
             @template.save
             current_user.templates << @template
             render 'show', status: 201
@@ -36,8 +36,8 @@ module Api::V1#:nodoc:
         def destroy
             template = current_user.templates.find(params[:id])
             if template.allow_destroy
-                call_spreadsheet(template.name)
-                spreadsheet.delete
+                ss = spreadsheet(template.name)
+                ss.delete
                 template.destroy
                 head :no_content
             else
@@ -59,10 +59,11 @@ module Api::V1#:nodoc:
             end
 
             def update_worksheet
-                if (formatted_params-formatted_fields).any? || params[:update_keys] || name_differs
-                    call_worksheet(template.gs_id)
+                if (formatted_params-formatted_fields).any? || params[:update_keys]
 
-                    worksheet.list.keys = if worksheet.list.keys.length < 3
+                    ws = google_drive.worksheet_by_url(template.gs_id)
+
+                    ws.list.keys = if ws.list.keys.length < 3
                         # If there are less than 3 keys, it is a new worksheet, so initialize all fields
                         base_keys + formatted_params
                     else
@@ -70,15 +71,14 @@ module Api::V1#:nodoc:
                         base_keys + refreshed_existing_keys + new_keys
                     end
 
-
-                    worksheet.save if worksheet.dirty?
+                    ws.save if ws.dirty?
 
                 end
 
                 if params[:name] != template.name
-                    call_spreadsheet(template.name)
-                    spreadsheet.title = params[:name]
-                    spreadsheet.save
+                    ss = spreadsheet(template.name)
+                    ss.title = params[:name]
+                    ss.save
                 end
 
             end
@@ -87,16 +87,8 @@ module Api::V1#:nodoc:
                 current_user.templates.find(params[:id])
             end
 
-            def name_differs
-                
-            end
-
             def fields
                 template.fields
-            end
-
-            def base_keys
-                ['Report ID', 'Created At', 'Updated At']
             end
 
             def formatted_fields
@@ -107,8 +99,12 @@ module Api::V1#:nodoc:
                 params[:fields_attributes].select { |x| x['fieldtype'] != 'labelntext' }.map { |x| "#{x['id']} #{x['o']['name']}" }
             end
 
+            def base_keys
+                ['Report ID', 'Created At', 'Updated At']
+            end
+
             def worksheet_keys
-                keys = worksheet.list.keys.drop(3)
+                keys = @ws.list.keys.drop(3)
                 keys
             end
 
