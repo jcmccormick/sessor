@@ -2,12 +2,12 @@
 <nav class="navbar-top" role="navigation">
     <div class="navbar-header">
         <span class="navbar-brand"><a href="/">Clerkr</a></span>
-<!--         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".collapse-nav">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".collapse-nav" ng-if="user.email == 'joe.c.mccormick@gmail.com'">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-        </button> -->
+        </button>
         <ul class="nav top-nav pull-right">
             <li class="dropdown">
                 <a href="javascript:;" class="user-menu dropdown-toggle" data-toggle="dropdown"><md-icon>person</md-icon></a>
@@ -25,9 +25,9 @@
             <li><a href="/reports">Reports</a></li>
             <li><a href="/statistics">Statistics</a></li>
         </ul>
-<!--         <ul class="nav collapse collapse-nav pull-left">
+        <ul class="nav collapse collapse-nav pull-left" ng-if="user.email == 'joe.c.mccormick@gmail.com'">
             <li><a href="/group">Group</a></li>
             <li><a href="/mastery">Mastery</a></li>
-        </ul> -->
+        </ul>
     </div>
 </nav>
