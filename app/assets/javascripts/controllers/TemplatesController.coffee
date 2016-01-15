@@ -109,6 +109,7 @@ do ->
                 else
                     report = ReportsService.extendReport()
                     report.template_order.push template.id
+                    console.log report
                     ReportsService.saveReport(report, true, form)
 
             vt.setDraft = (template)->

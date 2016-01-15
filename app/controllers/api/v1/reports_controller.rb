@@ -61,8 +61,9 @@ module Api::V1 #:nodoc:
                     
                     if fields.any? && ws = google_drive.worksheet_by_url(template.gs_id)
                         ids = ws.rows.map { |x| x[0].to_i }.drop(1)
-                        index = [*ids.each_with_index].bsearch { |x, _| x > report.id.to_i}.last + 1
-                        if index
+                        searched = [*ids.each_with_index].bsearch { |x, _| x >= report.id.to_i}
+                        if searched
+                            index = searched.last + 2
                             ws[index, 3] = Time.now
                             params[:values_attributes].each do |value|
                                 fields.each do |field|
@@ -75,7 +76,7 @@ module Api::V1 #:nodoc:
                             new_row['Report ID'] = report.id
                             new_row['Created At'] = report.created_at
                             new_row['Updated At'] = Time.now
-                            template.fields.where.not(fieldtype: 'labelntext').each do |field|
+                            fields.each do |field|
                                 new_row["#{field.id} #{field.o['name']}"] = field.o['default_value']
                             end
                             ws.list.push new_row
