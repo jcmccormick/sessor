@@ -1,11 +1,21 @@
-<div layout="row" layout-xs="column" layout-sm="column" layout-md="column">
-    <md-card flex ng-controller="TemplatesController as vt">
+<md-toolbar class="md-site-secondary" clocation ng-click="lv.locate('/templates/new')" ng-if="user.templates_count == 0">
+    <div class="md-toolbar-tools">
+        <h4>Add a page <md-icon>add</md-icon></h4>
+    </div>
+</md-toolbar>
+<md-toolbar class="md-site-secondary" ng-controller="TemplatesController as vt" ng-click="vt.newReport(vt.templates[0], {})" ng-if="user.templates_count > 0 && user.reports_count == 0">
+    <div class="md-toolbar-tools">
+        <h4>Add a report <md-icon>add</md-icon></h4>
+    </div>
+</md-toolbar>
+<div layout="column" layout-gt-md="row">
+    <md-card flex ng-controller="TemplatesController as vt" ng-show="vt.templates.length > 0">
 
         <!-- Page Toolbar -->
 
         <md-toolbar class="md-site-secondary">
             <div class="md-toolbar-tools">
-                <h2 clocation ng-click="lv.locate('/templates')">
+                <h2 clocation ng-click="lv.locate('/templates')" aria-label="view all pages">
                     <span>Pages</span>
                 </h2>
                 <span flex></span>
@@ -193,13 +203,13 @@
         </md-content>
     </md-card>
 
-    <md-card flex ng-controller="ReportsController as vr">
+    <md-card flex ng-controller="ReportsController as vr" ng-show="vr.reports.length > 0">
         
         <!-- Report Toolbar -->
 
         <md-toolbar class="md-site-secondary">
             <div class="md-toolbar-tools">
-                <h2 clocation ng-click="lv.locate('/reports')">
+                <h2 clocation ng-click="lv.locate('/reports')" aria-label="view all reports">
                     <span>Reports</span>
                 </h2>
                 <span flex></span>

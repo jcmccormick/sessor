@@ -16,6 +16,9 @@ do ->
         resolver = 'auth': ['$auth', 'localStorageService', 'ReportsService', 'TemplatesService',
         ($auth, localStorageService, ReportsService, TemplatesService)->
             $auth.validateUser().then ->
+                delete $auth.user.refresh_token
+                delete $auth.user.access_token
+                delete $auth.user.expires_at
                 reports = localStorageService.get('_csr')
                 templates = localStorageService.get('_cst')
 
@@ -28,6 +31,10 @@ do ->
                 else
                     localStorageService.set('_csr', reports)
                     localStorageService.set('_cst', templates)
+                $auth.user.reports_count = localStorageService.get('_csr',).length
+                $auth.user.templates_count = localStorageService.get('_cst',).length
+                
+
         ]
 
         $routeProvider.when('/',

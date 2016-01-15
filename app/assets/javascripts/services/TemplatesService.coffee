@@ -83,15 +83,18 @@ do ->
                 templates = localStorageService.get('_cst')
                 deferred = $q.defer()
                 id = parseInt(id, 10)
-                if !templates[geti(id)].loadedFromDB || refreshing
+                if templates[geti(id)] && (!templates[geti(id)].loadedFromDB || refreshing)
                     ClassFactory.get({class: 'templates', id: id}, (res)->
                         res.loadedFromDB = true
                         templates[geti(id)] = res
                         slt(templates)
                         deferred.resolve(templates[geti(id)])
                     )
-                else
+                else if templates[geti(id)]
                     deferred.resolve(templates[geti(id)])
+                else
+                    $location.path('/')
+                    Flash.create('danger', '<h3>Error! <small>Page</small></h3><p>Could not process request.</p>', 'customAlert')
                 return deferred.promise
 
             extendTemplate: (id)->
@@ -107,7 +110,7 @@ do ->
                 # Validate and save
                 validateTemplate(template)
                 if !!template.errors
-                    Flash.create('danger', '<h3>Error!</h3>'+template.errors, 'customAlert')
+                    Flash.create('danger', '<h3>Error! <small>Page</small></h3>'+template.errors, 'customAlert')
                     template.errors = ''
                     return
                 
