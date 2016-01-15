@@ -1,15 +1,9 @@
 <!-- Signed-in Menu -->
 <md-toolbar class="md-site-primary" layout="row" layout-align="start center" layout-padding>
-    <md-button clocation ng-click="lv.locate('/')">
+    <md-button clocation ng-click="lv.locate('/')" aria-label="go to main">
         <h6 class="md-headline"><strong>Clerkr</strong></h6>
     </md-button>
     <div ng-if="user.signedIn && user.email == 'joe.c.mccormick@gmail.com'">
-        <md-button clocation ng-click="lv.locate('/templates')" aria-label="view all pages">
-            Pages
-        </md-button>
-        <md-button clocation ng-click="lv.locate('/reports')" aria-label="view all reports">
-            Reports
-        </md-button>
         <md-button clocation ng-click="lv.locate('/statistics')" aria-label="view statistics">
             Statistics
         </md-button>
@@ -32,17 +26,21 @@
 </md-toolbar>
 
 <md-sidenav user-menu class="md-sidenav-right" md-component-id="right">
-    <md-content contact layout="column" layout-fill layout-padding>
+    <md-content ng-form="contactForm" contact layout="column" layout-fill layout-padding>
         <md-input-container>
             <label>Send us a message</label>
-            <textarea ng-model="cv.message"></textarea>
+            <textarea ng-model="cv.message" required="required"></textarea>
         </md-input-container>
         <md-input-container ng-if="!user.signedIn">
             <label>Email</label>
-            <input type="email" ng-model="user.email">
+            <input type="email" ng-model="user.email" required="required">
         </md-input-container>
-        <md-button ng-click="cv.newContact(user.email, cv.message);uv.closeMenu()" ng-disabled="{{!user.signedIn && !user.email}} || !cv.message" aria-label="send contact message">
+        <md-button ng-click="cv.newContact(user.email, cv.message);uv.closeMenu()" ng-disabled="!contactForm.$valid" aria-label="send contact message">
             Submit
+        </md-button>
+        <span flex></span>
+        <md-button ng-click="uv.closeMenu();signOut()" ng-if="user.signedIn" class="md-raised md-warn" aria-label="sign out of clerkr">
+            Sign Out
         </md-button>
     </md-content>
 </md-sidenav>
