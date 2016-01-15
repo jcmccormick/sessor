@@ -1,6 +1,12 @@
 <md-card ng-cloak>
     <md-toolbar class="md-site-secondary">
         <div class="md-toolbar-tools">
+            <md-button href="/" class="md-icon-button" aria-label="back to index">
+                <md-tooltip md-direction="bottom">
+                    Go back
+                </md-tooltip>
+                <md-icon>arrow_back</md-icon>
+            </md-button>
             <h2>
                 <span>All Reports</span>
             </h2>
@@ -13,33 +19,6 @@
             </md-button>
         </div>
     </md-toolbar>
-
-    <div layout="row" layout-padding layout-align="center center">
-        <md-input-container flex>
-            <label>Search</label>
-            <input ng-model="vr.keywords" ng-change="vt.currentPage = 0">
-        </md-input-container>
-        <span flex></span>
-        <md-button class="md-icon-button md-primary" ng-repeat="distance in [10, 25, 50, 100]" ng-click="vr.pageSize = distance; vr.currentPage = 0" aria-label="{{distance}} entries per page">
-            <md-tooltip md-direction="bottom">
-                entries per page
-            </md-tooltip>
-            {{distance}}
-        </md-button>
-        <md-button class="md-primary" ng-class="{'disabled':vr.currentPage==0}" ng-click="vr.currentPage = vr.currentPage-1" aria-label="back 1 page">
-            <md-tooltip md-direction="bottom">
-                Back 1 page
-            </md-tooltip>
-            <md-icon>chevron_left</md-icon>
-        </md-button>
-        {{(vr.filteredList.length && vr.currentPage+1) || 0}} of {{vr.filteredList.length && vr.numPages() || 0}}
-        <md-button class="md-primary" ng-class="{'disabled':vr.filteredList.length && vr.currentPage>=vt.numPages()-1}" ng-click="vr.currentPage = vr.currentPage+1" aria-label="forward 1 page">
-            <md-tooltip md-direction="bottom">
-                Forward 1 page
-            </md-tooltip>
-            <md-icon>chevron_right</md-icon>
-        </md-button>
-    </div>
 
     <table class="table">
         <thead>
@@ -64,6 +43,12 @@
             </tr>
         </thead>
         <tbody ng-if="vr.reports.length">
+            <tr>
+                <md-input-container>
+                    <label>Search</label>
+                    <input ng-model="vr.keywords" ng-change="vt.currentPage = 0">
+                </md-input-container>
+            </tr>
             <tr ng-repeat="report in vr.filteredList = (vr.reports | filter:vr.keywords) | orderBy:vr.sortType:vr.sortReverse | startFrom:vr.currentPage*vr.pageSize | limitTo: vr.pageSize">
                 <td>{{report.id}}</td>
                 <td>{{report.title || 'Untitled'}}</td>
@@ -94,4 +79,27 @@
             </tr>
         </tbody>
     </table>
+    <div layout="row" layout-padding layout-align="center center">
+        <md-button class="md-icon-button md-primary" ng-repeat="distance in [5, 25, 100]" ng-click="vr.pageSize = distance; vr.currentPage = 0" aria-label="{{distance}} entries per page">
+            <md-tooltip md-direction="top">
+                entries per page
+            </md-tooltip>
+            {{distance}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-primary" ng-class="{'disabled':vr.currentPage==0}" ng-click="vr.currentPage = vr.currentPage-1" aria-label="back 1 page">
+            <md-tooltip md-direction="top">
+                Back 1 page
+            </md-tooltip>
+            <md-icon>chevron_left</md-icon>
+        </md-button>
+        {{(vr.filteredList.length && vr.currentPage+1) || 0}} of {{vr.filteredList.length && vr.numPages() || 0}}
+        <md-button class="md-primary" ng-class="{'disabled':vr.filteredList.length && vr.currentPage >= vr.numPages()-1}" ng-click="vr.currentPage = vr.currentPage+1" aria-label="forward 1 page">
+            <md-tooltip md-direction="top">
+                Forward 1 page
+            </md-tooltip>
+            <md-icon>chevron_right</md-icon>
+        </md-button>
+    </div>
+
 </md-card>

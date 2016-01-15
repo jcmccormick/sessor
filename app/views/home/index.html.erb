@@ -1,24 +1,28 @@
-<ng-include src="'main/menu.html'" ng-if="user.signedIn"></ng-include>
-
-<loading></loading>
 <div flash-message="7500"></div>
 
-<main ng-if="user.signedIn" class="view-frame animate-view" ng-view></main>
+<ng-include src="'main/menu.html'"></ng-include>
 
-<section class="landing-page" ng-init="landing={}" ng-show="false || !user.signedIn" ng-cloak>
+<loading></loading>
 
-    <!-- Signed-out Menu -->
-    <nav class="navbar-top" role="navigation">
-        <div class="navbar-header">
-            <h1 class="navbar-brand"><a href="/">Clerkr</a></h1>
-            <ul class="nav top-nav pull-right" bs-popover>
-                <li><a href="javascript:;" ng-click="landing.extra='about'" scroll-to="#about" bypass="true">About</a></li>
-                <li><a href="javascript:;" ng-click="landing.extra='contact'" scroll-to="#contact" bypass="true">Contact</a></li>
-                <li><a href="javascript:;" ng-click="landing.extra='development'" scroll-to="#development" bypass="true">Under Development</a></li>
-                <li><a href="javascript:;" ng-click="authenticate('google')"><strong>Sign in with Google</strong></a></li>
-            </ul>
+<main ng-view ng-if="user.signedIn" class="view-frame animate-view"></main>
+
+<md-card class="landing-page" ng-show="false || !user.signedIn" ng-cloak>
+
+    <newsletter>
+        <div ng-form="newsForm">
+            <h2>We're developing! Sign up to our newsletter and get perks when we go live.</h2>
+            <div layout="row" layout="center center">
+                <md-input-container flex>
+                    <label>Email</label>
+                    <input type="email" ng-model="nv.email" required="required">
+                </md-input-container>
+                <md-button ng-click="nv.newSubscribe(nv.email, newsForm)" ng-disabled="!newsForm.$valid" class="md-raised">
+                    Sign Up
+                </md-button>
+            </div>
         </div>
-    </nav>
+    </newsletter>
+
     <article class="approach">
         <section>
             <h2>
@@ -38,89 +42,55 @@
                 </small>
             </h2>
             <h3>Record, visualize, and share your data. Easy.</h3>
-
-            <newsletter>
-                <div ng-form="newsForm">
-                    <h2>We're developing! For now you can sign up for the newsletter.</h2>
-                    <div class="input-group">
-                        <input type="email" name="email" class="form-control imod" placeholder="Email" ng-model="nv.email" required="required">
-                        <span class="input-group-btn">
-                            <a href="javascript:;" class="btn" ng-click="nv.newSubscribe(nv.email, newsForm)" ng-disabled="!newsForm.$valid">Submit</a>
-                        </span>
-                    </div>
-                    <h2><small>(Or if you really want, you can log in and poke around while we build up the site.)</small></h2>
-                </div>
-            </newsletter>
         </section>
         <%= image_tag 'skyline.png' %>
     </article>
 
-    <div class="text-center down" scroll-to=".features" bypass="true"><i class="glyphicon glyphicon-chevron-down"></i></div>
+    <md-content layout="column" layout-gt-md="row" layout-align="space-around" layout-wrap class="md-primary md-hue-1">
+        <div flex="35" layout-padding>
+            <h3 class="md-display-1">Designed Data</h3>
+            <p class="md-subhead">Clerkr bases its services on the pages of data you create. Fine tune your process and increase productivity and efficiency.</p>
+        </div>
+        <div flex="35" layout-padding>
+            <h3 class="md-display-1">Group Time</h3>
+            <p class="md-subhead">Got a crew? Let's join forces. Got a business? We can help with that too: scheduling, appointments, client engagement, all integrated with your pages.</p>
+        </div>
+        <div flex="35" layout-padding>
+            <h3 class="md-display-1">Growth is Key</h3>
+            <p class="md-subhead">All users start with a set amount of reports to create. This number will naturally increase over time, and can be expanded.</p>
+        </div>
+        <div flex="35" layout-padding>
+            <h3 class="md-display-1">Nerd Out</h3>
+            <p class="md-subhead">Take a break and reflect on our various charts and graphs. Save your visualizations and export the data for use elsewhere.</p>
+        </div>
+    </md-content>
 
-    <div class="features container-fluid">
-        <div class="col-xs-12">
-            <div class="col-xs-12 col-md-6">
-                <i class="glyphicon glyphicon-file"></i>
-                <h1>Designed Data</h1>
-                <h3>Clerkr bases its services on the pages of data you create. Fine tune your process and increase productivity and efficiency.</h3>
-            </div>
-            <div class="col-xs-12 col-md-6">
-                <i class="glyphicon glyphicon-briefcase"></i>
-                <h1>Group Time</h1>
-                <h3>Got a crew? Let's join forces. Got a business? We can help with that too: scheduling, appointments, client engagement, all integrated with your pages.</h3>
-            </div>
-        </div>
-        <div class="col-xs-12">
-            <div class="col-xs-12 col-md-6">
-                <i class="glyphicon glyphicon-inbox"></i>
-                <h1>Growth is Key</h1>
-                <h3>All users start with a set amount of reports to create. This number will naturally increase over time, and can be expanded.</h3>
-            </div>
-            <div class="col-xs-12 col-md-6">
-                <i class="glyphicon glyphicon-stats"></i>
-                <h1>Nerd Out</h1>
-                <h3>Take a break and reflect on our various charts and graphs. Save your visualizations and export the data for use elsewhere.</h3>
-            </div>
-        </div>
+    <md-content layout="row" layout-align="center center" layout-padding class="md-accent">
+        <h3 id="about">Clerkr offers services for individuals and more for businesses.</h3>
+    </md-content>
+    
+    <md-content layout="column" layout-gt-md="row" layout-align="space-around" layout-padding>
+        <span flex="35">
+            <h3 class="md-display-1">For individuals...</h3>
+            <blockquote>
+                <p class="md-subhead">Keep track of hobbies, sports, exercise, research, anything you can think of.</p>
+                <p class="md-subhead">Use your pages for surveys.</p>
+                <p class="md-subhead">Create interactive and visually-appealing graphs; print, save, and export your data views.</p>
+            </blockquote>
+        </span>
+        <span flex="35">
+            <h3 class="md-display-1">For businesses...</h3>
+            <blockquote>
+                <p class="md-subhead">Schedule employees and keep track of their time online.</p>
+                <p class="md-subhead">Use pages on your site and for online or kiosk-based customer submissions.</p>
+                <p class="md-subhead">Interact with customers in online appointments.</p>
+                <p class="md-subhead">Get combined and individual stats for the members in your group.</p>
+            </blockquote>
+        </span>
+    </md-content>
+
+    <div layout="row" layout-align="center center">
+        <h4 id="copyright">&copy; 2016 Clerkr</h4>
     </div>
 
-    <div class="officials" ng-init="landing.extra='about'">
-        <div class="text-center">
-            <a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='about'}" ng-click="landing.extra='about'" scroll-to="#about" bypass="true">About</a>
-            <a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='contact'}" ng-click="landing.extra='contact'" scroll-to="#contact" bypass="true">Contact</a>
-            <a href="javascript:;" class="btn" ng-class="{'btn-default':landing.extra=='development'}" ng-click="landing.extra='development'" scroll-to="#development" bypass="true">Under Development</a>
-        </div>
-        <div ng-show="landing.extra" class="extras col-xs-12 col-md-6 col-md-offset-3">
-            <div ng-show="landing.extra=='about'" id="about" class="h3">
-                <h3>Clerkr offers services for individuals and more for businesses.</h3>
-                <br />
-                <h1>For individuals...</h1>
-                <blockquote>
-                    <h3>Keep track of hobbies, sports, exercise, research, anything you can think of.</h3>
-                    <h3>Use your pages for surveys.</h3>
-                    <h3>Create interactive and visually-appealing graphs; print, save, and export your data views.</h3>
-                </blockquote>
-                <h1>For businesses...</h1>
-                <blockquote>
-                    <h3>Schedule employees and keep track of their time online.</h3>
-                    <h3>Use pages on your site and for online or kiosk-based customer submissions.</h3>
-                    <h3>Interact with customers in online appointments.</h3>
-                    <h3>Get combined and individual stats for the members in your group.</h3>
-                </blockquote>
-            </div>
-            <contact ng-show="landing.extra=='contact'" id="contact">
-                <form name="contForm">
-                    <input type="email" name="email" class="form-control imod" placeholder="Email" ng-model="cv.email" required="required">
-                    <br /><br />
-                    <textarea type="text" rows="6" class="form-control imod" placeholder="Message" ng-model="cv.message" required="required"></textarea>
-                    <a href="javascript:;" class="btn btn-success pull-right h1" ng-click="cv.newContact(cv.email, cv.message, contForm)" ng-disabled="!contForm.$valid">Submit</a>
-                </form>
-            </contact>
-            <div ng-show="landing.extra=='development'" id="development">
-                <h3>We're currently under development and looking to begin open individual-use testing in Spring 2016.</h3>
-            </div>
-        </div>
-
-    </div>
-    <h4 id="copyright" class="text-center col-xs-12">&copy; 2016 Clerkr</h4>
-</section>
+</md-card>

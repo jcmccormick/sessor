@@ -1,33 +1,48 @@
 <!-- Signed-in Menu -->
-<nav class="navbar-top" role="navigation">
-    <div class="navbar-header">
-        <span class="navbar-brand"><a href="/">Clerkr</a></span>
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".collapse-nav" ng-if="user.email == 'joe.c.mccormick@gmail.com'">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <ul class="nav top-nav pull-right">
-            <li class="dropdown">
-                <a href="javascript:;" class="user-menu dropdown-toggle" data-toggle="dropdown"><md-icon>person</md-icon></a>
-                <ul class="dropdown-menu bump-left">
-                    <!-- <li><a href="/profile"><i class="glyphicon glyphicon-user"></i> &nbsp; Profile</a></li> -->
-                    <li><a href="/contact"><i class="glyphicon glyphicon-globe"></i> &nbsp; Contact</a></li>
-                    <!-- <li><a href="/support"><i class="glyphicon glyphicon-question-sign"></i> &nbsp; Support</a></li> -->
-                    <li class="divider"></li>
-                    <li><a href ng-click="signOut()"><i class="glyphicon glyphicon-off"></i> &nbsp; Sign out</a></li>
-                </ul>
-            </li>
-        </ul>
-        <ul class="nav pull-left" ng-if="user.email == 'joe.c.mccormick@gmail.com'">
-            <li><a href="/templates">Pages</a></li>
-            <li><a href="/reports">Reports</a></li>
-            <li><a href="/statistics">Statistics</a></li>
-        </ul>
-        <ul class="nav collapse collapse-nav pull-left" ng-if="user.email == 'joe.c.mccormick@gmail.com'">
-            <li><a href="/group">Group</a></li>
-            <li><a href="/mastery">Mastery</a></li>
-        </ul>
+<md-toolbar class="md-site-primary" layout="row" layout-align="start center" layout-padding>
+    <md-button clocation ng-click="lv.locate('/')">
+        <h6 class="md-headline"><strong>Clerkr</strong></h6>
+    </md-button>
+    <div ng-if="user.signedIn && user.email == 'joe.c.mccormick@gmail.com'">
+        <md-button clocation ng-click="lv.locate('/templates')" aria-label="view all pages">
+            Pages
+        </md-button>
+        <md-button clocation ng-click="lv.locate('/reports')" aria-label="view all reports">
+            Reports
+        </md-button>
+        <md-button clocation ng-click="lv.locate('/statistics')" aria-label="view statistics">
+            Statistics
+        </md-button>
     </div>
-</nav>
+    <div ng-if="!user.signedIn">
+        <md-button scroll-to="#about" bypass="true" aria-label="about clerkr">
+            About
+        </md-button>
+    </div>
+    <span flex></span>
+    <md-button ng-click="authenticate('google')" ng-if="!user.signedIn" aria-label="sign in with google">
+        Sign in with Google
+    </md-button>
+    <md-button user-menu ng-click="uv.toggleMenu()" class="md-icon-button" aria-label="open the user menu">
+        <md-tooltip md-direction="bottom">
+            User Menu
+        </md-tooltip>
+        <md-icon>person</md-icon>
+    </md-button>
+</md-toolbar>
+
+<md-sidenav user-menu class="md-sidenav-right" md-component-id="right">
+    <md-content contact layout="column" layout-fill layout-padding>
+        <md-input-container>
+            <label>Send us a message</label>
+            <textarea ng-model="cv.message"></textarea>
+        </md-input-container>
+        <md-input-container ng-if="!user.signedIn">
+            <label>Email</label>
+            <input type="email" ng-model="user.email">
+        </md-input-container>
+        <md-button ng-click="cv.newContact(user.email, cv.message);uv.closeMenu()" ng-disabled="{{!user.signedIn && !user.email}} || !cv.message" aria-label="send contact message">
+            Submit
+        </md-button>
+    </md-content>
+</md-sidenav>

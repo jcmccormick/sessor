@@ -3,7 +3,7 @@ do ->
 
     loading = ->
         {
-            template: '<div ng-if="lv.loading"><span>Processing... <i class="glyphicon glyphicon-refresh"></i></span></div>'
+            template: '<md-progress-linear md-mode="indeterminate" ng-if="lv.loading"></md-progress-linear>'
             scope: false
             controllerAs: 'lv'
             controller: ['$rootScope', ($rootScope)->

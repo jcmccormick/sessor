@@ -11,9 +11,9 @@ do ->
             link: (scope, element, attrs)->
                 if (scope.template && scope.template.e) || scope.bypass
                     length = if scope.bypass then 70 else 250
-                    element.on 'click', ()->
+                    element.on 'click', ->
 
-                        setTimeout (()->
+                        setTimeout (->
                             $('html, body').stop(true, true).animate({scrollTop: $(scope.scrollTo).offset().top-length }, "slow")
 
                             # This will focus on the section/field name after scrolling, 
