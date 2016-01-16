@@ -6,20 +6,37 @@
             </h2>
         </div>
     </md-toolbar>
-    <div class="form-header">
-        <section>
-            <ul class="nav top-nav">
-                <li class="dropdown">
-                    <a href class="dropdown-toggle" data-toggle="dropdown">Pages <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/templates/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
-                        <li><a href="/templates"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
-                    </ul>
-                </li>
-                <li><a href="/templates/{{vt.template.id}}/edit">Edit</a></li>
-            </ul>
-        </section>
-    </div>
+
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-button user-menu ng-click="uv.toggleLeftMenu()" class="md-icon-button" aria-label="open options menu" ng-if="vt.template.id">
+                <md-tooltip md-direction="bottom">
+                    Options Menu
+                </md-tooltip>
+                <md-icon>menu</md-icon>
+            </md-button>
+            <md-button clocation ng-click="lv.locate('/templates/'+vt.template.id+'/edit')" class="md-icon-button" aria-label="edit {{vt.template.name}}">
+                <md-tooltip md-direction="bottom">
+                    Edit {{vt.template.name}}
+                </md-tooltip>
+                <md-icon>edit</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-sidenav user-menu class="md-sidenav-left" md-component-id="left" ng-if="vt.template.id">
+        <md-content layout="column" layout-fill layout-padding>
+            <md-button clocation ng-click="lv.locate('/templates/new')" class="md-raised md-primary" aria-label="create new page">
+                New Page
+            </md-button>
+            <md-button ng-click="vt.view_sheet($event, vt.template)" aria-label="view google sheet for {{vt.template.name}}">
+                View Google Sheet
+            </md-button>
+            <md-button clocation ng-click="lv.locate('/templates')" aria-label="view all pages">
+                View All Pages
+            </md-button>
+        </md-content>
+    </md-sidenav>
 
     <div layout="row" layout-align="center center">
         <h2>{{vt.template.name}}</h2>

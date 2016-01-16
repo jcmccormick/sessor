@@ -6,36 +6,41 @@
             </h2>
         </div>
     </md-toolbar>
-    <md-content layout="row" layout-align="center center" layout-padding>
-    
-        <md-select placeholder="Page" ng-model="sv.template" ng-change="sv.checker()">
+
+    <div layout="row" layout-align="center center" layout-padding>
+        <strong>Page</strong>
+        <md-select ng-model="sv.template" ng-change="sv.checker()">
             <md-option ng-repeat="template in sv.orderedTemplates = (sv.templates | orderBy:'-updated_at')" ng-value="template">{{template.name}}</md-option>
         </md-select>
     
-        <md-select placeholder="Field" ng-model="sv.field">
+        <strong>Field</strong>
+        <md-select ng-model="sv.field">
             <md-option ng-repeat="field in sv.filteredFields = ( sv.template.fields | filter: {fieldtype: '!labelntext'} )" ng-value="field">{{field.o.name}}</md-option>
         </md-select>
     
-        <md-select placeholder="Days ago" ng-model="sv.days">
+        <strong>Past # of Days</strong>
+        <md-select ng-model="sv.days">
             <md-option ng-repeat="day in [5, 10, 15, 30, 60, 90]" value="{{day}}">{{day}}</md-option>
         </md-select>
-        <span flex></span>
-    </md-content>
-    <div class="form-header">
-        <section>
-            <ul class="nav top-nav">
-                <li><a href="javascript:;" ng-click="sv.update()"><i class="glyphicon glyphicon-stats"></i> &nbsp; Graph</a></li>
-                <li><a href="javascript:;" ng-if="sv.chart.data.rows.length" ng-click="sv.chart.data = {};sv.chartEditor.closeDialog()">Reset</a></li>
-            </ul>
-        </section>
     </div>
-    <div class="col-xs-12" ng-if="sv.chart.data.rows.length && sv.chart.data.cols.length">
-        <section class="paper paper-color">
-            <span class="loading h4" ng-if="!sv.chart.displayed">Initializing chart... <i class="glyphicon glyphicon-refresh"></i></span>
-            <a href="javascript:;" class="btn btn-primary" ng-click="sv.loadEditor()" ng-if="sv.chart.displayed">Edit</a>
-    <!--        <div class="chart-edit"></div>
-            <article google-chart chart="sv.chart"></article> -->
-            <article id="google-chart" style="height: 400px; width: 600px;"></article>
-        </section>
+
+    <div layout="row" layout-align="center center" layout-padding>
+        <md-button ng-click="sv.update()" aria-label="update graph with selected options">
+            Update
+        </md-button>
+
+        <md-button ng-click="sv.chart.data = {};sv.chartEditor.closeDialog()" aria-label="clear graph display">
+            Clear
+        </md-button>
+    </div>
+
+    <div layout-padding ng-if="sv.chart.data.rows.length && sv.chart.data.cols.length">
+        <span ng-if="!sv.chart.displayed">Initializing chart...</span>
+
+        <md-button ng-click="sv.loadEditor()" ng-if="sv.chart.displayed" class="md-raised|md-fab|md-mini" aria-label="edit graph options">
+            Edit
+        </md-button>
+
+        <div id="google-chart"></div>
     </div>
 </md-card>

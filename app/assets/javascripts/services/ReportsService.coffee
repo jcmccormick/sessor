@@ -122,6 +122,19 @@ do ->
                         Flash.create('danger', '<p>'+err.data.errors+'</p>', 'customAlert')
                     )
 
+            deleteTemplate: (ev, report)->
+                confirm = $mdDialog.confirm()
+                    .title('Are you sure you want to remove this page from this report?')
+                    .content('Pressing DELETE will permanently remove '+report.form.name+' from this report.')
+                    .targetEvent(ev)
+                    .ok('Delete')
+                    .cancel('Get me out of here!')
+                $mdDialog.show(confirm).then ->
+                    report.did = parseInt(report.form.id, 10)
+                    index = report.template_order.indexOf(report.did)
+                    report.template_order.splice index, 1
+                    report.templates.splice index, 1
+
             sortTemplates: (report)->
                 sorted = []
                 for key in report.template_order

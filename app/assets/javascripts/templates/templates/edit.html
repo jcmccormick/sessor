@@ -7,65 +7,60 @@
             </h2>
         </div>
     </md-toolbar>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-button user-menu ng-click="uv.toggleLeftMenu()" class="md-icon-button" aria-label="open options menu" ng-if="vt.template.id">
+                <md-tooltip md-direction="bottom">
+                    Options Menu
+                </md-tooltip>
+                <md-icon>menu</md-icon>
+            </md-button>
+            <md-button ng-click="vt.save(true)" class="md-icon-button" aria-label="save {{vt.template.name}}">
+                <md-tooltip md-direction="bottom">
+                    Save {{vt.template.name}}
+                </md-tooltip>
+                <md-icon>save</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
 
-    <!-- TRANSITION THIS TO md-menu WHEN ANGULAR-MATERIAL 1.0.2 COMES -->
-    <div class="form-header">
-        <section>
-            <ul class="nav top-nav">
-                <!-- <li class="form-specs-toggle" ng-if="!vt.template.id || vt.template.e">
-                    <a href="javascript:;" ng-click="vt.checkSpec()" data-toggle="collapse" data-target=".form-specs" aria-expanded="true">
-                        <i class="glyphicon glyphicon-cog pull-right"></i>
-                    </a>
-                </li> -->
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">File <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="javascript:;" ng-click="vt.save()" ng-if="vt.template.id"><i class="glyphicon glyphicon-save"></i> &nbsp; View</a></li>
-                        <li><a href="/templates/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
-                        <li><a href="/templates"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
-                        <li ng-if="vt.template.id" class="divider"></li>
-                        <li><a href="javascript:;" ng-if="vt.template.id" ng-click="vt.delete($event, vt.template)"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
-                    </ul>
-                </li>
-                <li><a href="javascript:;" ng-click="vt.save(true)"><span ng-class="{'save-now':!vt.tempForm.$pristine}">Save</span></a></li>
-                <li class="dropdown" ng-if="vt.template.id">
-                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><span>Sharing</span></li>
-                        <li><span><label for="private_world"><input type="checkbox" id="private_world" name="private_world" ng-model="vt.template.private_world"> Share Public</label></span></li>
-                        <li><span><label for="private_group"><input type="checkbox" id="private_group" name="private_group" ng-model="vt.template.private_group"> Share Group</label></span></li>
-                        <div ng-if="vt.template.private_group == 1">
-                            <li class="divider"></li>
-                            <li><span>Group</span></li>
-                            <li><span><label for="group_edit"><input type="checkbox" id="group_edit" name="group_edit" ng-model="vt.template.group_edit"> Allow Editing</label></span></li>
-                            <div ng-if="vt.template.group_edit">
-                                <li><span>Editors</span></li>
-                                <li><span><a role="button">Add</a> / <a role="button">Remove</a></span></li>
-                            </div>
-                        </div>
-                    </ul>
-                </li>
-                <li class="dropdown" ng-if="vt.template.drafts.length">
-                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Drafts <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li ng-repeat="draft in vt.template.drafts | orderBy:'time'">
-                            <span>
-                                <a href="javascript:;" ng-click="vt.template.assimilate(draft)">Draft #{{$index+1}} {{draft.recent}}</a>
-                            </span>
-                        </li>
-                    </ul>
-                </li>
-                <li ng-if="vt.template.id"><a href="javascript:;" ng-click="vt.view_sheet($event, vt.template)">View Google Sheet</a></li>
-            </ul>
-        </section>
-    </div>
+    <md-sidenav user-menu class="md-sidenav-left" md-component-id="left" ng-if="vt.template.id">
+        <md-content layout="column" layout-fill layout-padding>
+            <md-button clocation ng-click="lv.locate('/templates/new')" class="md-raised md-primary" aria-label="create new page">
+                New Page
+            </md-button>
+            <md-button ng-click="vt.view_sheet($event, vt.template)" aria-label="view google sheet for {{vt.template.name}}">
+                View Google Sheet
+            </md-button>
+            <md-button user-menu ng-click="vt.save()" aria-label="view {{vt.template.name}}">
+                View This Page
+            </md-button>
+            <md-button clocation ng-click="lv.locate('/templates')" aria-label="view all pages">
+                View All Pages
+            </md-button>
+            <md-divider></md-divider>
+            <md-checkbox ng-model="vt.template.private_world" aria-label="toggle public sharing">
+                Share Publically
+            </md-checkbox>
+            <md-checkbox ng-model="vt.template.private_group" aria-label="toggle group sharing">
+                Share within Group
+            </md-checkbox>
+            <md-checkbox ng-model="vt.template.group_edit" aria-label="toggle allowing group editors">
+                Allow Group Editors
+            </md-checkbox>
+            <span flex></span>
+            <md-button ng-click="vt.delete($event, vt.template)" class="md-raised md-warn" aria-label="delete {{vt.template.name}}">
+                Delete This Page
+            </md-button>
+        </md-content>
+    </md-sidenav>
 
     <div layout="row" layout-padding>
         <md-input-container flex>
             <label>Page Name</label>
             <input ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save(true)">
         </md-input-container>
-        <span flex="5"></span>
+        <span flex="5" ng-if="vt.template.id"></span>
         <div layout="column" layout-padding layout-align="center center" ng-if="vt.template.id">
             {{vt.template.fields.length || 0}} of 20 fields used
             <md-checkbox ng-model="vt.template.draft" aria-label="{{vt.template.name}} toggle draft">
@@ -73,13 +68,14 @@
             </md-checkbox>
         </div>
     </div>
+
     <div layout-padding ng-if="!vt.template.id">Enter a name for your Page and press Enter or Save</div>
 
-    <draggable-options field="vt.template.sO" form="vt.template" class="field-options" ng-if="vt.template.e && vt.template.poppedOut && vt.template.sO.o"></draggable-options>
+    <draggable-options field="vt.template.sO" form="vt.template" class="field-options" ng-if="vt.template.poppedOut && vt.template.sO.o"></draggable-options>
 
     <template-form-directive form="vt.template"></template-form-directive>
 
-    <md-button ng-click="vt.template.addSection(form)" aria-label="add a new section" ng-if="vt.template.e && ((vt.template.fields && vt.template.fields.length) || 0) < 20">
+    <md-button ng-click="vt.template.addSection(form)" aria-label="add a new section" ng-if="((vt.template.fields && vt.template.fields.length) || 0) < 20">
         <md-icon>add</md-icon> Add Section
     </md-button>
     

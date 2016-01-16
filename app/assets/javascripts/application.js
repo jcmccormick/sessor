@@ -12,9 +12,6 @@
 //
 //= require moment
 //= require jquery
-//= require jquery-ui
-//= require jquery_ujs
-//= require bootstrap-sprockets
 //= require angular
 //= require angular-aria
 //= require angular-route

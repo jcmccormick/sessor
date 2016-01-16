@@ -67,17 +67,13 @@ do ->
                 vr.save = (temporary)->
                     ReportsService.saveReport(vr.report, temporary, vr.repForm)
 
-                vr.deleteTemplate = ->
-                    vr.repForm.$pristine = false
-                    vr.report.did = parseInt(vr.report.form.id, 10)
-                    index = vr.report.template_order.indexOf(vr.report.did)
-                    vr.report.template_order.splice index, 1
-                    vr.report.templates.splice index, 1
-                    vr.save(true).then((res)->
-                        vr.report.did = undefined
-                        vr.template = vr.filteredTemplates()[0]
-                        vr.report.form = vr.report.templates[0]
-                    )
+                vr.deleteTemplate = (ev)->
+                    ReportsService.deleteTemplate(ev, vr.report).then ->
+                        vr.repForm.$pristine = false
+                        vr.save(true).then (res)->
+                            vr.report.did = undefined
+                            vr.template = vr.filteredTemplates()[0]
+                            vr.report.form = vr.report.templates[0]
         else
             vr.viewStyle = 'sortable'
             vr.sortType = 'updated_at'

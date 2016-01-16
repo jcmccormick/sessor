@@ -4,14 +4,14 @@
 
 <loading></loading>
 
-<main ng-view ng-if="user.signedIn" class="view-frame animate-view"></main>
+<div ng-view ng-if="user.signedIn" class="view-frame animate-view"></div>
 
 <md-card class="landing-page" ng-show="false || !user.signedIn" ng-cloak>
 
     <newsletter>
         <div ng-form="newsForm">
             <h2>We're developing! Sign up to our newsletter and get perks when we go live.</h2>
-            <div layout="row" layout="center center">
+            <div layout="row" layout-align="center center">
                 <md-input-container class="md-no-padding" flex>
                     <label>Email</label>
                     <input type="email" ng-model="nv.email" required="required">
@@ -23,7 +23,7 @@
         </div>
     </newsletter>
 
-    <article class="approach">
+    <div class="approach">
         <section>
             <h2>
                 <small class="verticalFlip">
@@ -44,7 +44,7 @@
             <h3>Record, visualize, and share your data. Easy.</h3>
         </section>
         <%= image_tag 'skyline.png' %>
-    </article>
+    </div>
 
     <md-content layout="column" layout-gt-md="row" layout-align="space-around" layout-wrap class="md-primary md-hue-1">
         <div flex="35" layout-padding>

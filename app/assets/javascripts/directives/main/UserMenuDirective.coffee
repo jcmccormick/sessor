@@ -15,6 +15,13 @@ do ->
                 uv.closeMenu = ->
                     $mdSidenav('right').close()
 
+                uv.toggleLeftMenu = $mdUtil.debounce (->
+                    $mdSidenav('left').toggle()
+                ), 300
+
+                uv.closeLeftMenu = ->
+                    $mdSidenav('left').close()
+
                 return uv
 
             ]

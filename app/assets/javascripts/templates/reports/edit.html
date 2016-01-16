@@ -6,67 +6,78 @@
             </h2>
         </div>
     </md-toolbar>
-    <div class="form-header">
-        <section>
-            <ul class="nav top-nav">
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Reports <b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li ng-if="vr.report.id"><a href="javascript:;" ng-click="vr.save(false)"><i class="glyphicon glyphicon-save"></i> &nbsp; View</a></li>
-                        <li><a href="/reports/new"><i class="glyphicon glyphicon-plus"></i> &nbsp; New</a></li>
-                        <li><a href="/reports"><i class="glyphicon glyphicon-search"></i> &nbsp; View All</a></li>
-                        <li ng-if="vr.report.id" class="divider"></li>
-                        <li ng-if="vr.report.id"><a href="javascript:;" ng-click="vr.delete($event, vr.report)"><i class="glyphicon glyphicon-trash text-danger"></i> &nbsp; Delete</a></li>
-                    </ul>
-                </li>
-                <li ng-if="vr.report.id"><a href="javascript:;" ng-click="vr.save(true)"><span ng-class="{'save-now':!vr.repForm.$pristine}">Save</span></a></li>
-            </ul>
 
-            <fieldset>
-                <div class="form-specs container-fluid collapse" ng-class="{'in':!vr.report.id || vr.report.e}">
-                    <div class="col-xs-12" ng-if="!vr.templates.length">
-                        <p>It looks like you don't have any pages yet. Make sure the Page you want to add is not marked as Draft. Uncheck "Draft" under the Options menu when editing a Page, then save it.</p>
-                        <p>Pages may only be added to a report once.</p>
-                    </div>
-                    <div class="col-xs-6 col-md-3">
-                        <label for="report-name">Report Name</label>
-                        <input type="text" id="report-name" class="form-control" placeholder="Optional" ng-model="vr.report.title" ng-keypress="($event.keyCode==13) && vr.report.save(true)" />
-                    </div>
-                    <div class="col-xs-6 col-md-3" ng-if="vr.templates.length">
-                        <label for="add-pages">Add Page</label>
-                        <div class="input-group">
-                            <select id="add-pages" class="form-control" ng-model="vr.template" ng-options="template.name for template in vr.filteredTemplates()"></select>
-                            <span class="input-group-btn">
-                                <a href="javascript:;" class="btn btn-default" ng-click="vr.addTemplate(vr.template)">Add</a>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-xs-6 col-md-3" ng-if="vr.report.templates.length">
-                        <a href="javascript:;" ng-class="{'disabled':vr.report.form.id == vr.report.template_order[0]}" ng-click="vr.switchForm(-1)"><i class="glyphicon glyphicon-triangle-left"></i></a>
-                        <label for="current-page">Current Page</label>
-                        <a href="javascript:;" ng-class="{'disabled':vr.report.form.id == vr.report.template_order[vr.report.template_order.length-1]}" ng-click="vr.switchForm(1)"><i class="glyphicon glyphicon-triangle-right"></i></a>
-                        <div class="input-group">
-                            <select id="current-page" class="form-control" ng-model="vr.report.form" ng-options="template.name for template in vr.report.templates"></select>
-                            <span class="input-group-btn">
-                                <a href="javascript:;" class="btn btn-default" ng-bootbox-confirm="<center><h4>Are you sure you want to remove this page from the report?<br><br>All information will be lost.</h4></center>" ng-bootbox-confirm-action="vr.deleteTemplate()">
-                                    <i class="glyphicon glyphicon-trash"></i>
-                                </a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
-        </section>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-button user-menu ng-click="uv.toggleLeftMenu()" class="md-icon-button" aria-label="open options menu" ng-if="vr.report.id">
+                <md-tooltip md-direction="bottom">
+                    Options Menu
+                </md-tooltip>
+                <md-icon>menu</md-icon>
+            </md-button>
+            <md-button ng-click="vr.save(true)" class="md-icon-button" aria-label="save {{vr.report.title}}">
+                <md-tooltip md-direction="bottom">
+                    Save {{vr.report.title}}
+                </md-tooltip>
+                <md-icon>save</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-sidenav user-menu class="md-sidenav-left" md-component-id="left" ng-if="vr.report.id">
+        <md-content layout="column" layout-fill layout-padding>
+            <md-button clocation ng-click="lv.locate('/reports/new')" class="md-raised md-primary" aria-label="create new report">
+                New Report
+            </md-button>
+            <md-button user-menu ng-click="vr.save()" aria-label="view {{vr.report.title}}">
+                View This Report
+            </md-button>
+            <md-button clocation ng-click="lv.locate('/reports')" aria-label="view all reports">
+                View All Reports
+            </md-button>
+            <span flex></span>
+            <md-button ng-click="vr.delete($event, vr.report)" class="md-raised md-warn" aria-label="delete {{vr.report.name}}">
+                Delete This Report
+            </md-button>
+        </md-content>
+    </md-sidenav>
+
+    <div layout="column" layout-padding ng-if="!vr.templates.length">
+        <p>It looks like you don't have any pages yet. Make sure the Page you want to add is not marked as Draft. Uncheck "Draft" when editing a Page, then save it.</p>
+        <p>Pages may only be added to a report once.</p>
+    </div>
+
+    <div layout="column" layout-padding ng-if="vr.report.templates.length">
+        <md-input-container>
+            <label>Report Name (optional)</label>
+            <input ng-model="vr.report.title" ng-keypress="($event.keyCode==13) && vr.save(true)">
+        </md-input-container>
+        <div layout="row" layout-align="start center">
+            <md-select ng-model="vr.template">
+              <md-option ng-repeat="template in vr.filteredTemplates()" ng-value="template">{{template.name}}</md-option>
+            </md-select>
+            <md-button ng-click="vr.addTemplate(vr.template)" class="md-icon-button" aria-label="add {{vr.template.name}} to this report">
+                <md-tooltip md-direction="bottom">
+                    Add {{vr.template.name}} to this report
+                </md-tooltip>
+                <md-icon>add</md-icon>
+            </md-button>
+            <span flex></span>
+            <md-select ng-model="vr.report.form">
+                <md-option ng-repeat="template in vr.report.templates" ng-value="template">{{template.name}}</md-option>
+            </md-select>
+            <md-button ng-click="vr.deleteTemplate($event)" class="md-icon-button md-warn" aria-label="remove {{vr.report.form.name}} from this report">
+                <md-tooltip md-direction="bottom">
+                    Remove {{vr.report.form.name}} from this report
+                </md-tooltip>
+                <md-icon>delete</md-icon>
+            </md-button>
+        </div>
+    </div>
+
+    <div layout="row" layout-align="start center" layout-padding>
     </div>
 
     <template-form-directive report="vr.report" form="vr.report.form"></template-form-directive>
 
 </md-card>
-
-
-<!-- REPORT PAGES MOBILE BOTTOM BAR BREADCRUMBS -->
-<!-- <ol ng-init="vr.report.showPages=false;vr.report.form = vr.report.templates[0]" ng-click="vr.report.showPages=!vr.report.showPages" ng-if="vr.report.templates.length" class="breadcrumb edit-report-crumbs">
-    <h3>Pages</h3>
-    <li ng-show="vr.report.showPages" ng-class="{'in':vr.report.showPages,'selected':template==vr.report.form}" ng-repeat="template in vr.report.templates"><a href="javascript:;" ng-click="vr.report.form = template">{{template.name}}</a></li>
-</ol>
- -->
