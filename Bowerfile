@@ -1,4 +1,3 @@
 asset 'angular-flash-alert'
 asset 'angular-mocks'
-asset 'angular-ui-sortable'
 # vim: ft=ruby

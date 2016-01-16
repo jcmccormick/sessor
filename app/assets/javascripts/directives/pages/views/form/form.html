@@ -1,10 +1,8 @@
-<md-content layout="column" layout-padding ng-form="myForm" class="section-row" ng-repeat="section in form.sections track by $index">
+<div layout="column" layout-padding ng-form="myForm" class="section-row" ng-repeat="section in form.sections track by $index">
 
-    <div ng-if="!form.e" layout="row">
-        <h3>
-            {{section.n}}
-        </h3>
-    </div>
+    <p class="md-headline" ng-if="!form.e">
+        {{section.n}}
+    </p>
 
     <ng-include src="'directives/pages/views/form/section_options.html'" ng-if="form.e"></ng-include>
 
@@ -39,4 +37,4 @@
             </div>
         </div>
     </div>
-</md-content>
+</div>

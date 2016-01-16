@@ -12,7 +12,6 @@ do ->
         'ngAria',
         'ng-token-auth',
         'LocalStorageModule',
-        'ui.sortable',
         'googlechart',
         'flash'
     ]
