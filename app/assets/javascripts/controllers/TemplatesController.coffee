@@ -1,7 +1,7 @@
 do ->
     'use strict'
 
-    TemplatesController = ($routeParams, $scope, $window, localStorageService, ReportsService, TemplatesService)->
+    TemplatesController = ($routeParams, $scope, localStorageService, ReportsService, TemplatesService)->
 
         vt = this
 
@@ -131,6 +131,6 @@ do ->
 
         return vt
 
-    TemplatesController.$inject = ['$routeParams', '$scope', '$window', 'localStorageService', 'ReportsService', 'TemplatesService']
+    TemplatesController.$inject = ['$routeParams', '$scope', 'localStorageService', 'ReportsService', 'TemplatesService']
 
     angular.module('clerkr').controller('TemplatesController', TemplatesController)

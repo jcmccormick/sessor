@@ -343,115 +343,37 @@ blockquote {
 }
 
 template-field-directive {
-    word-wrap: break-word !important;
 
-    h3 {
-        font-size: 24px;
-    }
+    .field-overlay {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
 
-    h4,
-    h5 {
-        font-size: 20px;
+        i {
+            position: absolute;
+            top: initial !important;
+            bottom: 12px;
+            right: 30px;
+            font-family: "Glyphicons Halflings";
+            font-size: x-large;
+            content: "\e019";
+            color: #ddd;
 
-    }
-    
-    .form-group {
-        position: relative;
-
-        textarea {
-            height: 113px;
-            resize: vertical;
-        }
-
-        p {
-            font-size: 18px;
-            line-height: 1.7em;
-        }
-
-        blockquote {
-            margin: 10px 0 0;
-            font-size: 20px;
-        }
-
-        label {
-            display: inline;
-        }
-
-        /* Replace mmddyyy/hhmmampm with placeholder until focused or data */
-        input[type="date"],
-        input[type="time"] {
-            &.notfull:not(:focus):not(:hover) {
-                &:before {
-                    color:#999;
-                    content:attr(placeholder);
-
-                    &.ng-valid {
-                        content: none;
-                    }
-                }
-                &::-webkit-datetime-edit-year-field:not([aria-valuenow]),
-                &::-webkit-datetime-edit-month-field:not([aria-valuenow]),
-                &::-webkit-datetime-edit-day-field:not([aria-valuenow]),
-                &::-webkit-datetime-edit-minute-field:not([aria-valuenow]),
-                &::-webkit-datetime-edit-hour-field:not([aria-valuenow]),
-                &::-webkit-datetime-edit-ampm-field:not([aria-valuenow]),
-                &::-webkit-datetime-edit-text:not([aria-valuenow]) {
-                        display: none;
-                }
+            &.bump-down {
+                top: 12px;
             }
         }
 
-        &.clear-align {
-            margin:0;
-        }
-
-        &.space {
-            margin-top: 20px !important;
-        }
-
-        .glyphs {
-            position: absolute;
-            top: 0;
-            left: -25px;
-            width: 15px;
-
-            .field-required {
-                color: red;
-            }
-
-        }
-
-        .field-overlay {
-            position: absolute;
-            top: 0;
+        &:hover,
+        &.force-hover {
+            background-color: rgba(255,255,255,.5);
+            outline: 2px solid #337ab7;
             width: 100%;
             height: 100%;
-            cursor: pointer;
-
-            i {
-                position: absolute;
-                top: initial !important;
-                bottom: 12px;
-                right: 30px;
-                font-family: "Glyphicons Halflings";
-                font-size: x-large;
-                content: "\e019";
-                color: #ddd;
-
-                &.bump-down {
-                    top: 12px;
-                }
-            }
-
-            &:hover,
-            &.force-hover {
-                background-color: rgba(255,255,255,.5);
-                outline: 2px solid #337ab7;
-                width: 100%;
-                height: 100%;
-                md-icon {
-                    color: #337ab7;
-                }
+            md-icon {
+                color: #337ab7;
             }
         }
     }
@@ -462,47 +384,6 @@ template-field-directive {
  */
 .google-chart {
     min-height: 300px;
-}
-
-/*
- * Input Modern
- */
-input[type=checkbox] {
-    margin: 0 !important;
-}
-
-select.imod,
-textarea.imod,
-input.imod {
-    height: 50px;
-    font-size: 24px;
-    padding: 7px;
-    border: none;
-    border-bottom: 2px solid #eee;
-    border-left: 5px solid #eee;
-    border-radius: 0;
-    box-shadow: none;
-
-    &:-webkit-autofill {
-        transition: background-color 5000s ease-in-out 0s;
-    }
-
-    &[type=checkbox],
-    &[type=radio] {
-        margin: 12px 10px 0 0 !important;
-        height: 18px;
-        width: 18px;
-        float: left;
-    }
-
-    &:focus {
-        box-shadow: none;
-    }
-
-    &.ng-invalid-email:not(:focus),
-    &.ng-invalid-required.ng-touched:not(:focus) {
-        border-color: #FF9D9D;
-    }
 }
 
 /*
@@ -520,25 +401,14 @@ input.imod {
             @include respond(mobile) { width: 250%; }
             @include respond(tablet) { width: 215%; }
             @include respond(desktop) { width: 100%; }
-
-            &:after {
-                position: absolute;
-                top: 90%;
-                content: "Connect your data. Easy.";
-                width: 100%;
-                text-align: center;
-            }
         }
-        section {
+        .approach-text {
             position: absolute;
             width: 100%;
             color: white !important;
             overflow-x: hidden;
+            text-align: center;
 
-            h2 ,
-            h3 {
-                text-align: center;
-            }
             h3 {
                 font-style: italic;
             }
@@ -587,46 +457,8 @@ input.imod {
         }
     }
 
-    .down {
-        padding: 15px;
-        cursor: pointer;
-        i{
-            font-size: larger !important;
-        }
-    }
-
-    .features {
-        i {
-            font-size: 80px;
-        }
-
-        /* Fine-tune grid layout */
-        > * > * {
-            margin: 30px 0;
-
-            @include respond(desktop) {
-                margin: 100px 0 0;
-                padding: 50px 100px;
-            }
-        }
-    }
-
     newsletter {
-        font-size: 18px;
-        display: block;
         background-color: rgba(34,139,34,0.3);
         padding: 1px 10% 30px;
-    }
-
-    .officials {
-        padding: 60px 10px;
-
-        @include respond(desktop) {
-
-            .extras {
-                margin-top: 50px;
-                margin-bottom: 50px;
-            }
-        }
     }
 }

@@ -1,7 +1,7 @@
 do ->
     'use strict'
 
-    ReportsController = ($scope, $routeParams, localStorageService, ReportsService, TemplatesService)->
+    ReportsController = ($routeParams, $scope, localStorageService, ReportsService, TemplatesService)->
 
         vr = this
 
@@ -26,10 +26,13 @@ do ->
 
             vr.addTemplate = (template)->
                 vr.repForm.$pristine = false
-                !vr.report.id && skipRefresh = true
+
+                # Save the report with a new template
                 vr.report.template_order.push template.id
                 ReportsService.saveReport(vr.report, true, vr.repForm).then ((res)->
-                    !skipRefresh && ReportsService.queryReport(repId, true).then((res)->
+
+                    # If new report, query to collect the full contents of the newly added template
+                    !vr.report.id && ReportsService.queryReport(repId, true).then((res)->
                         $.extend vr.report, res
                         vr.report.form = vr.report.templates[vr.report.templates.length-1]
                         vr.template = vr.filteredTemplates()[0]
@@ -89,6 +92,6 @@ do ->
 
         return vr
 
-    ReportsController.$inject = ['$scope', '$routeParams', 'localStorageService', 'ReportsService', 'TemplatesService']
+    ReportsController.$inject = ['$routeParams', '$scope', 'localStorageService', 'ReportsService', 'TemplatesService']
 
     angular.module('clerkr').controller("ReportsController", ReportsController)

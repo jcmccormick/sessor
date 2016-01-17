@@ -60,8 +60,7 @@ module Api::V1#:nodoc:
 
             def update_worksheet
                 if (formatted_params-formatted_fields).any? || params[:update_keys]
-
-                    ws = google_drive.worksheet_by_url(template.gs_id)
+                    get_sheet
 
                     ws.list.keys = if ws.list.keys.length < 3
                         # If there are less than 3 keys, it is a new worksheet, so initialize all fields
@@ -81,6 +80,14 @@ module Api::V1#:nodoc:
                     ss.save
                 end
 
+            end
+
+            def ws
+                @ws
+            end
+
+            def get_sheet
+                @ws = google_drive.worksheet_by_url(template.gs_id)
             end
 
             def template
@@ -104,7 +111,7 @@ module Api::V1#:nodoc:
             end
 
             def worksheet_keys
-                keys = @ws.list.keys.drop(3)
+                keys = ws.list.keys.drop(3)
                 keys
             end
 

@@ -21,8 +21,24 @@ do ->
 
         linker = (scope, element, attrs)->
 
+            fw = '<md-input-container>
+                <label>{{field.o.name}}</label>'
+
+            mdfwend = '<div class="field-overlay" md-ink-ripple ng-click="template.sO=field" ng-class="{\'force-hover\':template.sO.id == field.id}" ng-if="template.e" aria-label="click to edit {{field.o.name}}">
+                    <md-tooltip md-direction="bottom">
+                        Click to edit {{field.o.name}}
+                    </md-tooltip>
+                </div>
+                </md-input-container>'
+
+
+
+
+
+
+
             # Create a container (form-group) for field input box layout
-            fwstart = '<div class="form-group" ng-class="{\'clear-align\':field.fieldtype==\'checkbox\' || field.fieldtype==\'radio\' || field.fieldtype==\'labelntext\',\'space\':field.fieldtype==\'checkbox\' && field.o.column_order == 1}" scroll-to=".force-hover" template="template">'
+            fwstart = '<div ng-class="{\'clear-align\':field.fieldtype==\'checkbox\' || field.fieldtype==\'radio\' || field.fieldtype==\'labelntext\',\'space\':field.fieldtype==\'checkbox\' && field.o.column_order == 1}" scroll-to=".force-hover" template="template">'
             
             required = '<md-icon class="md-warn" ng-if="field.o.required && !field.value.input && !field.o.default_value">
                     <md-tooltip md-direction="top">
@@ -41,31 +57,28 @@ do ->
                 {{field.o.name}}
             </h3>'
 
-            fwend = '<div class="field-overlay" md-ink-ripple ng-click="template.sO=field" ng-class="{\'force-hover\':template.sO.id == field.id}" ng-if="template.e" aria-label="click to edit {{field.o.name}}">
-                    <md-tooltip md-direction="bottom">
-                        Click to edit {{field.o.name}}
-                    </md-tooltip>
-                </div>
+            fwend = '
             </div>'
 
-            fw = fwstart+fwmid
+            #fw = fwstart+fwmid
 
             # Break apart an <input> tag into common denominators
             inputstart = '<input'
-            clas = 'class="form-control imod" ng-class="{\'notfull\': !field.o.default_value && !field.value.input}" '
+            #clas = 'class="imod" ng-class="{\'notfull\': !field.o.default_value && !field.value.input}" '
 
             ngmodel = if scope.report then 'ng-model="field.value.input"' else 'ng-model="field.o.default_value"'
             checkboxmodel = if scope.report then 'ng-model="$parent.field.value.input"' else 'ng-model="$parent.field.o.default_value"'
 
-            fid = ' id="{{field.o.section_id}}{{field.o.column_id}}{{field.id}}"'
-            pho = ' placeholder="{{field.o.placeholder}}"'
+            fid = ' id="clf_{{field.o.section_id}}{{field.o.column_id}}{{field.id}}"'
+            #pho = ' placeholder="{{field.o.placeholder}}"'
 
-            inputend = ' ng-focus="template.sO=field" name="{{field.o.section_id}}{{field.o.column_id}}{{field.id}}" ng-required="field.o.required" ng-disabled="field.o.disabled">'
+            inputend = ' ng-required="field.o.required" ng-disabled="field.o.disabled">'
             
-            standard = clas+' '+fid+' '+pho+' '+ngmodel+' '+inputend
+            standard = fid+' '+ngmodel+' '+inputend
 
             # Define the particulars of each supported field
-            labelntext = '<p ng-if="!field.value.input && !field.o.default_value && template.e">
+            labelntext = '<h5>{{field.o.name}}</h5>
+                        <p ng-if="!field.value.input && !field.o.default_value && template.e">
                             Add text here. Use just the label, or text, or both...
                         </p>
                         <blockquote ng-if="field.value.input || field.o.default_value">{{field.value.input || field.o.default_value}}</blockquote>'
@@ -125,13 +138,13 @@ do ->
                 switch cur_field
                     when "labelntext" then element.html fw+labelntext+fwend
 
-                    when "textfield" then element.html fw+textfield+fwend
-                    when "textarea" then element.html fw+textarea+fwend
-                    when "email" then element.html fw+email+fwend
+                    when "textfield" then element.html fw+textfield+mdfwend
+                    when "textarea" then element.html fw+textarea+mdfwend
+                    when "email" then element.html fw+email+mdfwend
 
-                    when "integer" then element.html fw+integer+fwend
-                    when "date" then element.html fw+date+fwend
-                    when "time" then element.html fw+time+fwend
+                    when "integer" then element.html fw+integer+mdfwend
+                    when "date" then element.html fw+date+mdfwend
+                    when "time" then element.html fw+time+mdfwend
 
                     when "checkbox" then element.html fwstart+checkbox+fwend
                     when "radio" then element.html fw+radio+fwend

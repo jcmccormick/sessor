@@ -1,11 +1,15 @@
-<md-toolbar class="md-site-secondary" clocation ng-click="lv.locate('/templates/new')" ng-show="user.templates_count == 0">
+<md-toolbar class="md-site-secondary" ng-show="user.templates_count == 0">
     <div class="md-toolbar-tools">
-        <h4>Add a page <md-icon>add</md-icon></h4>
+        <md-button clocation ng-click="lv.locate('/templates/new')" class="md-raised" aria-label="create your first page">
+            <md-icon>add</md-icon> Create your first page
+        </md-button>
     </div>
 </md-toolbar>
-<md-toolbar class="md-site-secondary" ng-controller="TemplatesController as vt" ng-click="vt.newReport(vt.templates[0], {})" ng-if="user.templates_count > 0 && user.reports_count == 0">
+<md-toolbar class="md-site-secondary" ng-controller="TemplatesController as vt" ng-if="user.templates_count > 0 && user.reports_count == 0">
     <div class="md-toolbar-tools">
-        <h4>Add a report <md-icon>add</md-icon></h4>
+        <md-button ng-click="vt.newReport(vt.templates[0], {})" class="md-raised" aria-label="create your first report">
+            <md-icon>add</md-icon> Create your first report
+        </md-button>
     </div>
 </md-toolbar>
 
@@ -16,7 +20,13 @@
 
         <md-toolbar class="md-site-secondary">
             <div class="md-toolbar-tools">
-                <h2 clocation ng-click="lv.locate('/templates')" aria-label="view all pages">
+                <md-button href="/templates" class="md-icon-button" aria-label="view all pages">
+                    <md-tooltip md-direction="bottom">
+                        View All Pages
+                    </md-tooltip>
+                    <md-icon>search</md-icon>
+                </md-button>
+                <h2>
                     <span>Pages</span>
                 </h2>
                 <span flex></span>
@@ -32,31 +42,43 @@
             <md-tabs md-dynamic-height md-border-bottom ng-form="vt.tempForm">
                 <md-tab label="sort">
                     <md-content>
-                        <table class="table">
+                        <table cellpadding="10" layout-fill>
                             <thead>
                                 <tr>
-                                    <th ng-click="vt.sortType = 'id'; vt.sortReverse = !vt.sortReverse" aria-label="sort pages by id">ID &nbsp; 
-                                        <md-icon ng-show="vt.sortType=='id' && !vt.sortReverse">expand_more</md-icon> 
-                                        <md-icon ng-show="vt.sortType=='id' && vt.sortReverse">expand_less</md-icon>
+                                    <th>
+                                        <md-button ng-click="vt.sortType = 'id'; vt.sortReverse = !vt.sortReverse" aria-label="sort pages by id">
+                                            ID &nbsp; 
+                                            <md-icon ng-show="vt.sortType=='id' && !vt.sortReverse">expand_more</md-icon> 
+                                            <md-icon ng-show="vt.sortType=='id' && vt.sortReverse">expand_less</md-icon>
+                                        </md-button>
                                     </th>
-                                    <th ng-click="vt.sortType = 'name'; vt.sortReverse = !vt.sortReverse" aria-label="sort pages by name">Name &nbsp; 
-                                        <md-icon ng-show="vt.sortType=='name' && !vt.sortReverse">expand_more</md-icon> 
-                                        <md-icon ng-show="vt.sortType=='name' && vt.sortReverse">expand_less</md-icon>
+                                    <th>
+                                        <md-button ng-click="vt.sortType = 'name'; vt.sortReverse = !vt.sortReverse" aria-label="sort pages by name">
+                                            Name &nbsp; 
+                                            <md-icon ng-show="vt.sortType=='name' && !vt.sortReverse">expand_more</md-icon> 
+                                            <md-icon ng-show="vt.sortType=='name' && vt.sortReverse">expand_less</md-icon>
+                                        </md-button>
                                     </th>
-                                    <th ng-click="vt.sortType = 'draft'; vt.sortReverse = !vt.sortReverse" aria-label="sort pages by draft">Draft &nbsp; 
-                                        <md-icon ng-show="vt.sortType=='draft' && !vt.sortReverse">expand_more</md-icon> 
-                                        <md-icon ng-show="vt.sortType=='draft' && vt.sortReverse">expand_less</md-icon>
+                                    <th>
+                                        <md-button ng-click="vt.sortType = 'draft'; vt.sortReverse = !vt.sortReverse" aria-label="sort pages by draft">
+                                            Draft &nbsp; 
+                                            <md-icon ng-show="vt.sortType=='draft' && !vt.sortReverse">expand_more</md-icon> 
+                                            <md-icon ng-show="vt.sortType=='draft' && vt.sortReverse">expand_less</md-icon>
+                                        </md-button>
                                     </th>
-                                    <th ng-click="vt.sortType = 'updated_at'; vt.sortReverse = !vt.sortReverse" aria-label="sort pages by time updated">Updated &nbsp; 
-                                        <md-icon ng-show="vt.sortType=='updated_at' && !vt.sortReverse">expand_more</md-icon> 
-                                        <md-icon ng-show="vt.sortType=='updated_at' && vt.sortReverse">expand_less</md-icon>
+                                    <th>
+                                        <md-button ng-click="vt.sortType = 'updated_at'; vt.sortReverse = !vt.sortReverse" aria-label="sort pages by time updated">
+                                            Updated &nbsp; 
+                                            <md-icon ng-show="vt.sortType=='updated_at' && !vt.sortReverse">expand_more</md-icon> 
+                                            <md-icon ng-show="vt.sortType=='updated_at' && vt.sortReverse">expand_less</md-icon>
+                                        </md-button>
                                     </th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody ng-if="vt.templates.length">
                                 <tr>
-                                    <md-input-container>
+                                    <md-input-container class="md-no-padding">
                                         <label>Search</label>
                                         <input ng-model="vt.keywords" ng-change="vt.currentPage = 0">
                                     </md-input-container>
@@ -210,7 +232,13 @@
 
         <md-toolbar class="md-site-secondary">
             <div class="md-toolbar-tools">
-                <h2 clocation ng-click="lv.locate('/reports')" aria-label="view all reports">
+                <md-button href="/reports" class="md-icon-button" aria-label="view all reports">
+                    <md-tooltip md-direction="bottom">
+                        View All Reports
+                    </md-tooltip>
+                    <md-icon>search</md-icon>
+                </md-button>
+                <h2>
                     <span>Reports</span>
                 </h2>
                 <span flex></span>
@@ -226,31 +254,43 @@
             <md-tabs md-dynamic-height md-border-bottom ng-form="vr.repForm">
                 <md-tab label="sort">
                     <md-content>
-                        <table class="table">
+                        <table cellpadding="10" layout-fill>
                             <thead>
                                 <tr>
-                                    <th ng-click="vr.sortType = 'id'; vr.sortReverse = !vr.sortReverse" aria-label="sort reports by id">ID &nbsp; 
-                                        <md-icon ng-show="vr.sortType=='id' && !vr.sortReverse">expand_more</md-icon> 
-                                        <md-icon ng-show="vr.sortType=='id' && vr.sortReverse">expand_less</md-icon>
+                                    <th>
+                                        <md-button ng-click="vr.sortType = 'id'; vr.sortReverse = !vr.sortReverse" aria-label="sort reports by id">
+                                            ID &nbsp; 
+                                            <md-icon ng-show="vr.sortType=='id' && !vr.sortReverse">expand_more</md-icon> 
+                                            <md-icon ng-show="vr.sortType=='id' && vr.sortReverse">expand_less</md-icon>
+                                        </md-button>
                                     </th>
-                                    <th ng-click="vr.sortType = 'title'; vr.sortReverse = !vr.sortReverse" aria-label="sort reports by name">Name &nbsp; 
-                                        <md-icon ng-show="vr.sortType=='title' && !vr.sortReverse">expand_more</md-icon> 
-                                        <md-icon ng-show="vr.sortType=='title' && vr.sortReverse">expand_less</md-icon>
+                                    <th>
+                                        <md-button ng-click="vr.sortType = 'title'; vr.sortReverse = !vr.sortReverse" aria-label="sort reports by name">
+                                            Name &nbsp; 
+                                            <md-icon ng-show="vr.sortType=='title' && !vr.sortReverse">expand_more</md-icon> 
+                                            <md-icon ng-show="vr.sortType=='title' && vr.sortReverse">expand_less</md-icon>
+                                        </md-button>
                                     </th>
-                                    <th ng-click="vr.sortType = 'templates[0].name'; vr.sortReverse = !vr.sortReverse" aria-label="sort reports by pages">Pages &nbsp;
-                                        <md-icon ng-show="vr.sortType=='templates[0].name' && !vr.sortReverse">expand_more</md-icon> 
-                                        <md-icon ng-show="vr.sortType=='templates[0].name' && vr.sortReverse">expand_less</md-icon>
+                                    <th>
+                                        <md-button ng-click="vr.sortType = 'templates[0].name'; vr.sortReverse = !vr.sortReverse" aria-label="sort reports by pages">
+                                            Pages &nbsp;
+                                            <md-icon ng-show="vr.sortType=='templates[0].name' && !vr.sortReverse">expand_more</md-icon> 
+                                            <md-icon ng-show="vr.sortType=='templates[0].name' && vr.sortReverse">expand_less</md-icon>
+                                        </md-button>
                                     </th>
-                                    <th ng-click="vr.sortType = 'updated_at'; vr.sortReverse = !vr.sortReverse" aria-label="sort reports by updated time">Updated &nbsp; 
-                                        <md-icon ng-show="vr.sortType=='updated_at' && !vr.sortReverse">expand_more</md-icon> 
-                                        <md-icon ng-show="vr.sortType=='updated_at' && vr.sortReverse">expand_less</md-icon>
+                                    <th>
+                                        <md-button ng-click="vr.sortType = 'updated_at'; vr.sortReverse = !vr.sortReverse" aria-label="sort reports by updated time">
+                                            Updated &nbsp; 
+                                            <md-icon ng-show="vr.sortType=='updated_at' && !vr.sortReverse">expand_more</md-icon> 
+                                            <md-icon ng-show="vr.sortType=='updated_at' && vr.sortReverse">expand_less</md-icon>
+                                        </md-button>
                                     </th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody ng-if="vr.reports.length">
                                 <tr>
-                                    <md-input-container>
+                                    <md-input-container class="md-no-padding">
                                         <label>Search</label>
                                         <input ng-model="vr.keywords" ng-change="vt.currentPage = 0">
                                     </md-input-container>
