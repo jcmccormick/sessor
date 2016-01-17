@@ -188,12 +188,14 @@
                                 </span>
                                 <span layout="row">
                                     <span ng-click="template.draft = !template.draft; vt.setDraft(template)">
-                                        <md-button ng-show="template.draft">Undraft</md-button>
-                                        <md-button ng-show="!template.draft">Set to Draft</md-button>
+                                        <md-button ng-show="template.draft" aria-label="undraft {{template.name}}">Undraft</md-button>
+                                        <md-button ng-show="!template.draft" aria-label="set {{template.name}} to draft">Set to Draft</md-button>
                                     </span>
                                     <span flex></span>
-                                    <md-button ng-click="vt.queryTemplate(template.id)" ng-show="vt.currentTemplateView.id != template.id">Show</md-button>
-                                    <md-button ng-click="vt.currentTemplateView = undefined" ng-show="vt.currentTemplateView.id == template.id">Hide</md-button>
+                                    <md-button ng-click="vt.queryTemplate(template.id)" ng-show="vt.currentTemplateView.id != template.id" aria-label="open a preview of {{template.name}}">
+                                        Show
+                                    </md-button>
+                                    <md-button ng-click="vt.currentTemplateView = undefined" ng-show="vt.currentTemplateView.id == template.id" aria-label="close {{template.name}} preview">Hide</md-button>
                                 </span>
 
                                 <template-form-directive ng-if="vt.currentTemplateView.id == template.id" ng-init="template.e = false" form="template"></template-form-directive>

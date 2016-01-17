@@ -3,12 +3,8 @@ module Sheeted extend ActiveSupport::Concern
     end
 
     def google_drive
-        if !@gd_session || current_user.token_is_old
-            current_user.refresh_google_oauth2_token if current_user.token_is_old
-            @gd_session = GoogleDrive.login_with_oauth(current_user.access_token)
-        else
-            @gd_session
-        end
+        current_user.refresh_google_oauth2_token if current_user.token_is_old
+        GoogleDrive.login_with_oauth(current_user.access_token)
     end
 
     def create_spreadsheet(name)

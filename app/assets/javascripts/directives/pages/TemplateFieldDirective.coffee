@@ -20,27 +20,8 @@ do ->
             return
 
         linker = (scope, element, attrs)->
-
-            fw = '<md-input-container>
-                <label>{{field.o.name}}</label>'
-
-            mdfwend = '<div class="field-overlay" md-ink-ripple ng-click="template.sO=field" ng-class="{\'force-hover\':template.sO.id == field.id}" ng-if="template.e" aria-label="click to edit {{field.o.name}}">
-                    <md-tooltip md-direction="bottom">
-                        Click to edit {{field.o.name}}
-                    </md-tooltip>
-                </div>
-                </md-input-container>'
-
-
-
-
-
-
-
-            # Create a container (form-group) for field input box layout
-            fwstart = '<div ng-class="{\'clear-align\':field.fieldtype==\'checkbox\' || field.fieldtype==\'radio\' || field.fieldtype==\'labelntext\',\'space\':field.fieldtype==\'checkbox\' && field.o.column_order == 1}" scroll-to=".force-hover" template="template">'
-            
-            required = '<md-icon class="md-warn" ng-if="field.o.required && !field.value.input && !field.o.default_value">
+            required = '
+                <md-icon class="md-warn" ng-if="field.o.required && !field.value.input && !field.o.default_value">
                     <md-tooltip md-direction="top">
                         Required
                     </md-tooltip>
@@ -52,6 +33,23 @@ do ->
                     </md-tooltip>
                     live_help
                 </md-icon>'
+
+            fw = '<div layout="row" layout-fill>'+required+'
+                <md-input-container flex>
+                    <label>{{field.o.name}}</label>'
+
+            mdfwend = '
+                    <div class="field-overlay" md-ink-ripple ng-click="template.sO=field" ng-class="{\'force-hover\':template.sO.id == field.id}" ng-if="template.e" aria-label="click to edit {{field.o.name}}" scroll-to=".force-hover" template="template">
+                        <md-tooltip md-direction="bottom">
+                            Click to edit {{field.o.name}}
+                        </md-tooltip>                
+                    </div>
+                </md-input-container>
+            </div>'
+
+            # Create a container (form-group) for field input box layout
+            fwstart = '<div ng-class="{\'clear-align\':field.fieldtype==\'checkbox\' || field.fieldtype==\'radio\' || field.fieldtype==\'labelntext\',\'space\':field.fieldtype==\'checkbox\' && field.o.column_order == 1}">'
+            
 
             fwmid = '<h3>'+required+'
                 {{field.o.name}}
@@ -78,10 +76,10 @@ do ->
 
             # Define the particulars of each supported field
             labelntext = '<h5>{{field.o.name}}</h5>
-                        <p ng-if="!field.value.input && !field.o.default_value && template.e">
-                            Add text here. Use just the label, or text, or both...
-                        </p>
-                        <blockquote ng-if="field.value.input || field.o.default_value">{{field.value.input || field.o.default_value}}</blockquote>'
+                <p ng-if="!field.value.input && !field.o.default_value && template.e">
+                    Add text here. Use just the label, or text, or both...
+                </p>
+                <blockquote ng-if="field.value.input || field.o.default_value">{{field.value.input || field.o.default_value}}</blockquote>'
 
             textfield = inputstart+' type="text" '+standard
             textarea = '<textarea type="text" '+standard+'</textarea>'
@@ -91,20 +89,70 @@ do ->
             date = inputstart+' type="date" '+standard
             time = inputstart+' type="time" '+standard
 
-            checkbox = '<label for="{{field.o.section_id}}{{field.o.column_id}}{{field.id}}" class="clearfix">
-                            '+inputstart+' type="checkbox" class="form-control imod" ng-true-value="\'t\'" ng-false-value="\'f\'"'+fid+checkboxmodel+inputend+'
-                            <h5>'+required+'{{field.o.name}}</h5>
-                        </label>'
-            radio = '   <span ng-if="template.e && field.o.options && !field.o.options.length">
-                            Click to add options...
-                        </span>
-                        <label for="{{field.o.section_id}}{{field.o.column_id}}{{field.id}}{{$index}}" class="clearfix" ng-repeat="option in field.o.options track by $index">
-                            '+inputstart+' type="radio" class="form-control imod" id="{{field.o.section_id}}{{field.o.column_id}}{{field.id}}{{$index}}" ng-value="field.o.options[$index]" '+ngmodel+inputend+'
-                            <h5>{{option}}</h5>
-                        </label>'
-            dropdown = '<select ng-options="option for option in field.o.options" '+standard+'
-                            <option value="">{{field.o.placeholder || "Select an item..."}}</option>
-                        </select>'
+            checkbox = '<div layout="row">'+required+'
+                <div layout="column" class="md-input-container-parent" layout-fill>
+                    <md-checkbox '+checkboxmodel+'>
+                        {{field.o.name}}
+                    </md-checkbox>
+                    <div class="field-overlay" md-ink-ripple ng-click="template.sO=field" ng-class="{\'force-hover\':template.sO.id == field.id}" ng-if="template.e" aria-label="click to edit {{field.o.name}}">
+                        <md-tooltip md-direction="bottom">
+                            Click to edit {{field.o.name}}
+                        </md-tooltip>                
+                    </div>
+                </div>
+            </div>'
+
+
+
+            blah = '
+                <label for="{{field.o.section_id}}{{field.o.column_id}}{{field.id}}" class="clearfix">
+                    '+inputstart+' type="checkbox" class="form-control imod" ng-true-value="\'t\'" ng-false-value="\'f\'"'+fid+checkboxmodel+inputend+'
+                    <h5>'+required+'{{field.o.name}}</h5>
+                </label>'
+
+            radio = '
+            <div layout="row">
+                <div layout="column" class="md-input-container-parent" layout-fill>
+                    <p>'+required+'{{field.o.name}}</p>
+                    <md-radio-group ng-model="data.group1" class="md-primary" ng-if="field.o.options">
+                        <md-radio-button ng-repeat="option in field.o.options" ng-value="option">{{option}}</md-radio-button>
+                    </md-radio-group>
+                    <div class="field-overlay" md-ink-ripple ng-click="template.sO=field" ng-class="{\'force-hover\':template.sO.id == field.id}" ng-if="template.e" aria-label="click to edit {{field.o.name}}">
+                        <md-tooltip md-direction="bottom">
+                            Click to edit {{field.o.name}}
+                        </md-tooltip>                
+                    </div>
+                </div>
+            </div>'
+
+
+            blah2 = '<span ng-if="template.e && field.o.options && !field.o.options.length">
+                    Click to add options...
+                </span>
+                <label for="{{field.o.section_id}}{{field.o.column_id}}{{field.id}}{{$index}}" class="clearfix" ng-repeat="option in field.o.options track by $index">
+                    '+inputstart+' type="radio" class="form-control imod" id="{{field.o.section_id}}{{field.o.column_id}}{{field.id}}{{$index}}" ng-value="field.o.options[$index]" '+ngmodel+inputend+'
+                    <h5>{{option}}</h5>
+                </label>'
+
+            dropdown = '<div layout="row">'+required+'
+                <div layout="column" class="md-input-container-parent" layout-fill>
+                    <md-select placeholder="{{field.o.name}}" ng-model="ctrl.userState">
+                        <md-optgroup label="{{field.o.name}}">
+                            <md-option ng-repeat="option in field.o.options" ng-value="option">{{option}}</md-option>
+                        </md-optgroup>
+                    </md-select>
+                    <div class="field-overlay" md-ink-ripple ng-click="template.sO=field" ng-class="{\'force-hover\':template.sO.id == field.id}" ng-if="template.e" aria-label="click to edit {{field.o.name}}">
+                        <md-tooltip md-direction="bottom">
+                            Click to edit {{field.o.name}}
+                        </md-tooltip>                
+                    </div>
+                </div>
+            </div>'
+
+            blah3 = '
+                <select ng-options="option for option in field.o.options" '+standard+'
+                    <option value="">{{field.o.placeholder || "Select an item..."}}</option>
+                </select>'
 
             # masked = inputstart+' type="password" '+standard
 
@@ -147,8 +195,8 @@ do ->
                     when "time" then element.html fw+time+mdfwend
 
                     when "checkbox" then element.html fwstart+checkbox+fwend
-                    when "radio" then element.html fw+radio+fwend
-                    when "dropdown" then element.html fw+dropdown+fwend
+                    when "radio" then element.html radio+fwend
+                    when "dropdown" then element.html dropdown+fwend
 
                     # when "masked" then element.html fw+masked+fwend
             else
