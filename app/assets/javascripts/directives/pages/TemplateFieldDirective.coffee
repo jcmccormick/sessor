@@ -91,7 +91,7 @@ do ->
 
             checkbox = cust_start+'<md-checkbox '+checkboxmodel+' ng-true-value="\'t\'" ng-false-value="\'f\'" aria-label="toggle {{field.o.name}}">
                         {{field.o.name}}
-                    </md-checkbox><pre>{{field | json}}</pre>'+cust_end
+                    </md-checkbox>'+cust_end
 
             radio = cust_start+'<span class="md-title">{{field.o.name}}</span>
                     <md-radio-group '+ngmodel+' class="md-primary" ng-if="field.o.options">
