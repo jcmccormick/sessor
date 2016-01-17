@@ -47,9 +47,11 @@ $site-color-secondary: darkgreen;
 .md-site-primary {
     background-color: $site-color-primary !important;
 }
-
 .md-site-secondary {
     background-color: $site-color-secondary !important;
+}
+.md-fab:not(.md-mini) md-icon {
+    margin-bottom: 16px !important;
 }
 .md-icon-button md-icon {
     margin-bottom: 12px !important;
