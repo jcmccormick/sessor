@@ -80,9 +80,9 @@ do ->
             date = inputstart+' type="date" '+standard
             time = inputstart+' type="time" '+standard
 
-            checkbox = '<div layout="row">'+requiredtip+'
+            checkbox = '<div layout="row">
+                '+requiredtip+'
                 <div layout="column" class="md-input-container-parent" layout-fill>
-
                     <md-checkbox '+checkboxmodel+' aria-label="toggle {{field.o.name}}"'+inputend+'
                         {{field.o.name}}
                     </md-checkbox>
@@ -90,12 +90,10 @@ do ->
                 </div>
             </div>'
 
-            radio = '
-            <div layout="row" layout-align="start start">
+            radio = '<div layout="row">
                 '+requiredtip+'
                 <div layout="column" class="md-input-container-parent" layout-fill>
                     <span class="md-title">{{field.o.name}}</span>
-
                     <md-radio-group ng-model="data.group1" class="md-primary" ng-if="field.o.options">
                         <md-radio-button ng-repeat="option in field.o.options" ng-value="option">{{option}}</md-radio-button>
                     </md-radio-group>
@@ -103,7 +101,8 @@ do ->
                 </div>
             </div>'
 
-            dropdown = '<div layout="row">'+requiredtip+'
+            dropdown = '<div layout="row">
+                '+requiredtip+'
                 <div layout="column" class="md-input-container-parent" layout-fill>
                     <md-select placeholder="{{field.o.name}}" ng-model="ctrl.userState">
                         <md-optgroup label="{{field.o.name}}">

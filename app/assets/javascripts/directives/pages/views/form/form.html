@@ -1,9 +1,6 @@
 <div layout="column" layout-padding ng-form="myForm" class="section-row" ng-repeat="section in form.sections track by $index">
 
-    <p class="md-headline" ng-if="!form.e">
-        {{section.n}}
-    </p>
-
+    <span class="md-headline" ng-if="!form.e">{{section.n}}</span>
     <ng-include src="'directives/pages/views/form/section_options.html'" ng-if="form.e"></ng-include>
 
     <div layout-md="column" layout-gt-md="row">
@@ -15,26 +12,7 @@
                 <draggable-options field="field" form="form" class="field-options" ng-show="form.e && !form.poppedOut && form.sO==field"></draggable-options>
             </div>
 
-            <div layout="column" layout-padding ng-if="form.e && ((form.fields && form.fields.length) || 0) < 20">
-                <h4>
-                    <md-icon>arrow_upward</md-icon>
-                    <span>New Field</span>
-                    <small>{{section.n || 'Section '+(section.i)}}, Column {{$index+1}}</small>
-                </h4>
-                <md-input-container class="md-no-padding">
-                    <label>New Field Name</label>
-                    <input type="text" ng-model="form.newFieldName">
-                </md-input-container>
-                <div layout-md="row" layout-wrap>
-                    <md-button flex ng-click="form.addField(section.i, $parent.$index+1, type)" ng-repeat="type in form.addFieldTypes" aria-label="add {{type.value}} field to {{section.n || 'section '+section.i}}, column {{column_id+1}}">
-                        <md-tooltip md-direction="bottom">
-                            Add {{type.value}} field to {{section.n || 'Section '+section.i}}, Column {{column_id+1}}
-                        </md-tooltip>
-                        <md-icon>{{type.glyphicon}}</md-icon>
-                        <p>{{type.value}}</p>
-                    </md-button>
-                </div>
-            </div>
+            <ng-include src="'directives/pages/views/form/field_add.html'" layout="column" layout-padding ng-if="form.e && ((form.fields && form.fields.length) || 0) < 20"></ng-include>
         </div>
     </div>
 </div>

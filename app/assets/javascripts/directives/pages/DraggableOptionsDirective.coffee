@@ -10,7 +10,7 @@ do ->
             link: (scope, element, attrs) ->
                 $(element).draggable({
                     addClasses: false
-                    containment: '.gridline-workspace'
+                    containment: '.view-frame'
                     handle: '.selected-field-options'
                     scroll: false
                 })
