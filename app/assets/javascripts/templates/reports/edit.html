@@ -42,6 +42,16 @@
         </md-content>
     </md-sidenav>
 
+    <md-chips layout-padding>
+        <md-chip flex></md-chip>
+        <md-chip aria-label="reporting is currently under development">
+            <md-tooltip md-direction="bottom">
+                Reporting is currently being reworked, so things may be buggy!
+            </md-tooltip>
+            Under Development
+        </md-chip>
+    </md-chips>
+
     <div layout="column" layout-padding ng-if="!vr.templates.length">
         <p>It looks like you don't have any pages yet. Make sure the Page you want to add is not marked as Draft. Uncheck "Draft" when editing a Page, then save it.</p>
         <p>Pages may only be added to a report once.</p>
@@ -52,6 +62,11 @@
             <label>Report Name (optional)</label>
             <input ng-model="vr.report.title" ng-keypress="($event.keyCode==13) && vr.save(true)">
         </md-input-container>
+        <div layout="row">
+            <span class="md-subhead">Add New Page</span>
+            <span flex></span>
+            <span class="md-subhead">Change Page</span>
+        </div>
         <div layout="row" layout-align="start center">
             <md-select ng-model="vr.template">
               <md-option ng-repeat="template in vr.filteredTemplates()" ng-value="template">{{template.name}}</md-option>
@@ -63,15 +78,15 @@
                 <md-icon>add</md-icon>
             </md-button>
             <span flex></span>
-            <md-select ng-model="vr.report.form">
-                <md-option ng-repeat="template in vr.report.templates" ng-value="template">{{template.name}}</md-option>
-            </md-select>
             <md-button ng-click="vr.deleteTemplate($event)" class="md-icon-button md-warn" aria-label="remove {{vr.report.form.name}} from this report">
                 <md-tooltip md-direction="bottom">
                     Remove {{vr.report.form.name}} from this report
                 </md-tooltip>
                 <md-icon>delete</md-icon>
             </md-button>
+            <md-select ng-model="vr.report.form">
+                <md-option ng-repeat="template in vr.report.templates" ng-value="template">{{template.name}}</md-option>
+            </md-select>
         </div>
     </div>
 

@@ -4,7 +4,7 @@ do ->
     contact = ->
         {
             controllerAs: 'cv'
-            controller: ['$http', '$location', 'Flash', ($http, $location, Flash)->
+            controller: ['$http', '$location', '$mdDialog', 'Flash', ($http, $location, $mdDialog, Flash)->
                 
                 cv = this
 
@@ -20,6 +20,8 @@ do ->
                         Flash.create('danger', '<h2>Error! <small>Contact</small></h2><p>Please include a message.</p>', 'customAlert')
 
                 return cv
+
+                ## Need to add a terms pop-up for the side menu and elsewheres
 
             ]
         }

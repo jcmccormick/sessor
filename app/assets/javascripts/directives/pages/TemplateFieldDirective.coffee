@@ -81,38 +81,28 @@ do ->
             date = inputstart+' type="date" '+standard
             time = inputstart+' type="time" '+standard
 
-            checkbox = '<div layout="row">
+            cust_start = '<div layout="row">
                 '+requiredtip+'
-                <div layout="column" class="md-input-container-parent" layout-fill>
-                    <md-checkbox '+checkboxmodel+' aria-label="toggle {{field.o.name}}"'+inputend+'
+                <div layout="column" class="md-input-container-parent" layout-fill>'
+
+            cust_end = overlay+'
+                </div>
+            </div>'
+
+            checkbox = cust_start+'<md-checkbox '+checkboxmodel+' ng-true-value="\'t\'" ng-false-value="\'f\'" aria-label="toggle {{field.o.name}}">
                         {{field.o.name}}
-                    </md-checkbox>
-                    '+overlay+'
-                </div>
-            </div>'
+                    </md-checkbox><pre>{{field | json}}</pre>'+cust_end
 
-            radio = '<div layout="row">
-                '+requiredtip+'
-                <div layout="column" class="md-input-container-parent" layout-fill>
-                    <span class="md-title">{{field.o.name}}</span>
-                    <md-radio-group ng-model="data.group1" class="md-primary" ng-if="field.o.options">
+            radio = cust_start+'<span class="md-title">{{field.o.name}}</span>
+                    <md-radio-group '+ngmodel+' class="md-primary" ng-if="field.o.options">
                         <md-radio-button ng-repeat="option in field.o.options" ng-value="option">{{option}}</md-radio-button>
-                    </md-radio-group>
-                    '+overlay+'
-                </div>
-            </div>'
+                    </md-radio-group>'+cust_end
 
-            dropdown = '<div layout="row">
-                '+requiredtip+'
-                <div layout="column" class="md-input-container-parent" layout-fill>
-                    <md-select placeholder="{{field.o.name}}" ng-model="ctrl.userState">
+            dropdown = cust_start+'<md-select '+ngmodel+' placeholder="{{field.o.name}}">
                         <md-optgroup label="{{field.o.name}}">
                             <md-option ng-repeat="option in field.o.options" ng-value="option">{{option}}</md-option>
                         </md-optgroup>
-                    </md-select>
-                    '+overlay+'
-                </div>
-            </div>'
+                    </md-select>'+cust_end
 
             # Verify field type
             cur_field = getTemplate(scope.field)
@@ -172,13 +162,11 @@ do ->
                             $filter('date')(scope.valueCopy, 'shortTime')
                         when "checkbox"
                             if scope.valueCopy == "f" then 'False' else 'True'
-
-                    display = if cur_field == 'labelntext'
-                        '<blockquote>{{valueCopy}}</blockquote>'
-                    else
-                        '<h4><strong>{{valueCopy || "No data"}}</strong></h4>'
                     
-                element.html '<h3>'+scope.field.o.name+'</h3>' + display
+                element.html '<div ng-if="field.fieldtype != \'labelntext\'">
+                        <p class="md-subhead">{{field.o.name}}</p>
+                        <blockquote class="md-title">{{valueCopy || "No data"}}</blockquote>
+                    </div>'
 
             $compile(element.contents()) scope
             return
