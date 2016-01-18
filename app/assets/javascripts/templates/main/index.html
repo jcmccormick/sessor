@@ -1,10 +1,9 @@
-
 <!-- First Time User Toolbars -->
 
 <md-toolbar layout-margin class="md-site-secondary" ng-show="user.templates_count == 0">
     <div class="md-toolbar-tools">
         <md-button clocation ng-click="lv.locate('/templates/new')" class="md-raised" aria-label="create your first page">
-            <md-icon>add</md-icon> Create your first page
+            <md-icon>add</md-icon> Create your first Page
         </md-button>
     </div>
 </md-toolbar>
@@ -12,7 +11,7 @@
 <md-toolbar layout-margin class="md-site-secondary" ng-controller="TemplatesController as vt" ng-if="user.templates_count > 0 && user.reports_count == 0">
     <div class="md-toolbar-tools">
         <md-button ng-click="vt.newReport(vt.templates[0], {})" aria-label="create your first report">
-            <md-icon>add</md-icon> Create your first report
+            <md-icon>add</md-icon> Create your first Report
         </md-button>
     </div>
 </md-toolbar>
