@@ -41,7 +41,7 @@ do ->
                 <md-icon>{{field.o.glyphicon}}</md-icon>              
             </div>'
 
-            mdfw = '<div layout="row" layout-fill>'+requiredtip+'
+            mdfw = '<div layout="row">'+requiredtip+'
                 <md-input-container flex>
                     <label>{{field.o.name}}</label>'
 
@@ -89,7 +89,7 @@ do ->
                 </div>
             </div>'
 
-            checkbox = cust_start+'<md-checkbox '+checkboxmodel+' ng-true-value="\'t\'" ng-false-value="\'f\'" aria-label="toggle {{field.o.name}}">
+            checkbox = cust_start+'<md-checkbox '+checkboxmodel+' ng-true-value="\'t\'" ng-false-value="\'f\'" class="md-primary" aria-label="toggle {{field.o.name}}">
                         {{field.o.name}}
                     </md-checkbox>'+cust_end
 

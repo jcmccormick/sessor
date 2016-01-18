@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
             :authorize_url => "/o/oauth2/auth",
             :ssl => {:verify => !Rails.env.development?}
         )
+        puts self.refresh_token
         access_token = OAuth2::AccessToken.from_hash(oauth_client, {:refresh_token => self.refresh_token})
         access_token = access_token.refresh!
         self.access_token = access_token.token

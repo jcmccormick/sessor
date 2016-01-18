@@ -3,8 +3,8 @@
     <span class="md-headline" ng-if="!form.e">{{section.n}}</span>
     <ng-include src="'directives/pages/views/form/section_options.html'" ng-if="form.e"></ng-include>
 
-    <div layout-md="column" layout-gt-md="row">
-        <div layout-padding layout-fill ng-repeat="column in columnsArray(section.c) track by $index">
+    <div layout="column" layout-gt-md="row" layout-fill>
+        <div flex ng-repeat="column in columnsArray(section.c) track by $index">
             <div ng-repeat="field in form.fields | filter:{o:{column_id: $index+1, section_id: section.i}} | orderBy:'o.column_order'">
 
                 <template-field-directive myForm="myForm" field="field" template="form" report="report"></template-field-directive>

@@ -44,11 +44,11 @@ do ->
         .when('/contact',
             templateUrl: "main/contact.html"
             resolve: resolver
+        )
         # .when('/support',
         #     templateUrl: "main/support.html"
         #     resolve: resolver
         # )
-        )
         # .when('/pass_reset',
         #     templateUrl: "user/pass.html"
         #     resolve: resolver
