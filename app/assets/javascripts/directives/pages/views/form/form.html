@@ -1,9 +1,5 @@
 <div layout="column" layout-padding ng-form="myForm" class="section-row" ng-repeat="section in form.sections track by $index">
     
-    <p class="md-headline" ng-if="!form.e">
-        {{section.n}}
-    </p>
-
     <span class="md-headline" ng-if="!form.e">{{section.n}}</span>
     <ng-include src="'directives/pages/views/form/section_options.html'" ng-if="form.e"></ng-include>
 
