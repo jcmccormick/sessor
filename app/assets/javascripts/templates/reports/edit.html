@@ -48,32 +48,34 @@
     </div>
 
     <div layout="row" layout-padding ng-if="vr.report.templates.length">
-        <md-input-container flex>
-            <label>Report Name (optional)</label>
-            <input ng-model="vr.report.title" ng-keypress="($event.keyCode==13) && vr.save(true)">
-        </md-input-container>
-
-        <span layout="row" layout-align="center center">
-            <md-select ng-model="vr.template">
-              <md-option ng-repeat="template in vr.filteredTemplates()" ng-value="template">{{template.name}}</md-option>
-            </md-select>
+        <span layout="row" layout-align="center end">
             <md-button ng-click="vr.addTemplate(vr.template)" class="md-icon-button" aria-label="add {{vr.template.name}} to this report">
                 <md-tooltip md-direction="bottom">
                     Add {{vr.template.name}} to this report
                 </md-tooltip>
                 <md-icon>add</md-icon>
             </md-button>
+            <md-select ng-model="vr.template" class="md-no-padding" layout-margin>
+              <md-option ng-repeat="template in vr.filteredTemplates()" ng-value="template">{{template.name}}</md-option>
+            </md-select>
         </span>
+
+        <md-input-container flex>
+            <label>Report Name (optional)</label>
+            <input ng-model="vr.report.title" ng-keypress="($event.keyCode==13) && vr.save(true)">
+        </md-input-container>
     </div>
 
     <md-tabs md-dynamic-height md-border-bottom>
-        <md-tab label="{{template.name}}" ng-click="vr.report.form = template" ng-repeat="template in vr.report.templates">
-            <md-button ng-click="vr.deleteTemplate($event)" class="md-icon-button md-warn" aria-label="remove {{template.name}} from this report">
-                <md-tooltip md-direction="bottom">
-                    Remove {{template.name}} from this report
-                </md-tooltip>
-                <md-icon>delete</md-icon>
-            </md-button>
+        <md-tab label="{{template.name}}" ng-repeat="template in vr.report.templates">
+            <span layout="row" layout-align="end end">
+                <md-button ng-click="vr.report.form = template;vr.deleteTemplate($event)" class="md-icon-button md-warn" aria-label="remove {{template.name}} from this report">
+                    <md-tooltip md-direction="bottom">
+                        Remove {{template.name}} from this report
+                    </md-tooltip>
+                    <md-icon>delete</md-icon>
+                </md-button>
+            </span>
             <template-form-directive report="vr.report" form="template"></template-form-directive>
         </md-tab>
     </md-tabs>
