@@ -3,6 +3,9 @@ do ->
 
     StatisticsService = ($q, ClassFactory, Flash, googleChartApiPromise)->
         {
+            googleChart: ->
+                googleChartApiPromise
+
             showDataCounts: (sv)->
                 ids = $.map sv.template.fields, (x)-> x.id
                 deferred = $q.defer()
@@ -11,22 +14,9 @@ do ->
                     sv.chart.data.cols = res.cols
                     sv.chart.data.rows = res.rows
                     #sv.chart.options.title = sv.template.name+': '+(sv.field.o.name || sv.field.o.placeholder)
-                    if !sv.chart.displayed
+                    if !sv.chart.displayed && res.rows.length
                         googleChartApiPromise.then ->
                             chartEditor = undefined
-
-                            sv.loadEditor = ->
-                                wrapper = new google.visualization.ChartWrapper({
-                                    dataTable: sv.chart.data,
-                                    containerId: document.getElementById('google-chart')
-                                })
-
-                                sv.chartEditor = new google.visualization.ChartEditor()
-                                google.visualization.events.addListener(sv.chartEditor, 'ok', redrawChart)
-                                sv.chartEditor.openDialog(wrapper, {})
-
-                            redrawChart = ->
-                                sv.chartEditor.getChartWrapper().draw(document.getElementById('google-chart'))
 
                             sv.chart.displayed = true
                             sv.loadEditor()

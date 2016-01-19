@@ -34,15 +34,12 @@
             </md-button>
         </md-content>
     </md-sidenav>
+    
+    <h2>{{vr.report.title || 'Untitled report ' + vr.report.id}}</h2>
 
-    <div layout="column" layout-align="center start" layout-padding>
-        <h2>{{vr.report.title || 'Untitled report ' + vr.report.id}}</h2>
-        <div layout="row">
-            <md-button ng-click="vr.report.form = template" ng-repeat="template in vr.report.templates" aria-label="view {{template.name}}">
-                {{template.name}}
-            </md-button>
-        </div>
-    </div>
-
-    <template-form-directive report="vr.report" form="vr.report.form"></template-form-directive>
+    <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="{{template.name}}" ng-repeat="template in vr.report.templates">
+            <template-form-directive report="vr.report" form="template"></template-form-directive>
+        </md-tab>
+    </md-tabs>
 </md-card>

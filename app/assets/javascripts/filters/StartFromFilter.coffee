@@ -3,7 +3,8 @@ do ->
 
     startFrom = ->
         (input, start)->
-            start = +start
-            input.slice start
+            if input
+                start = +start
+                input.slice start
 
     angular.module('clerkr').filter("startFrom", startFrom)

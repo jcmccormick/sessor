@@ -3,7 +3,7 @@
     <md-button clocation ng-click="lv.locate('/')" aria-label="go to main">
         <span class="md-headline"><strong>Clerkr</strong></span>
     </md-button>
-    <div ng-if="user.signedIn && user.email == 'joe.c.mccormick@gmail.com'">
+    <div ng-if="user.signedIn && user.reports_count > 0">
         <md-button clocation ng-click="lv.locate('/statistics')" aria-label="view statistics">
             Statistics
         </md-button>

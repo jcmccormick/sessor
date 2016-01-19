@@ -1,4 +1,5 @@
 # Value Statistics Controller. Generates a response specifically to perform statistics on Values.
+# The output of this script should be formatted as spec'd by the ng-google-chart angular module
 module Api::V1 #:nodoc:
     class ValuesStatisticsController < ApplicationController
         before_action :authenticate_user!
@@ -50,31 +51,9 @@ module Api::V1 #:nodoc:
             data_by_date.each_with_index do |(date, values), day|
                 grouped[:rows][day] = {c: [{ v: date }] }
                 (0..diffvals.length-1).each { |value| grouped[:rows][day][:c].push({v: values[value][:count] }) }
-                #grouped[:rows][day][:c].push({v: values.map {|v| v[:count]}.reduce(0, :+) })
             end 
 
-            #grouped[:cols].push({'id': "s", 'label': "Total", 'type': 'number'}) 
-
             grouped[:rows].reverse!
-
-
-            ###########################
-
-            # the object which will hold the data to be returned
-            # grouped = {:cols => [], :rows => []}
-
-            # standard_data = current_user.values.all.where(field_id: params[:field_ids])
-            # field_data = current_user.fields.all.where(id: params[:field_ids]).map { |x| x.name }
-            # grouped[:cols].push({'id': 'Date', 'label': 'Date', 'type': 'date'})
-            # field_data.each { |input| grouped[:cols].push({'id': input, 'label': input, 'type': 'string'}) }
-
-            # standard_data.each{ |value| grouped[:rows]
-            #   .push({c: [
-            #       {v: value[:created_at].to_date}, 
-            #       {v: value[:input]}
-            #   ]})
-            # }
-
 
             render json: grouped
         end

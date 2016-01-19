@@ -78,43 +78,6 @@ body {
     pointer-events: none;
     color: grey !important;
 }
-.save-now {
-    border-bottom: 4px solid #337ab7;
-    border-bottom-style: dotted;
-}
-.table {
-    th:not(:first-child),
-    td:not(:first-child) {
-        word-break: break-word;
-    }
-    td {
-        vertical-align: middle !important;
-    }
-    a {
-        text-decoration: none !important;
-    }
-}
-.google-visualization-table-td-number {
-    text-align: left !important;
-}
-@media (min-width: 768px) {
-    .modal {
-        text-align: center;
-    }
-
-    .modal:before {
-        display: inline-block;
-        vertical-align: middle;
-        content: " ";
-        height: 100%;
-    }
-
-    .modal-dialog {
-        display: inline-block;
-        text-align: left;
-        vertical-align: middle;
-    }
-}
 
 /*
  * Flash Messages
@@ -238,6 +201,10 @@ template-field-directive {
  */
 .google-chart {
     min-height: 300px;
+
+    .google-visualization-table {
+        width: 100%;
+    }
 }
 
 /*

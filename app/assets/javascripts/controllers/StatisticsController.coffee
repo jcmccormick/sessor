@@ -26,7 +26,6 @@ do ->
                 unbindFieldWatch()
 
         sv.checker = ->
-            console.log sv.template
             if !sv.template.fields
                 TemplatesService.queryTemplate(sv.template.id, true).then((res)->
                     $.extend sv.template, res
@@ -34,16 +33,23 @@ do ->
 
         sv.update = ->
             sv.chartEditor && sv.chartEditor.closeDialog()
-            sv.showDataCounts(sv)
+            sv.loadEditor()
 
-        $(->
-            $('.form-header').css('min-height': (50+$('.form-specs').height())+'px')
-            $('.form-specs').on 'shown.bs.collapse', ->
-                $('.form-header').css('min-height': (50+$(this).height())+'px')
-        )
-        sv.checkSpec = ->
-            $('.form-specs').hasClass('in') && $('.form-header').css('min-height': '50px')
-            return true
+        sv.loadEditor = ->
+            StatisticsService.googleChart().then ->
+                wrapper = new google.visualization.ChartWrapper({
+                    dataSourceUrl: 'http://spreadsheets.google.com/tq?key=1Y5o9J1RRNnxsE7fG2m3vmBFeovzyxlFOfEvlwPiEHeA'
+                    query: sv.query
+                    containerId: document.getElementById('google-chart')
+                })
+
+                sv.chartEditor = new google.visualization.ChartEditor()
+                google.visualization.events.addListener(sv.chartEditor, 'ok', redrawChart)
+                sv.chartEditor.openDialog(wrapper, {})
+
+        redrawChart = ->
+            sv.chartEditor.getChartWrapper().draw(document.getElementById('google-chart'))
+
         return sv
 
     StatisticsController.$inject = ['googleChartApiPromise', 'localStorageService', 'StatisticsService', 'TemplatesService', '$scope']

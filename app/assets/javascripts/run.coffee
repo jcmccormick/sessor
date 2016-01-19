@@ -28,16 +28,6 @@ do ->
         $rootScope.$on 'auth:account-update-success', ->
             Flash.create('success', '<h3>Success! <small>Auth</small></h3><p>Account updated.</p>', 'customAlert')
 
-        $rootScope.clearLocalStorage = ->
-            localStorageService.clearAll()
-
-        $rootScope.handleSignOut = ->
-            $rootScope.signOut()
-
-        $(document).on 'click.nav li', '.navbar-collapse.in', (e)->
-            if $(e.target).is('a')
-                $(this).removeClass('in').addClass 'collapse'
-
     run.$inject = ['$auth', '$location', '$rootScope', 'Flash', 'localStorageService']
 
     angular.module('clerkr').run(run)
