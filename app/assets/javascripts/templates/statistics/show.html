@@ -9,12 +9,12 @@
 
     <div layout="row" layout-padding>
         <div layout="column" layout-align="center center" layout-margin>
-            <strong>Page</strong>
+<!--             <strong>Page</strong> -->
             <md-select ng-model="sv.template" ng-change="sv.checker()">
                 <md-option ng-repeat="template in sv.orderedTemplates = (sv.templates | orderBy:'-updated_at')" ng-value="template">{{template.name}}</md-option>
             </md-select>
         </div>
-
+<!-- 
         <div layout="column" layout-align="center center" layout-margin>
             <strong>Field</strong>
             <md-select ng-model="sv.field">
@@ -28,15 +28,13 @@
                 <md-option ng-repeat="day in [5, 10, 15, 30, 60, 90]" value="{{day}}">{{day}}</md-option>
             </md-select>
         </div>
-
+ -->
     
         <div layout="column" layout-align="center center" layout-margin>
-            <span flex></span>
             <md-input-container>
                 <label>Query</label>
                 <input type="text" ng-model="sv.query" />
             </md-input-container>
-            <span flex></span>
         </div>
 
         <md-button ng-click="sv.update()" aria-label="update graph with selected options">
@@ -48,7 +46,7 @@
         </md-button>
     </div>
 
-    <span ng-if="!sv.chartEditor">Initializing chart options...</span>
+    <span layout-padding layout-margin ng-if="!sv.chartEditor">Initializing chart options...</span>
 
     <md-button ng-click="sv.loadEditor()" ng-if="sv.chartEditor" aria-label="edit graph options">
         Edit

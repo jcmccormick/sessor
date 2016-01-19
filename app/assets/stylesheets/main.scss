@@ -41,14 +41,18 @@ $desktop: 62em;
  * Material Design Additions
  */
  
-$site-color-primary: forestgreen;
-$site-color-secondary: darkgreen;
+$site-color-primary: rgb(173,199,106);
+$site-color-secondary: rgb(137,160,79);
+$site-color-tertiary: rgb(84,102,40);
 
 .md-site-primary {
     background-color: $site-color-primary !important;
 }
 .md-site-secondary {
     background-color: $site-color-secondary !important;
+}
+.md-site-tertiary {
+    background-color: $site-color-tertiary !important;
 }
 .md-fab:not(.md-mini) md-icon {
     margin-bottom: 16px !important;
@@ -193,17 +197,6 @@ template-field-directive {
                 color: #337ab7;
             }
         }
-    }
-}
-
-/*
- * Statistics
- */
-.google-chart {
-    min-height: 300px;
-
-    .google-visualization-table {
-        width: 100%;
     }
 }
 
