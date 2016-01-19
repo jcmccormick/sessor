@@ -32,9 +32,8 @@ do ->
                 ReportsService.saveReport(vr.report, true, vr.repForm).then ((res)->
 
                     # If new report, query to collect the full contents of the newly added template
-                    !vr.report.id && ReportsService.queryReport(repId, true).then((res)->
+                    ReportsService.queryReport(repId, true).then((res)->
                         $.extend vr.report, res
-                        vr.report.form = vr.report.templates[vr.report.templates.length-1]
                         vr.template = vr.filteredTemplates()[0]
                     )
                 ), (err)->

@@ -29,5 +29,17 @@ class Report < ActiveRecord::Base
     # For unassociated templates, iterate through its fields and create report values
     # Ussable on single report objects
 
+    def disassociate_template(did, unvalued=[])
+        template = templates.find(did)
+        template.fields.each do |field|
+            values.each do |value|
+                if field.id == value.field_id
+                    unvalued.push value.id
+                end
+            end
+        end
+        values.where(:id => unvalued).destroy_all
+        templates.delete(template)
+    end
 
 end

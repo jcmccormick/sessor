@@ -66,8 +66,8 @@
                 <td>{{template.name}}</td>
                 <td>
                     <div class="btn-group" ng-click="template.draft = !template.draft; vt.setDraft(template)">
-                        <a href="javascript:;" ng-show="template.draft" class="switch-on">Drafted</a>
-                        <a href="javascript:;" ng-show="!template.draft">Undrafted</a>
+                        <a href="javascript:;" ng-show="template.draft" class="drafted" aria-label="click to undraft {{template.name}}">Drafted</a>
+                        <a href="javascript:;" ng-show="!template.draft" class="un drafted" aria-label="click to draft {{template.name}}">Undrafted</a>
                     </div>
                 </td>
                 <td>{{template.updated_at | date: 'short'}}</td>
