@@ -92,10 +92,10 @@
                                     <td>{{template.id}}</td>
                                     <td>{{template.name}}</td>
                                     <td>
-                                        <a ng-click="template.draft = false; vt.setDraft(template)" href="javascript:;" ng-show="template.draft" class="switch-on">
+                                        <a ng-click="template.draft = false; vt.setDraft(template)" href="javascript:;" ng-show="template.draft" class="drafted">
                                             Drafted
                                         </a>
-                                        <a ng-click="template.draft = true; vt.setDraft(template)" href="javascript:;" ng-show="!template.draft">
+                                        <a ng-click="template.draft = true; vt.setDraft(template)" href="javascript:;" ng-show="!template.draft" class="un drafted">
                                             Undrafted
                                         </a>
                                     </td>

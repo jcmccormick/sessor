@@ -54,6 +54,15 @@ $site-color-tertiary: rgb(84,102,40);
 .md-site-tertiary {
     background-color: $site-color-tertiary !important;
 }
+.md-icon-site-primary {
+    color: $site-color-primary !important;
+}
+.md-icon-site-secondary {
+    color: $site-color-secondary !important;
+}
+.md-icon-site-tertiary {
+    color: $site-color-tertiary !important;
+}
 .md-fab:not(.md-mini) md-icon {
     margin-bottom: 16px !important;
 }
@@ -81,6 +90,13 @@ body {
     cursor: not-allowed;
     pointer-events: none;
     color: grey !important;
+}
+.drafted {
+    text-decoration: none;
+
+    &.un {
+        color: gray;
+    }
 }
 
 /*
