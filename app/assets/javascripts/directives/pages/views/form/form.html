@@ -4,12 +4,12 @@
     <ng-include src="'directives/pages/views/form/section_options.html'" ng-if="form.e"></ng-include>
 
     <div layout="column" layout-gt-md="row" layout-fill>
-        <div flex ng-repeat="column in columnsArray(section.c) track by $index">
+        <div flex layout-padding ng-repeat="column in columnsArray(section.c) track by $index">
             <div ng-repeat="field in form.fields | filter:{o:{column_id: $index+1, section_id: section.i}} | orderBy:'o.column_order'">
 
                 <template-field-directive myForm="myForm" field="field" template="form" report="report"></template-field-directive>
 
-                <draggable-options field="field" form="form" class="field-options" ng-show="form.e && !form.poppedOut && form.sO==field"></draggable-options>
+                <draggable-options field="field" form="form" class="field-options" ng-if="form.e && !form.poppedOut && form.sO==field"></draggable-options>
             </div>
 
             <ng-include src="'directives/pages/views/form/field_add.html'" layout="column" layout-padding ng-if="form.e && ((form.fields && form.fields.length) || 0) < 20"></ng-include>
