@@ -24,21 +24,10 @@ class Report < ActiveRecord::Base
     serialize :template_order, Array
     accepts_nested_attributes_for :values
 
-    # Populate the Values of the Fields associated with the Report.
-    # Look over all the templates to see which are not yet associated with the report
-    # For unassociated templates, iterate through its fields and create report values
-    # Ussable on single report objects
-
     def disassociate_template(did, unvalued=[])
         template = templates.find(did)
-        template.fields.each do |field|
-            values.each do |value|
-                if field.id == value.field_id
-                    unvalued.push value.id
-                end
-            end
-        end
-        values.where(:id => unvalued).destroy_all
+        field_ids = template.fields.map {|x| x.id }
+        values.where(:report => self, :field_id => field_ids).destroy_all
         templates.delete(template)
     end
 

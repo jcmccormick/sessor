@@ -11,7 +11,7 @@ do ->
                 $(element).draggable({
                     addClasses: false
                     containment: '.view-frame'
-                    handle: '.selected-field-options'
+                    handle: '.cl-selected-field-options'
                     scroll: false
                 })
 

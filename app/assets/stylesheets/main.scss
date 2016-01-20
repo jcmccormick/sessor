@@ -147,10 +147,14 @@ body {
     border-bottom: 5px solid #ddd;
 }
 
+.cl-field-add,
+.cl-selected-field-options {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
 .field-options {
-    margin-bottom: 20px;
     overflow: hidden;
-    min-height: 0;
 
     &.ui-draggable {
         position: fixed !important;
@@ -162,6 +166,9 @@ body {
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
         -moz-transition: opacity 1s ease;
         transition: opacity 1s ease;
+        .cl-selected-field-options {
+            margin: 0;
+        }
 
         &:hover {
             opacity: 1;
@@ -169,13 +176,9 @@ body {
     }
     &:not(.ui-draggable) {
         position: static !important;
-
-        .selected-field-options {
-            margin: 15px -5px;
-        }
     }
 
-    .selected-field-options {
+    .cl-selected-field-options {
         background-color: #eee;
 
         .drag-bar {
@@ -202,13 +205,14 @@ template-field-directive {
         cursor: pointer;
 
         md-icon {
-            margin: 10px;
+            margin-right: 8px;
         }
 
         &:hover,
         &.force-hover {
             background-color: rgba(255,255,255,.5);
-            outline: 2px solid #337ab7;
+            outline: none;
+            border-top: 2px solid #337ab7;
             md-icon {
                 color: #337ab7;
             }

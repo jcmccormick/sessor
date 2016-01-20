@@ -12,7 +12,7 @@
                 <draggable-options field="field" form="form" class="field-options" ng-if="form.e && !form.poppedOut && form.sO==field"></draggable-options>
             </div>
 
-            <ng-include src="'directives/pages/views/form/field_add.html'" layout="column" layout-padding ng-if="form.e && ((form.fields && form.fields.length) || 0) < 20"></ng-include>
+            <ng-include src="'directives/pages/views/form/field_add.html'" ng-if="form.e && ((form.fields && form.fields.length) || 0) < 20"></ng-include>
         </div>
     </div>
 </div>

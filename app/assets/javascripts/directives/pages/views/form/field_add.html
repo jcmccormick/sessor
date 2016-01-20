@@ -1,18 +1,20 @@
-<h4>
-    <md-icon>arrow_upward</md-icon>
-    <span>New Field</span>
-    <small>{{section.n || 'Section '+(section.i)}}, Column {{$index+1}}</small>
-</h4>
-<md-input-container class="md-no-padding">
-    <label>New Field Name</label>
-    <input type="text" ng-model="form.newFieldName">
-</md-input-container>
-<div layout-md="row" layout-wrap>
-    <md-button flex ng-click="form.addField(section.i, $parent.$index+1, type)" ng-repeat="type in form.addFieldTypes" aria-label="add {{type.value}} field to {{section.n || 'section '+section.i}}, column {{column_id+1}}">
-        <md-tooltip md-direction="bottom">
-            Add {{type.value}} field to {{section.n || 'Section '+section.i}}, Column {{column_id+1}}
-        </md-tooltip>
-        <md-icon class="md-icon-site-secondary">{{type.glyphicon}}</md-icon>
-        <p>{{type.value}}</p>
-    </md-button>
+<div layout="column" layout-padding class="cl-field-add md-site-primary">
+    <div>
+        <md-icon>arrow_upward</md-icon>
+        <span class="md-title">New Field</span>
+        <small>{{section.n || 'Section '+(section.i)}}, Column {{$index+1}}</small>
+    </div>
+    <md-input-container layout-padding>
+        <label>Field Name (Required)</label>
+        <input type="text" ng-model="form.newFieldName">
+    </md-input-container>
+    <div layout-md="row" layout-wrap>
+        <md-button flex ng-click="form.addField(section.i, $parent.$index+1, type)" ng-repeat="type in form.addFieldTypes" aria-label="add {{type.value}} field to {{section.n || 'section '+section.i}}, column {{column_id+1}}">
+            <md-tooltip md-direction="bottom">
+                Add {{type.value}} field to {{section.n || 'Section '+section.i}}, Column {{column_id+1}}
+            </md-tooltip>
+            <md-icon class="md-icon-site-secondary">{{type.glyphicon}}</md-icon>
+            <p>{{type.value}}</p>
+        </md-button>
+    </div>
 </div>

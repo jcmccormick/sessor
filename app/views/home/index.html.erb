@@ -4,7 +4,31 @@
 
 <loading></loading>
 
-<div ng-view ng-if="user.signedIn" class="view-frame animate-view"></div>
+<div layout="row" layout-align="center center" class="view-frame animate-view" ng-if="user.signedIn">
+
+    <!-- First Time User Toolbars -->
+
+    <div ng-form="vt.tempForm" ng-controller="TemplatesController as vt" layout-padding ng-if="user.templates_count == 0 || user.reports_count == 0">
+        <md-toolbar class="md-site-secondary" ng-show="user.templates_count == 0">
+            <div class="md-toolbar-tools">
+                <md-button href="/templates/new" aria-label="create your first page">
+                    <md-icon>add</md-icon> Create your first Page
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-toolbar class="md-site-secondary" ng-if="user.templates_count > 0 && user.reports_count == 0">
+            <div class="md-toolbar-tools">
+                <md-button ng-click="vt.newReport(vt.templates[0], vt.tempForm)" aria-label="create your first report">
+                    <md-icon>add</md-icon> Create your first Report
+                </md-button>
+            </div>
+        </md-toolbar>
+    </div>
+
+    <!-- Main View Container -->
+    <div ng-view flex layout="column" flex-gt-lg="80" layout-gt-lg="row" layout-fill layout-wrap></div>
+</div>
 
 <md-card class="landing-page" ng-show="false || !user.signedIn" ng-cloak>
 

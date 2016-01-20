@@ -1,10 +1,10 @@
-<div class="selected-field-options">
+<div layout="column" class="cl-selected-field-options">
     <div class="drag-bar"></div>
-    <div layout="row" layout-padding layout-align="center center">
-        <h4>
-            <span>{{field.fieldtype|uppercase}}</span>
-            <small>SETTINGS</small>
-        </h4>
+    <div layout="row">
+        <div layout-padding>
+            <span class="md-title">{{field.fieldtype|uppercase}}</span>
+            <small>Settings</small>
+        </div>
         <span flex></span>
         <md-button ng-click="form.deleteField($event, field)" class="md-icon-button md-mini md-warn" aria-label="delete {{field.o.name}}">
             <md-tooltip md-direction="left">
@@ -14,113 +14,102 @@
         </md-button>
     </div>
     <div layout="row">
-        <div flex layout-padding layout="column">
-            <section layout="row" layout-align="center center" ng-if="field.fieldtype != 'labelntext'">
-                <md-button ng-class="{'md-primary':!field.o.disabled}" ng-click="field.o.disabled = false" aria-label="press to disable {{field.o.name}}">
-                    enabled
-                </md-button>
-                <md-button ng-class="{'md-primary':field.o.disabled}" ng-click="field.o.disabled = true" aria-label="press to enable {{field.o.name}}">
-                    disabled
-                </md-button>
-            </section>
+        <md-switch ng-model="field.o.disabled" aria-label="{{field.o.name}} disabled switch" ng-if="field.fieldtype != 'labelntext'">
+            Disabled
+        </md-switch>
+        <md-switch ng-model="field.o.required" aria-label="{{field.o.name}} required switch" ng-if="field.fieldtype != 'labelntext'">
+            Required
+        </md-switch>
+    </div>
+    <div layout="column" layout-gt-md="row" layout-padding>
+        <md-input-container>
+            <label>{{(field.fieldtype == 'labelntext' && 'Label') || 'Name'}}</label>
+            <input type="text" id="field_name_{{field.o.section_id}}{{field.o.column_id}}{{field.id}}" ng-model="field.o.name">
+        </md-input-container>
 
-            <md-input-container>
-                <label>{{(field.fieldtype == 'labelntext' && 'Label') || 'Name'}}</label>
-                <input type="text" id="field_name_{{field.o.section_id}}{{field.o.column_id}}{{field.id}}" ng-model="field.o.name">
-            </md-input-container>
-            <md-input-container ng-if="['checkbox','date','time','integer'].indexOf(field.fieldtype) == -1">
-                <label>{{(field.fieldtype == 'labelntext' && 'Text') || 'Default Value'}}</label>
-                <input type="text" ng-model="field.o.default_value">
-            </md-input-container>
-            <md-input-container ng-if="field.fieldtype == 'integer'">
-                <label>Default Integer</label>
-                <input type="number" ng-model="field.o.default_value">
-            </md-input-container>
-            <md-input-container ng-if="field.fieldtype == 'date'">
-                <label>Default Date</label>
-                <input type="date" ng-model="field.o.default_value">
-            </md-input-container>
-            <md-input-container ng-if="field.fieldtype == 'time'">
-                <label>Default Time</label>
-                <input type="time" ng-model="field.o.default_value">
-            </md-input-container>
-            <md-checkbox ng-if="field.fieldtype == 'checkbox'" ng-model="field.o.default_value" aria-label="set default checkbox value">
-                Default: {{field.o.default_value || false}}
-            </md-checkbox>
-        </div>
-        <div flex layout-padding layout="column">
-            <section layout="row" layout-align="center center" ng-if="field.fieldtype != 'labelntext'">
-                <md-button ng-class="{'md-primary':!field.o.required}" ng-click="field.o.required = false">optional</md-button>
-                <md-button ng-class="{'md-primary':field.o.required}" ng-click="field.o.required = true">required</md-button>
-            </section>
-            <md-input-container ng-if="field.fieldtype !='labelntext'">
-                <label>Tooltip</label>
-                <input type="text" ng-model="field.o.tooltip">
-            </md-input-container>
-            <!-- <md-input-container ng-if="['labelntext', 'radio','checkbox'].indexOf(field.fieldtype) == -1">
-                <label>Placeholder</label>
-                <input type="text" ng-model="field.o.placeholder">
-            </md-input-container> -->
-            <md-select ng-model="field.o.section_id" ng-change="form.changeFieldSection(field, '{{field.o.section_id}}')">
-              <md-select-label>Change section</md-select-label>
-              <md-option ng-repeat="field_section in form.sections" value="{{field_section.i}}">{{ field_section.n || 'Section '+field_section.i }}</md-option>
-            </md-select>
-        </div>
+        <md-input-container ng-if="['checkbox','date','time','integer'].indexOf(field.fieldtype) == -1">
+            <label>{{(field.fieldtype == 'labelntext' && 'Text') || 'Default Value'}}</label>
+            <input type="text" ng-model="field.o.default_value">
+        </md-input-container>
+        <md-checkbox ng-if="field.fieldtype == 'checkbox'" ng-model="field.o.default_value" aria-label="set default checkbox value">
+            Default: {{field.o.default_value || false}}
+        </md-checkbox>
+        <md-input-container ng-if="field.fieldtype == 'date'">
+            <label>Default Date</label>
+            <input type="date" ng-model="field.o.default_value">
+        </md-input-container>
+        <md-input-container ng-if="field.fieldtype == 'time'">
+            <label>Default Time</label>
+            <input type="time" ng-model="field.o.default_value">
+        </md-input-container>
+        <md-input-container ng-if="field.fieldtype == 'integer'">
+            <label>Default Integer</label>
+            <input type="number" ng-model="field.o.default_value">
+        </md-input-container>
+
+        <md-input-container ng-if="field.fieldtype !='labelntext'">
+            <label>Tooltip</label>
+            <input type="text" ng-model="field.o.tooltip">
+        </md-input-container>
     </div>
 
-    <div layout="column" layout-padding ng-if="field.fieldtype == 'dropdown' || field.fieldtype == 'radio'">
-        <h4>
-            Options
-            <md-button ng-click="form.addOption(field)" class="md-icon-button" aria-label="add option for {{field.name}}">
-                <md-tooltip md-direction="top">
-                    Add option for {{field.name}}
-                </md-tooltip>
-                <md-icon>add</md-icon>
-            </md-button>
-        </h4>
-        <div layout="row" ng-repeat="option in field.o.options track by $index">
-            <md-input-container layout-fill>
-                <label>Option Name</label>
-                <input type="text" ng-model="field.o.options[$index]">
-            </md-input-container>
-            <md-button ng-click="form.deleteOption($event, field, option)" class="md-icon-button md-warn" aria-label="delete {{option || 'Option ' + $index*1+1}}">
-                <md-tooltip md-direction="left">
-                    Delete {{option || 'Option' + $index+1}}
-                </md-tooltip>
-                <md-icon>delete</md-icon>
-            </md-button>
-        </div>
+    <div layout="row" layout-align="center center" ng-repeat="option in field.o.options track by $index" ng-if="field.o.options">
+        <md-input-container flex layout-padding>
+            <label>Option {{$index+1}} Name</label>
+            <input type="text" ng-model="field.o.options[$index]">
+        </md-input-container>
+        <md-button ng-click="form.deleteOption($event, field, option)" class="md-icon-button md-warn" aria-label="delete {{option || 'Option ' + $index*1+1}}">
+            <md-tooltip md-direction="left">
+                Delete {{option || 'Option' + $index+1}}
+            </md-tooltip>
+            <md-icon>delete</md-icon>
+        </md-button>
     </div>
+
+    <md-button ng-click="form.addOption(field)" aria-label="add option for {{field.o.name}}" ng-if="field.fieldtype == 'dropdown' || field.fieldtype == 'radio'">
+        <md-tooltip md-direction="top">
+            Add option for {{field.o.name}}
+        </md-tooltip>
+        <md-icon>add</md-icon> Add Option
+    </md-button>
 
     <div layout="row">
-        <md-button ng-click="form.sO=undefined">close</md-button>
-        <md-button ng-click="form.poppedOut=!form.poppedOut">pop-{{(!form.poppedOut && 'out') || 'in'}}</md-button>
+        <div layout="column" layout-gt-md="row" layout-align="center center">
+            <md-button ng-click="form.poppedOut=!form.poppedOut">pop-{{(!form.poppedOut && 'out') || 'in'}}</md-button>
+            <md-button ng-click="form.sO=undefined">close</md-button>
+        </div>
         <span flex></span>
-        <div scroll-to=".force-hover" template="form">
-            <md-button ng-click="form.changeFieldColumn(field, field.o.column_id-1)" class="md-icon-button" aria-label="move {{field.o.name}} 1 column left">
-                <md-tooltip md-direction="top">
-                    Move 1 column left
-                </md-tooltip>
-                <md-icon>keyboard_arrow_left</md-icon>
-            </md-button>
-            <md-button ng-click="form.moveField(field, -1)" class="md-icon-button" aria-label="move {{field.o.name}} up">
-                <md-tooltip md-direction="top">
-                    Move up
-                </md-tooltip>
-                <md-icon>keyboard_arrow_up</md-icon>
-            </md-button>
-            <md-button ng-click="form.moveField(field, 1)" class="md-icon-button" aria-label="move {{field.o.name}} down">
-                <md-tooltip md-direction="top">
-                    Move down
-                </md-tooltip>
-                <md-icon>keyboard_arrow_down</md-icon>
-            </md-button>
-            <md-button ng-click="form.changeFieldColumn(field, field.o.column_id+1)" class="md-icon-button" aria-label="move {{field.o.name}} 1 column right">
-                <md-tooltip md-direction="top">
-                    Move 1 column right
-                </md-tooltip>
-                <md-icon>keyboard_arrow_right</md-icon>
-            </md-button>
+        <div layout="column" layout-gt-md="row" layout-align="center center">
+            <md-select ng-if="field.fieldtype != 'labelntext'" ng-model="field.o.section_id" ng-change="form.changeFieldSection(field, '{{field.o.section_id}}')">
+                <md-select-label>Change section</md-select-label>
+                <md-option ng-repeat="field_section in form.sections" value="{{field_section.i}}">{{ field_section.n || 'Section '+field_section.i }}</md-option>
+            </md-select>
+            <div scroll-to=".force-hover" template="form">
+                <md-button ng-click="form.changeFieldColumn(field, field.o.column_id-1)" class="md-icon-button" aria-label="move {{field.o.name}} 1 column left">
+                    <md-tooltip md-direction="top">
+                        Move 1 column left
+                    </md-tooltip>
+                    <md-icon>keyboard_arrow_left</md-icon>
+                </md-button>
+                <md-button ng-click="form.moveField(field, -1)" class="md-icon-button" aria-label="move {{field.o.name}} up">
+                    <md-tooltip md-direction="top">
+                        Move up
+                    </md-tooltip>
+                    <md-icon>keyboard_arrow_up</md-icon>
+                </md-button>
+                <md-button ng-click="form.moveField(field, 1)" class="md-icon-button" aria-label="move {{field.o.name}} down">
+                    <md-tooltip md-direction="top">
+                        Move down
+                    </md-tooltip>
+                    <md-icon>keyboard_arrow_down</md-icon>
+                </md-button>
+                <md-button ng-click="form.changeFieldColumn(field, field.o.column_id+1)" class="md-icon-button" aria-label="move {{field.o.name}} 1 column right">
+                    <md-tooltip md-direction="top">
+                        Move 1 column right
+                    </md-tooltip>
+                    <md-icon>keyboard_arrow_right</md-icon>
+                </md-button>
+            </div>
         </div>
     </div>
     <div class="drag-bar"></div>

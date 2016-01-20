@@ -34,8 +34,8 @@ do ->
                     live_help
                 </md-icon>'
 
-            overlay = '<div class="field-overlay" layout="row" layout-align="end start" md-ink-ripple ng-click="template.sO=field" ng-class="{\'force-hover\':template.sO.id == field.id}" ng-if="template.e" aria-label="click to edit {{field.o.name}}">
-                <md-tooltip md-direction="bottom">
+            overlay = '<div class="field-overlay" layout="row" layout-align="end center" layout-padding md-ink-ripple ng-click="template.sO=field" ng-class="{\'force-hover\':template.sO.id == field.id}" ng-if="template.e" aria-label="click to edit {{field.o.name}}">
+                <md-tooltip md-direction="top">
                     Click to edit {{field.o.name}}
                 </md-tooltip>
                 <md-icon>{{field.o.glyphicon}}</md-icon>              

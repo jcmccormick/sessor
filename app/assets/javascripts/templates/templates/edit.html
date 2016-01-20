@@ -1,5 +1,5 @@
 
-<md-card ng-form="vt.tempForm" ng-init="vt.formSpeccing=true">
+<md-card flex ng-form="vt.tempForm">
     <md-toolbar class="md-site-secondary">
         <div class="md-toolbar-tools">
             <h2>
@@ -19,7 +19,7 @@
                 <md-tooltip md-direction="bottom">
                     Save {{vt.template.name}}
                 </md-tooltip>
-                <md-icon>save</md-icon>
+                <md-icon ng-class="{'md-accent':!vt.tempForm.$pristine}">save</md-icon>
             </md-button>
         </div>
     </md-toolbar>
@@ -57,7 +57,7 @@
 
     <div layout="row" layout-padding>
         <md-input-container flex>
-            <label>Page Name</label>
+            <label>Page Name (Required)</label>
             <input ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save(true)">
         </md-input-container>
         <span flex="5" ng-if="vt.template.id"></span>
@@ -79,11 +79,4 @@
         <md-icon>add</md-icon> Add Section
     </md-button>
     
-<!--         <div layout="column" layout-padding>
-        Test field mixing Clerkr style with Material Design
-        <md-input-container>
-            <label>Type here!</label>
-            <input type="text" class="imod">
-        </md-input-container>
-    </div> -->
 </md-card>
