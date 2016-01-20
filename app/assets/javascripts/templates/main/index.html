@@ -264,13 +264,6 @@
                             </md-button>
                         </th>
                         <th>
-                            <md-button ng-click="vr.sortType = 'templates[0].name'; vr.sortReverse = !vr.sortReverse" aria-label="sort reports by pages">
-                                Pages &nbsp;
-                                <md-icon ng-show="vr.sortType=='templates[0].name' && !vr.sortReverse">expand_more</md-icon> 
-                                <md-icon ng-show="vr.sortType=='templates[0].name' && vr.sortReverse">expand_less</md-icon>
-                            </md-button>
-                        </th>
-                        <th>
                             <md-button ng-click="vr.sortType = 'updated_at'; vr.sortReverse = !vr.sortReverse" aria-label="sort reports by updated time">
                                 Updated &nbsp; 
                                 <md-icon ng-show="vr.sortType=='updated_at' && !vr.sortReverse">expand_more</md-icon> 
@@ -289,7 +282,6 @@
                     <tr ng-repeat-start="report in vr.filteredList = (vr.reports | filter:vr.keywords) | orderBy:vr.sortType:vr.sortReverse | startFrom:vr.currentPage*vr.pageSize | limitTo: vr.pageSize">
                         <td>{{report.id}}</td>
                         <td>{{report.title || 'Untitled'}}</td>
-                        <td><span ng-repeat="template in report.templates track by $index">{{template.name}}<span ng-show="!$last">, </span></span></td>
                         <td>{{report.updated_at | date: 'short'}}</td>
                     </tr>
                     <tr ng-repeat-end>
@@ -355,7 +347,7 @@
                 </md-card-title> -->
 
                 <md-card-content>
-                    <span class="md-headline">{{report.title || 'Untitled'}}</span>
+                    <h3 class="md-title">{{report.title || 'Untitled'}}</h3>
                     <span layout="row" class="md-subhead">
                         #{{report.id}}
                         <span flex></span>
