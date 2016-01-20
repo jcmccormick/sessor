@@ -22,7 +22,13 @@
     </head>
     <body ng-app="clerkr">
         <noscript>Please enable javascript and cookies in your browser.</noscript>
-        <%= yield %>
+        <div flash-message="7500"></div>
+        
+        <div layout="row">
+            <span flex hide show-gt-md></span>
+            <span flex flex-gt-md="75"><%= yield %></span>
+            <span flex hide show-gt-md></span>
+        </div>
     </body>
     <%= javascript_include_tag 'application', async: Rails.env.production?, cache: true %>
     <%= stylesheet_link_tag 'application', media: 'all', cache: true %>

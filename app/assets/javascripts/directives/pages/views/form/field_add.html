@@ -8,7 +8,7 @@
         <label>Field Name (Required)</label>
         <input type="text" ng-model="form.newFieldName">
     </md-input-container>
-    <div layout-md="row" layout-wrap>
+    <div layout-md="row" layout-wrap ng-if="form.newFieldName.length">
         <md-button flex ng-click="form.addField(section.i, $parent.$index+1, type)" ng-repeat="type in form.addFieldTypes" aria-label="add {{type.value}} field to {{section.n || 'section '+section.i}}, column {{column_id+1}}">
             <md-tooltip md-direction="bottom">
                 Add {{type.value}} field to {{section.n || 'Section '+section.i}}, Column {{column_id+1}}

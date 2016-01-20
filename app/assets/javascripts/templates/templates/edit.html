@@ -75,7 +75,7 @@
 
     <template-form-directive form="vt.template"></template-form-directive>
 
-    <md-button ng-click="vt.template.addSection(form)" aria-label="add a new section" ng-if="((vt.template.fields && vt.template.fields.length) || 0) < 20">
+    <md-button ng-click="vt.template.addSection(form)" aria-label="add a new section" ng-if="vt.template.id && ((vt.template.fields && vt.template.fields.length) || 0) < 20">
         <md-icon>add</md-icon> Add Section
     </md-button>
     

@@ -28,6 +28,7 @@ module Api::V1#:nodoc:
         def update
             template = current_user.templates.find(params[:id])
             update_worksheet if params[:fields_attributes]
+            update_name if params[:name] != template.name
             template.sections = params[:sections]
             template.update_attributes(allowed_params)
             current_user.templates << template unless current_user.templates.include?(template)
@@ -37,8 +38,7 @@ module Api::V1#:nodoc:
         def destroy
             template = current_user.templates.find(params[:id])
             if template.allow_destroy
-                ss = spreadsheet(template.name)
-                ss.delete
+                google_drive.spreadsheet_by_key(template.gs_key).delete
                 template.destroy
                 head :no_content
             else
@@ -49,7 +49,7 @@ module Api::V1#:nodoc:
         private
             def allowed_params
                 params.require(:template).permit(
-                    :name, :gs_url, :gs_id, :draft, :private_group, :private_world, :group_id, :group_edit, :group_editors,
+                    :name, :gs_id, :gs_key, :gs_url, :draft, :private_group, :private_world, :group_id, :group_edit, :group_editors,
                     {:sections => []},
                     {:fields_attributes => [
                         :id, :fieldtype, :_destroy, {:o => [
@@ -74,13 +74,11 @@ module Api::V1#:nodoc:
                     ws.save if ws.dirty?
 
                 end
+            end
 
-                if params[:name] != template.name
-                    ss = spreadsheet(template.name)
-                    ss.title = params[:name]
-                    ss.save
-                end
-
+            def update_name
+                ss = google_drive.spreadsheet_by_key(template.gs_key)
+                ss.title = params[:name]
             end
 
             def ws
@@ -88,7 +86,7 @@ module Api::V1#:nodoc:
             end
 
             def get_sheet
-                @ws = google_drive.worksheet_by_url(template.gs_id)
+                @ws = google_drive.spreadsheet_by_key(template.gs_key).worksheets[0]
             end
 
             def template
