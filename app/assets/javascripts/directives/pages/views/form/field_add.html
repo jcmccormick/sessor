@@ -4,11 +4,21 @@
         <span class="md-title">New Field</span>
         <small>{{section.n || 'Section '+(section.i)}}, Column {{$index+1}}</small>
     </div>
-    <md-input-container layout-padding>
-        <label>Field Name (Required)</label>
-        <input type="text" ng-model="form.newFieldName">
-    </md-input-container>
-    <div layout-md="row" layout-wrap ng-if="form.newFieldName.length">
+    <div layout="row">
+        <md-input-container flex>
+            <label>Name (Required)</label>
+            <input type="text" ng-model="form.newFieldName">
+        </md-input-container>
+        <md-select ng-model="vt.newFieldType" ng-change="form.addField(section.i, $parent.$index+1, vt.newFieldType)">
+            <md-select-label>Type</md-select-label>
+            <md-option ng-value="type" ng-repeat="type in form.addFieldTypes">
+                <md-icon class="md-icon-site-secondary">{{type.glyphicon}}</md-icon> {{type.value}}
+            </md-option>
+        </md-select>
+    </div>
+</div>
+
+<!--     <div layout-md="row" layout-wrap ng-if="form.newFieldName.length">
         <md-button flex ng-click="form.addField(section.i, $parent.$index+1, type)" ng-repeat="type in form.addFieldTypes" aria-label="add {{type.value}} field to {{section.n || 'section '+section.i}}, column {{column_id+1}}">
             <md-tooltip md-direction="bottom">
                 Add {{type.value}} field to {{section.n || 'Section '+section.i}}, Column {{column_id+1}}
@@ -16,5 +26,4 @@
             <md-icon class="md-icon-site-secondary">{{type.glyphicon}}</md-icon>
             <p>{{type.value}}</p>
         </md-button>
-    </div>
-</div>
+    </div> -->
