@@ -37,8 +37,9 @@ do ->
 
         sv.loadEditor = ->
             StatisticsService.googleChart().then ->
+                console.log sv.template
                 wrapper = new google.visualization.ChartWrapper({
-                    dataSourceUrl: 'http://spreadsheets.google.com/tq?key=1Y5o9J1RRNnxsE7fG2m3vmBFeovzyxlFOfEvlwPiEHeA'
+                    dataSourceUrl: 'http://spreadsheets.google.com/tq?key='+sv.template.gs_key
                     query: sv.query
                     containerId: document.getElementById('google-chart')
                 })

@@ -23,35 +23,35 @@
     <table cellpadding="10" layout-fill>
         <thead>
             <tr>
-                <th>
+                <th align="left">
                     <md-button ng-click="vr.sortType = 'id'; vr.sortReverse = !vr.sortReverse" aria-label="sort reports by id">
                         ID &nbsp; 
                         <md-icon ng-show="vr.sortType=='id' && !vr.sortReverse">expand_more</md-icon> 
                         <md-icon ng-show="vr.sortType=='id' && vr.sortReverse">expand_less</md-icon>
                     </md-button>
                 </th>
-                <th>
+                <th align="left">
                     <md-button ng-click="vr.sortType = 'title'; vr.sortReverse = !vr.sortReverse" aria-label="sort reports by name">
                         Name &nbsp; 
                         <md-icon ng-show="vr.sortType=='title' && !vr.sortReverse">expand_more</md-icon> 
                         <md-icon ng-show="vr.sortType=='title' && vr.sortReverse">expand_less</md-icon>
                     </md-button>
                 </th>
-                <th>
+                <th align="left">
                     <md-button ng-click="vr.sortType = 'templates[0].name'; vr.sortReverse = !vr.sortReverse" aria-label="sort reports by pages">
                         Pages &nbsp;
                         <md-icon ng-show="vr.sortType=='templates[0].name' && !vr.sortReverse">expand_more</md-icon> 
                         <md-icon ng-show="vr.sortType=='templates[0].name' && vr.sortReverse">expand_less</md-icon>
                     </md-button>
                 </th>
-                <th>
+                <th align="left">
                     <md-button ng-click="vr.sortType = 'updated_at'; vr.sortReverse = !vr.sortReverse" aria-label="sort reports by updated time">
                         Updated &nbsp; 
                         <md-icon ng-show="vr.sortType=='updated_at' && !vr.sortReverse">expand_more</md-icon> 
                         <md-icon ng-show="vr.sortType=='updated_at' && vr.sortReverse">expand_less</md-icon>
                     </md-button>
                 </th>
-                <th></th>
+                <th align="left"></th>
             </tr>
         </thead>
         <tbody ng-if="vr.reports.length">

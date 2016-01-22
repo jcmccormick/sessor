@@ -21,7 +21,7 @@
             Required
         </md-switch>
     </div>
-    <div layout="column" layout-gt-md="row" layout-padding>
+    <div layout="column" layout-gt-md="row" layout-padding layout-wrap>
         <md-input-container>
             <label>{{(field.fieldtype == 'labelntext' && 'Label') || 'Name'}}</label>
             <input type="text" id="field_name_{{field.o.section_id}}{{field.o.column_id}}{{field.id}}" ng-model="field.o.name">
