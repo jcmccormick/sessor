@@ -30,6 +30,7 @@ gem 'google-api-client'
 gem 'google_drive'
 #gem 'rails-angular-material'
 source 'https://rails-assets.org' do
+    gem 'rails-assets-underscore'
     gem 'rails-assets-angular'
     gem 'rails-assets-angular-material', '0.9.8'
     gem 'rails-assets-angular-aria'

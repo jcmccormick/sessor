@@ -47,7 +47,7 @@
         <p>Pages may only be added to a report once.</p>
     </div>
 
-    <div layout="row" layout-padding ng-if="vr.report.templates.length">
+    <div layout="row" layout-padding>
         <span layout="row" layout-align="center end">
             <md-button ng-click="vr.addTemplate(vr.template)" class="md-icon-button" aria-label="add {{vr.template.name}} to this report">
                 <md-tooltip md-direction="bottom">
@@ -60,13 +60,15 @@
             </md-select>
         </span>
 
-        <md-input-container flex>
-            <label>Report Name (optional)</label>
+        <md-input-container flex ng-if="vr.report.id">
+            <label>Report Name (Optional)</label>
             <input ng-model="vr.report.title" ng-keypress="($event.keyCode==13) && vr.save(true)">
         </md-input-container>
     </div>
 
-    <md-tabs md-dynamic-height md-border-bottom>
+    <div layout-padding ng-if="!vr.report.id">Pick a first Page to create this report with.</div>
+
+    <md-tabs md-dynamic-height md-border-bottom ng-if="vr.report.templates.length">
         <md-tab label="{{template.name}}" ng-repeat="template in vr.report.templates">
             <span layout="row" layout-align="end end">
                 <md-button ng-click="vr.report.form = template;vr.deleteTemplate($event)" class="md-icon-button md-warn" aria-label="remove {{template.name}} from this report">
