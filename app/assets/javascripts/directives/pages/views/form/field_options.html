@@ -22,32 +22,32 @@
         </md-switch>
     </div>
     <div layout="column" layout-gt-md="row" layout-padding layout-wrap>
-        <md-input-container>
+        <md-input-container flex>
             <label>{{(field.fieldtype == 'labelntext' && 'Label') || 'Name'}}</label>
             <input type="text" id="field_name_{{field.o.section_id}}{{field.o.column_id}}{{field.id}}" ng-model="field.o.name">
         </md-input-container>
 
-        <md-input-container ng-if="['checkbox','date','time','integer'].indexOf(field.fieldtype) == -1">
+        <md-input-container flex ng-if="['checkbox','date','time','integer'].indexOf(field.fieldtype) == -1">
             <label>{{(field.fieldtype == 'labelntext' && 'Text') || 'Default Value'}}</label>
             <input type="text" ng-model="field.o.default_value">
         </md-input-container>
-        <md-checkbox ng-if="field.fieldtype == 'checkbox'" ng-model="field.o.default_value" aria-label="set default checkbox value">
+        <md-checkbox flex ng-if="field.fieldtype == 'checkbox'" ng-model="field.o.default_value" aria-label="set default checkbox value">
             Default: {{field.o.default_value || false}}
         </md-checkbox>
-        <md-input-container ng-if="field.fieldtype == 'date'">
+        <md-input-container flex ng-if="field.fieldtype == 'date'">
             <label>Default Date</label>
             <input type="date" ng-model="field.o.default_value">
-        </md-input-container>
+        </md-input-container flex>
         <md-input-container ng-if="field.fieldtype == 'time'">
             <label>Default Time</label>
             <input type="time" ng-model="field.o.default_value">
         </md-input-container>
-        <md-input-container ng-if="field.fieldtype == 'integer'">
+        <md-input-container flex ng-if="field.fieldtype == 'integer'">
             <label>Default Integer</label>
             <input type="number" ng-model="field.o.default_value">
         </md-input-container>
 
-        <md-input-container ng-if="field.fieldtype !='labelntext'">
+        <md-input-container flex ng-if="field.fieldtype !='labelntext'">
             <label>Tooltip</label>
             <input type="text" ng-model="field.o.tooltip">
         </md-input-container>
@@ -73,12 +73,7 @@
         <md-icon>add</md-icon> Add Option
     </md-button>
 
-    <div layout="row">
-        <div layout="column" layout-gt-md="row" layout-align="center center">
-            <md-button ng-click="form.poppedOut=!form.poppedOut">pop-{{(!form.poppedOut && 'out') || 'in'}}</md-button>
-            <md-button ng-click="form.sO=undefined">close</md-button>
-        </div>
-        <span flex></span>
+    <div layout="row" layout-padding layout-wrap>
         <div layout="column" layout-gt-md="row" layout-align="center center">
             <md-select ng-if="field.fieldtype != 'labelntext'" ng-model="field.o.section_id" ng-change="form.changeFieldSection(field, '{{field.o.section_id}}')">
                 <md-select-label>Change section</md-select-label>
@@ -110,6 +105,11 @@
                     <md-icon>keyboard_arrow_right</md-icon>
                 </md-button>
             </div>
+        </div>
+        <span flex></span>
+        <div layout="column" layout-gt-md="row" layout-align="center center">
+            <md-button ng-click="form.poppedOut=!form.poppedOut" hide show-gt-md>pop-{{(!form.poppedOut && 'out') || 'in'}}</md-button>
+            <md-button ng-click="form.sO=undefined">close</md-button>
         </div>
     </div>
     <div class="drag-bar"></div>
