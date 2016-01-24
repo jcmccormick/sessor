@@ -8,4 +8,7 @@ erd.pdf
 *.sublime*
 
 # Ignore application configuration
-/config/application.yml
+config/application.yml
+
+certificates/
+key/
