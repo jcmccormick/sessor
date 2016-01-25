@@ -8,7 +8,7 @@
     <div ng-view flex layout="column" layout-gt-lg="row" layout-align="space around" layout-fill layout-wrap ng-if="user.signedIn"></div>
 </div>
 
-<md-card class="landing-page" ng-show="false || !user.signedIn" ng-cloak>
+<md-card class="landing-page" layout="column" ng-show="false || !user.signedIn" ng-cloak>
 
     <newsletter ng-form="newsForm">
         <h2 class="md-headline">We're developing! Sign up to our newsletter and get perks when we go live.</h2>
@@ -25,7 +25,7 @@
 
     <div class="approach">
         <div class="approach-text">
-            <h2>
+            <!-- <h2>
                 <small class="verticalFlip">
                     <span>Hobbyist?</span>
                     <span>Scientist?</span>
@@ -40,13 +40,14 @@
                     <span>Student?</span>
                     <span>Clerkr?</span>
                 </small>
-            </h2>
+            </h2> -->
+            <h2 class="green md-display-3">Clerkr</h2>
             <h3>Record, visualize, and share your data. Easy.</h3>
         </div>
         <%= image_tag 'skyline.png' %>
     </div>
 
-    <md-content layout="column" layout-gt-md="row" layout-align="space-around" layout-wrap>
+    <div id="about" layout="row" layout-align="space-around" layout-wrap>
         <span flex="90" layout-padding class="md-headline">We aim to provide...</span>
         <div flex="35">
             <h3 class="md-display-1">Designed Data</h3>
@@ -65,23 +66,23 @@
             <p class="md-subhead">Take a break and reflect on our various charts and graphs. Save your visualizations and export the data for use elsewhere.</p>
         </div>
         <div flex="35">
-            <h3 class="md-display-1">For individuals...</h3>
-            <blockquote>
-                <p class="md-subhead">Keep track of hobbies, sports, exercise, research, anything you can think of.</p>
-                <p class="md-subhead">Use your pages for surveys.</p>
-                <p class="md-subhead">Create interactive and visually-appealing graphs; print, save, and export your data views.</p>
-            </blockquote>
+            <h3 class="md-display-1">Individuals...</h3>
+            <ul>
+                <li>Keep track of hobbies, sports, exercise, research, anything you want.</li>
+                <li>Use your pages for surveys.</li>
+                <li>Create interactive and visually-appealing graphs; print, save, and export your data views.</li>
+            </ul>
         </div>
         <div flex="35">
-            <h3 class="md-display-1">For businesses...</h3>
-            <blockquote>
-                <p class="md-subhead">Schedule employees and keep track of their time online.</p>
-                <p class="md-subhead">Use pages on your site and for online or kiosk-based customer submissions.</p>
-                <p class="md-subhead">Interact with customers in online appointments.</p>
-                <p class="md-subhead">Get combined and individual stats for the members in your group.</p>
-            </blockquote>
+            <h3 class="md-display-1">Businesses...</h3>
+            <ul>
+                <li>Schedule employees and keep track of their time online.</li>
+                <li>Use pages on your site and for online or kiosk-based customer submissions.</li>
+                <li>Interact with customers in online appointments.</li>
+                <li>Get combined and individual stats for the members in your group.</li>
+            </ul>
         </div>
-    </md-content>
+    </div>
 
 
     <div layout="row" layout-align="center center">
