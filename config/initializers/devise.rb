@@ -4,10 +4,5 @@ Devise.setup do |config|
     config.expire_all_remember_me_on_sign_out = true
     config.sign_out_via = :delete
     config.skip_session_storage = [:http_auth, :token_auth]
-
-    if Rails.env.development?
-        config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], {:client_options => {:ssl => {:verify => false}}, skip_jwt: true, scope: "email, profile, https://www.googleapis.com/auth/drive, https://spreadsheets.google.com/feeds/", prompt: 'consent'}
-    else
-        config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], {scope: "email, profile, https://www.googleapis.com/auth/drive, https://spreadsheets.google.com/feeds/", prompt: 'consent'}
-    end
+    config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], {scope: "email, profile, https://www.googleapis.com/auth/drive, https://spreadsheets.google.com/feeds/", prompt: 'consent'}
 end

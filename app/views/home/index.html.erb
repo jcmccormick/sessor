@@ -23,7 +23,7 @@
         </div>
     </newsletter>
 
-    <div class="approach">
+    <div ng-if="!user.signedIn" class="approach">
         <div class="approach-text">
             <!-- <h2>
                 <small class="verticalFlip">
@@ -44,7 +44,7 @@
             <h2 class="green md-display-3">Clerkr</h2>
             <h3>Record, visualize, and share your data. Easy.</h3>
         </div>
-        <%= image_tag 'skyline.png' %>
+        <%= image_tag 'skyline.png' if !Rails.env.development?  %>
     </div>
 
     <div id="about" layout="row" layout-align="space-around" layout-wrap>
