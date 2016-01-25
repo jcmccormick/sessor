@@ -9,7 +9,7 @@
             <label>Name (Required)</label>
             <input type="text" ng-model="form.newFieldName">
         </md-input-container>
-        <md-select ng-model="vt.newFieldType" ng-change="form.addField(section.i, $parent.$index+1, vt.newFieldType)">
+        <md-select ng-model="vt.newFieldType" ng-change="form.addField(section.i, $parent.$index+1, vt.newFieldType)" aria-label="select a new field type">
             <md-select-label>Type</md-select-label>
             <md-option ng-value="type" ng-repeat="type in form.addFieldTypes">
                 <md-icon class="md-icon-site-secondary">{{type.glyphicon}}</md-icon> {{type.value}}

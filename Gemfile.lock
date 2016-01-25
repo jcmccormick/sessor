@@ -186,10 +186,13 @@ GEM
     rails-assets-angular-flash-alert (1.1.1)
       rails-assets-angular (>= 1.2.0)
     rails-assets-angular-local-storage (0.2.3)
-    rails-assets-angular-material (0.9.8)
-      rails-assets-angular
-      rails-assets-angular-animate
-      rails-assets-angular-aria
+    rails-assets-angular-material (1.0.3)
+      rails-assets-angular (>= 1.4.8, < 2)
+      rails-assets-angular-animate (>= 1.4.8, < 2)
+      rails-assets-angular-aria (>= 1.4.8, < 2)
+      rails-assets-angular-messages (>= 1.4.8, < 2)
+    rails-assets-angular-messages (1.4.9)
+      rails-assets-angular (= 1.4.9)
     rails-assets-angular-mocks (1.4.9)
       rails-assets-angular (= 1.4.9)
     rails-assets-angular-resource (1.4.9)
@@ -297,7 +300,7 @@ DEPENDENCIES
   rails-assets-angular-cookie!
   rails-assets-angular-flash-alert!
   rails-assets-angular-local-storage!
-  rails-assets-angular-material (= 0.9.8)!
+  rails-assets-angular-material (= 1.0.3)!
   rails-assets-angular-mocks!
   rails-assets-angular-resource!
   rails-assets-angular-route!
