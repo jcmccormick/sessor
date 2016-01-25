@@ -67,6 +67,9 @@ gem 'google_drive'
 # Some native fonts
 gem 'font-kit-rails', '~>1.2.0'
 
+# Angular Material fix
+gem 'rails-assets-angular-material', :git => 'git://github.com/jcmccormick/raam103.git'
+
 # Front end dependencies
 source 'https://rails-assets.org' do
     gem 'rails-assets-angular'
@@ -75,7 +78,7 @@ source 'https://rails-assets.org' do
     gem 'rails-assets-angular-cookie'
     gem 'rails-assets-angular-flash-alert'
     gem 'rails-assets-angular-local-storage'
-    gem 'rails-assets-angular-material', '1.0.3'
+    #gem 'rails-assets-angular-material', '1.0.3'
     gem 'rails-assets-angular-mocks'
     gem 'rails-assets-angular-resource'
     gem 'rails-assets-angular-route'

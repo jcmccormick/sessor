@@ -1,4 +1,14 @@
 GIT
+  remote: git://github.com/jcmccormick/raam103.git
+  revision: 153fac6b7e7530d73c933cf62726957e30e78a2e
+  specs:
+    rails-assets-angular-material (1.0.3)
+      rails-assets-angular (>= 1.4.8, < 2)
+      rails-assets-angular-animate (>= 1.4.8, < 2)
+      rails-assets-angular-aria (>= 1.4.8, < 2)
+      rails-assets-angular-messages (>= 1.4.8, < 2)
+
+GIT
   remote: git://github.com/zquestz/omniauth-google-oauth2.git
   revision: f7a360053358ae18e2ba41b3d1c7e6c8c4d568b9
   specs:
@@ -186,11 +196,6 @@ GEM
     rails-assets-angular-flash-alert (1.1.1)
       rails-assets-angular (>= 1.2.0)
     rails-assets-angular-local-storage (0.2.3)
-    rails-assets-angular-material (1.0.3)
-      rails-assets-angular (>= 1.4.8, < 2)
-      rails-assets-angular-animate (>= 1.4.8, < 2)
-      rails-assets-angular-aria (>= 1.4.8, < 2)
-      rails-assets-angular-messages (>= 1.4.8, < 2)
     rails-assets-angular-messages (1.4.9)
       rails-assets-angular (= 1.4.9)
     rails-assets-angular-mocks (1.4.9)
@@ -300,7 +305,7 @@ DEPENDENCIES
   rails-assets-angular-cookie!
   rails-assets-angular-flash-alert!
   rails-assets-angular-local-storage!
-  rails-assets-angular-material (= 1.0.3)!
+  rails-assets-angular-material!
   rails-assets-angular-mocks!
   rails-assets-angular-resource!
   rails-assets-angular-route!
