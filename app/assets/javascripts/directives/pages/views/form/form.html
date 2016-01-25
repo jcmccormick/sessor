@@ -7,7 +7,7 @@
         <div flex layout-padding ng-repeat="column in columnsArray(section.c) track by $index">
             <div ng-repeat="field in form.fields | filter:{o:{column_id: $index+1, section_id: section.i}} | orderBy:'o.column_order'">
 
-                <template-field-directive myForm="myForm" field="field" template="form" report="report"></template-field-directive>
+                <template-field-directive layout="column" myForm="myForm" field="field" template="form" report="report"></template-field-directive>
 
                 <draggable-options field="field" form="form" class="field-options" ng-if="form.e && !form.poppedOut && form.sO==field"></draggable-options>
             </div>

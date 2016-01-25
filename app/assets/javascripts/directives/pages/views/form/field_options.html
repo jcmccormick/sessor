@@ -13,7 +13,7 @@
             <md-icon>delete</md-icon>
         </md-button>
     </div>
-    <div layout="row">
+    <div layout="row" layout-align="center center">
         <md-switch ng-model="field.o.disabled" aria-label="{{field.o.name}} disabled switch" ng-if="field.fieldtype != 'labelntext'">
             Disabled
         </md-switch>
@@ -37,8 +37,8 @@
         <md-input-container flex ng-if="field.fieldtype == 'date'">
             <label>Default Date</label>
             <input type="date" ng-model="field.o.default_value">
-        </md-input-container flex>
-        <md-input-container ng-if="field.fieldtype == 'time'">
+        </md-input-container>
+        <md-input-container flex ng-if="field.fieldtype == 'time'">
             <label>Default Time</label>
             <input type="time" ng-model="field.o.default_value">
         </md-input-container>
@@ -53,8 +53,8 @@
         </md-input-container>
     </div>
 
-    <div layout="row" layout-align="center center" ng-repeat="option in field.o.options track by $index" ng-if="field.o.options">
-        <md-input-container flex layout-padding>
+    <div layout="row" layout-align="end start" layout-padding ng-repeat="option in field.o.options track by $index" ng-if="field.o.options">
+        <md-input-container flex>
             <label>Option {{$index+1}} Name</label>
             <input type="text" ng-model="field.o.options[$index]">
         </md-input-container>
@@ -109,6 +109,7 @@
         <span flex></span>
         <div layout="column" layout-gt-md="row" layout-align="center center">
             <md-button ng-click="form.poppedOut=!form.poppedOut" hide show-gt-md>pop-{{(!form.poppedOut && 'out') || 'in'}}</md-button>
+            <span flex></span>
             <md-button ng-click="form.sO=undefined">close</md-button>
         </div>
     </div>

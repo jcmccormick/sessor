@@ -34,20 +34,19 @@ do ->
                     live_help
                 </md-icon>'
 
-            overlay = '<div class="field-overlay" layout="row" layout-align="end center" layout-padding md-ink-ripple ng-click="template.sO=field" ng-class="{\'force-hover\':template.sO.id == field.id}" ng-if="template.e" aria-label="click to edit {{field.o.name}}">
+            overlay = '<div flex class="field-overlay" md-ink-ripple ng-click="template.sO=field" ng-class="{\'force-hover\':template.sO.id == field.id}" ng-if="template.e" aria-label="click to edit {{field.o.name}}">
                 <md-tooltip md-direction="top">
                     Click to edit {{field.o.name}}
                 </md-tooltip>
-                <md-icon>{{field.o.glyphicon}}</md-icon>              
+                <md-icon flex>{{field.o.glyphicon}}</md-icon>              
             </div>'
 
-            mdfw = '<div layout="row">'+requiredtip+'
-                <md-input-container flex>
+            mdfw = requiredtip+'
+                <md-input-container layout="column" flex>
                     <label>{{field.o.name}}</label>'
 
             mdfwend = overlay+'
-                </md-input-container>
-            </div>'
+                </md-input-container>'
 
             # Break apart an <input> tag into common denominators
             inputstart = '<input'
