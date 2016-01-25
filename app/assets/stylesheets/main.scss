@@ -67,12 +67,6 @@ $site-color-tertiary: rgb(84,102,40);
 .md-icon-site-tertiary {
     color: $site-color-tertiary !important;
 }
-.md-fab:not(.md-mini) md-icon {
-    margin-bottom: 16px !important;
-}
-.md-icon-button md-icon {
-    margin-bottom: 12px !important;
-}
 .md-no-padding {
     padding: 0;
 }
@@ -193,6 +187,9 @@ body {
             background: $site-color-tertiary;
         }
     }
+}
+.md-container-parent {
+    position: relative;
 }
 
 template-field-directive {
