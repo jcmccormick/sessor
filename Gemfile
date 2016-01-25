@@ -75,7 +75,7 @@ source 'https://rails-assets.org' do
     gem 'rails-assets-angular-cookie'
     gem 'rails-assets-angular-flash-alert'
     gem 'rails-assets-angular-local-storage'
-    gem 'rails-assets-angular-material', '0.9.8'
+    gem 'rails-assets-angular-material', '1.0.3'
     gem 'rails-assets-angular-mocks'
     gem 'rails-assets-angular-resource'
     gem 'rails-assets-angular-route'

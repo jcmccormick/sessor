@@ -48,6 +48,7 @@
             <table cellpadding="10" layout-fill>
                 <thead>
                     <tr>
+                        <th colspan="4"></th>
                         <th align="left">
                             <md-button ng-click="vt.sortType = 'id'; vt.sortReverse = !vt.sortReverse" aria-label="sort pages by id">
                                 ID &nbsp; 
@@ -79,6 +80,7 @@
                         </md-input-container>
                     </tr>
                     <tr ng-repeat-start="template in vt.filteredList = (vt.templates | filter:vt.keywords) | orderBy:vt.sortType:vt.sortReverse | startFrom:vt.currentPage*vt.pageSize | limitTo: vt.pageSize">
+                        
                         <td>{{template.id}}</td>
                         <td>{{template.name}}</td>
                         <td>{{template.updated_at | date: 'short'}}</td>
