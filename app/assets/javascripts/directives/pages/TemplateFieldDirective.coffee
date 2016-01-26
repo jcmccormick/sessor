@@ -49,7 +49,7 @@ do ->
 
             mdfwend = hint+required+overlay+'</md-input-container>'
 
-            cust_start = '<div layout="column" layout-align="center start" class="cust-start">'
+            cust_start = '<div layout="column" layout-align="center start" layout-fill class="cust-start">'
 
             cust_end = overlay+'</div>'
 
@@ -79,15 +79,16 @@ do ->
 
             integer = inputstart+' type="number" '+standard
             time = inputstart+' type="time" '+standard
-            date = cust_start+'<md-datepicker ng-click="fform[field.o.name].$setTouched()" md-placeholder="Select date" '+standard+'</md-datepicker>'+cust_tooltip+cust_end
+            date = cust_start+'<md-datepicker ng-click="fform[field.o.name].$setTouched()" md-placeholder="{{field.o.name}}" '+standard+'</md-datepicker>'+cust_tooltip+cust_end
 
-            checkbox = cust_start+'<md-checkbox '+checkboxmodel+' ng-true-value="\'t\'" ng-false-value="\'f\'" class="green" aria-label="toggle {{field.o.name}}">
+            checkbox = cust_start+'<md-checkbox '+checkboxmodel+' ng-true-value="\'t\'" ng-false-value="\'f\'" class="green" aria-label="toggle {{field.o.name}}" '+inputend+'
                         {{field.o.name}}
                     </md-checkbox>'+cust_tooltip+cust_end
 
             radio = cust_start+'<span class="md-body-1">{{field.o.name}}</span>'+cust_tooltip+'
-                    <md-radio-group '+ngmodel+' ng-disabled="{{field.o.disabled}}" class="md-primary" ng-if="field.o.options">
-                        <md-radio-button ng-repeat="option in field.o.options" ng-value="option">{{option}}</md-radio-button>
+                    <md-radio-group '+ngmodel+' class="md-primary" ng-if="field.o.options">
+                        <md-radio-button ng-repeat="option in field.o.options" ng-value="option"'+inputend+'{{option}}
+                        </md-radio-button>
                     </md-radio-group>'+cust_end
 
             dropdown = '<md-select '+standard+'
@@ -103,7 +104,7 @@ do ->
             # Compile the field display after doublechecking that values are appropriate for their fieldtype
             # If editing/viewing a template or editing a report, show <input> fields
             if (scope.template && !scope.report) || scope.report.e
-                if (scope.report && scope.field.value) || (!scope.report && scope.field.default_value)
+                if scope.field.value || scope.field.default_value
 
                     # Pre-parse the value
                     cur_value = if scope.report

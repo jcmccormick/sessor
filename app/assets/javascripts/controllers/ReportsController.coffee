@@ -27,12 +27,15 @@ do ->
             vr.addTemplate = (template)->
                 vr.repForm.$pristine = false
 
+                # Set var to check for a new report
+                repid = vr.report.id
+
                 # Save the report with a new template
                 vr.report.template_order.push template.id
                 ReportsService.saveReport(vr.report, true, vr.repForm).then ((res)->
 
-                    # If new report, query to collect the full contents of the newly added template
-                    ReportsService.queryReport(repId, true).then((res)->
+                    # If existing report, query to collect the full contents of the newly added template
+                    repid && ReportsService.queryReport(repId, true).then((res)->
                         $.extend vr.report, res
                         vr.template = vr.filteredTemplates()[0]
                     )

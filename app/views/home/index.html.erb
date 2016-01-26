@@ -13,7 +13,7 @@
     <newsletter ng-form="newsForm">
         <h2 class="md-headline">We're developing! Sign up to our newsletter and get perks when we go live.</h2>
         <div layout="row" layout-align="start start">
-            <md-input-container flex>
+            <md-input-container flex class="md-no-errors" style="margin:18px 0 0;">
                 <label>Email</label>
                 <input type="email" ng-model="nv.email" required="required">
             </md-input-container>
@@ -44,7 +44,7 @@
             <h2 class="cl-green md-display-3">Clerkr</h2>
             <h3>Record, visualize, and share your data. Easy.</h3>
         </div>
-        <%= image_tag 'skyline.png' if !Rails.env.development?  %>
+        <%= image_tag 'my-monkey.svg' %>
     </div>
 
     <div id="about" layout="row" layout-align="space-around" layout-wrap>

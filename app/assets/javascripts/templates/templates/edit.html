@@ -54,9 +54,11 @@
         </md-content>
     </md-sidenav>
 
+    <div layout-padding layout-margin ng-if="!vt.template.id">Enter a name for your Page and press Enter or Save</div>
+
     <div layout="row" layout-align="start end" layout-margin>
         <md-input-container flex class="md-no-errors">
-            <label>Page Name (Required)</label>
+            <label>(Required) Page Name</label>
             <input ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save(true)">
         </md-input-container>
         <div layout="column" layout-align="end end" ng-if="vt.template.id">
@@ -66,8 +68,6 @@
             </md-checkbox>
         </div>
     </div>
-
-    <div layout-padding ng-if="!vt.template.id">Enter a name for your Page and press Enter or Save</div>
 
     <draggable-options field="vt.template.sO" form="vt.template" class="field-options" ng-if="vt.template.poppedOut && vt.template.sO.o"></draggable-options>
 

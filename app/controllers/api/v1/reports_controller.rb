@@ -59,7 +59,7 @@ module Api::V1 #:nodoc:
                     fields = template.fields.where.not(fieldtype: 'labelntext')
                     report.templates << template unless report.templates.include?(template)
                     
-                    if fields.any? && ws = google_drive.worksheet_by_url(template.gs_id)
+                    if fields.any? && params[:values_attributes] && ws = google_drive.worksheet_by_url(template.gs_id)
                         ids = ws.rows.map { |x| x[0].to_i }.drop(1)
                         searched = [*ids.each_with_index].bsearch { |x, _| x >= report.id.to_i}
                         if searched

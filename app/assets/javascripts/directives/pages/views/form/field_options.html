@@ -81,7 +81,7 @@
         <md-input-container flex>
             <label>Change Section</label>
             <md-select ng-model="field.o.section_id" ng-change="form.changeFieldSection(field, '{{field.o.section_id}}')" aria-label="change section for this field">
-                <md-optgroup label="Section">
+                <md-optgroup label="Sections">
                     <md-option ng-value="field_section.i" ng-repeat="field_section in form.sections">
                         {{ field_section.n || 'Section '+field_section.i }}
                     </md-option>
@@ -116,7 +116,7 @@
             </md-button>
         </div>
     </div>
-    
+
     <div layout="column" layout-gt-md="row" layout-align="center center">
         <md-button ng-click="form.poppedOut=!form.poppedOut" hide show-gt-md>pop-{{(!form.poppedOut && 'out') || 'in'}}</md-button>
         <span flex></span>
