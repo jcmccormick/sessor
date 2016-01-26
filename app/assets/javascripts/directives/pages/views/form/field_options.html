@@ -21,39 +21,43 @@
             Required
         </md-switch>
     </div>
-    <div layout="column" layout-gt-md="row" layout-padding layout-wrap>
+
+    <div layout="row" layout-margin>
         <md-input-container flex>
             <label>{{(field.fieldtype == 'labelntext' && 'Label') || 'Name'}}</label>
             <input type="text" id="field_name_{{field.o.section_id}}{{field.o.column_id}}{{field.id}}" ng-model="field.o.name">
         </md-input-container>
-
-        <md-input-container flex ng-if="['checkbox','date','time','integer'].indexOf(field.fieldtype) == -1">
-            <label>{{(field.fieldtype == 'labelntext' && 'Text') || 'Default Value'}}</label>
-            <input type="text" ng-model="field.o.default_value">
-        </md-input-container>
-        <md-checkbox flex ng-if="field.fieldtype == 'checkbox'" ng-model="field.o.default_value" aria-label="set default checkbox value">
-            Default: {{field.o.default_value || false}}
-        </md-checkbox>
-        <md-input-container flex ng-if="field.fieldtype == 'date'">
-            <label>Default Date</label>
-            <input type="date" ng-model="field.o.default_value">
-        </md-input-container>
-        <md-input-container flex ng-if="field.fieldtype == 'time'">
-            <label>Default Time</label>
-            <input type="time" ng-model="field.o.default_value">
-        </md-input-container>
-        <md-input-container flex ng-if="field.fieldtype == 'integer'">
-            <label>Default Integer</label>
-            <input type="number" ng-model="field.o.default_value">
-        </md-input-container>
-
         <md-input-container flex ng-if="field.fieldtype !='labelntext'">
             <label>Tooltip</label>
             <input type="text" ng-model="field.o.tooltip">
         </md-input-container>
     </div>
 
-    <div layout="row" layout-align="end start" layout-padding ng-repeat="option in field.o.options track by $index" ng-if="field.o.options">
+    <div layout="column" layout-margin>
+        <md-input-container ng-if="['checkbox','date','time','integer'].indexOf(field.fieldtype) == -1">
+            <label>{{(field.fieldtype == 'labelntext' && 'Text') || 'Default Value'}}</label>
+            <input type="text" ng-model="field.o.default_value">
+        </md-input-container>
+        <div layout-padding ng-if="field.fieldtype == 'checkbox'">
+            <md-checkbox ng-model="$parent.field.o.default_value" ng-true-value="'t'" ng-false-value="'f'" class="green" aria-label="default checkbox value">
+                Default Value
+            </md-checkbox>
+        </div>
+        <md-input-container ng-if="field.fieldtype == 'date'">
+            <label>Default Date</label>
+            <input type="date" ng-model="field.o.default_value">
+        </md-input-container>
+        <md-input-container ng-if="field.fieldtype == 'time'">
+            <label>Default Time</label>
+            <input type="time" ng-model="field.o.default_value">
+        </md-input-container>
+        <md-input-container ng-if="field.fieldtype == 'integer'">
+            <label>Default Integer</label>
+            <input type="number" ng-model="field.o.default_value">
+        </md-input-container>
+    </div>
+
+    <div layout="row" layout-align="end center" layout-margin ng-repeat="option in field.o.options track by $index" ng-if="field.o.options">
         <md-input-container flex>
             <label>Option {{$index+1}} Name</label>
             <input type="text" ng-model="field.o.options[$index]">
@@ -73,45 +77,50 @@
         <md-icon>add</md-icon> Add Option
     </md-button>
 
-    <div layout="row" layout-padding layout-wrap>
-        <div layout="column" layout-gt-md="row" layout-align="center center">
-            <md-select ng-if="field.fieldtype != 'labelntext'" ng-model="field.o.section_id" ng-change="form.changeFieldSection(field, '{{field.o.section_id}}')">
-                <md-select-label>Change section</md-select-label>
-                <md-option ng-repeat="field_section in form.sections" value="{{field_section.i}}">{{ field_section.n || 'Section '+field_section.i }}</md-option>
+    <div layout="row" layout-align="center center" layout-margin>
+        <md-input-container flex>
+            <label>Change Section</label>
+            <md-select ng-model="field.o.section_id" ng-change="form.changeFieldSection(field, '{{field.o.section_id}}')" aria-label="change section for this field">
+                <md-optgroup label="Section">
+                    <md-option ng-value="field_section.i" ng-repeat="field_section in form.sections">
+                        {{ field_section.n || 'Section '+field_section.i }}
+                    </md-option>
+                </md-optgroup>
             </md-select>
-            <div scroll-to=".force-hover" template="form">
-                <md-button ng-click="form.changeFieldColumn(field, field.o.column_id-1)" class="md-icon-button" aria-label="move {{field.o.name}} 1 column left">
-                    <md-tooltip md-direction="top">
-                        Move 1 column left
-                    </md-tooltip>
-                    <md-icon>keyboard_arrow_left</md-icon>
-                </md-button>
-                <md-button ng-click="form.moveField(field, -1)" class="md-icon-button" aria-label="move {{field.o.name}} up">
-                    <md-tooltip md-direction="top">
-                        Move up
-                    </md-tooltip>
-                    <md-icon>keyboard_arrow_up</md-icon>
-                </md-button>
-                <md-button ng-click="form.moveField(field, 1)" class="md-icon-button" aria-label="move {{field.o.name}} down">
-                    <md-tooltip md-direction="top">
-                        Move down
-                    </md-tooltip>
-                    <md-icon>keyboard_arrow_down</md-icon>
-                </md-button>
-                <md-button ng-click="form.changeFieldColumn(field, field.o.column_id+1)" class="md-icon-button" aria-label="move {{field.o.name}} 1 column right">
-                    <md-tooltip md-direction="top">
-                        Move 1 column right
-                    </md-tooltip>
-                    <md-icon>keyboard_arrow_right</md-icon>
-                </md-button>
-            </div>
+        </md-input-container>
+
+        <div scroll-to=".force-hover" template="form">
+            <md-button ng-click="form.changeFieldColumn(field, field.o.column_id-1)" class="md-icon-button" aria-label="move {{field.o.name}} 1 column left">
+                <md-tooltip md-direction="top">
+                    Move 1 column left
+                </md-tooltip>
+                <md-icon>keyboard_arrow_left</md-icon>
+            </md-button>
+            <md-button ng-click="form.moveField(field, -1)" class="md-icon-button" aria-label="move {{field.o.name}} up">
+                <md-tooltip md-direction="top">
+                    Move up
+                </md-tooltip>
+                <md-icon>keyboard_arrow_up</md-icon>
+            </md-button>
+            <md-button ng-click="form.moveField(field, 1)" class="md-icon-button" aria-label="move {{field.o.name}} down">
+                <md-tooltip md-direction="top">
+                    Move down
+                </md-tooltip>
+                <md-icon>keyboard_arrow_down</md-icon>
+            </md-button>
+            <md-button ng-click="form.changeFieldColumn(field, field.o.column_id+1)" class="md-icon-button" aria-label="move {{field.o.name}} 1 column right">
+                <md-tooltip md-direction="top">
+                    Move 1 column right
+                </md-tooltip>
+                <md-icon>keyboard_arrow_right</md-icon>
+            </md-button>
         </div>
+    </div>
+    
+    <div layout="column" layout-gt-md="row" layout-align="center center">
+        <md-button ng-click="form.poppedOut=!form.poppedOut" hide show-gt-md>pop-{{(!form.poppedOut && 'out') || 'in'}}</md-button>
         <span flex></span>
-        <div layout="column" layout-gt-md="row" layout-align="center center">
-            <md-button ng-click="form.poppedOut=!form.poppedOut" hide show-gt-md>pop-{{(!form.poppedOut && 'out') || 'in'}}</md-button>
-            <span flex></span>
-            <md-button ng-click="form.sO=undefined">close</md-button>
-        </div>
+        <md-button ng-click="form.sO=undefined">close</md-button>
     </div>
     <div class="drag-bar"></div>
 </div>

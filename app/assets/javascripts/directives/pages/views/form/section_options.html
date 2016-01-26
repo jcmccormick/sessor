@@ -1,9 +1,9 @@
-<div layout="row"  class="section-options">
-    <md-input-container flex>
-        <label>Section Name (Optional)</label>
+<div layout="row" class="section-options" layout-align="center center" layout-margin>
+    <md-input-container flex class="md-no-errors">
+        <label>(Optional) Click here to add a section name...</label>
         <input type="text" id="section-{{section.i}}-name" ng-model="section.n" ng-click="form.sO=section">
     </md-input-container>
-    <div flex>
+    <div layout="row">
         <md-button ng-click="form.moveSection($index, $index-1)" class="md-icon-button" ng-disabled="form.sections.length <= 1" aria-label="switch with section above">
             <md-tooltip md-direction="top">
                 Switch with section above

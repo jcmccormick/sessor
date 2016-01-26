@@ -1,26 +1,31 @@
-<div>
-    <md-icon>arrow_upward</md-icon>
-    <span class="md-title">New Field</span>
-    <small>{{section.n || 'Section '+(section.i)}}, Column {{$index+1}}</small>
+<div class="new-field-add">
+    <div layout-margin>
+        <md-icon>arrow_upward</md-icon>
+        <span class="md-title">New Field</span>
+        <small>{{section.n || 'Section '+(section.i)}}, Column {{$index+1}}</small>
+    </div>
+    <md-tabs md-dynamic-height md-selected="form.newFieldAddTab">
+        <md-tab label="name">
+            <span layout-margin></span>
+            <div layout-margin layout-wrap>
+                <md-input-container layout-fill class="md-no-errors">
+                    <label>(Required) Click here to add a field name...</label>
+                    <input type="text" ng-model="form.newFieldName" ng-change="form.newFieldAddTab=1" ng-model-options="{ debounce: {'default': 1500, 'blur': 0} }" />
+                </md-input-container>
+            </div>
+        </md-tab>
+        <md-tab label="type" ng-disabled="!form.newFieldName">
+            <div layout="row" layout-align="space-around" layout-wrap>
+                <md-button ng-click="form.newFieldAddTab=0;form.addField(section.i, $parent.$index+1, type)" ng-repeat="type in form.addFieldTypes" aria-label="add {{type.value}} field to {{section.n || 'section '+section.i}}, column {{column_id+1}}">
+                    <md-tooltip md-direction="bottom">
+                        Add {{type.value}} field to {{section.n || 'Section '+section.i}}, Column {{column_id+1}}
+                    </md-tooltip>
+                    <md-icon class="md-icon-site-secondary">{{type.glyphicon}}</md-icon><br />{{type.value}}
+                </md-button>
+            </div>
+        </md-tab>
+    </md-tabs>
 </div>
-<md-tabs md-dynamic-height md-selected="form.newFieldAddTab">
-    <md-tab label="name">
-        <md-input-container layout-fill>
-            <label>Name (Required)</label>
-            <input type="text" ng-model="form.newFieldName" ng-change="form.newFieldAddTab=1" ng-model-options="{ debounce: {'default': 500, 'blur': 0} }" />
-        </md-input-container>
-    </md-tab>
-    <md-tab label="type" ng-disabled="!form.newFieldName">
-        <md-content layout="row" layout-wrap>
-            <md-button flex="auto" ng-click="form.newFieldAddTab=0;form.addField(section.i, $parent.$index+1, type)" ng-repeat="type in form.addFieldTypes" aria-label="add {{type.value}} field to {{section.n || 'section '+section.i}}, column {{column_id+1}}">
-                <md-tooltip md-direction="bottom">
-                    Add {{type.value}} field to {{section.n || 'Section '+section.i}}, Column {{column_id+1}}
-                </md-tooltip>
-                <md-icon class="md-icon-site-secondary">{{type.glyphicon}}</md-icon><br />{{type.value}}
-            </md-button>
-        </md-content>
-    </md-tab>
-</md-tabs>
 
 <!--     <div layout-md="row" layout-wrap ng-if="form.newFieldName.length">
 
