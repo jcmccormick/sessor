@@ -2,91 +2,97 @@
 
 <loading></loading>
 
-<div layout="column" layout-align="center center" class="view-frame animate-view">
+<!-- Main View Container -->
+<main layout="row" class="view-animate-container">
+    <div flash-message="7500"></div>
+    <div flex-gt-md="15"></div>
 
-    <!-- Main View Container -->
-    <div ng-view flex layout="column" layout-gt-lg="row" layout-align="space around" layout-fill layout-wrap ng-if="user.signedIn"></div>
-</div>
+    <!-- ng-view inserts angular views determined by routing -->
+    <section flex ng-view class="view-animate view-frame" ng-if="user.signedIn"></section>
 
-<md-card class="landing-page" layout="column" ng-show="false || !user.signedIn" ng-cloak>
+    <!-- Signed out view -->
+    <md-card flex class="landing-page" ng-if="!user.signedIn">
+        <md-toolbar class="md-site-secondary">
+            <newsletter ng-form="newsForm" layout="row" layout-align="center center" layout-margin>
+                <md-input-container flex class="md-no-margin md-no-errors">
+                    <label>Your email for our newsletter.</label>
+                    <input type="email" name="email" ng-model="nv.email" ng-pattern="/^.+@.+\..+$/">
+                </md-input-container>
+                <md-button class="md-fab md-mini md-site-primary" ng-click="nv.newSubscribe(nv.email, newsForm)" ng-disabled="!newsForm.email.$touched || newsForm.email.$invalid" aria-label="sign up for the newsletter">
+                    <md-icon>check</md-icon>
+                </md-button>
+            </newsletter>
+        </md-toolbar>
 
-    <newsletter ng-form="newsForm">
-        <h2 class="md-headline">We're developing! Sign up to our newsletter and get perks when we go live.</h2>
-        <div layout="row" layout-align="start start">
-            <md-input-container flex class="md-no-errors" style="margin:18px 0 0;">
-                <label>Email</label>
-                <input type="email" ng-model="nv.email" required="required">
-            </md-input-container>
-            <md-button ng-click="nv.newSubscribe(nv.email, newsForm)" ng-disabled="!newsForm.$valid" class="md-raised">
-                Sign Up
-            </md-button>
+        <div class="approach">
+            <div class="approach-text" layout="column" layout-margin layout-padding layout-fill>
+                <h2 class="cl-green">Clerkr</h2>
+                <span flex></span>
+                <div layout="row" layout-align="center end" class="approach-subtext-container">
+                    <h3><em>Record, visualize, and share your data. Easy.</em></h3>
+                </div>
+                <!-- <span class="verticalFlipContainer">
+                    <small class="verticalFlip">
+                        <span>Hobbyist?</span>
+                        <span>Scientist?</span>
+                        <span>Teacher?</span>
+                        <span>Researcher?</span>
+                        <span>Athlete?</span>
+                        <span>Tutor?</span>
+                        <span>Investigator?</span>
+                        <span>Doctor?</span>
+                        <span>Accountant?</span>
+                        <span>Professional?</span>
+                        <span>Student?</span>
+                        <span>Clerkr?</span>
+                    </small>
+                </span> -->
+            </div>
+            <%= image_tag 'my-monkey.svg' %>
         </div>
-    </newsletter>
 
-    <div ng-if="!user.signedIn" class="approach">
-        <div class="approach-text">
-            <!-- <h2>
-                <small class="verticalFlip">
-                    <span>Hobbyist?</span>
-                    <span>Scientist?</span>
-                    <span>Teacher?</span>
-                    <span>Researcher?</span>
-                    <span>Athlete?</span>
-                    <span>Tutor?</span>
-                    <span>Investigator?</span>
-                    <span>Doctor?</span>
-                    <span>Accountant?</span>
-                    <span>Professional?</span>
-                    <span>Student?</span>
-                    <span>Clerkr?</span>
-                </small>
-            </h2> -->
-            <h2 class="cl-green md-display-3">Clerkr</h2>
-            <h3>Record, visualize, and share your data. Easy.</h3>
+        <div id="about" layout="row" layout-align="space-around" layout-wrap>
+            <span flex="100" layout-padding layout-margin class="md-headline">We aim to provide...</span>
+            <div flex="35">
+                <h3 class="md-display-1">Designed Data</h3>
+                <p class="md-subhead">Clerkr bases its services on the pages of data you create. Fine tune your process and increase productivity and efficiency.</p>
+            </div>
+            <div flex="35">
+                <h3 class="md-display-1">Group Time</h3>
+                <p class="md-subhead">Got a crew? Let's join forces. Got a business? We can help with that too: scheduling, appointments, client engagement, all integrated with your pages.</p>
+            </div>
+            <div flex="35">
+                <h3 class="md-display-1">Growth</h3>
+                <p class="md-subhead">All users start with a set amount of reports to create. This number will naturally increase over time, and can be expanded.</p>
+            </div>
+            <div flex="35">
+                <h3 class="md-display-1">Nerding Out</h3>
+                <p class="md-subhead">Take a break and reflect on our various charts and graphs. Save your visualizations and export the data for use elsewhere.</p>
+            </div>
+            <div flex="35">
+                <h3 class="md-display-1">Individuals...</h3>
+                <ul>
+                    <li>Keep track of hobbies, sports, exercise, research, anything you want.</li>
+                    <li>Use your pages for surveys.</li>
+                    <li>Create interactive and visually-appealing graphs; print, save, and export your data views.</li>
+                </ul>
+            </div>
+            <div flex="35">
+                <h3 class="md-display-1">Businesses...</h3>
+                <ul>
+                    <li>Schedule employees and keep track of their time online.</li>
+                    <li>Use pages on your site and for online or kiosk-based customer submissions.</li>
+                    <li>Interact with customers in online appointments.</li>
+                    <li>Get combined and individual stats for the members in your group.</li>
+                </ul>
+            </div>
         </div>
-        <%= image_tag 'my-monkey.svg' %>
-    </div>
-
-    <div id="about" layout="row" layout-align="space-around" layout-wrap>
-        <span flex="90" layout-padding class="md-headline">We aim to provide...</span>
-        <div flex="35">
-            <h3 class="md-display-1">Designed Data</h3>
-            <p class="md-subhead">Clerkr bases its services on the pages of data you create. Fine tune your process and increase productivity and efficiency.</p>
-        </div>
-        <div flex="35">
-            <h3 class="md-display-1">Group Time</h3>
-            <p class="md-subhead">Got a crew? Let's join forces. Got a business? We can help with that too: scheduling, appointments, client engagement, all integrated with your pages.</p>
-        </div>
-        <div flex="35">
-            <h3 class="md-display-1">Growth</h3>
-            <p class="md-subhead">All users start with a set amount of reports to create. This number will naturally increase over time, and can be expanded.</p>
-        </div>
-        <div flex="35">
-            <h3 class="md-display-1">Nerding Out</h3>
-            <p class="md-subhead">Take a break and reflect on our various charts and graphs. Save your visualizations and export the data for use elsewhere.</p>
-        </div>
-        <div flex="35">
-            <h3 class="md-display-1">Individuals...</h3>
-            <ul>
-                <li>Keep track of hobbies, sports, exercise, research, anything you want.</li>
-                <li>Use your pages for surveys.</li>
-                <li>Create interactive and visually-appealing graphs; print, save, and export your data views.</li>
-            </ul>
-        </div>
-        <div flex="35">
-            <h3 class="md-display-1">Businesses...</h3>
-            <ul>
-                <li>Schedule employees and keep track of their time online.</li>
-                <li>Use pages on your site and for online or kiosk-based customer submissions.</li>
-                <li>Interact with customers in online appointments.</li>
-                <li>Get combined and individual stats for the members in your group.</li>
-            </ul>
-        </div>
-    </div>
 
 
-    <div layout="row" layout-align="center center">
-        <h4 id="copyright">&copy; 2016 Clerkr</h4>
-    </div>
+        <div layout="row" layout-align="center center">
+            <h4 id="copyright">&copy; 2016 Clerkr</h4>
+        </div>
+    </md-card>
 
-</md-card>
+    <div flex-gt-md="15"></div>
+</main>

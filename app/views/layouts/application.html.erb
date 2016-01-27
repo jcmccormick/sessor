@@ -20,15 +20,9 @@
         </style>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
-    <body ng-app="clerkr">
+    <body ng-app="clerkr" ng-cloak>
         <noscript>Please enable javascript and cookies in your browser.</noscript>
-        <div flash-message="7500"></div>
-        
-        <div layout="row">
-            <span flex hide show-gt-md></span>
-            <span flex flex-gt-md="75"><%= yield %></span>
-            <span flex hide show-gt-md></span>
-        </div>
+        <%= yield %>
     </body>
     <%= javascript_include_tag 'application', async: Rails.env.production?, cache: true %>
     <%= stylesheet_link_tag 'application', media: 'all', cache: true %>

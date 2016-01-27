@@ -53,7 +53,7 @@
         <md-input-container>
             <label>Add Page</label>
             <md-select ng-model="vr.template" aria-label="select a page to add to this report">
-              <md-optgroup label="{{ !vr.filteredTemplates().length && 'No Undrafted '}}Pages">
+              <md-optgroup label="{{ (!vr.filteredTemplates().length && 'No Undrafted ') || undefined }}Pages">
                   <md-option ng-repeat="template in vr.filteredTemplates()" ng-value="template">
                     {{template.name}}
                 </md-option>

@@ -1,16 +1,27 @@
-<form layout="column" layout-padding name="fform" class="section-row" ng-repeat="section in form.sections track by $index">
+<form name="fform" layout="column" layout-padding>
 
-    <span class="md-title" ng-if="!form.e">{{section.n}}</span>
-    <ng-include src="'directives/pages/views/form/section_options.html'" ng-if="form.e"></ng-include>
+    <!-- Repeat each section in the form. A "section" is a row of fields. Unlimited rows. -->
+    <div layout-gt-sm="row" layout-fill layout-wrap ng-repeat="section in form.sections track by $index">
 
-    <div layout="column" layout-gt-md="row" layout-fill>
-        <div flex="auto" layout-padding ng-repeat="column in columnsArray(section.c) track by $index">
+        <!-- Show either section name or section options -->
+        <div flex="100" ng-if="form.e || section.n">
+            <h4 class="md-title" ng-if="!form.e">{{section.n}}</h4>
+            <ng-include src="'directives/pages/views/form/section_options.html'" ng-if="form.e"></ng-include>
+        </div>
+
+        <!-- Repeat the columns of the row, which contain the fields themselves. Maximum 3 columns.
+             flex="auto" allows the rows to automatically adjust their width, as some elements are
+             differently sized. -->
+        <div layout="column" flex layout-padding ng-repeat="column in columnsArray(section.c) track by $index">
+
+            <!-- Repeat field containers, along with compiling directive and options directive. -->
             <div ng-repeat="field in form.fields | filter:{o:{column_id: $index+1, section_id: section.i}} | orderBy:'o.column_order'">
                 <template-field-directive fform="fform" field="field" template="form" report="report"></template-field-directive>
 
                 <draggable-options field="field" form="form" class="field-options" ng-if="form.e && !form.poppedOut && form.sO==field"></draggable-options>
             </div>
 
+            <!-- Add a new field area, if editing and there are less than 20 total fields. -->
             <ng-include src="'directives/pages/views/form/field_add.html'" ng-if="form.e && ((form.fields && form.fields.length) || 0) < 20"></ng-include>
         </div>
     </div>

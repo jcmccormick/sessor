@@ -1,29 +1,36 @@
 <!-- Signed-in Menu -->
-<md-toolbar layout="row" layout-align="start center" layout-padding class="md-site-primary">
-    <md-button clocation ng-click="lv.locate('/')" aria-label="go to main">
-        <span class="md-headline"><strong>Clerkr</strong></span>
-    </md-button>
-    <div ng-if="user.signedIn && user.reports_count > 0">
-        <md-button clocation ng-click="lv.locate('/statistics')" aria-label="view statistics">
-            Statistics
-        </md-button>
-    </div>
-    <div ng-if="!user.signedIn">
-        <md-button scroll-to="#about" bypass="true" aria-label="about clerkr">
-            About
-        </md-button>
-    </div>
-    <span flex></span>
-    <md-button ng-click="authenticate('google')" ng-if="!user.signedIn" aria-label="sign in with google">
-        Sign in with Google
-    </md-button>
-    <md-button user-menu ng-click="uv.toggleMenu()" class="md-icon-button" aria-label="open user menu">
-        <md-tooltip md-direction="bottom">
-            User Menu
-        </md-tooltip>
-        <md-icon>person</md-icon>
-    </md-button>
-</md-toolbar>
+
+<nav>
+    <md-toolbar layout="row" class="md-site-primary">
+        <div flex-gt-md="15"></div>
+        <div flex layout="row" layout-align="start center" layout-padding>
+            <md-button clocation ng-click="lv.locate('/')" aria-label="go to main">
+                <span class="md-headline"><strong>Clerkr</strong></span>
+            </md-button>
+            <div ng-if="user.signedIn && user.reports_count > 0">
+                <md-button clocation ng-click="lv.locate('/statistics')" aria-label="view statistics">
+                    Statistics
+                </md-button>
+            </div>
+            <div ng-if="!user.signedIn">
+                <md-button scroll-to="#about" bypass="true" aria-label="about clerkr">
+                    About
+                </md-button>
+            </div>
+            <span flex></span>
+            <md-button ng-click="authenticate('google')" ng-if="!user.signedIn" aria-label="sign in with google">
+                Sign in with Google
+            </md-button>
+            <md-button user-menu ng-click="uv.toggleMenu()" class="md-icon-button" aria-label="open user menu">
+                <md-tooltip md-direction="bottom">
+                    User Menu
+                </md-tooltip>
+                <md-icon>person</md-icon>
+            </md-button>
+        </div>
+        <div flex-gt-md="15"></div>
+    </md-toolbar>
+</nav>
 
 <md-sidenav user-menu class="md-sidenav-right" md-component-id="right">
     <md-content ng-form="contactForm" contact layout="column" layout-fill layout-padding>
