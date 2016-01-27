@@ -35,7 +35,7 @@
                 <span>Pages</span>
             </h2>
             <span flex></span>
-            <md-button href="/templates/new" class="md-fab md-site-primary md-fab-top-right" aria-label="new page">
+            <md-button href="/templates/new" class="md-fab md-site-primary cl-desktop-fab-align" aria-label="new page">
                 <md-tooltip md-direction="bottom">
                     New Page
                 </md-tooltip>
@@ -51,30 +51,27 @@
                     <label>Search</label>
                     <input ng-model="vt.keywords" ng-change="vt.currentPage = 0">
                 </md-input-container>
-                <table cellspacing="0" layout-fill>
+                <table class="table" cellspacing="0" layout-fill>
                     <thead>
                         <tr>
                             <th></th>
-                            <th align="left">
-                                <md-button md-ink-ripple ng-click="vt.sortType = 'id'; vt.sortReverse = !vt.sortReverse" aria-label="sort pages by id">
-                                    ID &nbsp; 
-                                    <md-icon ng-show="vt.sortType=='id' && !vt.sortReverse">expand_more</md-icon> 
-                                    <md-icon ng-show="vt.sortType=='id' && vt.sortReverse">expand_less</md-icon>
-                                </md-button>
+                            <th align="left" ng-click="vt.sortType = 'id'; vt.sortReverse = !vt.sortReverse" aria-label="sort pages by id">
+                                ID
+                                <md-icon ng-show="vt.sortType=='id'">
+                                    expand_{{ (!vt.sortReverse && 'more') || (vt.sortReverse && 'less') }}
+                                </md-icon>
                             </th>
-                            <th align="left">
-                                <md-button ng-click="vt.sortType = 'name'; vt.sortReverse = !vt.sortReverse" aria-label="sort pages by name">
-                                    Name &nbsp; 
-                                    <md-icon ng-show="vt.sortType=='name' && !vt.sortReverse">expand_more</md-icon> 
-                                    <md-icon ng-show="vt.sortType=='name' && vt.sortReverse">expand_less</md-icon>
-                                </md-button>
+                            <th align="left" ng-click="vt.sortType = 'name'; vt.sortReverse = !vt.sortReverse" aria-label="sort pages by name">
+                                Name
+                                <md-icon ng-show="vt.sortType=='name'">
+                                    expand_{{ (!vt.sortReverse && 'more') || (vt.sortReverse && 'less') }}
+                                </md-icon>
                             </th>
-                            <th align="left">
-                                <md-button ng-click="vt.sortType = 'updated_at'; vt.sortReverse = !vt.sortReverse" aria-label="sort pages by time updated">
-                                    Updated &nbsp; 
-                                    <md-icon ng-show="vt.sortType=='updated_at' && !vt.sortReverse">expand_more</md-icon> 
-                                    <md-icon ng-show="vt.sortType=='updated_at' && vt.sortReverse">expand_less</md-icon>
-                                </md-button>
+                            <th align="left" ng-click="vt.sortType = 'updated_at'; vt.sortReverse = !vt.sortReverse" aria-label="sort pages by time updated">
+                                Updated
+                                <md-icon ng-show="vt.sortType=='updated_at'">
+                                    expand_{{ (!vt.sortReverse && 'more') || (vt.sortReverse && 'less') }}
+                                </md-icon>
                             </th>
                         </tr>
                     </thead>
@@ -83,7 +80,7 @@
                             <td>
                                 <md-menu>
                                 <!-- Trigger element is a md-button with an icon -->
-                                    <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+                                    <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button md-raised" aria-label="Open sample menu">
                                         <md-tooltip md-direction="top">
                                             {{template.name}} Menu
                                         </md-tooltip>
@@ -228,7 +225,7 @@
                 <span>Reports</span>
             </h2>
             <span flex></span>
-            <md-button href="/reports/new" class="md-fab md-site-primary md-fab-bottom-right" aria-label="new report">
+            <md-button href="/reports/new" class="md-fab md-site-primary cl-desktop-fab-align" aria-label="new report">
                 <md-tooltip md-direction="bottom">
                     New Report
                 </md-tooltip>

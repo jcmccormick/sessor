@@ -1,18 +1,21 @@
 <form name="fform" layout="column" layout-padding>
 
     <!-- Repeat each section in the form. A "section" is a row of fields. Unlimited rows. -->
-    <div layout-gt-sm="row" layout-fill layout-wrap ng-repeat="section in form.sections track by $index">
+    <div ng-repeat-start="section in form.sections track by $index">
 
         <!-- Show either section name or section options -->
-        <div flex="100" ng-if="form.e || section.n">
-            <h4 class="md-title" ng-if="!form.e">{{section.n}}</h4>
+        <div ng-if="form.e || section.n">
+            <span class="md-title" ng-if="!form.e">{{section.n}}</span>
             <ng-include src="'directives/pages/views/form/section_options.html'" ng-if="form.e"></ng-include>
         </div>
+    </div>
+
+    <div layout="column" layout-gt-sm="row" ng-repeat-end>
 
         <!-- Repeat the columns of the row, which contain the fields themselves. Maximum 3 columns.
              flex="auto" allows the rows to automatically adjust their width, as some elements are
              differently sized. -->
-        <div layout="column" flex layout-padding ng-repeat="column in columnsArray(section.c) track by $index">
+        <div layout="column" flex ng-repeat="column in columnsArray(section.c) track by $index">
 
             <!-- Repeat field containers, along with compiling directive and options directive. -->
             <div ng-repeat="field in form.fields | filter:{o:{column_id: $index+1, section_id: section.i}} | orderBy:'o.column_order'">

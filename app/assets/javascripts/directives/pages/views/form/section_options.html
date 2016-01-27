@@ -1,41 +1,40 @@
-<div class="section-options" layout-margin layout-padding>
-    <div layout="row" layout-align="center center">
-        <md-input-container flex class="md-no-errors">
-            <label>(Optional) Add a section name...</label>
-            <input type="text" id="section-{{section.i}}-name" ng-model="section.n" ng-click="form.sO=section">
-        </md-input-container>
-        <div layout="row">
-            <md-button ng-click="form.moveSection($index, $index-1)" class="md-icon-button" ng-disabled="form.sections.length <= 1" aria-label="switch with section above">
-                <md-tooltip md-direction="top">
-                    Switch with section above
-                </md-tooltip>
-                <md-icon>arrow_upward</md-icon>
-            </md-button>
-            <md-button ng-click="form.moveSection($index, $index+1)" class="md-icon-button" ng-disabled="form.sections.length <= 1" aria-label="switch with section below">
-                <md-tooltip md-direction="top">
-                    Switch with section below
-                </md-tooltip>
-                <md-icon>arrow_downward</md-icon>
-            </md-button>
-            <md-button ng-click="form.deleteSectionColumn(section)" class="md-icon-button" ng-disabled="section.c == 1" aria-label="remove column from {{section.n || 'Section ' + section.i}}">
-                <md-tooltip md-direction="top">
-                    Remove column from {{section.n || 'Section ' + section.i}}
-                </md-tooltip>
-                <md-icon>remove</md-icon>
-            </md-button>
-            <md-button ng-click="form.addSectionColumn(section)" class="md-icon-button" ng-disabled="section.c == 3" aria-label="add column to {{section.n || 'Section ' + section.i}}">
-                <md-tooltip md-direction="top">
-                    Add column to {{section.n || 'Section ' + section.i}}
-                </md-tooltip>
-                <md-icon>add</md-icon>
-            </md-button>
-            <span flex="5"></span>
-            <md-button ng-click="form.deleteSection($event, section)" class="md-icon-button md-warn" aria-label="delete {{section.n || 'Section ' + section.i}}">
-                <md-tooltip md-direction="left">
-                    Delete {{section.n || 'Section ' + section.i}}
-                </md-tooltip>
-                <md-icon>delete</md-icon>
-            </md-button>
-        </div>
+<div layout="row" layout-align="center center">
+    <md-input-container flex class="md-no-errors">
+        <label>Add a row name...</label>
+        <input id="section-{{section.i}}-name" ng-model="section.n">
+        <div class="tooltip">Optional.</div>
+    </md-input-container>
+    <div layout="row">
+        <md-button ng-click="form.moveSection($index, $index-1)" class="md-icon-button" ng-disabled="form.sections.length <= 1" aria-label="switch with section above">
+            <md-tooltip md-direction="top">
+                Switch with section above
+            </md-tooltip>
+            <md-icon>arrow_upward</md-icon>
+        </md-button>
+        <md-button ng-click="form.moveSection($index, $index+1)" class="md-icon-button" ng-disabled="form.sections.length <= 1" aria-label="switch with section below">
+            <md-tooltip md-direction="top">
+                Switch with section below
+            </md-tooltip>
+            <md-icon>arrow_downward</md-icon>
+        </md-button>
+        <md-button ng-click="form.deleteSectionColumn(section)" class="md-icon-button" ng-disabled="section.c == 1" aria-label="remove column from {{section.n || 'Section ' + section.i}}">
+            <md-tooltip md-direction="top">
+                Remove column from {{section.n || 'Section ' + section.i}}
+            </md-tooltip>
+            <md-icon>remove</md-icon>
+        </md-button>
+        <md-button ng-click="form.addSectionColumn(section)" class="md-icon-button" ng-disabled="section.c == 3" aria-label="add column to {{section.n || 'Section ' + section.i}}">
+            <md-tooltip md-direction="top">
+                Add column to {{section.n || 'Section ' + section.i}}
+            </md-tooltip>
+            <md-icon>add</md-icon>
+        </md-button>
+        <span flex="5"></span>
+        <md-button ng-click="form.deleteSection($event, section)" class="md-icon-button md-warn" aria-label="delete {{section.n || 'Section ' + section.i}}">
+            <md-tooltip md-direction="left">
+                Delete {{section.n || 'Section ' + section.i}}
+            </md-tooltip>
+            <md-icon>delete</md-icon>
+        </md-button>
     </div>
 </div>

@@ -99,6 +99,11 @@ body {
         color: gray;
     }
 }
+.table {
+    th[ng-click] {
+        cursor: pointer;
+    }
+}
 
 /*
  * Flash Messages
@@ -218,6 +223,27 @@ md-checkbox.md-checked[disabled].red .md-icon {
     }
 }
 
+.tooltip {
+    position: initial;
+    left: 2px;
+    right: auto;
+    bottom: 7px;
+    font-size: 12px;
+    line-height: 14px;
+    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+    color: grey;
+
+    &.ng-hide,
+    &.ng-enter,
+    &.ng-leave.ng-leave-active {
+        bottom: 26px;
+        opacity: 0; }
+    &.ng-leave,
+    &.ng-enter.ng-enter-active {
+        bottom: 7px;
+        opacity: 1;
+    }
+}
 
 template-form-directive {
 
@@ -242,43 +268,17 @@ template-form-directive {
             margin-bottom: 18px;
         }
 
-        .tooltip {
-            position: initial;
-            left: 2px;
-            right: auto;
-            bottom: 7px;
-            font-size: 12px;
-            line-height: 14px;
-            transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
-            color: grey;
-
-            &.ng-hide,
-            &.ng-enter,
-            &.ng-leave.ng-leave-active {
-                bottom: 26px;
-                opacity: 0; }
-            &.ng-leave,
-            &.ng-enter.ng-enter-active {
-                bottom: 7px;
-                opacity: 1;
-            }
-        }
-
         .cust-tooltip {
             position: relative;
             font-size: 11px;
-            margin: 10px 0 0 25px;
+            margin-top: 5px 0 0 2px;
         }
         .field-overlay {
             position: absolute;
-            top: 0;
-            right: 12px;
-            cursor: pointer;
-            border-radius: 5px;
 
-            &:hover,
-            &.force-hover {
+            .force-hover {
                 background-color: $site-color-secondary;
+
                 md-icon {
                     color: white;
                 }

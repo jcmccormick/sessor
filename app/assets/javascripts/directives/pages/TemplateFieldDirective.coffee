@@ -29,11 +29,13 @@ do ->
                 </md-icon>'
 
             overlay = '
-                <div flex class="field-overlay" md-ink-ripple ng-click="template.sO=field" ng-class="{\'force-hover\':template.sO.id == field.id}" ng-if="template.e" aria-label="click to edit {{field.o.name}}">
-                    <md-tooltip md-direction="top">
-                        Click to edit {{field.o.name}}
-                    </md-tooltip>
-                    <md-icon flex>{{field.o.glyphicon}}</md-icon>              
+                <div flex class="field-overlay" layout="column" layout-fill layout-align="start end" ng-if="template.e">
+                    <md-button ng-click="template.sO=field" class="md-icon-button" ng-class="{\'force-hover\':template.sO.id == field.id}" aria-label="click to edit {{field.o.name}}">
+                        <md-tooltip md-direction="top">
+                            Click to edit {{field.o.name}}
+                        </md-tooltip>
+                        <md-icon flex>{{field.o.glyphicon}}</md-icon>      
+                    </md-button>        
                 </div>'
 
             hint = '<div class="tooltip" ng-show="field.o.tooltip && (!fform[field.o.name].$touched || fform[field.o.name].$valid)">{{field.o.tooltip}}</div>'

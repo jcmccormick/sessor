@@ -4,7 +4,7 @@
     <md-toolbar layout="row" class="md-site-primary">
         <div flex-gt-md="15"></div>
         <div flex layout="row" layout-align="start center" layout-padding>
-            <md-button clocation ng-click="lv.locate('/')" aria-label="go to main">
+            <md-button href="/" aria-label="go to main">
                 <span class="md-headline"><strong>Clerkr</strong></span>
             </md-button>
             <div ng-if="user.signedIn && user.reports_count > 0">
@@ -32,7 +32,7 @@
     </md-toolbar>
 </nav>
 
-<md-sidenav user-menu class="md-sidenav-right" md-component-id="right">
+<md-sidenav user-menu class="md-sidenav-right" md-component-id="user-menu">
     <md-content ng-form="contactForm" contact layout="column" layout-fill layout-padding>
         <md-input-container>
             <label>Send us a message</label>

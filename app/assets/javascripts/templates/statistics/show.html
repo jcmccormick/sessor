@@ -10,7 +10,7 @@
     <div layout="row" layout-padding>
         <div layout="column" layout-align="center center" layout-margin>
 <!--             <strong>Page</strong> -->
-            <md-select ng-model="sv.template" ng-change="sv.checker()">
+            <md-select ng-model="sv.template" ng-change="sv.checker()" aria-label="select page">
                 <md-option ng-repeat="template in sv.orderedTemplates = (sv.templates | orderBy:'-updated_at')" ng-value="template">{{template.name}}</md-option>
             </md-select>
         </div>

@@ -9,11 +9,11 @@ do ->
                 uv = this
 
                 uv.toggleMenu = $mdUtil.debounce (->
-                    $mdSidenav('right').toggle()
+                    $mdSidenav('user-menu').toggle()
                 ), 300
 
                 uv.closeMenu = ->
-                    $mdSidenav('right').close()
+                    $mdSidenav('user-menu').close()
 
                 uv.toggleLeftMenu = $mdUtil.debounce (->
                     $mdSidenav('left').toggle()

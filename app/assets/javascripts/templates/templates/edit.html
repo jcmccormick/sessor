@@ -58,8 +58,11 @@
 
     <div layout="row" layout-align="start end" layout-margin>
         <md-input-container flex class="md-no-errors">
-            <label>(Required) Page Name</label>
-            <input ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save(true)">
+            <label>Page Name</label>
+            <input name="templateName" ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save(true)">
+            <div ng-messages="vt.tempForm['template'].$error" ng-show="!vt.template.name">
+                <div ng-message="required">This field is required.</div>
+            </div>
         </md-input-container>
         <div layout="column" layout-align="end end" ng-if="vt.template.id">
             {{vt.template.fields.length || 0}} of 20 fields used
@@ -73,8 +76,8 @@
 
     <template-form-directive form="vt.template"></template-form-directive>
 
-    <md-button ng-click="vt.template.addSection(form)" aria-label="add a new section" ng-if="vt.template.id && ((vt.template.fields && vt.template.fields.length) || 0) < 20">
-        <md-icon>add</md-icon> Add Section
+    <md-button ng-click="vt.template.addSection(form)" class="md-raised" aria-label="add a new section" ng-if="vt.template.id && ((vt.template.fields && vt.template.fields.length) || 0) < 20">
+        <md-icon>add</md-icon> Add Row
     </md-button>
     
 </md-card>
