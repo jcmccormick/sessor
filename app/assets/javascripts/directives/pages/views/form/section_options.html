@@ -2,7 +2,7 @@
     <md-input-container flex class="md-no-errors">
         <label>Add a row name...</label>
         <input id="section-{{section.i}}-name" ng-model="section.n">
-        <div class="tooltip">Optional.</div>
+        <div class="tooltip">Optional</div>
     </md-input-container>
     <div layout="row">
         <md-button ng-click="form.moveSection($index, $index-1)" class="md-icon-button" ng-disabled="form.sections.length <= 1" aria-label="switch with section above">

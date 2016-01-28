@@ -20,13 +20,6 @@ do ->
             return
 
         linker = (scope, element, attrs)->
-            requiredtip = '
-                <md-icon class="md-warn" ng-if="field.o.required && !field.value.input && !field.o.default_value">
-                    <md-tooltip md-direction="top">
-                        Required
-                    </md-tooltip>
-                    grade
-                </md-icon>'
 
             overlay = '
                 <div flex class="field-overlay" layout="column" layout-fill layout-align="start end" ng-if="template.e">
@@ -75,12 +68,12 @@ do ->
                 </p>'+overlay+'
             </div>'
 
-            textfield = inputstart+' type="text" '+standard
-            textarea = '<textarea type="text" '+standard+'</textarea>'
-            email = inputstart+' type="email" '+standard
+            textfield = mdfw+inputstart+' type="text" '+standard+mdfwend
+            textarea = mdfw+'<textarea type="text" '+standard+'</textarea>'+mdfwend
+            email = mdfw+inputstart+' type="email" '+standard+mdfwend
 
-            integer = inputstart+' type="number" '+standard
-            time = inputstart+' type="time" '+standard
+            integer = mdfw+inputstart+' type="number" '+standard+mdfwend
+            time = mdfw+inputstart+' type="time" '+standard+mdfwend
             date = cust_start+'<md-datepicker ng-click="fform[field.o.name].$setTouched()" md-placeholder="{{field.o.name}}" '+standard+'</md-datepicker>'+cust_tooltip+cust_end
 
             checkbox = cust_start+'<md-checkbox '+checkboxmodel+' ng-true-value="\'t\'" ng-false-value="\'f\'" class="green" aria-label="toggle {{field.o.name}}" '+inputend+'
@@ -93,11 +86,11 @@ do ->
                         </md-radio-button>
                     </md-radio-group>'+cust_end
 
-            dropdown = '<md-select '+standard+'
+            dropdown = mdfw+'<md-select '+standard+'
                     <md-optgroup label="{{field.o.name}}">
                         <md-option ng-repeat="option in field.o.options" ng-value="option">{{option}}</md-option>
                     </md-optgroup>
-                </md-select>'
+                </md-select>'+mdfwend
 
             # Verify field type
             cur_field = getTemplate(scope.field)
@@ -126,23 +119,25 @@ do ->
                     !scope.report && scope.field.o.default_value = cur_value
                     scope.report && scope.field.value.input = cur_value
 
-                switch cur_field
-                    when "labelntext" then element.html labelntext
+                output = switch cur_field
+                    when "labelntext" then labelntext
 
-                    when "textfield" then element.html mdfw+textfield+mdfwend
-                    when "textarea" then element.html mdfw+textarea+mdfwend
-                    when "email" then element.html mdfw+email+mdfwend
+                    when "textfield" then textfield
+                    when "textarea" then textarea
+                    when "email" then email
 
-                    when "integer" then element.html mdfw+integer+mdfwend
-                    when "date" then element.html date
-                    when "time" then element.html mdfw+time+mdfwend
+                    when "integer" then integer
+                    when "date" then date
+                    when "time" then time
 
-                    when "checkbox" then element.html checkbox
-                    when "radio" then element.html radio
-                    when "dropdown" then element.html mdfw+dropdown+mdfwend
+                    when "checkbox" then checkbox
+                    when "radio" then radio
+                    when "dropdown" then dropdown
+
+                element.html output
             else
-                # Else we're viewing a report, so only show 
-                # input text and not an actual <input> field
+                # Else we're viewing a completed report, so only
+                # show responses and not actual <input> fields
 
                 if scope.field.value?
 
