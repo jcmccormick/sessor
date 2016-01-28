@@ -42,12 +42,13 @@
         </md-content>
     </md-sidenav>
 
-    <div layout-padding layout-margin ng-if="!vr.report.id">Give the report a name if you'd like, then add a page to it.</div>
+    <div layout-padding layout-margin ng-if="!vr.report.id">Name this Report if you'd like, then add a page</div>
 
     <div layout="row" layout-align="center center" layout-margin>
         <md-input-container flex class="md-no-errors">
-            <label>(Optional) Report Name </label>
+            <label>Report Name</label>
             <input ng-model="vr.report.title" ng-keypress="($event.keyCode==13) && vr.save(true)">
+            <div class="tooltip" ng-if="!vr.report.title">Optional</div>
         </md-input-container>
 
         <md-input-container>
