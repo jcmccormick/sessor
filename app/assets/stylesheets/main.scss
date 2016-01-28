@@ -291,8 +291,16 @@ template-form-directive {
  * Landing
  */
 
+newsletter {
+    label {
+        color: white;
+        font-size: initial;
+    }
+}
+
 .approach {
     position: relative;
+    overflow: hidden;
 
     img {
         width: 100%;
@@ -301,52 +309,44 @@ template-form-directive {
     .approach-text {
         position: absolute;
 
+        .cl-green {
+            background-color: rgba(0,0,0,.5);
+            padding: 0 15px;
+        }
+
         .approach-subtext-container {
-            background-color:  rgba(84,102,40, .75);
+            color: white;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 5px black;
+            background-color: rgba(84,102,40, .75);
+
+            @include respond(mini){ padding: 0 19%; font-size: small }
+            @include respond(mobile){ padding: 0 21%; font-size: initial }
+            @include respond(tablet){ padding: 0 25%; font-size: xx-large }
+            @include respond(desktop){ padding: 0 31%; font-size: xx-large }
         }
+    }
+}
 
-        .verticalFlipContainer {
-            .verticalFlip {
-                display: block;
-                font-size: 56px;
-                padding: 50px 0;
+#about {
+    .aim {
+        text-transform: uppercase;
+        text-align: center;
+    }
 
-                span {
-                    position: absolute;
-                    opacity: 0;
-                    right: 0;
-                    left: 0;
-                    color: forestgreen;
-                    font-weight: bold;
-                    font-family: 'Ubuntu';
-
-                    $times: 12;
-                    $basedelay: $times * 2.5s;
-                    animation: vertical $basedelay linear infinite 2.5s;
-                    -moz-animation: vertical $basedelay linear infinite 2.5s;
-                    -webkit-animation: vertical $basedelay linear infinite 2.5s;
-
-                    $looptimes: $times + 1;
-                    @while $looptimes > 2 {
-                        $looptimes: $looptimes - 1;
-                        $delay: $looptimes * 2.5s;
-
-                        &:nth-child(#{$looptimes}) {
-                            animation-delay: $delay;
-                            -moz-animation-delay: $delay;
-                            -webkit-animation-delay: $delay;
-                        }
-                    }
-                }
-            }
-            @keyframes vertical {
-                0% { }
-                2% { opacity: 1; }
-                8% { opacity: 1; font-size: larger; }
-                9% { opacity: .5; }
-                10% { opacity: 0; font-size: 10px; }
-            }
-        }
+    .md-title {
+        color: #555;
+        font-weight: 700 !important;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    .md-subhead,
+    ul {
+        margin-top: 0;
+        padding-top: 0;
+    }
+    ul {
+        margin-left: 30px;
     }
 }
 

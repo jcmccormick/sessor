@@ -21,85 +21,78 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body ng-app="clerkr" ng-cloak>
+
         <noscript>Please enable javascript and cookies in your browser.</noscript>
+
         <%= yield %>
 
         <!-- Signed out view -->
         <div ng-if="!user.signedIn">
             <md-toolbar class="md-site-secondary">
-                <newsletter ng-form="newsForm" layout="row" layout-margin layout-wrap>
-                    <md-input-container flex class="md-no-margin md-no-errors">
-                        <label>Let's trade: your email for our newsletter.</label>
-                        <input type="email" name="email" ng-model="nv.email" ng-pattern="/^.+@.+\..+$/">
-                    </md-input-container>
-                    <md-button class="md-fab md-mini md-site-primary" ng-click="nv.newSubscribe(nv.email, newsForm)" ng-disabled="!newsForm.email.$touched || newsForm.email.$invalid" aria-label="sign up for the newsletter">
-                        <md-icon>check</md-icon>
-                    </md-button>
-                    <span flex="1"></span>
-                    <md-button scroll-to="#about" bypass="true" aria-label="about clerkr">
-                        About
-                    </md-button>
-                    <md-button ng-click="authenticate('google')" aria-label="sign in with google">
-                        Sign in with Google
-                    </md-button>
+                <newsletter ng-form="newsForm" layout="column" layout-gt-sm="row">
+                    <div layout-fill layout="row" layout-align="end end">
+                        <md-button class="md-fab md-mini md-site-primary" ng-click="nv.newSubscribe(nv.email, newsForm)" ng-disabled="!nv.email || !newsForm.email.$valid" aria-label="sign up for the newsletter">
+                            <md-icon>check</md-icon>
+                        </md-button>
+                        <md-input-container layout-fill class="md-no-margin-bot md-no-errors">
+                            <label>Let's trade: your email for our newsletter.</label>
+                            <input type="email" name="email" ng-model="nv.email" ng-pattern="/^.+@.+\..+$/">
+                        </md-input-container>
+                    </div>
+                    <span flex></span>   
+                    <div layout="row" layout-align="start end">
+                        <md-button scroll-to="#about" bypass="true" aria-label="about clerkr">
+                            About
+                        </md-button>
+                        <span flex></span>
+                        <md-button ng-click="authenticate('google')" aria-label="sign in with google">
+                            Sign in with Google
+                        </md-button>
+                    </div>
                 </newsletter>
             </md-toolbar>
 
             <div class="approach">
-                <div class="approach-text" layout="column" layout-fill>
-                    <h2 layout-padding layout-margin class="cl-green">Clerkr</h2>
-                    <span flex="65"></span>
-                    <div layout="row" layout-align="center end" class="approach-subtext-container" layout-padding>
-                        <h3><em>Record, visualize, and share your data. Easy.</em></h3>
+                <div class="approach-text" layout="column" layout-align="center center" layout-fill>
+                    <h1 layout-padding layout-margin class="cl-green">Clerkr</h1>
+                    <span flex="50" flex-gt-sm="50"></span>
+                    <div layout="row" class="approach-subtext-container" layout-align="center center" layout-padding>
+                        <h3>Record, visualize, and share your data. Easy.</h3>
                     </div>
-                    <!-- <span class="verticalFlipContainer">
-                        <small class="verticalFlip">
-                            <span>Hobbyist?</span>
-                            <span>Scientist?</span>
-                            <span>Teacher?</span>
-                            <span>Researcher?</span>
-                            <span>Athlete?</span>
-                            <span>Tutor?</span>
-                            <span>Investigator?</span>
-                            <span>Doctor?</span>
-                            <span>Accountant?</span>
-                            <span>Professional?</span>
-                            <span>Student?</span>
-                            <span>Clerkr?</span>
-                        </small>
-                    </span> -->
                 </div>
                 <%= image_tag 'my-monkey-crop.svg' %>
             </div>
 
-            <div id="about" layout="row" layout-align="space-around" layout-wrap>
-                <span flex="100" layout-padding layout-margin class="md-headline">We aim to provide...</span>
-                <div flex="35">
-                    <h3 class="md-display-1">Designed Data</h3>
+            <div id="about" layout="column" layout-gt-sm="row" layout-align="space-around" layout-wrap>
+                <div flex="100" class="aim">
+                    <h2>We aim to provide...</h2>
+                </div>
+                <div flex="45" layout-margin layout-padding>
+                    <h4 class="md-title">Designed Data</h4>
                     <p class="md-subhead">Clerkr bases its services on the pages of data you create. Fine tune your process and increase productivity and efficiency.</p>
                 </div>
-                <div flex="35">
-                    <h3 class="md-display-1">Group Time</h3>
+                <div flex="45" layout-margin layout-padding>
+                    <h4 class="md-title">Group Time</h4>
                     <p class="md-subhead">Got a crew? Let's join forces. Got a business? We can help with that too: scheduling, appointments, client engagement, all integrated with your pages.</p>
                 </div>
-                <div flex="35">
-                    <h3 class="md-display-1">Growth</h3>
+                <div flex="45" layout-margin layout-padding>
+                    <h4 class="md-title">Growth</h4>
                     <p class="md-subhead">All users start with a set amount of reports to create. This number will naturally increase over time, and can be expanded.</p>
                 </div>
-                <div flex="35">
-                    <h3 class="md-display-1">Nerding Out</h3>
+                <div flex="45" layout-margin layout-padding>
+                    <h4 class="md-title">Nerding Out</h4>
                     <p class="md-subhead">Take a break and reflect on our various charts and graphs. Save your visualizations and export the data for use elsewhere.</p>
                 </div>
-                <div flex="35">
-                    <h3 class="md-display-1">Individuals...</h3>
+                <div flex="45" layout-margin layout-padding>
+                    <h4 class="md-title">Individuals...</h4>
                     <ul>
                         <li>Keep track of hobbies, sports, exercise, research, anything you want.</li>
                         <li>Use your pages for surveys.</li>
                         <li>Create interactive and visually-appealing graphs; print, save, and export your data views.</li>
                     </ul>
                 </div>
-                <div flex="35">
-                    <h3 class="md-display-1">Businesses...</h3>
+                <div flex="45" layout-margin layout-padding>
+                    <h4 class="md-title">Businesses...</h4>
                     <ul>
                         <li>Schedule employees and keep track of their time online.</li>
                         <li>Use pages on your site and for online or kiosk-based customer submissions.</li>
