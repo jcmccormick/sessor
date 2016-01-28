@@ -12,15 +12,7 @@
                     Statistics
                 </md-button>
             </div>
-            <div ng-if="!user.signedIn">
-                <md-button scroll-to="#about" bypass="true" aria-label="about clerkr">
-                    About
-                </md-button>
-            </div>
             <span flex></span>
-            <md-button ng-click="authenticate('google')" ng-if="!user.signedIn" aria-label="sign in with google">
-                Sign in with Google
-            </md-button>
             <md-button user-menu ng-click="uv.toggleMenu()" class="md-icon-button" aria-label="open user menu">
                 <md-tooltip md-direction="bottom">
                     User Menu
