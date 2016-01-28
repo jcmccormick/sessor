@@ -356,22 +356,23 @@ template-form-directive {
     }
 
     .view-animate.ng-enter, .view-animate.ng-leave {
-        transition:all ease .5s;
-
-        display:block;
-        width:70%;
-
         position:absolute;
-        left:15%;
+        display:block;
+        overflow: hidden;
+        transition:all ease .5s;
     }
 
     .view-animate.ng-enter {
-        left:100%;
+        top: 1000px;
+        width: 100%;
+        left: 0;
     }
     .view-animate.ng-enter.ng-enter-active {
-        left:15%;
+        top:0;
+        width: 70%;
+        left: 15%;
     }
     .view-animate.ng-leave.ng-leave-active {
-        left:-100%;
+        top: -1000px;
     }
 }

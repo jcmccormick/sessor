@@ -34,7 +34,7 @@ do ->
                         <md-tooltip md-direction="top">
                             Click to edit {{field.o.name}}
                         </md-tooltip>
-                        <md-icon flex>{{field.o.glyphicon}}</md-icon>      
+                        <md-icon>{{field.o.glyphicon}}</md-icon>      
                     </md-button>        
                 </div>'
 
@@ -95,8 +95,7 @@ do ->
 
             dropdown = '<md-select '+standard+'
                     <md-optgroup label="{{field.o.name}}">
-                        <md-option ng-repeat="option in field.o.options" ng-value="option">{{option}}
-                        </md-option>
+                        <md-option ng-repeat="option in field.o.options" ng-value="option">{{option}}</md-option>
                     </md-optgroup>
                 </md-select>'
 
