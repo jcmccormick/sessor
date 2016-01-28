@@ -103,17 +103,17 @@ do ->
             vt.numPages = ->
                 Math.ceil(vt.filteredList.length/vt.pageSize)
 
-            vt.newReport = (template, form)->
-                if template.draft
-                    TemplatesService.undraftFirst()
-                else
-                    report = ReportsService.extendReport()
-                    report.template_order.push template.id
-                    ReportsService.saveReport(report, true, form)
-
             vt.setDraft = (template)->
                 vt.tempForm.$pristine = false
                 TemplatesService.saveTemplate(template, true, vt.tempForm)
+                
+        vt.newReport = (template, form)->
+            if template.draft
+                TemplatesService.undraftFirst()
+            else
+                report = ReportsService.extendReport()
+                report.template_order.push template.id
+                ReportsService.saveReport(report, true, form)
 
         vt.delete = (ev, template)->
             TemplatesService.deleteTemplate(ev, template).then ->

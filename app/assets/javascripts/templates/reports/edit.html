@@ -7,44 +7,70 @@
         </div>
     </md-toolbar>
 
-    <md-toolbar class="md-site-tertiary" ng-if="vr.report.id">
-        <div class="md-toolbar-tools">
-            <md-button user-menu ng-click="uv.toggleLeftMenu()" class="md-icon-button" aria-label="open options menu">
-                <md-tooltip md-direction="bottom">
-                    Options Menu
-                </md-tooltip>
-                <md-icon>menu</md-icon>
-            </md-button>
-            <md-button ng-click="vr.save(true)" class="md-icon-button" aria-label="save {{vr.report.title}}">
-                <md-tooltip md-direction="bottom">
-                    Save {{vr.report.title}}
-                </md-tooltip>
-                <md-icon>save</md-icon>
-            </md-button>
-        </div>
-    </md-toolbar>
+    <div layout="row" ng-show="vr.report.id">
+        <md-menu-bar>
+            <md-menu>
+                <button ng-click="$mdOpenMenu()">
+                    File
+                </button>
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button ng-click="vr.save(true)" aria-label="save {{vr.report.title}}">
+                            Save
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="vr.save()" aria-label="view {{vr.report.title}}">
+                            Stop Editing
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item>
+                        <md-menu>
+                            <md-button ng-click="$mdOpenMenu()">New</md-button>
+                            <md-menu-content>
+                                <md-menu-item>
+                                    <md-button ng-click="$mdCloseMenu()" href="/templates/new" aria-label="create new page">
+                                        Page
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="$mdCloseMenu()" href="/reports/new" aria-label="create new report">
+                                        Report
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-menu>
+                            <md-button ng-click="$mdOpenMenu()">View</md-button>
+                            <md-menu-content>
+                                <md-menu-item>
+                                    <md-button ng-click="$mdCloseMenu()" href="/reports" aria-label="view all reports">
+                                        All Reports
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="$mdCloseMenu()" href="/templates" aria-label="view all pages">
+                                        All Pages
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item>
+                        <md-button ng-click="vr.delete($event, vr.report)" aria-label="delete {{vr.report.name}}">
+                            Delete
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </md-menu-bar>
+    </div>
 
-    <md-sidenav user-menu class="md-sidenav-left" md-component-id="left" ng-if="vr.report.id">
-        <md-content layout="column" layout-fill layout-padding>
-            <md-button clocation ng-click="lv.locate('/reports/new')" class="md-raised md-primary" aria-label="create new report">
-                New Report
-            </md-button>
-            <md-button user-menu ng-click="vr.save()" aria-label="view {{vr.report.title}}">
-                View This Report
-            </md-button>
-            <md-button clocation ng-click="lv.locate('/reports')" aria-label="view all reports">
-                View All Reports
-            </md-button>
-            <span flex></span>
-            <md-button ng-click="vr.delete($event, vr.report)" class="md-raised md-warn" aria-label="delete {{vr.report.name}}">
-                Delete This Report
-            </md-button>
-        </md-content>
-    </md-sidenav>
-
-    <div layout-padding layout-margin ng-if="!vr.report.id">Name this Report if you'd like, then add a page</div>
-
-    <div layout="row" layout-align="center center" layout-margin>
+    <div layout="row" layout-margin>
         <md-input-container flex class="md-no-errors">
             <label>Report Name</label>
             <input ng-model="vr.report.title" ng-keypress="($event.keyCode==13) && vr.save(true)">
@@ -69,6 +95,8 @@
             <md-icon>add</md-icon>
         </md-button>
     </div>
+
+    <div layout-padding layout-margin ng-if="!vr.report.id">Name this Report if you'd like, then add a page</div>
 
     <md-tabs md-dynamic-height md-border-bottom ng-if="vr.report.templates.length">
         <md-tab ng-repeat="template in vr.report.templates">

@@ -6,36 +6,68 @@
             </h2>
         </div>
     </md-toolbar>
-
-    <md-toolbar class="md-site-tertiary">
-        <div class="md-toolbar-tools">
-            <md-button user-menu ng-click="uv.toggleLeftMenu()" class="md-icon-button" aria-label="open options menu" ng-if="vr.report.id">
-                <md-tooltip md-direction="bottom">
-                    Options Menu
-                </md-tooltip>
-                <md-icon>menu</md-icon>
-            </md-button>
-            <md-button clocation ng-click="lv.locate('/reports/'+vr.report.id+'/edit')" class="md-icon-button" aria-label="edit {{vr.report.title || 'untitled report ' + vr.report.id}}">
-                <md-tooltip md-direction="bottom">
-                    Edit {{vr.report.title || 'Untitled report' + vr.report.id}}
-                </md-tooltip>
-                <md-icon>edit</md-icon>
-            </md-button>
-        </div>
-    </md-toolbar>
-
-    <md-sidenav user-menu class="md-sidenav-left" md-component-id="left" ng-if="vr.report.id">
-        <md-content layout="column" layout-fill layout-padding>
-            <md-button clocation ng-click="lv.locate('/reports/new')" class="md-raised md-primary" aria-label="create new report">
-                New Report
-            </md-button>
-            <md-button clocation ng-click="lv.locate('/reports')" aria-label="view all reports">
-                View All Reports
-            </md-button>
-        </md-content>
-    </md-sidenav>
     
-    <h2>{{vr.report.title || 'Untitled report ' + vr.report.id}}</h2>
+    <div layout="row" ng-show="vr.report.id">
+        <md-menu-bar>
+            <md-menu>
+                <button ng-click="$mdOpenMenu()">
+                    File
+                </button>
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button ng-click="$mdCloseMenu()" href="/reports/{{vr.report.id}}/edit" aria-label="edit {{vr.report.title}}">
+                            Edit
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item>
+                        <md-menu>
+                            <md-button ng-click="$mdOpenMenu()">New</md-button>
+                            <md-menu-content>
+                                <md-menu-item>
+                                    <md-button ng-click="$mdCloseMenu()" href="/templates/new" aria-label="create new page">
+                                        Page
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="$mdCloseMenu()" href="/reports/new" aria-label="create new report">
+                                        Report
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-menu>
+                            <md-button ng-click="$mdOpenMenu()">View</md-button>
+                            <md-menu-content>
+                                <md-menu-item>
+                                    <md-button ng-click="$mdCloseMenu()" href="/reports" aria-label="view all reports">
+                                        All Reports
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="$mdCloseMenu()" href="/templates" aria-label="view all pages">
+                                        All Pages
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item>
+                        <md-button ng-click="vr.delete($event, vr.report)" aria-label="delete {{vr.report.name}}">
+                            Delete
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </md-menu-bar>
+    </div>
+
+    <div layout="row" layout-margin>
+        <h2 class="md-headline">{{vr.report.title || 'Untitled Report ' + vr.report.id}}</h2>
+    </div>
 
     <md-tabs md-dynamic-height md-border-bottom>
         <md-tab label="{{template.name}}" ng-repeat="template in vr.report.templates">

@@ -50,11 +50,15 @@ do ->
                 deferred = $q.defer()
                 index = geti(parseInt(id, 10))
                 if refreshing || !reports[index].loadedFromDB
-                    ClassFactory.get({class: 'reports', id: id}, (res)->
+                    ClassFactory.get({class: 'reports', id: id}, ((res)->
                         res.loadedFromDB = true
                         reports[index] = res
                         slr(reports)
                         deferred.resolve(res)
+                    ), (err)->
+                        deferred.reject()
+                        Flash.create('danger', '<h3>Not Found</h3> <p>We couldn\'t find that.</p>')
+                        $location.path('/')
                     )
                 else
                     deferred.resolve(reports[index])

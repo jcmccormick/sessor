@@ -17,7 +17,7 @@ do ->
                     (!template.sections || (fields_values && template.fields.length != fields_values.length) ) && reload = true
 
 
-            repId && (!vr.report.loadedFromDB || reload) && ReportsService.queryReport(repId, true).then((res)->
+            repId && (!vr.report.loadedFromDB || reload) && ReportsService.queryReport(repId, true).then ((res)->
                 $.extend vr.report, res
                 vr.report.form = vr.report.templates[0]
             )

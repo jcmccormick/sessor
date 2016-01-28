@@ -7,39 +7,77 @@
         </div>
     </md-toolbar>
 
-    <md-toolbar class="md-site-tertiary">
-        <div class="md-toolbar-tools">
-            <md-button user-menu ng-click="uv.toggleLeftMenu()" class="md-icon-button" aria-label="open options menu" ng-if="vt.template.id">
-                <md-tooltip md-direction="bottom">
-                    Options Menu
-                </md-tooltip>
-                <md-icon>menu</md-icon>
-            </md-button>
-            <md-button clocation ng-click="lv.locate('/templates/'+vt.template.id+'/edit')" class="md-icon-button" aria-label="edit {{vt.template.name}}">
-                <md-tooltip md-direction="bottom">
-                    Edit {{vt.template.name}}
-                </md-tooltip>
-                <md-icon>edit</md-icon>
-            </md-button>
-        </div>
-    </md-toolbar>
+    <div layout="row" ng-show="vt.template.id">
+        <md-menu-bar>
+            <md-menu>
+                <button ng-click="$mdOpenMenu()">
+                    File
+                </button>
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button ng-click="$mdCloseMenu()" href="/templates/{{vt.template.id}}/edit" aria-label="edit {{vt.template.name}}">
+                            Edit
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item>
+                        <md-menu>
+                            <md-button ng-click="$mdOpenMenu()">New</md-button>
+                            <md-menu-content>
+                                <md-menu-item>
+                                    <md-button ng-click="$mdCloseMenu()" href="/templates/new" aria-label="create new page">
+                                        Page
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="$mdCloseMenu()" href="/reports/new" aria-label="create new report">
+                                        Report
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="vt.newReport(vt.template, vt.tempForm)" aria-label="create new report with this page">
+                                        Report with this Page
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-menu>
+                            <md-button ng-click="$mdOpenMenu()">View</md-button>
+                            <md-menu-content>
+                                <md-menu-item>
+                                    <md-button ng-click="$mdCloseMenu()" href="/templates" aria-label="view all pages">
+                                        All Pages
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="$mdCloseMenu()" href="/reports" aria-label="view all reports">
+                                        All Reports
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="vt.view_sheet($event, vt.template)" aria-label="view google sheet for {{vt.template.name}}">
+                                        Google Sheet for this Page
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item>
+                        <md-button ng-click="vt.delete($event, vt.template)" aria-label="delete {{vt.template.name}}">
+                            Delete
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
 
-    <md-sidenav user-menu class="md-sidenav-left" md-component-id="left" ng-if="vt.template.id">
-        <md-content layout="column" layout-fill layout-padding>
-            <md-button clocation ng-click="lv.locate('/templates/new')" class="md-raised md-primary" aria-label="create new page">
-                New Page
-            </md-button>
-            <md-button ng-click="vt.view_sheet($event, vt.template)" aria-label="view google sheet for {{vt.template.name}}">
-                View Google Sheet
-            </md-button>
-            <md-button clocation ng-click="lv.locate('/templates')" aria-label="view all pages">
-                View All Pages
-            </md-button>
-        </md-content>
-    </md-sidenav>
+        </md-menu-bar>
+    </div>
 
-    <div layout="row" layout-align="center center">
-        <h2>{{vt.template.name}}</h2>
+    <div layout="row" layout-margin>
+        <h2 class="md-headline">{{vt.template.name}}</h2>
     </div>
     
     <template-form-directive form="vt.template"></template-form-directive>

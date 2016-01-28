@@ -7,124 +7,130 @@
         </div>
     </md-toolbar>
 
-    <md-toolbar class="md-menu-toolbar">
-        <div layout="row">
-            <md-menu-bar>
-                <md-menu>
-                    <button ng-click="$mdOpenMenu()">
-                        File
-                    </button>
-                    <md-menu-content>
-                        <md-menu-item>
-                            <md-button ng-click="vt.save(true)" aria-label="save {{vt.template.name}}">
-                                Save
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button user-menu ng-click="vt.save()" aria-label="save and stop editing {{vt.template.name}}">
-                                Stop Editing
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-divider></md-menu-divider>
-                        <md-menu-item>
-                            <md-menu>
-                                <md-button ng-click="$mdOpenMenu()">New</md-button>
-                                <md-menu-content>
-                                    <md-menu-item>
-                                        <md-button href="/templates/new" aria-label="create new page">Page</md-button>
-                                    </md-menu-item>
-                                    <md-menu-item>
-                                        <md-button href="/reports/new" aria-label="create new report">Report</md-button>
-                                    </md-menu-item>
-                                    <md-menu-item ng-controller="ReportsController as vr">
-                                        <md-button ng-click="vr.addTemplate(vt.template)" aria-label="create new report with this page">Report with this Page</md-button>
-                                    </md-menu-item>
-                                </md-menu-content>
-                            </md-menu>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-menu>
-                                <md-button ng-click="$mdOpenMenu()">View</md-button>
-                                <md-menu-content>
-                                    <md-menu-item>
-                                        <md-button clocation ng-click="lv.locate('/templates')" aria-label="view all pages">
-                                            All Pages
-                                        </md-button>
-                                    </md-menu-item>
-                                    <md-menu-item>
-                                        <md-button ng-click="vt.view_sheet($event, vt.template)" aria-label="view google sheet for {{vt.template.name}}">
-                                            Google Sheet
-                                        </md-button>
-                                    </md-menu-item>
-                                </md-menu-content>
-                            </md-menu>
-                        </md-menu-item>
-                        <md-menu-divider></md-menu-divider>
-                        <md-menu-item>
-                            <md-button ng-click="vt.delete($event, vt.template)" aria-label="delete {{vt.template.name}}">
-                                Delete
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
-                <md-menu>
-                    <button ng-click="$mdOpenMenu()">
-                        Edit
-                    </button>
-                    <md-menu-content class="md-indent">
-                        <md-menu-item class="md-indent">
-                            <md-icon ng-class="{'md-primary':vt.template.draft}">turned_in</md-icon>
-                            <md-button ng-click="vt.template.draft = !vt.template.draft" aria-label="toggle draft">
-                                Draft {{(vt.template.draft && '- On') || ''}}
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
-                <md-menu>
-                    <button ng-click="$mdOpenMenu()">
-                        Share
-                    </button>
-                    <md-menu-content>
-                        <md-menu-item class="md-indent">
-                            <md-icon ng-class="{'md-primary':vt.template.private_world}">public</md-icon>
-                            <md-button ng-click="vt.template.private_world = !vt.template.private_world" aria-label="toggle public sharing">
-                                Public {{(vt.template.private_world && '- Enabled') || ''}}
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item class="md-indent">
-                            <md-icon ng-class="{'md-primary':vt.template.private_group}">group</md-icon>
-                            <md-button ng-click="vt.template.private_group = !vt.template.private_group" aria-label="toggle group sharing">
-                                Group {{(vt.template.private_group && '- Enabled') || ''}}
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item class="md-indent">
-                            <md-icon ng-class="{'md-primary':vt.template.group_edit}">group_add</md-icon>
-                            <md-button ng-click="vt.template.group_edit = !vt.template.group_edit" aria-label="toggle allowing group editors">
-                                Allow Group Editors {{(vt.template.group_edit && '- Enabled') || ''}}
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
-            </md-menu-bar>
-            <span flex></span>
-            <span layout-padding class="md-body-2">{{vt.template.fields.length || 0}} of 20 fields &nbsp; &nbsp; &nbsp; &nbsp;</span>
-        </div>
-    </md-toolbar>
+    <div layout="row" ng-show="vt.template.id">
+        <md-menu-bar>
+            <md-menu>
+                <button ng-click="$mdOpenMenu()">
+                    File
+                </button>
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button ng-click="vt.save(true)" aria-label="save {{vt.template.name}}">
+                            Save
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="vt.save()" aria-label="save and stop editing {{vt.template.name}}">
+                            Stop Editing
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item>
+                        <md-menu>
+                            <md-button ng-click="$mdOpenMenu()">New</md-button>
+                            <md-menu-content>
+                                <md-menu-item>
+                                    <md-button ng-click="$mdCloseMenu()" href="/templates/new" aria-label="create new page">
+                                        Page
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="$mdCloseMenu()" href="/reports/new" aria-label="create new report">
+                                        Report
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="vt.newReport(vt.template, vt.tempForm)" aria-label="create new report with this page">
+                                        Report with this Page
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-menu>
+                            <md-button ng-click="$mdOpenMenu()">View</md-button>
+                            <md-menu-content>
+                                <md-menu-item>
+                                    <md-button ng-click="$mdCloseMenu()" href="/templates" aria-label="view all pages">
+                                        All Pages
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="$mdCloseMenu()" href="/reports" aria-label="view all reports">
+                                        All Reports
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="vt.view_sheet($event, vt.template)" aria-label="view google sheet for {{vt.template.name}}">
+                                        Google Sheet for this Page
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item>
+                        <md-button ng-click="vt.delete($event, vt.template)" aria-label="delete {{vt.template.name}}">
+                            Delete
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+            <md-menu>
+                <button ng-click="$mdOpenMenu()">
+                    Edit
+                </button>
+                <md-menu-content class="md-indent">
+                    <md-menu-item class="md-indent">
+                        <md-icon ng-class="{'md-primary':vt.template.draft}">turned_in</md-icon>
+                        <md-button ng-click="vt.template.draft = !vt.template.draft" aria-label="toggle draft">
+                            Draft {{(vt.template.draft && '- On') || ''}}
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+            <md-menu>
+                <button ng-click="$mdOpenMenu()">
+                    Share
+                </button>
+                <md-menu-content>
+                    <md-menu-item class="md-indent">
+                        <md-icon ng-class="{'md-primary':vt.template.private_world}">public</md-icon>
+                        <md-button ng-click="vt.template.private_world = !vt.template.private_world" aria-label="toggle public sharing">
+                            Public {{(vt.template.private_world && '- Enabled') || ''}}
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item class="md-indent">
+                        <md-icon ng-class="{'md-primary':vt.template.private_group}">group</md-icon>
+                        <md-button ng-click="vt.template.private_group = !vt.template.private_group" aria-label="toggle group sharing">
+                            Group {{(vt.template.private_group && '- Enabled') || ''}}
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item class="md-indent">
+                        <md-icon ng-class="{'md-primary':vt.template.group_edit}">group_add</md-icon>
+                        <md-button ng-click="vt.template.group_edit = !vt.template.group_edit" aria-label="toggle allowing group editors">
+                            Allow Group Editors {{(vt.template.group_edit && '- Enabled') || ''}}
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </md-menu-bar>
+        <span flex></span>
+        <span layout-padding class="md-body-2">{{vt.template.fields.length || 0}} of 20 fields &nbsp; &nbsp;</span>
+    </div>
 
-
-    <div layout-padding layout-margin ng-if="!vt.template.id">Enter a name for your Page and press Enter or Save</div>
-
-    <div layout="row" layout-align="start end" layout-margin>
-        <md-input-container flex class="md-no-errors">
+    <div layout="row" layout-margin>
+        <md-input-container flex class="md-no-errors md-no-margin-top">
             <label>Page Name</label>
             <input name="templateName" ng-model="vt.template.name" ng-keypress="($event.keyCode==13) && vt.save(true)">
             <div ng-messages="vt.tempForm['template'].$error" ng-show="!vt.template.name">
                 <div ng-message="required">This field is required.</div>
             </div>
         </md-input-container>
-        <div layout="column" layout-align="end end" ng-if="vt.template.id">
-        </div>
     </div>
+
+    <div layout-padding layout-margin ng-if="!vt.template.id">Enter a name for your Page and press <code>Enter</code></div>
 
     <draggable-options field="vt.template.sO" form="vt.template" class="field-options" ng-if="vt.template.poppedOut && vt.template.sO.o"></draggable-options>
 
