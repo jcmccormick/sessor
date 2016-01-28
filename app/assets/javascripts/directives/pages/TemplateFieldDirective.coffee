@@ -21,15 +21,12 @@ do ->
 
         linker = (scope, element, attrs)->
 
-            overlay = '
-                <div flex class="field-overlay" layout="column" layout-fill layout-align="start end" ng-if="template.e">
-                    <md-button ng-click="template.sO=field" class="md-icon-button" ng-class="{\'force-hover\':template.sO.id == field.id}" aria-label="click to edit {{field.o.name}}">
-                        <md-tooltip md-direction="top">
-                            Click to edit {{field.o.name}}
-                        </md-tooltip>
-                        <md-icon>{{field.o.glyphicon}}</md-icon>      
-                    </md-button>        
-                </div>'
+            overlay = '<md-button ng-click="template.sO=field" class="field-overlay md-icon-button" ng-class="{\'force-hover\':template.sO.id == field.id}" aria-label="click to edit {{field.o.name}}" ng-if="template.e">
+                <md-tooltip md-direction="top">
+                    Click to edit {{field.o.name}}
+                </md-tooltip>
+                <md-icon>{{field.o.glyphicon}}</md-icon>      
+            </md-button>'
 
             hint = '<div class="tooltip" ng-show="field.o.tooltip && (!fform[field.o.name].$touched || fform[field.o.name].$valid)">{{field.o.tooltip}}</div>'
 
@@ -38,15 +35,15 @@ do ->
                     <div ng-message="required" ng-if="field.o.required">This field is required.</div>
                 </div>'
 
-            mdfw = '
-                <md-input-container class="md-block md-no-errors">
+            mdfw = '<div layout="row" layout-align="start start">'+overlay+'
+                <md-input-container layout-fill class="md-block">
                     <label>{{field.o.name}}</label>'
+                
+            mdfwend = hint+required+'</md-input-container>
+            </div>'
 
-            mdfwend = hint+required+overlay+'</md-input-container>'
-
-            cust_start = '<div layout="column" layout-align="center start" layout-fill class="cust-start">'
-
-            cust_end = overlay+'</div>'
+            cust_start = '<div layout="row" class="cust-start">'+overlay                
+            cust_end = '</div>'
 
             cust_tooltip = '<span ng-show="field.o.tooltip || field.o.required" class="cust-tooltip">'+hint+'<div class="required">'+required+'</div></span>'
 
@@ -61,11 +58,13 @@ do ->
             standard = ngmodel+' '+inputend
 
             # Define the particulars of each supported field
-            labelntext = '<div layout="column">
-                <span ng-if="field.o.name" class="md-title">{{field.o.name}}</span>
-                <p class="md-body-1" ng-if="field.value.input || field.o.default_value">
-                    {{field.value.input || field.o.default_value}}
-                </p>'+overlay+'
+            labelntext = '<div layout="row">'+overlay+'
+                <div layout="column" class="labeltext-wrap" layout-fill>
+                    <span ng-if="field.o.name" class="md-title">{{field.o.name}}</span>
+                    <p class="md-body-1" ng-if="field.value.input || field.o.default_value">
+                        {{field.value.input || field.o.default_value}}
+                    </p>
+                </div>
             </div>'
 
             textfield = mdfw+inputstart+' type="text" '+standard+mdfwend
@@ -74,17 +73,24 @@ do ->
 
             integer = mdfw+inputstart+' type="number" '+standard+mdfwend
             time = mdfw+inputstart+' type="time" '+standard+mdfwend
-            date = cust_start+'<md-datepicker ng-click="fform[field.o.name].$setTouched()" md-placeholder="{{field.o.name}}" '+standard+'</md-datepicker>'+cust_tooltip+cust_end
+            date = cust_start+'
+                <div layout="column" class="date-wrap">
+                    <md-datepicker ng-click="fform[field.o.name].$setTouched()" md-placeholder="{{field.o.name}}" '+standard+'</md-datepicker>'+cust_tooltip+'
+                </div>'+cust_end
 
-            checkbox = cust_start+'<md-checkbox '+checkboxmodel+' ng-true-value="\'t\'" ng-false-value="\'f\'" class="green" aria-label="toggle {{field.o.name}}" '+inputend+'
-                        {{field.o.name}}
-                    </md-checkbox>'+cust_tooltip+cust_end
+            checkbox = cust_start+'<div class="checkbox-wrap" layout-fill>
+                <md-checkbox '+checkboxmodel+' ng-true-value="\'t\'" ng-false-value="\'f\'" class="green" aria-label="toggle {{field.o.name}}" '+inputend+'
+                    {{field.o.name}}
+                </md-checkbox>
+            </div>'+cust_tooltip+cust_end
 
-            radio = cust_start+'<span class="md-body-1">{{field.o.name}}</span>'+cust_tooltip+'
-                    <md-radio-group '+ngmodel+' class="md-primary" ng-if="field.o.options">
-                        <md-radio-button ng-repeat="option in field.o.options" ng-value="option"'+inputend+'{{option}}
-                        </md-radio-button>
-                    </md-radio-group>'+cust_end
+            radio = cust_start+'<div class="radio-wrap" layout-fill>
+                <span class="md-body-1">{{field.o.name}}</span>'+cust_tooltip+'
+                <md-radio-group '+ngmodel+' class="md-primary" ng-if="field.o.options">
+                    <md-radio-button ng-repeat="option in field.o.options" ng-value="option"'+inputend+'{{option}}
+                    </md-radio-button>
+                </md-radio-group>
+            </div>'+cust_end
 
             dropdown = mdfw+'<md-select '+standard+'
                     <md-optgroup label="{{field.o.name}}">
@@ -134,7 +140,7 @@ do ->
                     when "radio" then radio
                     when "dropdown" then dropdown
 
-                element.html output
+                element.html '<div ng-class="{\'editing\':template.e}">'+output+'</div>'
             else
                 # Else we're viewing a completed report, so only
                 # show responses and not actual <input> fields

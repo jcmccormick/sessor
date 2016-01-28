@@ -5,7 +5,7 @@
 
         <!-- Show either section name or section options -->
         <div ng-if="form.e || section.n">
-            <span class="md-title" ng-if="!form.e">{{section.n}}</span>
+            <h4 class="md-title md-no-margin-bot" ng-if="!form.e">{{section.n}}</h4>
             <ng-include src="'directives/pages/views/form/section_options.html'" ng-if="form.e"></ng-include>
         </div>
     </div>

@@ -265,7 +265,26 @@ template-form-directive {
         }
 
         .cust-start {
+            md-input-container {
+                margin-left: 6px;
+            }
             margin-bottom: 18px;
+        }
+
+        .editing {
+            .labeltext-wrap {
+                margin-top: 7px;
+            }
+            .checkbox-wrap {
+                margin-top: 9px;
+            }
+            .radio-wrap {
+                margin-top: 8px;
+            }
+            .date-wrap {
+                margin-top: 7px;
+            }
+            .dropdown-wrap {}
         }
 
         .cust-tooltip {
@@ -274,10 +293,9 @@ template-form-directive {
             margin: 5px 0 0 2px;
         }
         .field-overlay {
-            position: absolute;
 
-            .force-hover {
-                background-color: $site-color-secondary;
+            &.force-hover {
+                background-color: $site-color-secondary !important;
 
                 md-icon {
                     color: white;
