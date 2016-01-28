@@ -15,7 +15,7 @@
             <md-toolbar class="md-site-secondary">
                 <newsletter ng-form="newsForm" layout="row" layout-align="center center" layout-margin>
                     <md-input-container flex class="md-no-margin md-no-errors">
-                        <label>Your email for our newsletter.</label>
+                        <label>Let's trade: your email for our newsletter.</label>
                         <input type="email" name="email" ng-model="nv.email" ng-pattern="/^.+@.+\..+$/">
                     </md-input-container>
                     <md-button class="md-fab md-mini md-site-primary" ng-click="nv.newSubscribe(nv.email, newsForm)" ng-disabled="!newsForm.email.$touched || newsForm.email.$invalid" aria-label="sign up for the newsletter">

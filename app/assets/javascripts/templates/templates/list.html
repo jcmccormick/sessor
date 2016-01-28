@@ -57,28 +57,28 @@
                         </md-button>
                         <md-menu-content width="4">
                             <md-menu-item>
-                                <md-switch ng-click="$mdCloseMenu()" ng-model="template.draft" aria-label="draft or undraft {{template.name}}" ng-change="vt.setDraft(template)">
+                                <md-switch ng-model="template.draft" class="md-primary" aria-label="draft or undraft {{template.name}}" ng-change="vt.setDraft(template)">
                                     {{(!template.draft && 'Und') || 'D'}}rafted
                                 </md-switch>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button ng-click="$mdCloseMenu();vt.newReport(template, vt.tempForm)" aria-label="new report with {{template.id}} {{template.name}}">
-                                    <md-icon>description</md-icon> New Report
+                                    <md-icon class="md-primary">description</md-icon>New Report
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button ng-click="$mdCloseMenu()" href="/templates/{{template.id}}" aria-label="view {{template.id}} {{template.name}}">
-                                    <md-icon>search</md-icon> View
+                                    <md-icon class="md-primary">search</md-icon> View
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button ng-click="$mdCloseMenu()" href="/templates/{{template.id}}/edit" aria-label="edit {{template.id}} {{template.name}}">
-                                    <md-icon>create</md-icon> Edit
+                                    <md-icon class="md-primary">create</md-icon> Edit
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item>
-                                <md-button ng-click="$mdCloseMenu();vt.delete($event, template)" class="md-warn" ria-label="delete {{template.id}} {{template.name}}">
-                                    <md-icon>delete</md-icon> Delete
+                                <md-button ng-click="$mdCloseMenu();vt.delete($event, template)" aria-label="delete {{template.id}} {{template.name}}">
+                                    <md-icon class="md-warn">delete</md-icon>Delete
                                 </md-button>
                             </md-menu-item>
                         </md-menu-content>
