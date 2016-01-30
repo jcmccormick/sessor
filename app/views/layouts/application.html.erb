@@ -15,9 +15,6 @@
         <%= csrf_meta_tags %>
         <title>Clerkr - Reporting for individuals and businesses.</title>
         <!-- data, software, tools -->
-        <style>
-            .newsletter {display: block;padding: 160px  40px;}
-        </style>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body ng-app="clerkr" ng-cloak>
@@ -45,8 +42,11 @@
                             About
                         </md-button>
                         <span flex></span>
-                        <md-button ng-click="authenticate('google')" aria-label="sign in with google">
-                            Sign in with Google
+                        <md-button user-menu ng-click="uv.toggleMenu()" aria-label="open user menu">
+                            <md-tooltip md-direction="bottom">
+                                User Menu
+                            </md-tooltip>
+                            <md-icon>person</md-icon>
                         </md-button>
                     </div>
                 </newsletter>

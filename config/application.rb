@@ -9,8 +9,6 @@ Bundler.require(*Rails.groups)
 module Sessor
     class Application < Rails::Application
 
-        config.web_console.whitelisted_ips = '192.168.1.125' if Rails.env.development?
-
         config.cache_store = :dalli_store
 
         # Settings in config/environments/* take precedence over those specified here.

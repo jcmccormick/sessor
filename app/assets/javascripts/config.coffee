@@ -8,10 +8,15 @@ do ->
         $httpProvider.interceptors.push 'loadingInterceptor'
 
         $authProvider.configure
-            apiUrl: ''
-            storage: 'localStorage'
-            apiProviderPaths:
-                google: 'auth/google_oauth2'
+            apiUrl: '',
+            storage: 'localStorage',
+            omniauthWindowType: 'sameWindow',
+            apiProviderPaths: {
+                google: '/auth/google_oauth2',
+                github: '/auth/github',
+                twitter: '/auth/twitter',
+                facebook: '/auth/facebook'
+            }
 
         resolver = 'auth': ['$auth', 'localStorageService', 'ReportsService', 'TemplatesService',
         ($auth, localStorageService, ReportsService, TemplatesService)->

@@ -61,6 +61,9 @@ gem 'angular-rails-templates'
 # Auth
 gem 'devise_token_auth'
 gem 'omniauth-google-oauth2', :git => 'git://github.com/zquestz/omniauth-google-oauth2.git'
+gem 'omniauth-github'
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
 gem 'google-api-client'
 gem 'google_drive'
 

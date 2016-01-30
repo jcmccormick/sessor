@@ -2,12 +2,11 @@
 module Api::V1 #:nodoc:
     class ReportsController < ApplicationController
         before_action :authenticate_user!
-        include Sheeted
+        # include Sheeted
 
         wrap_parameters include: Report.wrapped_params
 
         def index
-            logger.info user_session
             render json: current_user.reports.as_json(only: [:id, :title, :updated_at, :template_order])
         end
 
@@ -19,18 +18,19 @@ module Api::V1 #:nodoc:
             @report = current_user.reports.new(allowed_params)
             @report.save
             current_user.reports << @report
-            update_worksheet(@report)
+            #update_worksheet(@report)
+            update_templates(@report)
             render 'show', status: 201
         end
 
         def update
             report = current_user.reports.find(params[:id])
-            report.template_order = params[:template_order]
             if params.has_key?(:did)
                 report.disassociate_template(params[:did])
                 report.update_attributes(params.require(:report).permit({:template_order => []}))
             else
-                update_worksheet(report)
+                #update_worksheet(report)
+                update_templates(report)
                 report.update_attributes(allowed_params)
             end
             current_user.reports << report unless current_user.reports.include?(report)
@@ -52,6 +52,13 @@ module Api::V1 #:nodoc:
                         :id, :input, :field_id
                     ]      
                 )
+            end
+
+            def update_templates(report)
+                params[:template_order].each do |tid|
+                    template = current_user.templates.find_by_id(tid)
+                    report.templates << template unless report.templates.include?(template)
+                end
             end
 
             def update_worksheet(report)

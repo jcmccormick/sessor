@@ -62,7 +62,7 @@
                                     </md-button>
                                 </md-menu-item>
                                 <md-menu-item>
-                                    <md-button ng-click="vt.view_sheet($event, vt.template)" aria-label="view google sheet for {{vt.template.name}}">
+                                    <md-button ng-click="vt.view_sheet($event, vt.template)" aria-label="view google sheet for {{vt.template.name}}" ng-if="vt.template.gs_url">
                                         Google Sheet for this Page
                                     </md-button>
                                 </md-menu-item>
