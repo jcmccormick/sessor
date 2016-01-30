@@ -7,7 +7,7 @@ module Api::V1#:nodoc:
         wrap_parameters include: Template.wrapped_params
 
         def index
-            render json: current_user.templates.as_json(only: [:id, :name, :updated_at, :draft, :gs_key] )
+            render json: current_user.templates.as_json(only: [:id, :name, :updated_at, :draft] )
         end
 
         def show

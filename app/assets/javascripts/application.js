@@ -16,8 +16,8 @@
 //= require angular-aria
 //= require angular-route
 //= require angular-resource
-//= require angular-flash-alert/dist/angular-flash
-//= require angular-mocks/angular-mocks
+//= require angular-flash-alert
+//= require angular-mocks
 //= require angular-material
 //= require angular-animate
 //= require angular-local-storage

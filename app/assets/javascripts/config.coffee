@@ -14,7 +14,6 @@ do ->
             apiProviderPaths: {
                 google: '/auth/google_oauth2',
                 github: '/auth/github',
-                twitter: '/auth/twitter',
                 facebook: '/auth/facebook'
             }
 

@@ -16,16 +16,13 @@
 <md-sidenav user-menu class="md-sidenav-right" md-component-id="user-menu">
     <md-content ng-form="contactForm" contact layout="column" layout-fill layout-padding>
         <div layout="column" layout-align="center center" ng-if="!user.signedIn">
-            <md-button ng-click="authenticate('google')" class="md-raised md-primary" aria-label="sign in with google">
-                Sign in with Google
-            </md-button>
             <md-button ng-click="authenticate('github')" class="md-raised" aria-label="sign in with github">
                 Sign in with Github
             </md-button>
-            <md-button ng-click="authenticate('twitter')" class="md-raised md-accent" aria-label="sign in with twitter" ng-if="false">
-                Sign in with Twitter
+            <md-button ng-click="authenticate('google')" class="md-raised md-primary" aria-label="sign in with google">
+                Sign in with Google
             </md-button>
-            <md-button ng-click="authenticate('facebook')" class="md-raised md-warn" aria-label="sign in with facebook" ng-if="false">
+            <md-button ng-click="authenticate('facebook')" class="md-raised md-accent" aria-label="sign in with facebook">
                 Sign in with Facebook
             </md-button>
         </div>
