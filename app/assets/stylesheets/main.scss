@@ -7,31 +7,31 @@
  * Mixin Settings
  */
 
-$mini: 20em;
-$mobile: 30em;
-$tablet: 48em;
-$desktop: 60em;
+$cl-xs: 600px;
+$cl-sm: 960px;
+$cl-md: 1280px;
+$cl-lg: 1920px;
 
 @mixin respond($media) {
-    @if $media == mini {
-        @media screen and (min-width: $mini) {
-            @content
-        }
-    }
     @if $media == mobile {
-        @media screen and (min-width: $mobile) {
+        @media screen and (min-width: $cl-xs) {
             @content
         }
     }
-
-    @else if $media == tablet {
-        @media screen and (min-width: $tablet) {
+    @if $media == tablet {
+        @media screen and (min-width: $cl-sm) {
             @content
         }
     }
 
     @else if $media == desktop {
-        @media screen and (min-width: $desktop) {
+        @media screen and (min-width: $cl-md) {
+            @content
+        }
+    }
+
+    @else if $media == xl-desktop {
+        @media screen and (min-width: $cl-lg) {
             @content
         }
     }
@@ -293,6 +293,8 @@ template-form-directive {
             margin: 5px 0 0 2px;
         }
         .field-overlay {
+            background-color: rgba(137,160,79,.1);
+
 
             &.force-hover {
                 background-color: $site-color-secondary !important;
@@ -337,11 +339,14 @@ newsletter {
             text-transform: uppercase;
             text-shadow: 2px 2px 5px black;
             background-color: rgba(84,102,40, .75);
+            text-align: center;
+            padding: 0 20%;
+            font-size: small;
 
-            @include respond(mini){ padding: 0 19%; font-size: small }
-            @include respond(mobile){ padding: 0 21%; font-size: initial }
-            @include respond(tablet){ padding: 0 25%; font-size: xx-large }
-            @include respond(desktop){ padding: 0 31%; font-size: xx-large }
+            @include respond(mobile){ font-size: 22px }
+            @include respond(tablet){ font-size: 37px }
+            @include respond(desktop){ font-size: 50px }
+            @include respond(xl-desktop){ font-size: 76px }
         }
     }
 }
@@ -372,29 +377,27 @@ newsletter {
  * Animate View Frame
  */
 
-@include respond(desktop) {
-    .view-animate-container {
-        position:relative;
-    }
+.view-animate-container {
+    position:relative;
+}
 
-    .view-animate.ng-enter, .view-animate.ng-leave {
-        position:absolute;
-        display:block;
-        overflow: hidden;
-        transition:all ease .5s;
-    }
+.view-animate.ng-enter, .view-animate.ng-leave {
+    position:absolute;
+    display:block;
+    overflow: hidden;
+    transition:all ease .5s;
+}
 
-    .view-animate.ng-enter {
-        top: 1000px;
-        width: 100%;
-        left: 0;
-    }
-    .view-animate.ng-enter.ng-enter-active {
-        top:0;
-        width: 70%;
-        left: 15%;
-    }
-    .view-animate.ng-leave.ng-leave-active {
-        top: -1000px;
-    }
+.view-animate.ng-enter {
+    top: 1000px;
+    width: 100%;
+    left: 0;
+}
+.view-animate.ng-enter.ng-enter-active {
+    top:0;
+    width: 70%;
+    left: 15%;
+}
+.view-animate.ng-leave.ng-leave-active {
+    top: -1000px;
 }

@@ -7,6 +7,7 @@ module Api::V1 #:nodoc:
         wrap_parameters include: Report.wrapped_params
 
         def index
+            logger.info user_session
             render json: current_user.reports.as_json(only: [:id, :title, :updated_at, :template_order])
         end
 
