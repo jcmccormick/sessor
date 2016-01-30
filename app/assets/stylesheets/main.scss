@@ -82,6 +82,7 @@ $site-color-tertiary: rgb(84,102,40);
 
 body {
     font-family: 'Open Sans', sans-serif !important;
+    overflow-x: hidden;
 }
 .ng-leave,
 .ng-hide {
@@ -377,27 +378,31 @@ newsletter {
  * Animate View Frame
  */
 
+.view-animate.ng-enter {
+    animation: slideInLeft 0.4s both ease;
+    z-index: 8888;
+    position: absolute;
+    width: 100%;
+}
+
+@keyframes slideInLeft {
+    from { transform: translateX(200%); }
+    to { transform: translateX(0); }
+}
+
+.view-animate.ng-leave {
+    display: block !important;
+    position: absolute !important;
+    width: 100%;
+    animation: slideOutLeft 0.5s both ease;
+    z-index: 9999;
+}
+
+@keyframes slideOutLeft {
+    from { transform: translateX(0); }
+    to { transform: translateX(-200%); }
+}
+
 .view-animate-container {
     position:relative;
-}
-
-.view-animate.ng-enter, .view-animate.ng-leave {
-    position:absolute;
-    display:block;
-    overflow: hidden;
-    transition:all ease .5s;
-}
-
-.view-animate.ng-enter {
-    top: 1000px;
-    width: 100%;
-    left: 0;
-}
-.view-animate.ng-enter.ng-enter-active {
-    top:0;
-    width: 70%;
-    left: 15%;
-}
-.view-animate.ng-leave.ng-leave-active {
-    top: -1000px;
 }
