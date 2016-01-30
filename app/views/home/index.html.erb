@@ -15,32 +15,29 @@
 
 <md-sidenav user-menu class="md-sidenav-right" md-component-id="user-menu">
     <md-content ng-form="contactForm" contact layout="column" layout-fill layout-padding>
-        <div layout="column" layout-align="center center" ng-if="!user.signedIn">
-            <md-button ng-click="authenticate('github')" class="md-raised" aria-label="sign in with github">
-                Sign in with Github
-            </md-button>
-            <md-button ng-click="authenticate('google')" class="md-raised md-primary" aria-label="sign in with google">
-                Sign in with Google
-            </md-button>
-            <md-button ng-click="authenticate('facebook')" class="md-raised md-accent" aria-label="sign in with facebook">
-                Sign in with Facebook
-            </md-button>
-        </div>
-        <md-divider></md-divider>
-        <md-input-container class="md-no-errors md-no-margin-bot">
+        <md-input-container class="md-no-margin-bot">
             <label>Send us a message</label>
-            <textarea ng-model="cv.message" required="required"></textarea>
+            <textarea ng-model="cv.message"></textarea>
         </md-input-container>
-        <md-input-container ng-if="!user.signedIn">
+        <md-input-container class="md-no-margin-top" ng-if="!user.signedIn">
             <label>Email</label>
-            <input type="email" ng-model="user.email" required="required">
+            <input name="email" type="email" ng-model="user.email" ng-pattern="/^.+@.+\..+$/">
         </md-input-container>
-        <md-button ng-click="cv.newContact(user.email, cv.message);uv.closeMenu()" ng-disabled="!contactForm.$valid" aria-label="send contact message">
+        <md-button ng-click="cv.newContact(user.email, cv.message);uv.closeMenu()" ng-disabled="!cv.message || !cv.email || !contactForm['email'].$valid" aria-label="send a message to clerkr">
             Submit
         </md-button>
         <span flex></span>
         <md-button ng-click="uv.closeMenu();signOut()" ng-if="user.signedIn" class="md-raised md-warn" aria-label="sign out of clerkr">
             Sign Out
+        </md-button>
+        <md-button ng-click="authenticate('github')" class="md-raised" aria-label="sign in with github" ng-if="!user.signedIn">
+            Sign in with Github
+        </md-button>
+        <md-button ng-click="authenticate('google')" class="md-raised md-primary" aria-label="sign in with google" ng-if="!user.signedIn">
+            Sign in with Google
+        </md-button>
+        <md-button ng-click="authenticate('facebook')" class="md-raised md-accent" aria-label="sign in with facebook" ng-if="!user.signedIn">
+            Sign in with Facebook
         </md-button>
     </md-content>
 </md-sidenav>

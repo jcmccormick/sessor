@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-
+    
+    root 'home#index' 
 
     mount_devise_token_auth_for 'User', at: 'auth'
     
@@ -18,6 +19,4 @@ Rails.application.routes.draw do
     end
 
     get "/*path" => redirect("/?goto=%{path}")
-    
-    root 'home#index' 
 end

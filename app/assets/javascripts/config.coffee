@@ -9,13 +9,7 @@ do ->
 
         $authProvider.configure
             apiUrl: '',
-            storage: 'localStorage',
-            omniauthWindowType: 'sameWindow',
-            apiProviderPaths: {
-                google: '/auth/google_oauth2',
-                github: '/auth/github',
-                facebook: '/auth/facebook'
-            }
+            storage: 'localStorage'
 
         resolver = 'auth': ['$auth', 'localStorageService', 'ReportsService', 'TemplatesService',
         ($auth, localStorageService, ReportsService, TemplatesService)->
