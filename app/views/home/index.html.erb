@@ -10,8 +10,23 @@
     <div ng-view class="view-animate view-frame" layout-fill></div>
 </main>
 
-<md-sidenav user-menu class="md-sidenav-right" md-component-id="user-menu">
-    <md-content ng-form="contactForm" contact layout="column" layout-fill layout-padding>
+<md-sidenav user-menu layout="column" class="md-sidenav-right" md-component-id="user-menu">
+    <md-card>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">{{user.name}}</span>
+                <span class="md-subhead">
+                    Signed in via: {{(user.provider == 'google_oauth2' && 'Google') || ''}}
+                    {{(user.provider == 'facebook' && 'Facebook') || ''}}
+                    {{(user.provider == 'github' && 'Github') || ''}}
+                </span>
+            </md-card-title-text>
+            <md-card-title-media>
+                <div class="md-media-sm"><img src="{{user.image}}" /></div>
+            </md-card-title-media>
+        </md-card-title>
+    </md-card>
+    <div contact ng-form="contactForm" layout="column" layout-padding>
         <md-input-container class="md-no-margin-bot">
             <label>Send us a message</label>
             <textarea ng-model="cv.message"></textarea>
@@ -23,18 +38,20 @@
         <md-button ng-click="cv.newContact(user.email, cv.message);uv.closeMenu()" ng-disabled="!cv.message || !cv.email || !contactForm['email'].$valid" aria-label="send a message to clerkr">
             Submit
         </md-button>
-        <span flex></span>
-        <md-button ng-click="uv.closeMenu();signOut()" ng-if="user.signedIn" class="md-raised md-warn" aria-label="sign out of clerkr">
+    </div>
+    <span flex></span>
+    <div layout="column">
+        <md-button ng-click="uv.closeMenu();signOut()" class="md-raised md-warn" aria-label="sign out of clerkr" ng-if="user.signedIn">
             Sign Out
-        </md-button>
-        <md-button ng-click="authenticate('github')" class="md-raised" aria-label="sign in with github" ng-if="!user.signedIn">
-            Sign in with Github
         </md-button>
         <md-button ng-click="authenticate('google')" class="md-raised md-primary" aria-label="sign in with google" ng-if="!user.signedIn">
             Sign in with Google
         </md-button>
+        <md-button ng-click="authenticate('github')" class="md-raised" aria-label="sign in with github" ng-if="!user.signedIn">
+            Sign in with Github
+        </md-button>
         <md-button ng-click="authenticate('facebook')" class="md-raised md-accent" aria-label="sign in with facebook" ng-if="!user.signedIn">
             Sign in with Facebook
         </md-button>
-    </md-content>
+    </div>
 </md-sidenav>
