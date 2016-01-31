@@ -11,7 +11,7 @@
 </main>
 
 <md-sidenav user-menu layout="column" class="md-sidenav-right" md-component-id="user-menu">
-    <md-card>
+    <md-card ng-if="user.signedIn">
         <md-card-title>
             <md-card-title-text>
                 <span class="md-headline">{{user.name}}</span>
