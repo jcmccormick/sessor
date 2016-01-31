@@ -67,6 +67,9 @@ $site-color-tertiary: rgb(84,102,40);
 .md-icon-site-tertiary {
     color: $site-color-tertiary !important;
 }
+.md-site-alert {
+    color: rgb(102,178,255) !important;
+}
 .cl-desktop-fab-align {
     margin: 60px 0 0 !important;
 }
@@ -76,6 +79,7 @@ $site-color-tertiary: rgb(84,102,40);
 .md-no-margin-bot {
     margin-bottom: 0;
 }
+
 /*
  * General Site
  */
@@ -405,4 +409,19 @@ newsletter {
 @keyframes slideOutLeft {
     from { transform: translateX(0); }
     to { transform: translateX(-200%); }
+}
+
+.ng-stats {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,.5);
+    padding: 15px;
+}
+
+
+.md-fab-site-bottom-right {
+    right: 20px;
+    bottom: 20px;
+    position: fixed;
 }

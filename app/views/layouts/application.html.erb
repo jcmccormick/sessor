@@ -19,6 +19,11 @@
     </head>
     <body ng-app="clerkr" ng-cloak>
 
+        <div angular-stats class="ng-stats" watch-count=".watch-count" digest-length=".digest-length" on-watch-count-update="onWatchCountUpdate(watchCount)" on-digest-length-update="onDigestLengthUpdate(digestLength)" ng-if="user.name=='Joe McCormick' || user.name == 'Clint Gardner'">
+            Watch Count: <span class="watch-count"></span><br />
+            Digest Cycle Length: <span class="digest-length"></span>
+        </div>
+
         <noscript>Please enable javascript and cookies in your browser.</noscript>
 
         <%= yield %>

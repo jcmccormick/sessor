@@ -85,6 +85,7 @@ source 'https://rails-assets.org' do
     gem 'rails-assets-angular-resource'
     gem 'rails-assets-angular-route'
     gem 'rails-assets-moment'
+    gem 'rails-assets-ng-stats'
     gem 'rails-assets-ng-token-auth'
     gem 'rails-assets-underscore'
 end

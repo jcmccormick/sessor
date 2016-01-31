@@ -10,6 +10,7 @@ do ->
         'ngAnimate',
         'ngMaterial',
         'ngAria',
+        'angularStats',
         'ng-token-auth',
         'LocalStorageModule',
         'googlechart',

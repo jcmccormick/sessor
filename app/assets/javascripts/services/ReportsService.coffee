@@ -57,7 +57,7 @@ do ->
                         deferred.resolve(res)
                     ), (err)->
                         deferred.reject()
-                        Flash.create('danger', '<h3>Not Found</h3> <p>We couldn\'t find that.</p>')
+                        Flash.create('danger', '<h3>Not Found</h3> <p>We couldn\'t find that.</p>', 'customAlert')
                         $location.path('/')
                     )
                 else
@@ -141,18 +141,12 @@ do ->
 
             sortTemplates: (report)->
                 sorted = []
-                for key in report.template_order
-                    found = false
-                    localStorageService.get('_cst').filter (template)->
-                        if !found && template.id == key
-                            sorted.push template
-                            found = true
-                            return false
-                        else
-                            return true
+                templates = localStorageService.get('_cst')
+                for template_id in report.template_order
+                    template = $.grep templates, (x)-> x.id == template_id
+                    sorted.push template
 
                 output = []
-
                 for template of sorted
                     output[template] = sorted[template]
 

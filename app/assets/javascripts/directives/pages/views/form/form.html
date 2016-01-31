@@ -25,7 +25,7 @@
             </div>
 
             <!-- Add a new field area, if editing and there are less than 20 total fields. -->
-            <ng-include src="'directives/pages/views/form/field_add.html'" ng-if="form.e && ((form.fields && form.fields.length) || 0) < 20"></ng-include>
+            <ng-include src="'directives/pages/views/form/field_add.html'" ng-show="form.e && ((form.fields && form.fields.length) || 0) < 20"></ng-include>
         </div>
     </div>
 </form>

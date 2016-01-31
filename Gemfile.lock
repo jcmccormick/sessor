@@ -210,6 +210,8 @@ GEM
     rails-assets-angular-route (1.4.9)
       rails-assets-angular (= 1.4.9)
     rails-assets-moment (2.11.1)
+    rails-assets-ng-stats (2.5.2)
+      rails-assets-angular
     rails-assets-ng-token-auth (0.0.28)
       rails-assets-angular (~> 1.4.4)
       rails-assets-angular-cookie (~> 4.0.9)
@@ -317,6 +319,7 @@ DEPENDENCIES
   rails-assets-angular-resource!
   rails-assets-angular-route!
   rails-assets-moment!
+  rails-assets-ng-stats!
   rails-assets-ng-token-auth!
   rails-assets-underscore!
   rails_12factor

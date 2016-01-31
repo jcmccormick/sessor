@@ -131,6 +131,7 @@ do ->
                     #   template.timedSave = undefined
                     #   template.dereg()
                     # )
+
                     if !form.$pristine
                         template.updated_at = moment().local().format()
                         templates[geti(template.id)] = template

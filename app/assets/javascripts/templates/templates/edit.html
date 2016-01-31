@@ -141,3 +141,28 @@
     </md-button>
     
 </md-card>
+
+<md-fab-speed-dial md-direction="up" md-open="vt.saveIsOpen" class="md-scale md-hover-full md-fab-site-bottom-right" ng-mouseenter="vt.saveIsOpen=true" ng-mouseleave="vt.saveIsOpen=false">
+    <md-fab-trigger>
+        <md-button ng-click="vt.save(true)" class="md-fab md-site-tertiary" aria-label="save {{vt.template.name}}">
+            <md-tooltip md-direction="left">
+                Click to Save
+            </md-tooltip>
+            <md-icon ng-class="{'md-site-alert':vt.tempForm.$dirty}">save</md-icon>
+        </md-button>
+    </md-fab-trigger>
+    <md-fab-actions>
+        <md-button ng-click="vt.save()" class="md-fab md-raised md-mini md-site-secondary" aria-label="save and stop editing {{vt.template.name}}">
+            <md-tooltip md-visible="vt.saveIsOpen" md-direction="left">
+                Stop Editing
+            </md-tooltip>
+            <md-icon>check</md-icon>
+        </md-button>
+    </md-fab-actions>
+</md-fab-speed-dial>
+
+<md-card ng-if="user.name=='Joe McCormick'">
+    <md-card-content>
+        <pre>{{vt.template | json}}</pre>
+    </md-card-content>
+</md-card>

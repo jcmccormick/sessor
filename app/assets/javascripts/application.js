@@ -23,6 +23,7 @@
 //= require angular-local-storage
 //= require angular-rails-templates
 //= require angular-cookie
+//= require ng-stats
 //= require ng-token-auth
 //= require_tree ./xscripts
 //= require_tree ./templates
