@@ -43,7 +43,9 @@ $cl-lg: 1920px;
 
 @font-face {
     font-family: 'Moms typewriter';
-    src:url('Moms_typewriter.ttf');
+    src: font-url('Moms_typewriter.ttf');
+    font-weight: normal;
+    font-style: normal;
 }
 
 .cl-green {
