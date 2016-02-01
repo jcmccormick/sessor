@@ -29,7 +29,7 @@
 
         <!-- Signed out view -->
         <div ng-if="!user.signedIn">
-            <div class="md-site-secondary" layout-align="center center">
+            <div class="md-site-secondary md-site-top-nav" layout-align="center center">
                 <div layout="row" layout-align="end center" layout-wrap layout-fill>
                     <newsletter ng-form="newsForm" flex="100" flex-gt-sm="50" layout="row" layout-align="end end">
                         <md-button class="md-fab md-mini md-site-primary" ng-click="nv.newSubscribe(nv.email, newsForm)" ng-disabled="!nv.email || !newsForm.email.$valid" aria-label="sign up for the newsletter">

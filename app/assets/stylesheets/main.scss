@@ -38,14 +38,38 @@ $cl-lg: 1920px;
 }
 
 /*
- * Material Design Additions
+ * General Site
  */
+
+body {
+    font-family: 'Open Sans', sans-serif !important;
+    overflow-x: hidden;
+}
+.ng-leave,
+.ng-hide {
+    display: none !important;
+}
+.disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    color: grey !important;
+}
+.table {
+    th[ng-click] {
+        cursor: pointer;
+    }
+}
 
 .cl-green {
     color: forestgreen;
     font-family: 'Special Elite';
     text-decoration: none;
+    padding-top: 5px;
 }
+
+/*
+ * Material Design Additions
+ */
  
 $site-color-primary: rgb(173,199,106);
 $site-color-secondary: rgb(137,160,79);
@@ -87,35 +111,10 @@ $site-color-tertiary: rgb(84,102,40);
         color: white;
     }
 }
-
-/*
- * General Site
- */
-
-body {
-    font-family: 'Open Sans', sans-serif !important;
-    overflow-x: hidden;
-}
-.ng-leave,
-.ng-hide {
-    display: none !important;
-}
-.disabled {
-    cursor: not-allowed;
-    pointer-events: none;
-    color: grey !important;
-}
-.drafted {
-    text-decoration: none;
-
-    &.un {
-        color: gray;
-    }
-}
-.table {
-    th[ng-click] {
-        cursor: pointer;
-    }
+.md-fab-site-bottom-right {
+    right: 20px;
+    bottom: 20px;
+    position: fixed;
 }
 
 /*
@@ -344,7 +343,7 @@ newsletter {
 
         .cl-green {
             background-color: rgba(0,0,0,.5);
-            padding: 0 15px;
+            padding: 15px 0 10px;
         }
 
         .approach-subtext-container {
@@ -423,11 +422,4 @@ newsletter {
     bottom: 0;
     background-color: rgba(0,0,0,.5);
     padding: 15px;
-}
-
-
-.md-fab-site-bottom-right {
-    right: 20px;
-    bottom: 20px;
-    position: fixed;
 }
