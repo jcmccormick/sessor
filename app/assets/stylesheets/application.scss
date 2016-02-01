@@ -11,10 +11,8 @@
  * file per style scope.
  *
  *= require font-kit-rails/open-sans
- *= require font-kit-rails/droid-sans
- *= require font-kit-rails/pt-serif
- *= require font-kit-rails/ubuntu
  *= require angular-material
  */
+@import url(https://fonts.googleapis.com/css?family=Special+Elite)
 @import "angular-flash-alert";
 @import "main";
