@@ -9,7 +9,8 @@ do ->
 
         $authProvider.configure
             apiUrl: '',
-            storage: 'localStorage'
+            storage: 'localStorage',
+            omniauthWindowType: 'newWindow'
 
         resolver = 'auth': ['$auth', 'localStorageService', 'ReportsService', 'TemplatesService',
         ($auth, localStorageService, ReportsService, TemplatesService)->

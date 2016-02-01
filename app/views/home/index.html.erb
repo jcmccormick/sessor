@@ -44,13 +44,13 @@
         <md-button ng-click="uv.closeMenu();signOut()" class="md-raised md-warn" aria-label="sign out of clerkr" ng-if="user.signedIn">
             Sign Out
         </md-button>
-        <md-button ng-click="authenticate('google')" class="md-raised md-primary" aria-label="sign in with google" ng-if="!user.signedIn">
+        <md-button ng-click="uv.closeMenu();authenticate('google')" class="md-raised md-primary" aria-label="sign in with google" ng-if="!user.signedIn">
             Sign in with Google
         </md-button>
-        <md-button ng-click="authenticate('github')" class="md-raised" aria-label="sign in with github" ng-if="!user.signedIn">
+        <md-button ng-click="uv.closeMenu();authenticate('github')" class="md-raised" aria-label="sign in with github" ng-if="!user.signedIn">
             Sign in with Github
         </md-button>
-        <md-button ng-click="authenticate('facebook')" class="md-raised md-accent" aria-label="sign in with facebook" ng-if="!user.signedIn">
+        <md-button ng-click="uv.closeMenu();authenticate('facebook')" class="md-raised md-accent" aria-label="sign in with facebook" ng-if="!user.signedIn">
             Sign in with Facebook
         </md-button>
     </div>
