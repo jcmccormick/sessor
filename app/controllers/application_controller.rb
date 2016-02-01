@@ -5,6 +5,7 @@
 # The Application Controller includes necessary modules and uses a workaround to define the `current_user`
 
 class ApplicationController < ActionController::Base
+    force_ssl if !Rails.env.development?
 
     # Protect the site from CSRF
     protect_from_forgery with: :null_session#, :if => Proc.new { |c| c.request.format == 'application/json' }

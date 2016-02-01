@@ -8,7 +8,6 @@ Bundler.require(*Rails.groups)
 
 module Sessor
     class Application < Rails::Application
-
         config.cache_store = :dalli_store
 
         # Settings in config/environments/* take precedence over those specified here.
