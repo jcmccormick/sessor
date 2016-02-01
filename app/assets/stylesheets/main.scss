@@ -41,8 +41,15 @@ $cl-lg: 1920px;
  * Material Design Additions
  */
 
+@font-face {
+    font-family: 'Moms typewriter';
+    src:url('Moms_typewriter.ttf');
+}
+
 .cl-green {
     color: forestgreen;
+    font-family: 'Moms typewriter';
+    text-decoration: none;
 }
  
 $site-color-primary: rgb(173,199,106);
@@ -78,6 +85,12 @@ $site-color-tertiary: rgb(84,102,40);
 }
 .md-no-margin-bot {
     margin-bottom: 0;
+}
+.md-site-top-nav {
+    .material-icons,
+    .md-button {
+        color: white;
+    }
 }
 
 /*

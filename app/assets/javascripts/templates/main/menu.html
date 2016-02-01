@@ -1,11 +1,9 @@
 <!-- Signed-in Menu -->
 
-<div class="md-site-primary md-whiteframe-5dp">
-    <nav layout="row" layout-align="center center" flex-gt-sm="70" flex-offset-gt-sm="15" layout-fill>
+<div class="md-site-primary md-site-top-nav md-whiteframe-5dp">
+    <nav layout="row" layout-align="center center" flex-gt-sm="60" flex-offset-gt-sm="20" layout-fill>
 
-        <md-button href="/" aria-label="go to main">
-            <span class="md-title">Clerkr</span>
-        </md-button>
+        <a href="/" class="cl-green md-headline" aria-label="go to home page">Clerkr</a>
         
         <md-button href="/statistics" aria-label="view statistics" ng-if="user.signedIn && user.reports_count > 0">
             <strong>Statistics</strong>
