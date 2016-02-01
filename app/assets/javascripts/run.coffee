@@ -17,10 +17,12 @@ do ->
 
         cleanUp = ->
             localStorageService.clearAll()
+            console.log ipCookie('_cl_session')
             ipCookie.remove('_cl_session')
             $location.path('/')
 
         $rootScope.$on 'auth:logout-success', ->
+            console.log 'what'
             cleanUp()
 
         angular.forEach ['auth:invalid', 'auth:validation-error'], (value)->
