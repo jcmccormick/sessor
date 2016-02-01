@@ -17,11 +17,10 @@
         <!-- data, software, tools -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
-    <body ng-app="clerkr" ng-cloak>
+    <body ng-app="clerkr">
 
         <div angular-stats class="ng-stats" watch-count=".watch-count" digest-length=".digest-length" on-watch-count-update="onWatchCountUpdate(watchCount)" on-digest-length-update="onDigestLengthUpdate(digestLength)" ng-if="user.name=='Joe McCormick' || user.name == 'Clint Gardner'">
-            Watch Count: <span class="watch-count"></span><br />
-            Digest Cycle Length: <span class="digest-length"></span>
+            <span class="watch-count"></span> / <span class="digest-length"></span>
         </div>
 
         <noscript>Please enable javascript and cookies in your browser.</noscript>
@@ -30,31 +29,37 @@
 
         <!-- Signed out view -->
         <div ng-if="!user.signedIn">
-            <md-toolbar class="md-site-secondary">
-                <newsletter ng-form="newsForm" layout="column" layout-gt-sm="row">
-                    <div layout-fill layout="row" layout-align="end end">
+            <div class="md-site-secondary" layout-align="center center">
+                <div layout="row" layout-align="end center" layout-wrap layout-fill>
+                    <newsletter flex="100" flex-gt-sm="50" layout="row" layout-align="end end">
                         <md-button class="md-fab md-mini md-site-primary" ng-click="nv.newSubscribe(nv.email, newsForm)" ng-disabled="!nv.email || !newsForm.email.$valid" aria-label="sign up for the newsletter">
                             <md-icon>check</md-icon>
                         </md-button>
-                        <md-input-container layout-fill class="md-no-margin-bot md-no-errors">
+                        <md-input-container class="md-no-errors md-no-margin-bot" layout-fill>
                             <label>Let's trade: your email for our newsletter.</label>
                             <input type="email" name="email" ng-model="nv.email" ng-pattern="/^.+@.+\..+$/">
                         </md-input-container>
+                    </newsletter>
+                    <span flex></span>
+                    <md-button scroll-to="#about" bypass="true" aria-label="about clerkr">
+                        About
+                    </md-button>
+                    <md-button user-menu ng-click="uv.toggleMenu()" class="md-icon-button" aria-label="open user menu">
+                        <md-tooltip md-direction="bottom">
+                            User Menu
+                        </md-tooltip>
+                        <md-icon>person</md-icon>
+                    </md-button>
+                    
+                </div>
+<!--                 <newsletter ng-form="newsForm" layout="column" layout-gt-sm="row">
+                    <div layout-fill layout="row" layout-align="end end">
                     </div> 
                     <div layout="row" layout-align="start end">
-                        <md-button scroll-to="#about" bypass="true" aria-label="about clerkr">
-                            About
-                        </md-button>
                         <span flex></span>
-                        <md-button user-menu ng-click="uv.toggleMenu()" aria-label="open user menu">
-                            <md-tooltip md-direction="bottom">
-                                User Menu
-                            </md-tooltip>
-                            <md-icon>person</md-icon>
-                        </md-button>
                     </div>
-                </newsletter>
-            </md-toolbar>
+                </newsletter> -->
+            </div>
 
             <div class="approach">
                 <div class="approach-text" layout="column" layout-align="center center" layout-fill>

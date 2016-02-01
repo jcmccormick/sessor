@@ -1,25 +1,24 @@
 <!-- Signed-in Menu -->
 
-<nav>
-    <md-toolbar layout="row" class="md-site-primary">
-        <div flex-gt-md="15"></div>
-        <div flex layout="row" layout-align="start center" layout-padding>
-            <md-button href="/" aria-label="go to main">
-                <span class="md-headline"><strong>Clerkr</strong></span>
-            </md-button>
-            <div ng-if="user.signedIn && user.reports_count > 0">
-                <md-button href="/statistics" aria-label="view statistics">
-                    Statistics
-                </md-button>
-            </div>
-            <span flex></span>
-            <md-button user-menu ng-click="uv.toggleMenu()" class="md-icon-button" aria-label="open user menu">
-                <md-tooltip md-direction="bottom">
-                    User Menu
-                </md-tooltip>
-                <md-icon>person</md-icon>
-            </md-button>
-        </div>
-        <div flex-gt-md="15"></div>
-    </md-toolbar>
-</nav>
+<div class="md-site-primary md-whiteframe-5dp">
+    <nav layout="row" layout-align="center center" flex-gt-sm="70" flex-offset-gt-sm="15" layout-fill>
+
+        <md-button href="/" aria-label="go to main">
+            <span class="md-title">Clerkr</span>
+        </md-button>
+        
+        <md-button href="/statistics" aria-label="view statistics" ng-if="user.signedIn && user.reports_count > 0">
+            <strong>Statistics</strong>
+        </md-button>
+
+        <span flex></span>
+
+        <md-button user-menu ng-click="uv.toggleMenu()" class="md-icon-button" aria-label="open user menu">
+            <md-tooltip md-direction="bottom">
+                User Menu
+            </md-tooltip>
+            <md-icon>person</md-icon>
+        </md-button>
+
+    </nav>
+</div>
