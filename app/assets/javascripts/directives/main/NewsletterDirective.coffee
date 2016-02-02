@@ -10,7 +10,7 @@ do ->
 
                 nv.newSubscribe = (email, form)->
                     $http.post('/newsletters', {email: email}).then((res)->
-                        Flash.create('success', '<p>Thanks for signing up! We\'ll keep you up-to-date on all our developments.</p>', 'customAlert')
+                        Flash.create('success', '<h3>Success! <small>Newsletter</small></h3><p>Thanks for signing up! We\'ll keep you up-to-date on all our developments.</p>', 'customAlert')
                         nv.email = undefined
                         form.$setUntouched()
                     )

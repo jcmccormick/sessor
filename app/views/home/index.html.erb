@@ -35,7 +35,7 @@
             <label>Email</label>
             <input name="email" type="email" ng-model="user.email" ng-pattern="/^.+@.+\..+$/">
         </md-input-container>
-        <md-button ng-click="cv.newContact(user.email, cv.message);uv.closeMenu()" ng-disabled="!cv.message || (!user.email && !contactForm['email'].$valid)" aria-label="send a message to clerkr">
+        <md-button ng-click="cv.newContact(user.email, cv.message);uv.closeMenu()" ng-disabled="!cv.message || (!user.signedIn && (!user.email || !contactForm['email'].$valid))" aria-label="send a message to clerkr">
             Submit
         </md-button>
     </div>
