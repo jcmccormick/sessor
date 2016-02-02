@@ -25,6 +25,8 @@ module Api::V1 #:nodoc:
 
         def update
             report = current_user.reports.find(params[:id])
+            current_user.reports << report unless current_user.reports.include?(report)
+
             if params.has_key?(:did)
                 report.disassociate_template(params[:did])
                 report.update_attributes(params.require(:report).permit({:template_order => []}))
@@ -33,8 +35,9 @@ module Api::V1 #:nodoc:
                 update_templates(report)
                 report.update_attributes(allowed_params)
             end
-            current_user.reports << report unless current_user.reports.include?(report)
+            
             report.touch if report.values.find_index { |x| x.changed? }
+
             head :no_content
         end
 
@@ -49,7 +52,7 @@ module Api::V1 #:nodoc:
                 params.require(:report).permit(
                     :id, :title, {:template_order => []}, :allow_title, :submission, :response, :active, :location,
                     values_attributes: [
-                        :id, :input, :field_id
+                        :id, :input, :field_id, :report_id
                     ]      
                 )
             end

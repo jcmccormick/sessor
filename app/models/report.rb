@@ -20,9 +20,9 @@ class Report < ActiveRecord::Base
     include Nested
     has_and_belongs_to_many :users
     has_and_belongs_to_many :templates
-    has_many :values, dependent: :destroy
     serialize :template_order, Array
-    accepts_nested_attributes_for :values
+    has_many :values, dependent: :destroy, :inverse_of => :report
+    accepts_nested_attributes_for :values, update_only: true
 
     def disassociate_template(did, unvalued=[])
         template = templates.find(did)

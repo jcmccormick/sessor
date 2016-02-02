@@ -66,7 +66,14 @@ do ->
                 )
 
                 vr.save = (temporary)->
-                    ReportsService.saveReport(vr.report, temporary, vr.repForm)
+                    ReportsService.saveReport(vr.report, temporary, vr.repForm).then ->
+                        reload = undefined
+                        for template in vr.report.templates
+                            for field in template.fields
+                                if !field.value.id
+                                    reload = true
+                        reload && ReportsService.queryReport(repId, true).then (res)->
+                            $.extend vr.report, res
 
                 vr.deleteTemplate = (ev)->
                     ReportsService.deleteTemplate(ev, vr.report).then ->

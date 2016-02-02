@@ -18,6 +18,8 @@ json.templates @report.templates do |template|
                     if value.field_id == field.id
                         json.id value.id
                         json.input value.input
+                        json.field_id value.field_id
+                        json.report_id value.report_id
                     end
                 end
             end
