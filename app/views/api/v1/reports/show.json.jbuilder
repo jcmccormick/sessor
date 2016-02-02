@@ -6,6 +6,7 @@ json.templates @report.templates do |template|
     json.name template.name
     json.draft template.draft
     json.sections template.sections
+    json.updated_at template.updated_at
     json.fields template.fields do |field|
         json.id field.id
         json.fieldtype field.fieldtype

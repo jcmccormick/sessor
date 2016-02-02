@@ -11,16 +11,12 @@ do ->
             vr.templates = localStorageService.get('_cst')
             vr.report = ReportsService.extendReport(repId)
 
-            for template in vr.report.templates
-                if vr.report.loadedFromDB
-                    fields_values = $.map(template.fields, (x)-> x.value)
-                    (!template.sections || (fields_values && template.fields.length != fields_values.length) ) && reload = true
+            vr.report.loadedFromDB && for template in vr.report.templates
+                template.updated_at > vr.report.updated_at && reload = true
 
-
-            repId && (!vr.report.loadedFromDB || reload) && ReportsService.queryReport(repId, true).then ((res)->
+            repId && (!vr.report.loadedFromDB || reload) && ReportsService.queryReport(repId, true).then (res)->
                 $.extend vr.report, res
                 vr.report.form = vr.report.templates[0]
-            )
 
             vr.report.form = vr.report.templates[0]
 
