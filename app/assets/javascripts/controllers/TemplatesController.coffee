@@ -108,6 +108,9 @@ do ->
                 TemplatesService.saveTemplate(template, true, vt.tempForm)
                 
         vt.newReport = (template, form)->
+            if vt.save()
+                vt.save(true)
+
             if template.draft
                 TemplatesService.undraftFirst()
             else

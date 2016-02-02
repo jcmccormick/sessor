@@ -61,8 +61,8 @@
                                         All Reports
                                     </md-button>
                                 </md-menu-item>
-                                <md-menu-item>
-                                    <md-button ng-click="vt.view_sheet($event, vt.template)" aria-label="view google sheet for {{vt.template.name}}" ng-if="vt.template.gs_url">
+                                <md-menu-item ng-if="vt.template.gs_url">
+                                    <md-button ng-click="vt.view_sheet($event, vt.template)" aria-label="view google sheet for {{vt.template.name}}">
                                         Google Sheet for this Page
                                     </md-button>
                                 </md-menu-item>
@@ -139,10 +139,9 @@
     <md-button ng-click="vt.template.addSection(form)" class="md-raised" aria-label="add a new section" ng-if="vt.template.id && ((vt.template.fields && vt.template.fields.length) || 0) < 20">
         <md-icon>add</md-icon> Add Row
     </md-button>
-    
 </md-card>
 
-<md-fab-speed-dial md-direction="up" md-open="vt.saveIsOpen" class="md-scale md-hover-full md-fab-site-bottom-right" ng-mouseenter="vt.saveIsOpen=true" ng-mouseleave="vt.saveIsOpen=false">
+<md-fab-speed-dial md-direction="up" md-open="vt.saveIsOpen" class="md-scale md-hover-full md-fab-site-bottom-right" ng-mouseenter="vt.saveIsOpen=true" ng-mouseleave="vt.saveIsOpen=false" ng-if="vt.template.id">
     <md-fab-trigger>
         <md-button ng-click="vt.save(true)" class="md-fab md-site-tertiary" aria-label="save {{vt.template.name}}">
             <md-tooltip md-direction="left">
@@ -153,7 +152,7 @@
     </md-fab-trigger>
     <md-fab-actions>
         <md-button ng-click="vt.save()" class="md-fab md-raised md-mini md-site-secondary" aria-label="save and stop editing {{vt.template.name}}">
-            <md-tooltip md-visible="vt.saveIsOpen" md-direction="left">
+            <md-tooltip md-direction="left">
                 Stop Editing
             </md-tooltip>
             <md-icon>check</md-icon>

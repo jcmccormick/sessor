@@ -117,3 +117,23 @@
     </md-tabs>
 
 </md-card>
+
+
+<md-fab-speed-dial md-direction="up" md-open="vr.saveIsOpen" class="md-scale md-hover-full md-fab-site-bottom-right" ng-mouseenter="vr.saveIsOpen=true" ng-mouseleave="vr.saveIsOpen=false" ng-if="vr.report.id">
+    <md-fab-trigger>
+        <md-button ng-click="vr.save(true)" class="md-fab md-site-tertiary" aria-label="save {{vr.report.title}}">
+            <md-tooltip md-direction="left">
+                Click to Save
+            </md-tooltip>
+            <md-icon ng-class="{'md-site-alert':vr.repForm.$dirty}">save</md-icon>
+        </md-button>
+    </md-fab-trigger>
+    <md-fab-actions>
+        <md-button ng-click="vr.save()" class="md-fab md-raised md-mini md-site-secondary" aria-label="save and stop editing {{vr.report.title}}">
+            <md-tooltip md-direction="left">
+                Stop Editing
+            </md-tooltip>
+            <md-icon>check</md-icon>
+        </md-button>
+    </md-fab-actions>
+</md-fab-speed-dial>

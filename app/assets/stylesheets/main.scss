@@ -112,9 +112,9 @@ $site-color-tertiary: rgb(84,102,40);
     }
 }
 .md-fab-site-bottom-right {
-    right: 20px;
-    bottom: 20px;
-    position: fixed;
+    right: 20px !important;
+    bottom: 20px !important;
+    position: fixed !important;
 }
 
 /*
@@ -399,6 +399,14 @@ newsletter {
 
 .view-animate.ng-enter {
     animation: slideInLeft 0.4s both ease;
+    .md-fab-site-bottom-right {
+        animation: fadeIn 9999s both ease;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0 }
+    to { opacity: 1 }
 }
 
 @keyframes slideInLeft {
@@ -409,6 +417,9 @@ newsletter {
 .view-animate.ng-leave {
     display: block !important;
     animation: slideOutLeft 0.5s both ease;
+    .md-fab-site-bottom-right {
+        display: none;
+    }
 }
 
 @keyframes slideOutLeft {

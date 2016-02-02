@@ -56,8 +56,8 @@
                                         All Reports
                                     </md-button>
                                 </md-menu-item>
-                                <md-menu-item>
-                                    <md-button ng-click="vt.view_sheet($event, vt.template)" aria-label="view google sheet for {{vt.template.name}}" ng-if="vt.template.gs_url">
+                                <md-menu-item ng-if="vt.template.gs_url">
+                                    <md-button ng-click="vt.view_sheet($event, vt.template)" aria-label="view google sheet for {{vt.template.name}}">
                                         Google Sheet for this Page
                                     </md-button>
                                 </md-menu-item>
@@ -82,3 +82,10 @@
     
     <template-form-directive form="vt.template"></template-form-directive>
 </md-card>
+
+<md-button class="md-fab md-site-tertiary md-fab-site-bottom-right" href="/templates/{{vt.template.id}}/edit" aria-label="edit {{vt.template.name}}">
+    <md-tooltip md-direction="left">
+        Click to Edit
+    </md-tooltip>
+    <md-icon>edit</md-icon>
+</md-button>
