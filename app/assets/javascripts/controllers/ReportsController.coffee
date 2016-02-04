@@ -39,9 +39,8 @@ do ->
                     vr.report.template_order.pop()
 
             vr.filteredTemplates = ->
-                vr.templates.filter((template)->
+                vr.templates.filter (template)->
                     !template.draft && vr.report.template_order.indexOf(template.id) == -1
-                )
 
             vr.template = vr.filteredTemplates()[0]
                     
@@ -57,21 +56,24 @@ do ->
                         vr.save(true)
                         return false
 
-                $scope.$on('$locationChangeStart', (event)->
+                $scope.$on '$locationChangeStart', (event)->
                     if !vr.repForm.$pristine && !confirm('There are unsaved changes. Press cancel to return to the form.')
                         event.preventDefault()
                     else
                         vr.report = undefined
 
-                )
-
                 vr.save = (temporary)->
                     ReportsService.saveReport(vr.report, temporary, vr.repForm).then ->
+
+                        # Check fields to see if there are any without a value.id
+                        # values with no ids will cause the DB to continually create
+                        # new values. So, by querying the report after saving a new value
+                        # the value.id will be extended into the report.
                         reload = undefined
                         for template in vr.report.templates
-                            for field in template.fields
-                                if !field.value.id
-                                    reload = true
+                            if ($.grep template.fields, (x)-> !x.value.id)[0]
+                                reload = true
+                                break
                         reload && ReportsService.queryReport(repId, true).then (res)->
                             $.extend vr.report, res
 

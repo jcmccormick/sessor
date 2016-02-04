@@ -25,6 +25,11 @@
                 <div class="md-media-sm"><img src="{{user.image}}" /></div>
             </md-card-title-media>
         </md-card-title>
+<!--         <md-card-actions ng-if="user.provider=='google_oauth2'">
+            <md-switch ng-model="user.opts['google_access']" aria-label="toggle google account access">
+                A
+            </md-switch>
+        </md-card-actions> -->
     </md-card>
     <div contact ng-form="contactForm" layout="column" layout-padding>
         <md-input-container class="md-no-margin-bot">
@@ -41,9 +46,6 @@
     </div>
     <span flex></span>
     <div layout="column">
-        <md-button ng-click="uv.closeMenu();signOut()" class="md-raised md-warn" aria-label="sign out of clerkr" ng-if="user.signedIn">
-            Sign Out
-        </md-button>
         <md-button ng-click="uv.closeMenu();authenticate('google')" class="md-raised md-primary" aria-label="sign in with google" ng-if="!user.signedIn">
             Sign in with Google
         </md-button>
@@ -52,6 +54,9 @@
         </md-button>
         <md-button ng-click="uv.closeMenu();authenticate('facebook')" class="md-raised md-accent" aria-label="sign in with facebook" ng-if="!user.signedIn">
             Sign in with Facebook
+        </md-button>
+        <md-button ng-click="uv.closeMenu();signOut()" class="md-raised md-warn" aria-label="sign out of clerkr" ng-if="user.signedIn">
+            Sign Out
         </md-button>
     </div>
 </md-sidenav>

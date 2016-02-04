@@ -24,7 +24,7 @@ class Report < ActiveRecord::Base
     has_many :values, dependent: :destroy, :inverse_of => :report
     accepts_nested_attributes_for :values, update_only: true
 
-    def disassociate_template(did, unvalued=[])
+    def disassociate_template(did)
         template = templates.find(did)
         field_ids = template.fields.map {|x| x.id }
         values.where(:report => self, :field_id => field_ids).destroy_all
