@@ -158,24 +158,6 @@ $site-color-tertiary: rgb(84,102,40);
  * Template and Field Display
  */
 
-.section-options {
-    background-color: #eee;
-    border-bottom: 5px solid #ddd;
-    border-radius: 5px 5px 0 0;
-}
-
-.new-field-add {
-    background-color: #eee;
-    border-top: 5px solid #ddd;
-    border-radius: 0 0 5px 5px;
-}
-
-.cl-field-add,
-.cl-selected-field-options {
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
-
 .field-options {
     overflow: hidden;
 
@@ -203,6 +185,9 @@ $site-color-tertiary: rgb(84,102,40);
 
     .cl-selected-field-options {
         background-color: #eee;
+        margin: 0 -16px 16px;
+        padding: 0 16px;
+        box-shadow: 0 0 60px -25px inset;
 
         .drag-bar {
             display: block;
