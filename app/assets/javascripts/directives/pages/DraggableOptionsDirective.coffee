@@ -10,7 +10,7 @@ do ->
             link: (scope, element, attrs) ->
                 $(element).draggable({
                     addClasses: false
-                    containment: '.view-frame'
+                    containment: 'body'
                     handle: '.cl-selected-field-options'
                     scroll: false
                 })
