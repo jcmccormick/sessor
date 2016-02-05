@@ -2,7 +2,7 @@ class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksCon
 
     def omniauth_success
         super do |resource|
-            user_session['gauth_token'] = auth_hash['credentials']['token']
+            user_session['gaccess_token'] = auth_hash['credentials']['token']
             user_session['grefresh_token'] = auth_hash['credentials']['refresh_token']
             user_session['gexpires_at'] = auth_hash['credentials']['expires_at']
             @omniauth_success_block_called = true

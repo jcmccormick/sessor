@@ -21,24 +21,4 @@ class User < ActiveRecord::Base
     # Relate to Values
     has_many :values, through: :reports
 
-    def refresh_google_oauth2_token
-        oauth_client = OAuth2::Client.new(
-            ENV['GOOGLE_CLIENT_ID'],
-            ENV['GOOGLE_CLIENT_SECRET'],
-            :site => "https://accounts.google.com",
-            :token_url => "/o/oauth2/token",
-            :authorize_url => "/o/oauth2/auth",
-            :ssl => {:verify => !Rails.env.development?}
-        )
-        access_token = OAuth2::AccessToken.from_hash(oauth_client, {:refresh_token => user_session.refresh_token})
-        access_token = access_token.refresh!
-        user_session.access_token = access_token.token
-        user_session.expires_at = Time.now + access_token.expires_in
-        user_session.save
-    end
-
-    def token_is_old
-        Time.at(user_session.expires_at) < Time.now()
-    end
-
 end

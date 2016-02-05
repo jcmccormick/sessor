@@ -2,7 +2,7 @@
 module Api::V1#:nodoc:
     class TemplatesController < ApplicationController
         before_action :authenticate_user!
-        # include Sheeted
+        include Sheeted
 
         wrap_parameters include: Template.wrapped_params
 
@@ -15,11 +15,11 @@ module Api::V1#:nodoc:
         end
 
         def create
-            #ss = create_spreadsheet(params[:name])
+            ss = create_spreadsheet(params[:name])
             @template = current_user.templates.new(allowed_params)
-            #@template.gs_url = ss.human_url
-            #@template.gs_key = ss.key
-            #@template.gs_id = ss.worksheets[0].cells_feed_url
+            @template.gs_url = ss.human_url
+            @template.gs_key = ss.key
+            @template.gs_id = ss.worksheets[0].cells_feed_url
             @template.save
             current_user.templates << @template
             render 'show', status: 201
@@ -27,8 +27,8 @@ module Api::V1#:nodoc:
 
         def update
             template = current_user.templates.find(params[:id])
-            #update_worksheet if params[:fields_attributes]
-            #update_name if params[:name] != template.name
+            update_worksheet if params[:fields_attributes]
+            update_name if params[:name] != template.name
             template.sections = params[:sections]
             template.update_attributes(allowed_params)
             current_user.templates << template unless current_user.templates.include?(template)
@@ -38,7 +38,7 @@ module Api::V1#:nodoc:
         def destroy
             template = current_user.templates.find(params[:id])
             if template.allow_destroy
-                #google_drive.spreadsheet_by_key(template.gs_key).delete
+                google_drive.spreadsheet_by_key(template.gs_key).delete if template.gs_key
                 template.destroy
                 head :no_content
             else
@@ -60,25 +60,29 @@ module Api::V1#:nodoc:
             end
 
             def update_worksheet
-                if (formatted_params-formatted_fields).any? || params[:update_keys]
-                    get_sheet
+                if current_user.googler
+                    if (formatted_params-formatted_fields).any? || params[:update_keys]
+                        get_sheet
 
-                    ws.list.keys = if ws.list.keys.length < 3
-                        # If there are less than 3 keys, it is a new worksheet, so initialize all fields
-                        base_keys + formatted_params
-                    else
-                        # else we need to refresh keys and find any new keys to add to the base
-                        base_keys + refreshed_existing_keys + new_keys
+                        ws.list.keys = if ws.list.keys.length < 3
+                            # If there are less than 3 keys, it is a new worksheet, so initialize all fields
+                            base_keys + formatted_params
+                        else
+                            # else we need to refresh keys and find any new keys to add to the base
+                            base_keys + refreshed_existing_keys + new_keys
+                        end
+
+                        ws.save if ws.dirty?
+
                     end
-
-                    ws.save if ws.dirty?
-
                 end
             end
 
             def update_name
-                ss = google_drive.spreadsheet_by_key(template.gs_key)
-                ss.title = params[:name]
+                if current_user.googler
+                    ss = google_drive.spreadsheet_by_key(template.gs_key)
+                    ss.title = params[:name]
+                end
             end
 
             def ws

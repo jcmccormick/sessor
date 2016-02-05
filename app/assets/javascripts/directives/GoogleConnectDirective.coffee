@@ -20,12 +20,11 @@ do ->
 
                 gc.toggleService = ->
                     if $auth.user.googler == "f"
-                        $auth.authenticate('google', { params: { scope: 'email, profile, https://spreadsheets.google.com/feeds/'}}).then ((res)->
-                            console.log res
+                        $auth.authenticate('google', { params: { scope: 'email, profile, https://spreadsheets.google.com/feeds/, https://www.googleapis.com/auth/drive.file'}}).then ->
                             $auth.updateAccount({googler:true})
-                        )
                     else
                         $auth.updateAccount({googler:false})
+                        
                 return gc
 
             ]

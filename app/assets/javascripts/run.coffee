@@ -31,8 +31,6 @@ do ->
             $location.path('/')
             cleanUp()
 
-        $window.onbeforeunload = cleanUp()
-
     run.$inject = ['$location', '$rootScope', '$route', '$timeout', '$window', 'Flash', 'ipCookie', 'localStorageService']
 
     angular.module('clerkr').run(run)
