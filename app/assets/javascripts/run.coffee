@@ -1,7 +1,7 @@
 do ->
     'use strict'
 
-    run = ($auth, $location, $rootScope, $route, $window, Flash, ipCookie, localStorageService)->
+    run = ($location, $rootScope, $route, $timeout, $window, Flash, ipCookie, localStorageService)->
 
         $rootScope.$on '$locationChangeSuccess', ->
             if $rootScope.loadedForGA
@@ -11,8 +11,14 @@ do ->
         $rootScope.$on '$locationChangeStart', (evt, absNewUrl, absOldUrl)->
             ~absOldUrl.indexOf('reset_password=true') && $location.path('/pass_reset')
 
+        $rootScope.$on 'auth:login-success', ->
+            console.log 'You just logged in.'
+            location.reload()
+
+        $rootScope.$on 'auth:account-update-success', ->
+            Flash.create('success', '<h3>Success! <small>Auth</small></h3><p>Account updated.</p>', 'customAlert')
+
         cleanUp = ->
-            $location.path('/')
             localStorageService.clearAll()
             ipCookie.remove('_cl_session')
 
@@ -22,10 +28,11 @@ do ->
                 cleanUp()
 
         $rootScope.$on 'auth:logout-success', ->
+            $location.path('/')
             cleanUp()
 
         $window.onbeforeunload = cleanUp()
 
-    run.$inject = ['$auth', '$location', '$rootScope', '$route', '$window', 'Flash', 'ipCookie', 'localStorageService']
+    run.$inject = ['$location', '$rootScope', '$route', '$timeout', '$window', 'Flash', 'ipCookie', 'localStorageService']
 
     angular.module('clerkr').run(run)

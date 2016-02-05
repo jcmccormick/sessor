@@ -9,7 +9,7 @@ do ->
                         Clerkr can create Google Sheets based on the Pages you create, and we will populate the cells of those Google Sheets with the data from your Reports.
                     </md-tooltip>
                     <md-tooltip md-direction="bottom">
-                        This will tell clerkr to discontinue connecting to Google Sheets. However, you will still need to revoke access on your Google Account Permissions page.
+                        This will tell Clerkr to discontinue connecting to Google Sheets. However, you will still need to revoke access on your Google Account Permissions page if you no longer wish to use this service.
                     </md-tooltip>
                     {{(user.googler == \'f\'&& \'Enable\') || \'Disable\'}} Google Sheets Connection
                 </md-button>'

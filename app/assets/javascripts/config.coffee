@@ -1,4 +1,4 @@
-do ->
+do (window)->
     'use strict'
 
     config = ($authProvider, $httpProvider, $routeProvider, $locationProvider)->
@@ -11,7 +11,6 @@ do ->
             apiUrl: ''
             omniauthWindowType: 'newWindow'
             handleLoginResponse: (response)->
-                console.log 'You just logged in.'
                 return response.data
             handleAccountUpdateResponse: (response)->
                 console.log 'You just updated.'
