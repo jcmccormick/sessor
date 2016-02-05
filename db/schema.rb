@@ -11,19 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160120060806) do
+ActiveRecord::Schema.define(version: 20160205183254) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "admins_reports", id: false, force: :cascade do |t|
-    t.integer "admin_id",  limit: 4
-    t.integer "report_id", limit: 4
+    t.integer "admin_id"
+    t.integer "report_id"
   end
 
   add_index "admins_reports", ["admin_id"], name: "index_admins_reports_on_admin_id", using: :btree
   add_index "admins_reports", ["report_id"], name: "index_admins_reports_on_report_id", using: :btree
 
   create_table "admins_templates", id: false, force: :cascade do |t|
-    t.integer "admin_id",    limit: 4
-    t.integer "template_id", limit: 4
+    t.integer "admin_id"
+    t.integer "template_id"
   end
 
   add_index "admins_templates", ["admin_id"], name: "index_admins_templates_on_admin_id", using: :btree
@@ -32,7 +35,7 @@ ActiveRecord::Schema.define(version: 20160120060806) do
   create_table "authorizations", force: :cascade do |t|
     t.string   "provider",   limit: 255
     t.string   "uid",        limit: 255
-    t.integer  "user_id",    limit: 4
+    t.integer  "user_id"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.string   "token",      limit: 255
@@ -41,9 +44,9 @@ ActiveRecord::Schema.define(version: 20160120060806) do
 
   create_table "contacts", force: :cascade do |t|
     t.string   "email",      limit: 255
-    t.text     "message",    limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.text     "message"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "fields", force: :cascade do |t|
@@ -51,18 +54,18 @@ ActiveRecord::Schema.define(version: 20160120060806) do
     t.string   "fieldtype",     limit: 255
     t.boolean  "required"
     t.boolean  "disabled"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.integer  "column_id",     limit: 4
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "column_id"
     t.string   "glyphicon",     limit: 255
-    t.integer  "section_id",    limit: 4
-    t.integer  "template_id",   limit: 4
-    t.text     "options",       limit: 65535
-    t.integer  "column_order",  limit: 4
-    t.text     "default_value", limit: 65535
+    t.integer  "section_id"
+    t.integer  "template_id"
+    t.text     "options"
+    t.integer  "column_order"
+    t.text     "default_value"
     t.string   "placeholder",   limit: 255
     t.string   "tooltip",       limit: 255
-    t.text     "o",             limit: 65535
+    t.text     "o"
   end
 
   add_index "fields", ["column_id"], name: "index_fields_on_column_id", using: :btree
@@ -71,49 +74,49 @@ ActiveRecord::Schema.define(version: 20160120060806) do
   create_table "groups", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "owner",      limit: 255
-    t.text     "members",    limit: 65535
-    t.text     "templates",  limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.text     "members"
+    t.text     "templates"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "newsletters", force: :cascade do |t|
-    t.text     "email",      limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.text     "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "reports", force: :cascade do |t|
     t.string   "title",          limit: 255
-    t.text     "submission",     limit: 65535
-    t.text     "response",       limit: 65535
+    t.text     "submission"
+    t.text     "response"
     t.boolean  "active"
     t.string   "location",       limit: 255
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.boolean  "allow_title"
-    t.text     "template_order", limit: 65535
+    t.text     "template_order"
   end
 
   create_table "reports_templates", id: false, force: :cascade do |t|
-    t.integer "report_id",   limit: 4
-    t.integer "template_id", limit: 4
+    t.integer "report_id"
+    t.integer "template_id"
   end
 
   add_index "reports_templates", ["report_id"], name: "index_reports_templates_on_report_id", using: :btree
   add_index "reports_templates", ["template_id"], name: "index_reports_templates_on_template_id", using: :btree
 
   create_table "reports_users", id: false, force: :cascade do |t|
-    t.integer "user_id",   limit: 4
-    t.integer "report_id", limit: 4
+    t.integer "user_id"
+    t.integer "report_id"
   end
 
   add_index "reports_users", ["report_id"], name: "index_reports_users_on_report_id", using: :btree
   add_index "reports_users", ["user_id"], name: "index_reports_users_on_user_id", using: :btree
 
   create_table "sessions", force: :cascade do |t|
-    t.string   "session_id", limit: 255,   null: false
-    t.text     "data",       limit: 65535
+    t.string   "session_id", limit: 255, null: false
+    t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -125,35 +128,35 @@ ActiveRecord::Schema.define(version: 20160120060806) do
     t.string   "name",          limit: 255
     t.boolean  "private_world"
     t.boolean  "private_group"
-    t.integer  "group_id",      limit: 4
+    t.integer  "group_id"
     t.boolean  "group_edit"
-    t.text     "group_editors", limit: 65535
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.text     "group_editors"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.boolean  "draft"
-    t.text     "sections",      limit: 65535
-    t.text     "columns",       limit: 65535
+    t.text     "sections"
+    t.text     "columns"
     t.string   "gs_id",         limit: 255
     t.string   "gs_url",        limit: 255
     t.string   "gs_key",        limit: 255
   end
 
   create_table "templates_users", id: false, force: :cascade do |t|
-    t.integer "user_id",     limit: 4
-    t.integer "template_id", limit: 4
+    t.integer "user_id"
+    t.integer "template_id"
   end
 
   add_index "templates_users", ["template_id"], name: "index_templates_users_on_template_id", using: :btree
   add_index "templates_users", ["user_id"], name: "index_templates_users_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "provider",               limit: 255,                null: false
-    t.string   "uid",                    limit: 255,   default: "", null: false
-    t.string   "encrypted_password",     limit: 255,   default: "", null: false
+    t.string   "provider",               limit: 255,              null: false
+    t.string   "uid",                    limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,     default: 0,  null: false
+    t.integer  "sign_in_count",                      default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
@@ -166,13 +169,14 @@ ActiveRecord::Schema.define(version: 20160120060806) do
     t.string   "nickname",               limit: 255
     t.string   "image",                  limit: 255
     t.string   "email",                  limit: 255
-    t.text     "tokens",                 limit: 65535
+    t.text     "tokens"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "group_id",               limit: 4
+    t.integer  "group_id"
     t.string   "refresh_token",          limit: 255
     t.string   "access_token",           limit: 255
-    t.integer  "expires_at",             limit: 4
+    t.integer  "expires_at"
+    t.string   "googler"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", using: :btree
@@ -181,11 +185,11 @@ ActiveRecord::Schema.define(version: 20160120060806) do
   add_index "users", ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
 
   create_table "values", force: :cascade do |t|
-    t.text     "input",      limit: 65535
-    t.integer  "field_id",   limit: 4
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.integer  "report_id",  limit: 4
+    t.text     "input"
+    t.integer  "field_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "report_id"
   end
 
   add_index "values", ["field_id"], name: "index_values_on_field_id", using: :btree

@@ -11,8 +11,6 @@ module Api::V1#:nodoc:
         end
 
         def show
-            Rails.logger.info 'HEY TO YOU TOO'
-            Rails.logger.info user_session
             @template = current_user.templates.eager_load(:fields).find(params[:id])
         end
 

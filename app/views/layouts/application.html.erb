@@ -23,6 +23,7 @@
             <span class="watch-count"></span> / <span class="digest-length"></span>
         </div>
 
+
         <noscript>Please enable javascript and cookies in your browser.</noscript>
 
         <%= yield %>
@@ -107,6 +108,7 @@
             </div>
         </div>
     </body>
+
     <%= javascript_include_tag 'application', async: Rails.env.production?, cache: true %>
     <%= stylesheet_link_tag 'application', media: 'all', cache: true %>
 </html>

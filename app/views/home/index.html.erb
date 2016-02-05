@@ -25,11 +25,9 @@
                 <div class="md-media-sm"><img ng-src="{{user.image}}" /></div>
             </md-card-title-media>
         </md-card-title>
-<!--         <md-card-actions ng-if="user.provider=='google_oauth2'">
-            <md-switch ng-model="user.opts['google_access']" aria-label="toggle google account access">
-                A
-            </md-switch>
-        </md-card-actions> -->
+        <md-card-actions ng-if="user.provider=='google_oauth2'">
+            <google-connect></google-connect>
+        </md-card-actions>
     </md-card>
     <div contact ng-form="contactForm" layout="column" layout-padding>
         <md-input-container class="md-no-margin-bot">

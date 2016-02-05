@@ -2,7 +2,7 @@
 class User < ActiveRecord::Base
     
     # Include default devise modules.
-    devise :omniauthable, :omniauth_providers => [:google_oauth2, :github, :facebook]
+    devise :registerable, :trackable, :omniauthable, :omniauth_providers => [:google_oauth2, :github, :facebook]
     
     include DeviseTokenAuth::Concerns::User
 
@@ -30,15 +30,15 @@ class User < ActiveRecord::Base
             :authorize_url => "/o/oauth2/auth",
             :ssl => {:verify => !Rails.env.development?}
         )
-        access_token = OAuth2::AccessToken.from_hash(oauth_client, {:refresh_token => self.refresh_token})
+        access_token = OAuth2::AccessToken.from_hash(oauth_client, {:refresh_token => user_session.refresh_token})
         access_token = access_token.refresh!
-        self.access_token = access_token.token
-        self.expires_at = Time.now + access_token.expires_in
-        self.save
+        user_session.access_token = access_token.token
+        user_session.expires_at = Time.now + access_token.expires_in
+        user_session.save
     end
 
     def token_is_old
-        Time.at(self.expires_at) < Time.now()
+        Time.at(user_session.expires_at) < Time.now()
     end
 
 end

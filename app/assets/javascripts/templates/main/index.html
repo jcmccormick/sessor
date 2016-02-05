@@ -75,7 +75,7 @@
                     <td>
                         <md-menu>
                         <!-- Trigger element is a md-button with an icon -->
-                            <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+                            <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="open template {{template.id}} menu">
                                 <md-tooltip md-direction="top">
                                     {{template.name}} Menu
                                 </md-tooltip>
@@ -198,7 +198,7 @@
                     <td>
                         <md-menu>
                             <!-- Trigger element is a md-button with an icon -->
-                            <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="open report menu">
+                            <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="open report {{report.id}} menu">
                                 <md-icon>more_vert</md-icon>
                             </md-button>
                             <md-menu-content width="4">

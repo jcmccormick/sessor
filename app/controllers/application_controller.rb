@@ -7,16 +7,35 @@
 class ApplicationController < ActionController::Base
     force_ssl if !Rails.env.development?
 
-    # Protect the site from CSRF
-    protect_from_forgery with: :null_session#, :if => Proc.new { |c| c.request.format == 'application/json' }
-
-    # Include depdencies for `clean_pagination`, `devise`, and response types.
-    include DeviseTokenAuth::Concerns::SetUserByToken
-    #include ActionController::MimeResponds
-
     respond_to :json
-    
+
+    # Protect the site from CSRF
+    protect_from_forgery
+
+    before_filter :configure_permitted_parameters, if: :devise_controller?
+
+    after_filter :set_csrf_cookie_for_ng
+
+    include DeviseTokenAuth::Concerns::SetUserByToken
+
+    def set_csrf_cookie_for_ng
+      cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
+    end
+
     def new_session_path(scope)
         new_user_session_path
+    end
+
+    protected
+
+    def verified_request?
+        super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
+    end
+
+    def configure_permitted_parameters
+        Rails.logger.info 'Made it to devise'
+        devise_parameter_sanitizer.for(:account_update) do |user_params|
+          user_params.permit(:googler, :registration)
+        end
     end
 end

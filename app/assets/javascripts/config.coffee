@@ -9,6 +9,16 @@ do ->
 
         $authProvider.configure
             apiUrl: ''
+            omniauthWindowType: 'newWindow'
+            handleLoginResponse: (response)->
+                console.log 'You just logged in.'
+                return response.data
+            handleAccountUpdateResponse: (response)->
+                console.log 'You just updated.'
+                return response.data
+            handleTokenValidationResponse: (response)->
+                console.log 'You just validated.'
+                return response.data
 
         resolver = 'auth': ['$auth', 'localStorageService', 'ReportsService', 'TemplatesService',
         ($auth, localStorageService, ReportsService, TemplatesService)->
