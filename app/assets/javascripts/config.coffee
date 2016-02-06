@@ -1,4 +1,4 @@
-do (window)->
+do ->
     'use strict'
 
     config = ($authProvider, $httpProvider, $routeProvider, $locationProvider)->
@@ -10,14 +10,6 @@ do (window)->
         $authProvider.configure
             apiUrl: ''
             omniauthWindowType: 'newWindow'
-            handleLoginResponse: (response)->
-                return response.data
-            handleAccountUpdateResponse: (response)->
-                console.log 'You just updated.'
-                return response.data
-            handleTokenValidationResponse: (response)->
-                console.log 'You just validated.'
-                return response.data
 
         resolver = 'auth': ['$auth', 'localStorageService', 'ReportsService', 'TemplatesService',
         ($auth, localStorageService, ReportsService, TemplatesService)->

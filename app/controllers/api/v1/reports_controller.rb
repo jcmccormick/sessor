@@ -2,7 +2,7 @@
 module Api::V1 #:nodoc:
     class ReportsController < ApplicationController
         before_action :authenticate_user!
-        # include Sheeted
+        include Sheeted
 
         wrap_parameters include: Report.wrapped_params
 

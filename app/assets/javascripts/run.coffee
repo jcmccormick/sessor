@@ -1,19 +1,23 @@
 do ->
     'use strict'
 
-    run = ($location, $rootScope, $route, $timeout, $window, Flash, ipCookie, localStorageService)->
+    run = ($auth, $location, $rootScope, $timeout, $window, Flash, ipCookie, localStorageService)->
 
         $rootScope.$on '$locationChangeSuccess', ->
-            if $rootScope.loadedForGA
-                $location.$$host != 'localhost' && GoogleAnalytics.trackPageview $location.path
+            $rootScope.loadedForGA && $location.$$host != 'localhost' && GoogleAnalytics.trackPageview $location.path
             $rootScope.loadedForGA = true
 
-        $rootScope.$on '$locationChangeStart', (evt, absNewUrl, absOldUrl)->
-            ~absOldUrl.indexOf('reset_password=true') && $location.path('/pass_reset')
-
         $rootScope.$on 'auth:login-success', ->
-            console.log 'You just logged in.'
-            location.reload()
+            if $auth.user.googler == "t"
+                $timeout (->
+                    if !$auth.user.driveLoggedIn
+                        $auth.authenticate('google',{ params: { scope: 'email, profile, https://spreadsheets.google.com/feeds/, https://www.googleapis.com/auth/drive.file'}})
+                        $auth.user.driveLoggedIn = true
+                    else
+                        location.reload()
+                ), 0
+            else
+                location.reload()
 
         $rootScope.$on 'auth:account-update-success', ->
             Flash.create('success', '<h3>Success! <small>Auth</small></h3><p>Account updated.</p>', 'customAlert')
@@ -31,6 +35,7 @@ do ->
             $location.path('/')
             cleanUp()
 
-    run.$inject = ['$location', '$rootScope', '$route', '$timeout', '$window', 'Flash', 'ipCookie', 'localStorageService']
+
+    run.$inject = ['$auth', '$location', '$rootScope', '$timeout', '$window', 'Flash', 'ipCookie', 'localStorageService']
 
     angular.module('clerkr').run(run)
