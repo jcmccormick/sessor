@@ -18,8 +18,8 @@ module Api::V1 #:nodoc:
             @report = current_user.reports.new(allowed_params)
             @report.save
             current_user.reports << @report
-            update_worksheet(@report)
-            update_templates(@report)
+            #update_worksheet(@report)
+            #update_templates(@report)
             render 'show', status: 201
         end
 
@@ -31,8 +31,8 @@ module Api::V1 #:nodoc:
                 report.disassociate_template(params[:did])
                 report.update_attributes(params.require(:report).permit({:template_order => []}))
             else
-                update_worksheet(report)
-                update_templates(report)
+                #update_worksheet(report)
+                #update_templates(report)
                 report.update_attributes(allowed_params)
             end
             
@@ -65,7 +65,7 @@ module Api::V1 #:nodoc:
             end
 
             def update_worksheet(report)
-                current_user.googler && report.template_order.each do |template_id|
+                current_user.googler? && report.template_order.each do |template_id|
                     template = current_user.templates.find_by_id(template_id)
                     fields = template.fields.where.not(fieldtype: 'labelntext')
                     report.templates << template unless report.templates.include?(template)

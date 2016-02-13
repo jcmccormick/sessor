@@ -15,11 +15,11 @@ module Api::V1#:nodoc:
         end
 
         def create
-            ss = create_spreadsheet(params[:name])
+            #ss = create_spreadsheet(params[:name])
             @template = current_user.templates.new(allowed_params)
-            @template.gs_url = ss.human_url
-            @template.gs_key = ss.key
-            @template.gs_id = ss.worksheets[0].cells_feed_url
+            #@template.gs_url = ss.human_url
+            #@template.gs_key = ss.key
+            #@template.gs_id = ss.worksheets[0].cells_feed_url
             @template.save
             current_user.templates << @template
             render 'show', status: 201
@@ -27,8 +27,8 @@ module Api::V1#:nodoc:
 
         def update
             template = current_user.templates.find(params[:id])
-            update_worksheet if params[:fields_attributes]
-            update_name if params[:name] != template.name
+            #update_worksheet if params[:fields_attributes]
+            #update_name if params[:name] != template.name
             template.sections = params[:sections]
             template.update_attributes(allowed_params)
             current_user.templates << template unless current_user.templates.include?(template)
@@ -38,7 +38,7 @@ module Api::V1#:nodoc:
         def destroy
             template = current_user.templates.find(params[:id])
             if template.allow_destroy
-                google_drive.spreadsheet_by_key(template.gs_key).delete if template.gs_key
+                #google_drive.spreadsheet_by_key(template.gs_key).delete if template.gs_key
                 template.destroy
                 head :no_content
             else
