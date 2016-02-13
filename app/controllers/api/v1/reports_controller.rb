@@ -19,7 +19,7 @@ module Api::V1 #:nodoc:
             @report.save
             current_user.reports << @report
             #update_worksheet(@report)
-            #update_templates(@report)
+            update_templates(@report)
             render 'show', status: 201
         end
 
@@ -32,7 +32,7 @@ module Api::V1 #:nodoc:
                 report.update_attributes(params.require(:report).permit({:template_order => []}))
             else
                 #update_worksheet(report)
-                #update_templates(report)
+                update_templates(report)
                 report.update_attributes(allowed_params)
             end
             
