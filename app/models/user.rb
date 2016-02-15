@@ -2,7 +2,7 @@
 class User < ActiveRecord::Base
     
     # Include default devise modules.
-    devise :registerable, :trackable, :omniauthable, :omniauth_providers => [:google_oauth2, :github, :facebook]
+    devise :omniauthable, :omniauth_providers => [:google_oauth2, :github, :facebook]
     
     include DeviseTokenAuth::Concerns::User
 

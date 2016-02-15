@@ -2,7 +2,7 @@ Rails.application.routes.draw do
     
     root 'home#index' 
 
-    mount_devise_token_auth_for 'User', at: 'auth', :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", :registrations => "users/registrations" }
+    mount_devise_token_auth_for 'User', at: 'auth'#, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", :registrations => "users/registrations" }
 
     devise_scope :user do
         get 'auth/sign_in', :to => 'devise_token_auth/sessions#new', :as => :new_user_session

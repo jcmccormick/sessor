@@ -1,0 +1,95 @@
+[34;42m.[00m
+├── [34;42m./app[00m
+│   ├── [34;42m./app/assets[00m
+│   │   ├── [34;42m./app/assets/images[00m
+│   │   │   └── [01;34m./app/assets/images/unused[00m
+│   │   ├── [34;42m./app/assets/javascripts[00m
+│   │   │   ├── [34;42m./app/assets/javascripts/controllers[00m
+│   │   │   ├── [34;42m./app/assets/javascripts/directives[00m
+│   │   │   │   ├── [34;42m./app/assets/javascripts/directives/main[00m
+│   │   │   │   └── [34;42m./app/assets/javascripts/directives/pages[00m
+│   │   │   │       └── [34;42m./app/assets/javascripts/directives/pages/views[00m
+│   │   │   │           └── [34;42m./app/assets/javascripts/directives/pages/views/form[00m
+│   │   │   ├── [34;42m./app/assets/javascripts/factories[00m
+│   │   │   ├── [34;42m./app/assets/javascripts/filters[00m
+│   │   │   ├── [34;42m./app/assets/javascripts/services[00m
+│   │   │   ├── [34;42m./app/assets/javascripts/templates[00m
+│   │   │   │   ├── [34;42m./app/assets/javascripts/templates/main[00m
+│   │   │   │   ├── [34;42m./app/assets/javascripts/templates/reports[00m
+│   │   │   │   ├── [34;42m./app/assets/javascripts/templates/statistics[00m
+│   │   │   │   └── [34;42m./app/assets/javascripts/templates/templates[00m
+│   │   │   └── [34;42m./app/assets/javascripts/xscripts[00m
+│   │   │       ├── [34;42m./app/assets/javascripts/xscripts/jquery-ui-draggable[00m
+│   │   │       └── [34;42m./app/assets/javascripts/xscripts/ng-google-chart[00m
+│   │   └── [34;42m./app/assets/stylesheets[00m
+│   ├── [34;42m./app/controllers[00m
+│   │   ├── [34;42m./app/controllers/api[00m
+│   │   │   └── [34;42m./app/controllers/api/v1[00m
+│   │   ├── [34;42m./app/controllers/concerns[00m
+│   │   └── [34;42m./app/controllers/users[00m
+│   ├── [34;42m./app/mailers[00m
+│   ├── [34;42m./app/models[00m
+│   │   └── [34;42m./app/models/concerns[00m
+│   └── [34;42m./app/views[00m
+│       ├── [34;42m./app/views/api[00m
+│       │   └── [34;42m./app/views/api/v1[00m
+│       │       ├── [34;42m./app/views/api/v1/fields[00m
+│       │       ├── [34;42m./app/views/api/v1/groups[00m
+│       │       ├── [34;42m./app/views/api/v1/reports[00m
+│       │       ├── [34;42m./app/views/api/v1/templates[00m
+│       │       └── [34;42m./app/views/api/v1/values[00m
+│       ├── [34;42m./app/views/home[00m
+│       ├── [34;42m./app/views/layouts[00m
+│       └── [34;42m./app/views/shared[00m
+├── [34;42m./bin[00m
+├── [34;42m./config[00m
+│   ├── [34;42m./config/environments[00m
+│   ├── [34;42m./config/initializers[00m
+│   └── [34;42m./config/locales[00m
+├── [34;42m./db[00m
+│   └── [34;42m./db/migrate[00m
+├── [34;42m./lib[00m
+│   ├── [34;42m./lib/assets[00m
+│   └── [34;42m./lib/tasks[00m
+├── [34;42m./log[00m
+├── [34;42m./public[00m
+├── [34;42m./spec[00m
+│   ├── [34;42m./spec/controllers[00m
+│   ├── [34;42m./spec/factories[00m
+│   ├── [34;42m./spec/features[00m
+│   │   └── [34;42m./spec/features/user[00m
+│   ├── [34;42m./spec/helpers[00m
+│   ├── [34;42m./spec/javascripts[00m
+│   │   └── [34;42m./spec/javascripts/controllers[00m
+│   ├── [34;42m./spec/models[00m
+│   └── [34;42m./spec/support[00m
+├── [34;42m./test[00m
+│   ├── [34;42m./test/controllers[00m
+│   ├── [34;42m./test/fixtures[00m
+│   ├── [34;42m./test/helpers[00m
+│   ├── [34;42m./test/integration[00m
+│   ├── [34;42m./test/mailers[00m
+│   └── [34;42m./test/models[00m
+├── [34;42m./tmp[00m
+│   ├── [34;42m./tmp/cache[00m
+│   │   └── [34;42m./tmp/cache/assets[00m
+│   │       └── [34;42m./tmp/cache/assets/development[00m
+│   │           ├── [34;42m./tmp/cache/assets/development/sass[00m
+│   │           │   ├── [34;42m./tmp/cache/assets/development/sass/3f75bd3490a9549eacf1dbf4065da68b5a1d8203[00m
+│   │           │   ├── [34;42m./tmp/cache/assets/development/sass/4a5b25fb6bf1bb2508ce8830a40fb2aa84e0aef8[00m
+│   │           │   ├── [34;42m./tmp/cache/assets/development/sass/930065b08e5823e93e7d78568be00953b6ff42c0[00m
+│   │           │   ├── [34;42m./tmp/cache/assets/development/sass/996818ea99a8b9002c89afca14ccb3c3add7509f[00m
+│   │           │   ├── [34;42m./tmp/cache/assets/development/sass/ae165b4521662b5d1e495b4c2a0d6f722012a9b6[00m
+│   │           │   ├── [34;42m./tmp/cache/assets/development/sass/d1239a8748b99abf0254be6c63f64798bcc02692[00m
+│   │           │   └── [34;42m./tmp/cache/assets/development/sass/fc8b934eb7df160b466665742b71116f340f0a3f[00m
+│   │           └── [34;42m./tmp/cache/assets/development/sprockets[00m
+│   ├── [34;42m./tmp/pids[00m
+│   ├── [34;42m./tmp/sessions[00m
+│   └── [34;42m./tmp/sockets[00m
+└── [34;42m./vendor[00m
+    └── [34;42m./vendor/assets[00m
+        ├── [34;42m./vendor/assets/fonts[00m
+        ├── [34;42m./vendor/assets/javascripts[00m
+        └── [34;42m./vendor/assets/stylesheets[00m
+
+92 directories, 0 files
