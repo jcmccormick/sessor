@@ -3,7 +3,7 @@ do ->
 
     config = ($authProvider, $httpProvider, $routeProvider, $locationProvider)->
 
-        # $locationProvider.html5Mode true
+        $locationProvider.html5Mode true
 
         $httpProvider.interceptors.push 'loadingInterceptor'
 
