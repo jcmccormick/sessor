@@ -35,80 +35,80 @@ do ->
 
         $routeProvider.when('/',
             templateUrl: "main/index.html"
-            resolve: resolver
+            # resolve: resolver
             redirectTo: (current, path, search)->
                 (search.goto && '/'+search.goto) || '/'
         )
         .when('/contact',
             templateUrl: "main/contact.html"
-            resolve: resolver
+            # resolve: resolver
         )
         # .when('/support',
         #     templateUrl: "main/support.html"
-        #     resolve: resolver
+        #     # resolve: resolver
         # )
         # .when('/pass_reset',
         #     templateUrl: "user/pass.html"
-        #     resolve: resolver
+        #     # resolve: resolver
         # )
         # .when('/profile',
         #     templateUrl: "user/edit.html"
         #     controller: 'UsersController'
-        #     resolve: resolver
+        #     # resolve: resolver
         # ) # REPORTS ROUTES #
         .when('/reports',
             templateUrl: "reports/list.html"
             controller: 'ReportsController'
             controllerAs: 'vr'
-            resolve: resolver
+            # resolve: resolver
         )
         .when('/reports/new/',
             templateUrl: "reports/edit.html"
             controller: 'ReportsController'
             controllerAs: 'vr'
-            resolve: resolver
+            # resolve: resolver
         )
         .when('/reports/:reportId',
             templateUrl: "reports/view.html"
             controller: 'ReportsController'
             controllerAs: 'vr'
-            resolve: resolver
+            # resolve: resolver
         )
         .when('/reports/:reportId/edit'
             templateUrl: "reports/edit.html"
             controller: 'ReportsController'
             controllerAs: 'vr'
-            resolve: resolver
+            # resolve: resolver
         ) # TEMPLATES ROUTES #
         .when('/templates',
             templateUrl: "templates/list.html"
             controller: 'TemplatesController'
             controllerAs: 'vt'
-            resolve: resolver
+            # resolve: resolver
         )
         .when('/templates/new',
             templateUrl: "templates/edit.html"
             controller: 'TemplatesController'
             controllerAs: 'vt'
-            resolve: resolver
+            # resolve: resolver
         )
         .when('/templates/:templateId',
             templateUrl: "templates/view.html"
             controller: 'TemplatesController'
             controllerAs: 'vt'
-            resolve: resolver
+            # resolve: resolver
         )
         .when('/templates/:templateId/edit'
             templateUrl: "templates/edit.html"
             controller: 'TemplatesController'
             controllerAs: 'vt'
-            resolve: resolver
+            # resolve: resolver
         ) # STATISTICS ROUTES #
         .when('/statistics',
             templateUrl: "statistics/show.html"
             controller: 'StatisticsController'
             controllerAs: 'sv'
-            resolve: resolver
+            # resolve: resolver
         )
         .otherwise('/')
 
