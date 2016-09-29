@@ -23,5 +23,5 @@ Rails.application.routes.draw do
         end
     end
 
-    get "/*path" => redirect("/?goto=%{path}")
+    # get "/*path" => redirect("/?goto=%{path}")
 end
