@@ -14,22 +14,22 @@ do ->
         resolver = 'auth': ['$auth', 'localStorageService', 'ReportsService', 'TemplatesService',
         ($auth, localStorageService, ReportsService, TemplatesService)->
         #    $auth.validateUser().then ->
-                reports = localStorageService.get('_csr')
-                templates = localStorageService.get('_cst')
-        
-                if !templates || !reports
-                    TemplatesService.listTemplates().then (res)->
-        #                $auth.user.templates_count = res.length
-                        localStorageService.set('_cst', res)
-                        ReportsService.listReports().then (rep)->
-                            localStorageService.set('_csr', rep)
-        #                    $auth.user.reports_count = rep.length
-                            return true
-                else
-                    localStorageService.set('_csr', reports)
-                    localStorageService.set('_cst', templates)
-        #            $auth.user.reports_count = reports.length
-        #            $auth.user.templates_count = templates.length                
+            reports = localStorageService.get('_csr')
+            templates = localStorageService.get('_cst')
+    
+            if !templates || !reports
+                TemplatesService.listTemplates().then (res)->
+    #                $auth.user.templates_count = res.length
+                    localStorageService.set('_cst', res)
+                    ReportsService.listReports().then (rep)->
+                        localStorageService.set('_csr', rep)
+    #                    $auth.user.reports_count = rep.length
+                        return true
+            else
+                localStorageService.set('_csr', reports)
+                localStorageService.set('_cst', templates)
+    #            $auth.user.reports_count = reports.length
+    #            $auth.user.templates_count = templates.length                
             return true
         ]
 
