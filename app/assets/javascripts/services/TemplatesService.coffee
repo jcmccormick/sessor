@@ -116,8 +116,8 @@ do ->
                 
                 if !template.id
                     template.$save({class: 'templates'}, (res)->
-                        templates.push res
-                        slt(templates)
+                        #templates.push res
+                        #slt(templates)
                         $location.path("/templates/#{res.id}/edit")
                         return
                     )
