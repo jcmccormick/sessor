@@ -11,17 +11,17 @@ module Api::V1#:nodoc:
         end
 
         def show
-            @template = current_user.templates.eager_load(:fields).find(params[:id])
+            @template = templates.eager_load(:fields).find(params[:id])
         end
 
         def create
             #ss = create_spreadsheet(params[:name])
-            @template = current_user.templates.new(allowed_params)
+            @template = templates.new(allowed_params)
             #@template.gs_url = ss.human_url
             #@template.gs_key = ss.key
             #@template.gs_id = ss.worksheets[0].cells_feed_url
             @template.save
-            current_user.templates << @template
+            templates << @template
             render 'show', status: 201
         end
 

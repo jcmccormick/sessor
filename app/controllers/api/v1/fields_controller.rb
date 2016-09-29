@@ -4,14 +4,14 @@ module Api::V1 #:nodoc:
         before_action :authenticate_user!
         
         def index
-            render json: current_user.fields.where(:template_id => params[:template_id]).where.not(:fieldtype => 'labelntext').as_json(only: [:id, :fieldtype, :o])
+            render json: fields.where(:template_id => params[:template_id]).where.not(:fieldtype => 'labelntext').as_json(only: [:id, :fieldtype, :o])
         end
 
         def show
         end
 
         def create
-            template = current_user.templates.find(params[:template_id])
+            template = templates.find(params[:template_id])
             @field = template.fields.new(allowed_params)
             @field.save
             render 'show', status: 201
