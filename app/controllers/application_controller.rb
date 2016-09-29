@@ -5,7 +5,7 @@
 # The Application Controller includes necessary modules and uses a workaround to define the `current_user`
 
 class ApplicationController < ActionController::Base
-    force_ssl if !Rails.env.development?
+    # force_ssl if !Rails.env.development?
 
     respond_to :json
 
