@@ -3,7 +3,7 @@ do ->
 
     TemplatesService = ($interval, $location, $mdDialog, $q, $rootScope, $window, ClassFactory, Flash, localStorageService)->
 
-        templates = localStorageService.get('_cst')
+        templates = []#localStorageService.get('_cst')
 
         slt = (temps)->
             localStorageService.set('_cst', temps)
