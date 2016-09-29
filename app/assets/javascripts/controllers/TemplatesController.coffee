@@ -9,12 +9,13 @@ do ->
 
         if TemplatesService.creating() || tempId = parseInt($routeParams.templateId, 10)
             vt.template = if tempId
-                TemplatesService.extendTemplate(tempId)
+                {name: '', sections: [], fields: []}
+                #TemplatesService.extendTemplate(tempId)
             else
                 {name: '', sections: [], fields: []}
 
-            tempId && !vt.template.loadedFromDB && TemplatesService.queryTemplate(tempId, true).then((res)->
-                $.extend vt.template, res
+            #tempId && !vt.template.loadedFromDB && TemplatesService.queryTemplate(tempId, true).then((res)->
+            #    $.extend vt.template, res
             )
 
             vt.template.viewing = true
