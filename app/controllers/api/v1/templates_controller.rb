@@ -7,36 +7,36 @@ module Api::V1#:nodoc:
         wrap_parameters include: Template.wrapped_params
 
         def index
-            render json: templates.as_json(only: [:id, :name, :updated_at, :draft, :sections], include: [:fields] )
+            render json: Template.as_json(only: [:id, :name, :updated_at, :draft, :sections], include: [:fields] )
         end
 
         def show
-            @template = templates.eager_load(:fields).find(params[:id])
+            @template = Template.eager_load(:fields).find(params[:id])
         end
 
         def create
             #ss = create_spreadsheet(params[:name])
-            @template = templates.new(allowed_params)
+            @template = Template.new(allowed_params)
             #@template.gs_url = ss.human_url
             #@template.gs_key = ss.key
             #@template.gs_id = ss.worksheets[0].cells_feed_url
             @template.save
-            templates << @template
+            Template << @template
             render 'show', status: 201
         end
 
         def update
-            template = templates.find(params[:id])
+            template = Template.find(params[:id])
             #update_worksheet if params[:fields_attributes]
             #update_name if params[:name] != template.name
             template.sections = params[:sections]
             template.update_attributes(allowed_params)
-            templates << template unless templates.include?(template)
+            Template << template unless Template.include?(template)
             head :no_content
         end
 
         def destroy
-            template = templates.find(params[:id])
+            template = Template.find(params[:id])
             if template.allow_destroy
                 #google_drive.spreadsheet_by_key(template.gs_key).delete if template.gs_key
                 template.destroy
@@ -60,7 +60,7 @@ module Api::V1#:nodoc:
             end
 
             def update_worksheet
-                if googler
+                if current_user.googler
                     if (formatted_params-formatted_fields).any? || params[:update_keys]
                         get_sheet
 
@@ -79,7 +79,7 @@ module Api::V1#:nodoc:
             end
 
             def update_name
-                if googler
+                if current_user.googler
                     ss = google_drive.spreadsheet_by_key(template.gs_key)
                     ss.title = params[:name]
                 end
@@ -94,7 +94,7 @@ module Api::V1#:nodoc:
             end
 
             def template
-                templates.find(params[:id])
+                Template.find(params[:id])
             end
 
             def fields

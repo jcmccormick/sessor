@@ -1,17 +1,17 @@
 # Fields Controller
 module Api::V1 #:nodoc:
     class FieldsController < ApplicationController
-        before_action :authenticate_user!
+        # before_action :authenticate_user!
         
         def index
-            render json: fields.where(:template_id => params[:template_id]).where.not(:fieldtype => 'labelntext').as_json(only: [:id, :fieldtype, :o])
+            render json: Field.where(:template_id => params[:template_id]).where.not(:fieldtype => 'labelntext').as_json(only: [:id, :fieldtype, :o])
         end
 
         def show
         end
 
         def create
-            template = templates.find(params[:template_id])
+            template = Template.find(params[:template_id])
             @field = template.fields.new(allowed_params)
             @field.save
             render 'show', status: 201
