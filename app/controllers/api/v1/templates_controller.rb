@@ -21,7 +21,7 @@ module Api::V1#:nodoc:
             #@template.gs_key = ss.key
             #@template.gs_id = ss.worksheets[0].cells_feed_url
             @template.save
-            Template << @template
+            #Template << @template
             render 'show', status: 201
         end
 
@@ -31,7 +31,7 @@ module Api::V1#:nodoc:
             #update_name if params[:name] != template.name
             template.sections = params[:sections]
             template.update_attributes(allowed_params)
-            Template << template unless Template.include?(template)
+            #Template << template unless Template.include?(template)
             head :no_content
         end
 
