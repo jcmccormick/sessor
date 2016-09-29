@@ -29,7 +29,7 @@
         <%= yield %>
 
         <!-- Signed out view -->
-        <div ng-if="!user.signedIn">
+        <div ng-if="auser.signedIn">
             <div class="md-site-secondary md-site-top-nav" layout-align="center center">
                 <div layout="row" layout-align="start center" layout-wrap layout-fill>
                     <newsletter ng-form="newsForm" flex layout="row" layout-align="end end">
