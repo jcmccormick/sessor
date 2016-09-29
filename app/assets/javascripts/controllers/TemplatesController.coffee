@@ -16,7 +16,7 @@ do ->
 
             #tempId && !vt.template.loadedFromDB && TemplatesService.queryTemplate(tempId, true).then((res)->
             #    $.extend vt.template, res
-            )
+            #)
 
             vt.template.viewing = true
 
