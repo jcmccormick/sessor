@@ -1,13 +1,13 @@
 # Templates Controller
 module Api::V1#:nodoc:
     class TemplatesController < ApplicationController
-        before_action :authenticate_user!
+        # before_action :authenticate_user!
         include Sheeted
 
         wrap_parameters include: Template.wrapped_params
 
         def index
-            render json: current_user.templates.as_json(only: [:id, :name, :updated_at, :draft, :sections], include: [:fields] )
+            render json: templates.as_json(only: [:id, :name, :updated_at, :draft, :sections], include: [:fields] )
         end
 
         def show
@@ -26,17 +26,17 @@ module Api::V1#:nodoc:
         end
 
         def update
-            template = current_user.templates.find(params[:id])
+            template = templates.find(params[:id])
             #update_worksheet if params[:fields_attributes]
             #update_name if params[:name] != template.name
             template.sections = params[:sections]
             template.update_attributes(allowed_params)
-            current_user.templates << template unless current_user.templates.include?(template)
+            templates << template unless templates.include?(template)
             head :no_content
         end
 
         def destroy
-            template = current_user.templates.find(params[:id])
+            template = templates.find(params[:id])
             if template.allow_destroy
                 #google_drive.spreadsheet_by_key(template.gs_key).delete if template.gs_key
                 template.destroy
@@ -60,7 +60,7 @@ module Api::V1#:nodoc:
             end
 
             def update_worksheet
-                if current_user.googler
+                if googler
                     if (formatted_params-formatted_fields).any? || params[:update_keys]
                         get_sheet
 
@@ -79,7 +79,7 @@ module Api::V1#:nodoc:
             end
 
             def update_name
-                if current_user.googler
+                if googler
                     ss = google_drive.spreadsheet_by_key(template.gs_key)
                     ss.title = params[:name]
                 end
@@ -94,7 +94,7 @@ module Api::V1#:nodoc:
             end
 
             def template
-                current_user.templates.find(params[:id])
+                templates.find(params[:id])
             end
 
             def fields
